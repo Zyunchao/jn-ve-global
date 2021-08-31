@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "strict": false,
+        "jsx": "preserve",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "lib": ["esnext", "dom"],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["examples/*"],
+            "@views/*": ["examples/views/*"],
+            "@component/*": ["packages/*"]
+        },
+        "noImplicitAny": false,
+        "noImplicitThis": false
+    },
+    "include": [
+        "examples/**/*.ts",
+        "examples/**/*.d.ts",
+        "examples/**/*.tsx",
+        "examples/**/*.vue",
+        "packages/*"
+    ]
+}

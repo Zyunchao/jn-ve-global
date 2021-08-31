@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="16px" viewBox="0 0 20 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.65">
+        <g id="机构管理-默认" transform="translate(-290.000000, -24.000000)" fill="#000000">
+            <g id="Group" transform="translate(290.000000, 24.000000)">
+                <rect id="Combined-Shape" x="0.25" y="0.5" width="17.5" height="1.875" rx="0.9375"></rect>
+                <rect id="Rectangle-Copy" x="0.25" y="7.0625" width="11.25" height="1.875" rx="0.9375"></rect>
+                <path d="M12.0947111,6.91845665 L16.3692475,6.63087945 C16.5414472,6.6192944 16.6904342,6.74949832 16.7020193,6.92169804 C16.7029688,6.93581136 16.7029589,6.94997286 16.7019898,6.96408485 L16.4088387,11.2328157 C16.4029264,11.3189074 16.3283424,11.3839057 16.2422507,11.3779935 C16.2045995,11.3754078 16.1691565,11.3592822 16.1424704,11.332596 L11.994714,7.18483968 C11.9336946,7.12382025 11.9336946,7.02488823 11.994714,6.96386881 C12.021453,6.93712978 12.0569817,6.92099497 12.0947111,6.91845665 Z" id="Rectangle-6" transform="translate(15.795918, 9.089158) rotate(45.000000) translate(-15.795918, -9.089158) "></path>
+                <rect id="Rectangle-Copy-2" x="0.25" y="13.625" width="17.5" height="1.875" rx="0.9375"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
