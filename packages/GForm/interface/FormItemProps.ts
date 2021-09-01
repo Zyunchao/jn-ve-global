@@ -51,7 +51,6 @@ export type ControlConfig =
     | RateControlConfig
     | SliderControlConfig
     | SelectTreeControlConfig
-    | IconPickerControlConfig
 
 type FormItemProps =
     | {

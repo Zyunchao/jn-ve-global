@@ -33,8 +33,6 @@ export default defineComponent({
 .custom-svg-icon {
     width: 1em;
     height: 1em;
-    font-size: inherit;
-    color: skyblue !important;
     // vertical-align: middle;
 }
 </style>
