@@ -23,6 +23,7 @@
         "examples/**/*.d.ts",
         "examples/**/*.tsx",
         "examples/**/*.vue",
-        "packages/*"
+        "packages/*",
+        "docs/.vuepress/*.ts"
     ]
 }
