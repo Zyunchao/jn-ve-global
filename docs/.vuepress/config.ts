@@ -1,5 +1,7 @@
 import { defineUserConfig } from 'vuepress'
 import type { DefaultThemeOptions } from 'vuepress'
+import viteSvgIcons from 'vite-plugin-svg-icons'
+import sidebar from './slideBar'
 const path = require('path')
 
 export default defineUserConfig<DefaultThemeOptions>({
@@ -7,27 +9,40 @@ export default defineUserConfig<DefaultThemeOptions>({
     title: 'Ve-Global',
     description: '基于 vue3+element-plus+ts 的组件库',
 
+    // 主题配置
     themeConfig: {
         lastUpdated: true,
         lastUpdatedText: '上次更新：',
-        sidebar: [
-            {
-                text: '输入控制组件',
-                children: ['/modules/Form.md', '/modules/Table.md']
-            },
-            {
-                text: '展示组件'
-            },
-            {
-                text: '图标组件'
-            }
-        ]
+        sidebar
     },
 
+    // 定义路径别名
     alias: {
         '@': path.resolve(__dirname, '../../'),
-        '@component': path.resolve(__dirname, '../../packages')
-    }
+        '@component': '@/packages',
+        '@examples': '@/examples',
+        '@assets': '@/examples/assets'
+    },
 
-    // plugins: ['demo-container']
+    // 打包工具：网站的开发和构建
+    bundler: '@vuepress/vite',
+    bundlerConfig: {
+        viteOptions: {
+            plugins: [
+                viteSvgIcons({
+                    iconDirs: [path.resolve(__dirname, '../../examples/assets/icons/svg')],
+                    symbolId: 'custom-icon-[dir]-[name]'
+                })
+            ]
+        }
+    },
+
+    plugins: [
+        [
+            '@vuepress/register-components',
+            {
+                componentsDir: path.resolve(__dirname, './components')
+            }
+        ]
+    ]
 })

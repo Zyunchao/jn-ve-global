@@ -2,7 +2,7 @@
 home: true
 actions:
     - text: 组件文档
-      link: /modules/Form.html
+      link: /modules/Form
       type: primary
 features:
     - title: 数据驱动
