@@ -50,3 +50,40 @@
     --content-width: 1000px;
     --homepage-width: 960px;
 }
+
+main.page {
+    .theme-default-content {
+        >table {
+            width: 100%;
+            display: table;
+
+            th,
+            td {
+                border: none;
+                text-align: left;
+
+                &:first-of-type {
+                    width: 130px;
+                }
+
+                &:nth-of-type(2) {
+                    width: 350px;
+                }
+
+                &:nth-of-type(3) {
+                    width: 250px;
+                }
+
+                &:nth-of-type(4) {
+                    width: 100px;
+                }
+            }
+
+            thead {
+                tr {
+                    border-top: none;
+                }
+            }
+        }
+    }
+}

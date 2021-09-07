@@ -42,8 +42,9 @@ onMounted(() => {
     border: 1px solid #dcdfe6;
     border-radius: 3px;
     transition: 0.2s;
-    z-index: 999;
+    z-index: 2;
     position: relative;
+    margin: 10px 0;
 
     &:hover {
         box-shadow: 0 0 8px 0 rgb(232, 237, 250, 60%), 0 2px 4px 0 rgb(232, 237, 250, 50%);

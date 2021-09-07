@@ -1,7 +1,6 @@
-import { FieldErrorList } from 'async-validator'
+import { FieldErrorList, RuleItem } from 'async-validator'
 import { ValidateFieldCallback } from 'element-plus/lib/el-form'
 import FormItemProps from './FormItemProps'
-import { RuleItem } from 'async-validator'
 
 interface Callback {
     (isValid?: boolean, invalidFields?: FieldErrorList): void

@@ -63,3 +63,9 @@
 </template>
 
 </demo-block>
+
+## GIcon Attributes
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+icon| 图标标识 | string | --

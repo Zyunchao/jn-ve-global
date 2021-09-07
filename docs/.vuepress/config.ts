@@ -13,7 +13,8 @@ export default defineUserConfig<DefaultThemeOptions>({
     // 主题配置
     themeConfig: {
         lastUpdated: true,
-        lastUpdatedText: '上次更新：',
+        lastUpdatedText: '上次更新',
+        contributorsText: '贡献者',
         sidebar
     },
 
@@ -45,11 +46,6 @@ export default defineUserConfig<DefaultThemeOptions>({
             '@vuepress/register-components',
             {
                 componentsDir: path.resolve(__dirname, './components')
-                // getComponentName: (filename) => {
-                //     const name = filename.replace(/\/|\\/g, '-')
-                //     console.log(`%c name ========== `, 'color: #e6a23c;', name)
-                //     return name
-                // }
             }
         ]
     ],

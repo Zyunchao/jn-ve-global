@@ -5,6 +5,7 @@
 
 // 注册 Ele
 import ElementPlus from 'element-plus'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 import 'element-plus/lib/theme-chalk/index.css'
 
 // 阿里图标
@@ -20,6 +21,6 @@ import 'virtual:svg-icons-register'
 import './style.scss'
 
 export default ({ app, router, siteData }) => {
-    app.use(ElementPlus)
+    app.use(ElementPlus, { locale })
     app.use(GlobalComponent)
 }

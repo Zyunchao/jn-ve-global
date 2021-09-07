@@ -1,7 +1,7 @@
 import { VNode } from 'vue'
-import InputControlConfig from './InputControlConfig'
 import { ExtendRuleItem } from './FormProps'
 import {
+    InputControlConfig,
     InputNumberControlConfig,
     SelectControlConfig,
     RadioControlConfig,

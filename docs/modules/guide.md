@@ -1,5 +1,10 @@
 # 指引
 
+使用组件库前备知识点：<br/>
+[Typescript](https://www.tslang.cn/index.html) <br/>
+[Vue3](https://vue3js.cn/docs/zh/) <br/>
+[Element-plus](https://element-plus.gitee.io/#/zh-CN/component/installation)
+
 ## 理念
 
 该组件库是在 Element-plus 的基础上进行二次封装的，组件库的核心思想包括：
@@ -40,8 +45,8 @@ import 'jn-ve-global/style.css'
 
 const app = createApp(App)
 app
-  .use(GlobalComponents)
-  .mount('#app')
+    .use(GlobalComponents)
+    .mount('#app')
 ```
 
 ## 使用

@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import '@/assets/styles/index.scss'
-import '@/utils/rem'
+// import '@/utils/rem'
 import '@/assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
 import ElementPlus from 'element-plus'
