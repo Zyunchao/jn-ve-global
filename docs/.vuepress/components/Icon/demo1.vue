@@ -3,6 +3,7 @@
         <g-icon icon="caiwuriqi" />
         <g-icon icon="home-card-warning-icon" />
         <g-icon icon="dongtaikouling" />
+        <GIcon icon="org" />
     </div>
 </template>
 

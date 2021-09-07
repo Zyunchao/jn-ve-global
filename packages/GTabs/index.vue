@@ -10,12 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-
-export interface TabPaneProps {
-    label: string
-    value: string | number
-    disabled?: boolean
-}
+import { TabPaneProps } from './index'
 
 export default defineComponent({
     name: 'GTabs',

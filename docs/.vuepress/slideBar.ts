@@ -1,5 +1,9 @@
 export default [
     {
+        text: '指引',
+        link: '/modules/guide'
+    },
+    {
         text: '控制组件',
         children: [
             { text: 'Form', link: '/modules/Form' },
