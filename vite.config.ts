@@ -53,7 +53,8 @@ export default defineConfig({
         alias: {
             '@': resolve(__dirname, 'examples'),
             '@views': resolve(__dirname, 'examples/views'),
-            '@component': resolve(__dirname, 'packages')
+            '@component': resolve(__dirname, 'packages'),
+            '@assets': resolve(__dirname, 'examples/assets')
         }
     },
 

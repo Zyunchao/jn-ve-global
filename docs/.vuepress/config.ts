@@ -20,7 +20,7 @@ export default defineUserConfig<DefaultThemeOptions>({
 
     // 定义路径别名
     alias: {
-        '@': path.resolve(__dirname, '../../'),
+        '@': path.resolve(__dirname, '../../examples'),
         '@component': path.resolve(__dirname, '../../packages'),
         '@examples': path.resolve(__dirname, '../../examples'),
         '@assets': path.resolve(__dirname, '../../examples/assets'),

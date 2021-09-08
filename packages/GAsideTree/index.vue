@@ -244,15 +244,15 @@ $--base-padding-lr: 14px;
                     }
 
                     &.default-tree-node {
-                        background-image: url(@/assets/icons/svg/arrow-right.svg);
+                        background-image: url(@assets/icons/svg/arrow-right.svg);
                     }
 
                     &.mode-tree-node {
-                        background-image: url(@/assets/icons/svg/tree-sub.svg);
+                        background-image: url(@assets/icons/svg/tree-sub.svg);
 
                         &.expanded {
                             transform: none;
-                            background-image: url(@/assets/icons/svg/tree-add.svg);
+                            background-image: url(@assets/icons/svg/tree-add.svg);
                         }
                     }
                 }
