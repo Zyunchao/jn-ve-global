@@ -10,6 +10,9 @@ export interface BtnProps {
      * 授权标识
      */
     authCode?: string
+    /**
+     * 按钮的类型，同 Element Button
+     */
     type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
     /**
      * 禁用

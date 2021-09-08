@@ -20,6 +20,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/icon-test',
         component: () => import('@/views/iconTest/index.vue')
+    },
+    {
+        path: '/aside-tree-test',
+        component: () => import('@/views/asideTreeTest/index.vue')
     }
 ]
 

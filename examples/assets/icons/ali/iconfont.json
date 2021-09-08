@@ -6,6 +6,20 @@
   "description": "统一管理平台",
   "glyphs": [
     {
+      "icon_id": "18175778",
+      "name": "减号,展开,删除",
+      "font_class": "checkbox-minus",
+      "unicode": "ea6d",
+      "unicode_decimal": 60013
+    },
+    {
+      "icon_id": "18175783",
+      "name": "加号,收起,添加",
+      "font_class": "checkbox-plus",
+      "unicode": "ea6e",
+      "unicode_decimal": 60014
+    },
+    {
       "icon_id": "792491",
       "name": "box2-箱子",
       "font_class": "box2xiangzi",
