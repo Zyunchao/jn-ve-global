@@ -75,7 +75,7 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 
 <template #code>
 
-@[code](@demoroot/Form/demo1.vue)
+@[code vue{23-246}](@demoroot/Form/demo1.vue)
 
 </template>
 
@@ -110,7 +110,7 @@ Form 组件内部 item 的生成时，依赖 formItem 的 `prop` 属性，且与
 
 <template #code>
 
-@[code](@demoroot/Form/demo2.vue)
+@[code vue{54-76}](@demoroot/Form/demo2.vue)
 
 </template>
 
@@ -172,7 +172,7 @@ interface ExtendRuleItem extends RuleItem {
 }
 ```
 
-#### 添加给 FormItem
+#### 添加给 FormItem.rules
 
 <demo-block>
 
@@ -180,13 +180,13 @@ interface ExtendRuleItem extends RuleItem {
 
 <template #code>
 
-@[code](@demoroot/Form/demo3.vue)
+@[code vue{32}](@demoroot/Form/demo3.vue)
 
 </template>
 
 </demo-block>
 
-#### 添加 Form.rules
+#### 添加给 Form.rules
 
 <demo-block>
 
@@ -194,7 +194,7 @@ interface ExtendRuleItem extends RuleItem {
 
 <template #code>
 
-@[code](@demoroot/Form/demo4.vue)
+@[code vue{27-38}](@demoroot/Form/demo4.vue)
 
 </template>
 
@@ -206,7 +206,7 @@ interface ExtendRuleItem extends RuleItem {
 
 ### Form Attributes
 
-一层配置：**FormProps**
+一层配置：interface **FormProps**
 
 除去扩展字段，请参考 [Element Form Attributes](https://element-plus.gitee.io/#/zh-CN/component/form#form-attributes)
 
@@ -221,7 +221,7 @@ colon | 表示是否显示 label 后面的冒号| boolean | true
 
 ### Form-Item Attributes
 
-二层配置：**FormItemProps**
+二层配置：interface **FormItemProps**
 
 除去扩展字段，请参考 [Element Form-Item Attributes](https://element-plus.gitee.io/#/zh-CN/component/form#form-item-attributes)
 
@@ -236,7 +236,7 @@ class | 当前 formItem 的 className | string | --
 
 ### ControlConfig
 
-三层配置：**ControlConfig**
+三层配置：interface **ControlConfig**
 
 请参考源码各控件的 `ControlConfig interface` + 各控件文档
 

@@ -17,9 +17,6 @@ import GlobalComponent from '@component/register'
 // 本地 svg 图标
 import 'virtual:svg-icons-register'
 
-// 页面样式
-import './style.scss'
-
 export default ({ app, router, siteData }) => {
     app.use(ElementPlus, { locale })
     app.use(GlobalComponent)

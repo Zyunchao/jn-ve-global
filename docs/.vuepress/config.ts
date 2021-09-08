@@ -21,10 +21,10 @@ export default defineUserConfig<DefaultThemeOptions>({
     // 定义路径别名
     alias: {
         '@': path.resolve(__dirname, '../../'),
-        '@component': '@/packages',
-        '@examples': '@/examples',
-        '@assets': '@/examples/assets',
-        '@mdroot': '../modules'
+        '@component': path.resolve(__dirname, '../../packages'),
+        '@examples': path.resolve(__dirname, '../../examples'),
+        '@assets': path.resolve(__dirname, '../../examples/assets'),
+        '@mdroot': path.resolve(__dirname, '../modules')
     },
 
     // 打包工具：网站的开发和构建

@@ -28,3 +28,17 @@
 </template>
 
 </demo-block>
+
+## GTabs Attributes
+
+当前组件上的所有 attrs，都会通过 `v-bind="$attrs"` 传递到 `<el-tabs>` 内部，故可直接参考 [Element Tabs Attributes](https://element-plus.gitee.io/#/zh-CN/component/tabs#tabs-attributes)
+
+## Tab-pane Attributes
+
+interface **TabPaneProps**
+
+参数 | 说明 | 类型 | 默认值
+-----|-----|-----|-----
+label | 显示值 | string | --
+value | 绑定值 | string | --
+disabled | 禁用 | boolean | --

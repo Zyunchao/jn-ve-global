@@ -54,6 +54,27 @@
 main.page {
     .theme-default-content {
         >table {
+            border-collapse: collapse;
+            margin: 1rem 0;
+            display: block;
+            overflow-x: auto;
+
+            tr {
+                border-top: 1px solid var(--c-border-dark);
+            }
+
+            tr:nth-child(2n) {
+                background-color: var(--c-bg-light);
+            }
+
+            th,
+            td {
+                border: 1px solid var(--c-border-dark);
+                padding: 0.6em 1em;
+            }
+        }
+
+        >table {
             width: 100%;
             display: table;
 
@@ -86,4 +107,49 @@ main.page {
             }
         }
     }
+}
+
+
+// 覆盖 vuepress 对 table 做的样式修改
+table {
+    border-collapse: initial;
+    margin: initial;
+    display: table;
+    // overflow-x: initial;
+    overflow: auto;
+}
+
+tr {
+    border-top: initial;
+}
+
+tr:nth-child(2n) {
+    background-color: initial;
+}
+
+th,
+td {
+    border: initial;
+    padding: initial;
+}
+
+/*修改滚动条样式*/
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e8e8e8;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a5a3a3;
+    cursor: pointer;
 }
