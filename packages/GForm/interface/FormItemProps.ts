@@ -7,10 +7,10 @@ import {
     RadioControlConfig,
     RadioButtonControlConfig,
     SwitchControlConfig,
-    TimePickerCotrolConfig,
-    TimeSelectCotrolConfig,
-    DatePickerCotrolConfig,
-    DateTimePickerCotrolConfig,
+    TimePickerControlConfig,
+    TimeSelectControlConfig,
+    DatePickerControlConfig,
+    DateTimePickerControlConfig,
     CheckboxControlConfig,
     CheckboxButtonControlConfig,
     ColorPickerControlConfig,
@@ -41,10 +41,10 @@ export type ControlConfig =
     | RadioControlConfig
     | RadioButtonControlConfig
     | SwitchControlConfig
-    | TimePickerCotrolConfig
-    | TimeSelectCotrolConfig
-    | DatePickerCotrolConfig
-    | DateTimePickerCotrolConfig
+    | TimePickerControlConfig
+    | TimeSelectControlConfig
+    | DatePickerControlConfig
+    | DateTimePickerControlConfig
     | CheckboxControlConfig
     | CheckboxButtonControlConfig
     | ColorPickerControlConfig

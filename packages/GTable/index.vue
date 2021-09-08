@@ -153,12 +153,12 @@ $--base-border-color: #e8e8e8;
 
     // 表格
     .g-table-main {
+        $--tr-bgc: #fafafa;
+        $--font-color: #575757;
+
         height: calc(100% - #{$--pagination-height});
 
         :deep(.el-table) {
-            $--tr-bgc: #fafafa;
-            $--font-color: #575757;
-
             color: $--font-color;
 
             &::before,
@@ -199,7 +199,7 @@ $--base-border-color: #e8e8e8;
 
             .el-table__fixed-right-patch {
                 background-color: $--tr-bgc;
-                top: 0;
+                top: -1px;
                 border-bottom: 1px solid $--base-border-color;
             }
 
@@ -231,6 +231,18 @@ $--base-border-color: #e8e8e8;
                     }
                 }
             }
+        }
+
+        :deep(.el-table--group) {
+            border: none !important;
+
+            &::after {
+                display: none;
+            }
+        }
+
+        :deep(.el-table__header) {
+            background-color: $--tr-bgc;
         }
     }
 

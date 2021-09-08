@@ -243,22 +243,22 @@ export interface DateTimePickerProps extends BaseProps, RangeProps, DateBaseProp
     cellClassName?: (date: Date) => string
 }
 
-export interface TimePickerCotrolConfig {
+export interface TimePickerControlConfig {
     type: 'timePicker'
     props?: TimePickerProps
 }
 
-export interface TimeSelectCotrolConfig {
+export interface TimeSelectControlConfig {
     type: 'timeSelect'
     props?: TimeSelectProps
 }
 
-export interface DatePickerCotrolConfig {
+export interface DatePickerControlConfig {
     type: 'datePicker'
     props?: DatePickerProps
 }
 
-export interface DateTimePickerCotrolConfig {
+export interface DateTimePickerControlConfig {
     type: 'dateTimePicker'
     props?: DateTimePickerProps
 }
