@@ -22,8 +22,8 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/iconTest/index.vue')
     },
     {
-        path: '/aside-tree-test',
-        component: () => import('@/views/asideTreeTest/index.vue')
+        path: '/tree-test',
+        component: () => import('@/views/treeTest/index.vue')
     }
 ]
 

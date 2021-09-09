@@ -1,7 +1,7 @@
 <template>
     <div class="examples-base-wrapper">
         <div class="demo1">
-            <g-aside-tree
+            <g-tree
                 :data="treeData"
                 :btns="btns"
                 show-checkbox
@@ -11,7 +11,7 @@
         </div>
 
         <div class="demo2">
-            <g-aside-tree :data="treeData" :btns="btns" mode="other" :node-click="nodeClick" />
+            <g-tree :data="treeData" :btns="btns" mode="other" :node-click="nodeClick" />
         </div>
     </div>
 </template>
