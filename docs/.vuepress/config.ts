@@ -12,6 +12,7 @@ export default defineUserConfig<DefaultThemeOptions>({
 
     // 主题配置
     themeConfig: {
+        logo: '/favicon.ico',
         lastUpdated: true,
         lastUpdatedText: '上次更新',
         contributorsText: '贡献者',

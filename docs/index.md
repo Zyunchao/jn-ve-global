@@ -37,6 +37,6 @@ import 'jn-ve-global/style.css'
 
 const app = createApp(App)
 app
-  .use(GlobalComponents)
-  .mount('#app')
+    .use(GlobalComponents)
+    .mount('#app')
 ```
