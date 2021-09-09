@@ -16,3 +16,6 @@ build
 config
 index.html
 src/assets
+!*.vuepress
+*.cache
+*.temp

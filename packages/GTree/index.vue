@@ -76,6 +76,7 @@
 <script lang="ts">
 import { defineComponent, PropType, watch, reactive, toRefs } from 'vue'
 import { BtnProps } from '../index'
+import { TreeData } from '../GSelectTree/index'
 
 export default defineComponent({
     name: 'GAsideTree',
@@ -84,7 +85,7 @@ export default defineComponent({
          * 树数据
          */
         data: {
-            type: Array,
+            type: Array as PropType<TreeData[]>,
             default: () => []
         },
         /**

@@ -1,12 +1,16 @@
 <template>
-    <el-button type="primary" @click="drawerState.show = true">打开 Drawer</el-button>
+    <el-button type="primary" @click="drawerState.show = true">
+        打开 Drawer
+    </el-button>
     <el-drawer v-model="drawerState.show" :title="DrawerTitle[drawerState.type]" destroy-on-close>
         <GBaseDrawerContent>
             <g-form :config="infoFormConfig" />
 
             <template #footer>
                 <el-button> 重置 </el-button>
-                <el-button type="primary"> 保存 </el-button>
+                <el-button type="primary">
+                    保存
+                </el-button>
             </template>
         </GBaseDrawerContent>
     </el-drawer>
@@ -14,7 +18,7 @@
 
 <script lang="ts">
 export default {
-    name: 'BaseDrawerContent-demo1'
+    name: 'BaseDrawerContentDemo1'
 }
 </script>
 

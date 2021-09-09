@@ -3,8 +3,8 @@
         <div class="component-wrapper">
             <slot />
         </div>
-        <div :class="['source-wrapper', { expanded: expanded }]" ref="sourceWrapperRef">
-            <slot name="code"></slot>
+        <div ref="sourceWrapperRef" :class="['source-wrapper', { expanded: expanded }]">
+            <slot name="code" />
         </div>
         <div class="open-handle-wrapper" @click="handleChanleExpanded">
             <i :class="['el-icon-caret-bottom', { expanded: expanded }]" />

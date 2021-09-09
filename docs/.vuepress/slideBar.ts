@@ -8,7 +8,7 @@ export default [
         children: [
             { text: 'Form', link: '/modules/Form' },
             { text: 'Tabs', link: '/modules/Tabs' },
-            { text: 'SelectTree', link: '/modules/SelectTree' },
+            { text: 'SelectTree', link: '/modules/SelectTree' }
         ]
     },
     {
@@ -22,7 +22,8 @@ export default [
         text: '展示组件',
         children: [
             { text: 'Icon', link: '/modules/Icon' },
-            { text: 'Table', link: '/modules/Table' }
+            { text: 'Table', link: '/modules/Table' },
+            { text: 'Tree', link: '/modules/Tree' }
         ]
     }
 ]

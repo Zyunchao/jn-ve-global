@@ -2,15 +2,21 @@
     <g-tabs v-model="activeName" :list="tabList" />
 
     <div class="content-wrapper">
-        <div class="item" v-if="[TabVal.BASE_INFO].includes(activeName)">基本信息内容</div>
-        <div class="item" v-if="[TabVal.USER_INFO].includes(activeName)">用户信息内容</div>
-        <div class="item" v-if="[TabVal.ROLE_INFO].includes(activeName)">角色信息内容</div>
+        <div v-if="[TabVal.BASE_INFO].includes(activeName)" class="item">
+            基本信息内容
+        </div>
+        <div v-if="[TabVal.USER_INFO].includes(activeName)" class="item">
+            用户信息内容
+        </div>
+        <div v-if="[TabVal.ROLE_INFO].includes(activeName)" class="item">
+            角色信息内容
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 export default {
-    name: 'tabs-demo1'
+    name: 'TabsDemo1'
 }
 </script>
 

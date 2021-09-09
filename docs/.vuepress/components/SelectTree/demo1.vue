@@ -3,14 +3,14 @@
         v-model="activeData"
         :tree-data="treeData"
         placeholder="请选择"
-        everyChoose
+        every-choose
         style="width: 400px"
     />
 </template>
 
 <script lang="ts">
 export default {
-    name: 'SelectTree-demo1'
+    name: 'SelectTreeDemo1'
 }
 </script>
 

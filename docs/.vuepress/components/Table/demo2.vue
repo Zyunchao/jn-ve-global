@@ -1,12 +1,12 @@
 <template>
     <div class="table-demo1">
-        <g-table :config="tableConfig"></g-table>
+        <g-table :config="tableConfig" />
     </div>
 </template>
 
 <script lang="tsx">
 export default {
-    name: 'table-demo2'
+    name: 'TableDemo2'
 }
 </script>
 

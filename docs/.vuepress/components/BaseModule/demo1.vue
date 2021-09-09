@@ -1,7 +1,7 @@
 <template>
     <div class="base-module-demo1">
         <GBaseModule
-            searchBtnHorizontal
+            search-btn-horizontal
             :search-form-props="searchFormProps"
             :load-table-methods="loadTable"
             :btns="btns"

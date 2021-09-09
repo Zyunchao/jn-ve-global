@@ -4,14 +4,14 @@
         :tree-data="treeData"
         multiple
         placeholder="请选择"
-        everyChoose
+        every-choose
         style="width: 400px"
     />
 </template>
 
 <script lang="ts">
 export default {
-    name: 'SelectTree-demo2'
+    name: 'SelectTreeDemo2'
 }
 </script>
 
