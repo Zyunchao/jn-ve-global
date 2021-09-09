@@ -57,7 +57,7 @@ onMounted(() => {
 
     // 代码区域
     .source-wrapper {
-        transition: 0.2s;
+        transition: 0.3s;
         overflow: hidden;
         height: 0;
 
