@@ -4,7 +4,7 @@ import '@assets/styles/index.scss'
 import '@assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
 import ElementPlus from 'element-plus'
-import 'element-plus/lib/theme-chalk/index.css'
+import 'element-plus/dist/index.css'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 import Router from '@/router'
 

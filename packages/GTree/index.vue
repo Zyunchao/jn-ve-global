@@ -79,7 +79,7 @@ import { BtnProps } from '../index'
 import { TreeData } from '../GSelectTree/index'
 
 export default defineComponent({
-    name: 'GAsideTree',
+    name: 'GTree',
     props: {
         /**
          * 树数据

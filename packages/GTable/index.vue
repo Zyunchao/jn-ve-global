@@ -325,7 +325,7 @@ $--base-border-color: #e8e8e8;
 
                 .el-input {
                     height: 100%;
-                    margin-top: -1px;
+                    // margin-top: -1px;
                 }
             }
 

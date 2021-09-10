@@ -56,5 +56,8 @@ export default defineUserConfig<DefaultThemeOptions>({
             handleImportPath: (str) =>
                 str.replace(/^@demoroot/, path.resolve(__dirname, 'components'))
         }
-    }
+    },
+
+    host: 'localhost',
+    port: 3067
 })
