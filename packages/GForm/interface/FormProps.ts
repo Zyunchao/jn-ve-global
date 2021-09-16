@@ -1,5 +1,4 @@
 import { FieldErrorList, RuleItem } from 'async-validator'
-import { ValidateFieldCallback } from 'element-plus/lib/el-form'
 import FormItemProps from './FormItemProps'
 
 interface Callback {
@@ -14,7 +13,10 @@ export interface FormInstance {
     validate: (callback?: Callback) => Promise<boolean>
     resetFields: () => void
     clearValidate: (props?: string | string[]) => void
-    validateField: (props: string | string[], cb: ValidateFieldCallback) => void
+    validateField: (
+        props: string | string[],
+        cb: (isValid?: string, invalidFields?: FieldErrorList) => void
+    ) => void
     [k: string]: unknown
 }
 

@@ -25,25 +25,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+export default {
+    name: 'TableColumn'
+}
+</script>
+
+<script lang="ts" setup>
+import { PropType, ref, computed, isProxy, onBeforeMount } from 'vue'
 import { TableColumnProps } from './index'
 import { getColumnProps } from './utils'
 import FunctionalComponent from '../FunctionalComponent'
 
-export default defineComponent({
-    name: 'TableColumn',
-    components: {
-        FunctionalComponent
-    },
-    props: {
-        columnConfig: {
-            type: Object as PropType<TableColumnProps>,
-            required: true,
-            default: null
-        }
-    },
-    setup: (props) => ({ columnProps: getColumnProps(props.columnConfig) })
+const props = defineProps({
+    columnConfig: {
+        type: Object as PropType<TableColumnProps>,
+        required: true,
+        default: null
+    }
 })
+
+const columnProps = getColumnProps(props.columnConfig)
 </script>
 
 <style lang="scss" scoped></style>
