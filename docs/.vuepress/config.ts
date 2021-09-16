@@ -1,7 +1,8 @@
 import { defineUserConfig } from 'vuepress'
 import type { DefaultThemeOptions } from 'vuepress'
 import viteSvgIcons from 'vite-plugin-svg-icons'
-import sidebar from './slideBar'
+import sidebar from './slidebar'
+import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 const path = require('path')
 
@@ -16,7 +17,8 @@ export default defineUserConfig<DefaultThemeOptions>({
         lastUpdated: true,
         lastUpdatedText: '上次更新',
         contributorsText: '贡献者',
-        sidebar
+        sidebar,
+        navbar
     },
 
     // 定义路径别名

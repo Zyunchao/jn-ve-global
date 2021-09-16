@@ -157,18 +157,28 @@ watch(
          */
 
         if (localInstance.value) {
-            rows.forEach((row) => {
-                if (!localSelectedRows.value.some((item) => item === row)) {
-                    localInstance.value.toggleRowSelection(row, true)
-                }
-            })
-        } else {
-            nextTick(() => {
+            if (rows.length > 0) {
                 rows.forEach((row) => {
                     if (!localSelectedRows.value.some((item) => item === row)) {
                         localInstance.value.toggleRowSelection(row, true)
                     }
                 })
+            } else {
+                localInstance.value.clearSelection()
+                localSelectedRows.value = []
+            }
+        } else {
+            nextTick(() => {
+                if (rows.length > 0) {
+                    rows.forEach((row) => {
+                        if (!localSelectedRows.value.some((item) => item === row)) {
+                            localInstance.value.toggleRowSelection(row, true)
+                        }
+                    })
+                } else {
+                    localInstance.value.clearSelection()
+                    localSelectedRows.value = []
+                }
             })
         }
     },

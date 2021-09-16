@@ -60,6 +60,24 @@
 
 </demo-block>
 
+### 多选
+
+多选功能可一键开启 `config.showSelection = true` ，摒弃 Element 的添加一列 column 的配置（内部依旧通过 添加 type 为 `selection` 的 column 实现）<br/>
+便捷获取已选数组 `config.selectedRows = []` <br/>
+可维护多选状态，跨页多选，主动设置多选
+
+<demo-block>
+
+<Table-demo4 />
+
+<template #code>
+
+@[code vue{50-54}](@demoroot/Table/demo4.vue)
+
+</template>
+
+</demo-block>
+
 ### 更多示例
 
 请参考 [Element Table](https://element-plus.gitee.io/#/zh-CN/component/table)
@@ -78,6 +96,8 @@
 columns | 列的配置 | TableColumnProps[] | []
 instance | 表格实例，用来调用表格的方法 | [TableInstance](https://element-plus.gitee.io/#/zh-CN/component/table#table-methods) \| null | null
 pagination | 分页配置，不包含则无分页 | PaginationProps \| null \| undefined | --
+showSelection | 开启多选 | boolean | --
+selectedRows | 已选列表：获取已选列表 + 维护多选状态，不传递则不维护多选状态 | TBD[] | --
 
 ### Table-column Attributes
 
