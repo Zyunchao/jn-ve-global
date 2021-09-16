@@ -4,7 +4,7 @@ import { TableConfig, TableColumnProps } from './index'
  * @param props TableConfig
  */
 export function getTableProps(props: TableConfig<any>) {
-    const { columns, instance, pagination, ...tableProps } = props
+    const { columns, instance, pagination, showSelection, selectedRows, ...tableProps } = props
 
     return tableProps
 }

@@ -14,6 +14,14 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
      */
     columns: TableColumnProps[]
     /**
+     * 一键开启多选
+     */
+    showSelection?: boolean
+    /**
+     * 已选数组
+     */
+    selectedRows?: TBD[]
+    /**
      * 表格实例，用来调用表格的方法
      */
     instance: TableInstance | null

@@ -1,145 +1,133 @@
 <template>
     <div class="examples-base-wrapper">
-        <g-table :config="tableConfig" />
+        <el-button type="primary" @click="getSelection">
+            获取数据
+        </el-button>
+        <div>
+            <g-table :config="tableConfig" />
+        </div>
     </div>
 </template>
 
 <script lang="tsx">
-import { defineComponent, watch, reactive, ref } from 'vue'
+export default {
+    name: 'TableTest'
+}
+</script>
+
+<script lang="tsx" setup>
+import { watch, reactive, ref } from 'vue'
 import mockData from './data.json'
 import { TableColumnProps, TableConfig } from '@component/index'
 
-export default defineComponent({
-    name: 'TableTest',
-    setup() {
-        const tableColumns: TableColumnProps[] = [
-            {
-                prop: 'instituId',
-                label: '机构编码',
-                align: 'center',
-                width: 120,
-                fixed: 'left'
-            },
-            {
-                prop: 'instituName',
-                label: '机构名称',
-                width: 160
-            },
-            {
-                prop: 'loginName',
-                label: '用户登陆名',
-                width: 210
-            },
-            {
-                prop: 'idNumber',
-                label: '证件号码',
-                width: 380
-            },
-            {
-                prop: 'phone',
-                label: '手机',
-                width: 380
-            },
-            {
-                prop: 'email',
-                label: '邮箱',
-                width: 380
-            },
-            {
-                prop: 'opertion',
-                label: '操作',
-                width: 260,
-                fixed: 'right',
-                render(row) {
-                    return (
-                        <>
-                            <el-button
-                                type='text'
-                                onClick={() =>
-                                    console.log(`%c 编辑 row == `, 'color: #e6a23c;', row)
-                                }>
-                                编辑
-                            </el-button>
-                            <el-button
-                                type='text'
-                                onClick={() =>
-                                    console.log(`%c 密码 row == `, 'color: #e6a23c;', row)
-                                }>
-                                密码
-                            </el-button>
-                            <el-button
-                                type='text'
-                                onClick={() =>
-                                    console.log(`%c 详情 row == `, 'color: #e6a23c;', row)
-                                }>
-                                详情
-                            </el-button>
-                            <el-button
-                                type='text'
-                                onClick={() =>
-                                    console.log(`%c 关联角色 row == `, 'color: #e6a23c;', row)
-                                }>
-                                关联角色
-                            </el-button>
-                            <el-button
-                                type='text'
-                                class='btn-danger'
-                                onClick={() =>
-                                    console.log(`%c 删除 row == `, 'color: #e6a23c;', row)
-                                }>
-                                删除
-                            </el-button>
-                        </>
-                    )
-                }
-            }
-        ]
-
-        const tableConfig = reactive<TableConfig<any>>({
-            instance: null,
-            columns: tableColumns,
-            rowKey: 'id',
-            stripe: true,
-            pagination: {
-                // show: false,
-                pageSize: 10,
-                currentPage: 1,
-                total: 500,
-                onChange: (page, pageSize) => {
-                    console.log(`%c pagination on change === `, 'color: #e6a23c;', page, pageSize)
-                }
-            },
-            data: mockData.records
-        })
-
-        watch(
-            () => tableConfig.instance,
-            (val) => {
-                console.log(`%c tableConfig.instance === `, 'color: #67c23a;', val)
-            }
-        )
-
-        const flag = ref(true)
-
-        const checkout = () => {
-            flag.value = !flag.value
-
-            // if (!flag.value) {
-            //     // tableConfig.columns = tableColumns2
-            //     tableConfig.data = []
-            // } else {
-            //     // tableConfig.columns = tableColumns
-            //     tableConfig.data = mockData.records as UserInfo[]
-            // }
-        }
-
-        return {
-            flag,
-            checkout,
-            tableConfig
+const tableColumns: TableColumnProps[] = [
+    {
+        label: '',
+        type: 'selection'
+    },
+    {
+        prop: 'instituName',
+        label: '机构名称'
+    },
+    {
+        prop: 'postId',
+        label: '职务编码',
+        width: 140
+    },
+    {
+        prop: 'name',
+        label: '职务名称'
+    },
+    {
+        prop: 'createBy',
+        label: '创建者'
+    },
+    {
+        prop: 'createTime',
+        label: '创建时间'
+    },
+    {
+        prop: 'status',
+        label: '状态',
+        width: 160,
+        fixed: 'right'
+    },
+    {
+        prop: 'opertion',
+        label: '操作',
+        width: 200,
+        fixed: 'right',
+        render(row) {
+            return (
+                <>
+                    <el-button type='text'>编辑</el-button>
+                    <el-button type='text'>人员设置</el-button>
+                    <el-button type='text' class='btn-danger'>
+                        删除
+                    </el-button>
+                </>
+            )
         }
     }
+]
+
+const tableConfig = reactive<TableConfig<any>>({
+    instance: null,
+    columns: tableColumns,
+    rowKey: 'id',
+    stripe: true,
+    showSelection: true,
+    selectedRows: [mockData.data1[0], mockData.data1[1], mockData.data1[2]],
+    pagination: {
+        pageSize: 10,
+        currentPage: 1,
+        total: 26,
+        onChange: (page, pageSize) => {
+            tableConfig.data = mockData[`data${page}`]
+        }
+    },
+    data: mockData.data1,
+    onSelectionChange(selection) {
+        // console.log(`%c 外部的 selection === `, 'color: #ff3040;', selection)
+    },
+    onSelect(selection, row) {
+        // console.log(`%c 外部的 select == `, 'color: #ff3040;')
+    },
+    onSelectAll(selection) {
+        // console.log(`%c 外部的 selectAll`, 'color: #ff3040;')
+    }
 })
+
+watch(
+    () => tableConfig.selectedRows,
+    (arr) => {
+        console.log(`%c selectedRows == `, 'color: green;', arr)
+    },
+    {
+        deep: true
+    }
+)
+
+let index = 3
+const getSelection = () => {
+    tableConfig.selectedRows.push(mockData.data1[index++])
+    // console.log(`%c selectedRows == `, 'color: #67c23a;', tableConfig.selectedRows)
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.examples-base-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    > button {
+        width: 200px;
+        margin-bottom: 10px;
+    }
+
+    > div {
+        flex: 1;
+        overflow: hidden;
+    }
+}
+</style>
