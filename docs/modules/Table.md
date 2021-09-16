@@ -62,9 +62,18 @@
 
 ### 多选
 
-多选功能可一键开启 `config.showSelection = true` ，摒弃 Element 的添加一列 column 的配置（内部依旧通过 添加 type 为 `selection` 的 column 实现）<br/>
-便捷获取已选数组 `config.selectedRows = []` <br/>
-可维护多选状态，跨页多选，主动设置多选
+* 多选功能可一键开启 `config.showSelection = true`
+
+:::danger
+在 `1.1.0` 版本之前，多选采用与 Element 相同的配置方式（添加 `type: 'selection'` 的 column），新版本不兼容老的写法，请将项目中的多选表格修改为新版写法
+:::
+
+* 便捷获取已选数组 `config.selectedRows = []` <br/>
+* 可维护多选状态，跨页多选，主动设置多选
+
+:::tip
+如果不配置 `selectedRows` 将被认为不维护勾选数组，勾选行为由用户自由控制
+:::
 
 <demo-block>
 
