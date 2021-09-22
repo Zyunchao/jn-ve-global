@@ -1,5 +1,5 @@
 
-mage: node:latest   # 表示使用有 nodejs 环境的 docker，python等也有其他的 docker。
+#image: node:latest   # 表示使用有 nodejs 环境的 docker，python等也有其他的 docker。
 
 stages:     # 定义阶段顺序
   - build   # 先 build
