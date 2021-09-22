@@ -1,5 +1,5 @@
 
-#image: node:latest   # 表示使用有 nodejs 环境的 docker，python等也有其他的 docker。
+mage: node:latest   # 表示使用有 nodejs 环境的 docker，python等也有其他的 docker。
 
 stages:     # 定义阶段顺序
   - build   # 先 build
@@ -8,8 +8,8 @@ stages:     # 定义阶段顺序
 build:                   # 定义一个 job 叫 build
   stage: build           # 它属于 build 阶段
   script:                # 该 Job 要执行的命令行
-    - npm install       # npm 安装项目依赖
-    - npm run docs:build    # build 项目
+    - npm install        # npm 安装项目依赖
+    - npm run docs:build # build 项目
 
 pages:                   # 定义一个 job 叫 pages，最后一个阶段一定要叫 pages，这样 gitlab-pages 才会开始工作
   stage: deploy          # 他属于 deploy 阶段
@@ -24,4 +24,4 @@ pages:                   # 定义一个 job 叫 pages，最后一个阶段一定
 cache:                   # 定义缓存文件，从一个 job 到另一个 job ，除仓库外的文件都会被删除，然后把缓存文件复制到下一个 job
   paths:                 # 定义缓存文件的路径
     - node_modules       # 这里要缓存 node_modules，在下一次触发 gitlab-ci 时，缓存会被还原，就不用重复安装依赖。
-    - dist   
+    - dist               # 同时把 build 阶段生成的 dist 文件夹也缓存起来，在 deploy 阶段会用到。
