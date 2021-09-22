@@ -8,8 +8,8 @@ stages:     # 定义阶段顺序
 build:                   # 定义一个 job 叫 build
   stage: build           # 它属于 build 阶段
   script:                # 该 Job 要执行的命令行
-    - npm install        # npm 安装项目依赖
-    - npm run build      # build 项目
+    - yarn install       # npm 安装项目依赖
+    - yarn docs:build    # build 项目
 
 pages:                   # 定义一个 job 叫 pages，最后一个阶段一定要叫 pages，这样 gitlab-pages 才会开始工作
   stage: deploy          # 他属于 deploy 阶段
