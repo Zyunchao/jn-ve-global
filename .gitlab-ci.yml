@@ -15,7 +15,7 @@ pages:                   # 定义一个 job 叫 pages，最后一个阶段一定
   stage: deploy          # 他属于 deploy 阶段
   script:                # 该 Job 要执行的命令行
     - rm -rf public      # 删除 public 目录及目录下的文件。
-    - mkdir public && cp -rf dist/* public  # 创建一个 public 目录，并且把 build 结果 dist 下的文件复制到 public
+    - mkdir public && cp -rf cp -rf docs/.vuepress/dist/* public  # 创建一个 public 目录，并且把 build 结果 dist 下的文件复制到 public
   artifacts:             # 定义工件，在 jobs 执行完了后，gitlab-pages 会把工件目录下的文件自动部署到 pages 服务器中
     paths:               # 将项目中的文件夹定义为工件目录
       - public           # 要想部署到 pages 服务器中，这个文件夹必须叫 public ,所以前面一定要把打包结果复制到 public 文件夹
