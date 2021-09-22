@@ -1,27 +1,43 @@
 
 #image: node:latest   # 表示使用有 nodejs 环境的 docker，python等也有其他的 docker。
 
-stages:     # 定义阶段顺序
-  - build   # 先 build
-  - deploy  # 再部署
+#stages:     # 定义阶段顺序
+#  - build   # 先 build
+#  - deploy  # 再部署
 
-build:                   # 定义一个 job 叫 build
-  stage: build           # 它属于 build 阶段
-  script:                # 该 Job 要执行的命令行
-    - npm install        # npm 安装项目依赖
-    - npm run docs:build # build 项目
+#build:                   # 定义一个 job 叫 build
+#  stage: build           # 它属于 build 阶段
+#  script:                # 该 Job 要执行的命令行
+#    - npm install        # npm 安装项目依赖
+#    - npm run docs:build # build 项目
 
-pages:                   # 定义一个 job 叫 pages，最后一个阶段一定要叫 pages，这样 gitlab-pages 才会开始工作
-  stage: deploy          # 他属于 deploy 阶段
-  script:                # 该 Job 要执行的命令行
-    - rm -rf public      # 删除 public 目录及目录下的文件。
-    - mkdir public && cp -rf docs/.vuepress/dist/* public  # 创建一个 public 目录，并且把 build 结果 dist 下的文件复制到 public
-  artifacts:             # 定义工件，在 jobs 执行完了后，gitlab-pages 会把工件目录下的文件自动部署到 pages 服务器中
-    paths:               # 将项目中的文件夹定义为工件目录
-      - public           # 要想部署到 pages 服务器中，这个文件夹必须叫 public ,所以前面一定要把打包结果复制到 public 文件夹
-    expire_in: 30 days   # 工件有效期为 30 天，工件到期不会影响 pages
+#pages:                   # 定义一个 job 叫 pages，最后一个阶段一定要叫 pages，这样 gitlab-pages 才会开始工作
+#  stage: deploy          # 他属于 deploy 阶段
+#  script:                # 该 Job 要执行的命令行
+#    - rm -rf public      # 删除 public 目录及目录下的文件。
+#    - mkdir public && cp -rf docs/.vuepress/dist/* public  # 创建一个 public 目录，并且把 build 结果 dist 下的文件复制到 public
+#  artifacts:             # 定义工件，在 jobs 执行完了后，gitlab-pages 会把工件目录下的文件自动部署到 pages 服务器中
+#    paths:               # 将项目中的文件夹定义为工件目录
+#      - public           # 要想部署到 pages 服务器中，这个文件夹必须叫 public ,所以前面一定要把打包结果复制到 public 文件夹
+#    expire_in: 30 days   # 工件有效期为 30 天，工件到期不会影响 pages
 
-cache:                   # 定义缓存文件，从一个 job 到另一个 job ，除仓库外的文件都会被删除，然后把缓存文件复制到下一个 job
-  paths:                 # 定义缓存文件的路径
-    - node_modules       # 这里要缓存 node_modules，在下一次触发 gitlab-ci 时，缓存会被还原，就不用重复安装依赖。
-    - dist               # 同时把 build 阶段生成的 dist 文件夹也缓存起来，在 deploy 阶段会用到。
+#cache:                   # 定义缓存文件，从一个 job 到另一个 job ，除仓库外的文件都会被删除，然后把缓存文件复制到下一个 job
+#  paths:                 # 定义缓存文件的路径
+#    - node_modules       # 这里要缓存 node_modules，在下一次触发 gitlab-ci 时，缓存会被还原，就不用重复安装依赖。
+#    - dist               # 同时把 build 阶段生成的 dist 文件夹也缓存起来，在 deploy 阶段会用到。
+
+pages:
+ cache:
+   paths:
+   - node_modules/
+
+ script:
+   - npm install # npm install
+   - npm run docs:build # npm run docs:build
+   - rm -fr public
+   - mkdir public && cp -fr docs/.vuepress/dist/* public 
+ artifacts:
+   paths:
+   - public
+ only:
+ - master
