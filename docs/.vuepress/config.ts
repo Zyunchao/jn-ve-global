@@ -10,7 +10,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     title: 'Ve-Global',
     description: '基于 vue3+element-plus+ts 的组件库',
     base: "/", //部署站点的基础路径
-    dest: path.resolve(__dirname,'../../public'),
+    // dest: path.resolve(__dirname,'../../public'),
 
     // 主题配置
     themeConfig: {
