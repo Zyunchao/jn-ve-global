@@ -4,7 +4,15 @@ import { TableConfig, TableColumnProps } from './index'
  * @param props TableConfig
  */
 export function getTableProps(props: TableConfig<any>) {
-    const { columns, instance, pagination, showSelection, selectedRows, ...tableProps } = props
+    const {
+        columns,
+        instance,
+        pagination,
+        showSelection,
+        selectedRows,
+        onCellEdited,
+        ...tableProps
+    } = props
 
     return tableProps
 }
@@ -14,7 +22,7 @@ export function getTableProps(props: TableConfig<any>) {
  * @param props
  */
 export function getColumnProps(props: TableColumnProps) {
-    const { render, children, ...columnProps } = props
+    const { render, children, editable, controlConfig, ...columnProps } = props
 
     return columnProps
 }

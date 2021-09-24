@@ -66,11 +66,12 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { PropType, watch, nextTick, computed, ref, reactive, toRaw } from 'vue'
+import { PropType, watch, nextTick, computed, ref, reactive, toRaw, provide, readonly } from 'vue'
 import { TableConfig, TableMethods as TableInstance } from './index'
 import TableColumn from './TableColumn.vue'
 import { getTableProps } from './utils'
 import LGIcon from '../GIcon/index.vue'
+import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
 
 const props = defineProps({
     config: {
@@ -86,6 +87,11 @@ const refreshLoad = ref(true)
 const tableProps = computed(() => getTableProps(props.config))
 // 本地关联 Config（只读引用）
 const localConfig = computed(() => props.config)
+
+// 提供表格的 onCellEdited 事件
+provide(onCellEditKey, props.config.onCellEdited)
+// 表格实例
+provide(tableInstanceKey, localInstance)
 
 // 监听配置对象的 !"引用"! 更改，重建表格
 watch(
@@ -103,6 +109,10 @@ watch(
     () => localInstance.value,
     (instance) => {
         instance && (localConfig.value.instance = instance)
+        /**
+         * 较少情况下会有布局错乱，使用 ele 提供的方法重新布局
+         */
+        instance.doLayout()
     }
 )
 

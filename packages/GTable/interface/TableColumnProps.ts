@@ -1,5 +1,6 @@
 import { BaseTableDataItem } from '../index'
 import { VNode } from 'vue'
+import TableEditCellControlConfig from './TableEditCellControlConfig'
 
 export default interface TableColumnProps {
     /**
@@ -156,4 +157,12 @@ export default interface TableColumnProps {
      * 多级嵌套表头
      */
     children?: TableColumnProps[]
+    /**
+     * 是否可编辑
+     */
+    editable?: boolean
+    /**
+     * 编辑控件类型
+     */
+    controlConfig?: TableEditCellControlConfig
 }

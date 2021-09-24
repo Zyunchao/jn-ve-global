@@ -26,6 +26,10 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
      */
     instance: TableInstance | null
     /**
+     * 可编辑行编辑完成事件
+     */
+    onCellEdited?: (row: TBD, index?: number | string, field?: string) => void
+    /**
      * 分页
      */
     pagination?: PaginationProps | null

@@ -1,10 +1,20 @@
 <template>
-    <el-table-column v-bind="columnProps">
+    <el-table-column
+        v-bind="columnProps"
+        :class-name="columnConfig.editable ? 'g-table-edit-cell' : ''"
+    >
+        <!-- 
+            1. column 嵌套，多级表头
+            2. 自定义渲染
+            3. 可编辑行
+         -->
         <template
             v-if="
-                (columnConfig.children && columnConfig.children.length > 0) || columnConfig.render
+                (columnConfig.children && columnConfig.children.length > 0) ||
+                    columnConfig.render ||
+                    columnConfig.editable
             "
-            #default="{ row, index }"
+            #default="{ row, $index }"
         >
             <!-- 表头无限嵌套 -->
             <template v-if="columnConfig.children && columnConfig.children.length > 0">
@@ -16,25 +26,31 @@
                 </template>
             </template>
 
+            <!-- 可编辑行 -->
+            <template v-else-if="columnConfig.editable">
+                <TableEditCell :column-config="columnConfig" :data="row" :index="$index" />
+            </template>
+
             <!-- 列的自定义渲染 -->
             <template v-else-if="columnConfig.render">
-                <FunctionalComponent :render="columnConfig.render(row, index)" />
+                <FunctionalComponent :render="columnConfig.render(row, $index)" />
             </template>
         </template>
     </el-table-column>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
 export default {
     name: 'TableColumn'
 }
 </script>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { PropType, ref, computed, isProxy, onBeforeMount } from 'vue'
 import { TableColumnProps } from './index'
 import { getColumnProps } from './utils'
 import FunctionalComponent from '../FunctionalComponent'
+import TableEditCell from './TableEditCell.vue'
 
 const props = defineProps({
     columnConfig: {
