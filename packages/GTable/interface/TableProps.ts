@@ -2,6 +2,7 @@ import { TableEvents } from '../index'
 
 export interface BaseTableDataItem {
     id: string | number
+    edit?: boolean
     [k: string]: any
 }
 

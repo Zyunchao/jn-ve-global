@@ -12,12 +12,18 @@
             <div v-if="cellStatus === CellStatus.TEXT || !columnConfig.controlConfig" class="text">
                 <!-- 普通文本 -->
                 <span v-if="!columnConfig.render">{{ localPropRef }}</span>
+
                 <!-- 自定义渲染 -->
-                <FunctionalComponent v-else :render="columnConfig.render(localData, index)" />
+                <FunctionalComponent
+                    v-else-if="columnConfig.render && !tdIsHidden"
+                    :render="columnConfig.render(localData, index)"
+                />
             </div>
 
             <div
-                v-else-if="columnConfig.controlConfig && cellStatus === CellStatus.CONTROL"
+                v-else-if="
+                    columnConfig.controlConfig && !tdIsHidden && cellStatus === CellStatus.CONTROL
+                "
                 class="control"
                 @dblclick.stop
             >
@@ -48,9 +54,9 @@
                     <el-select
                         v-if="
                             !localControlProps ||
-                                localControlProps.multiple === undefined ||
-                                localControlProps.multiple === false ||
-                                (localControlProps.multiple && Array.isArray(localPropRef))
+                            localControlProps.multiple === undefined ||
+                            localControlProps.multiple === false ||
+                            (localControlProps.multiple && Array.isArray(localPropRef))
                         "
                         v-model="localPropRef"
                         v-bind="localControlProps"
@@ -254,9 +260,9 @@
                     <LGSelectTree
                         v-if="
                             !localControlProps ||
-                                localControlProps.multiple === undefined ||
-                                localControlProps.multiple === false ||
-                                (localControlProps.multiple && Array.isArray(localPropRef))
+                            localControlProps.multiple === undefined ||
+                            localControlProps.multiple === false ||
+                            (localControlProps.multiple && Array.isArray(localPropRef))
                         "
                         v-model="localPropRef"
                         :tree-data="columnConfig.controlConfig.treeData"
@@ -299,7 +305,7 @@ import {
     onBeforeUnmount,
     onUnmounted
 } from 'vue'
-import { TableColumnProps } from './index'
+import { TableColumnProps, BaseTableDataItem } from './index'
 import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
 import FunctionalComponent from '../FunctionalComponent'
 import ResizeObserver from 'resize-observer-polyfill'
@@ -330,7 +336,7 @@ const props = defineProps({
      * row 数据
      */
     data: {
-        type: Object,
+        type: Object as PropType<BaseTableDataItem>,
         default: null
     },
     /**
@@ -339,6 +345,7 @@ const props = defineProps({
     index: [Number, String]
 })
 
+// 组件 ref 引用
 const editCellContentRef = ref<HTMLElement>(null)
 // 动画时间
 const animationTime = ref('200ms')
@@ -349,7 +356,7 @@ const tableInstance = inject(tableInstanceKey)
 // 当前单元格状态
 const cellStatus = ref<CellStatus>(CellStatus.TEXT)
 // 行数据的本地引用
-const localData = computed(() => props.data)
+const localData = computed<BaseTableDataItem>(() => props.data)
 // 行字段的同步引用
 const localPropRef = toRef(localData.value, props.columnConfig.prop)
 // 控件类型
@@ -358,14 +365,37 @@ const localControlType = ref(props.columnConfig.controlConfig?.type)
 const localControlProps = ref(props.columnConfig.controlConfig?.props)
 // ResizeObserver 实例，供取消监听使用
 let ob: ResizeObserver = null
+// 当前组件所处的 td 是否隐藏
+let tdIsHidden = ref<boolean>(false)
+
+watch(
+    () => localData.value.edit,
+    (edit) => {
+        if (edit) {
+            textToControl()
+        } else {
+            cellStatus.value = CellStatus.TEXT
+        }
+    }
+)
 
 /**
  * 同步表格 cell 的高度
  */
 onMounted(() => {
+    if (!editCellContentRef.value) return
+
     /**
-     * 以下情况可能造成 cell 高度产生较大变化
+     * 判断单元格的无意义创建（隐藏的单元格）
      */
+    const tdDom = editCellContentRef.value.parentNode.parentNode as HTMLElement
+    tdIsHidden.value = tdDom.classList.value.includes('is-hidden')
+    if (tdIsHidden.value) return
+
+    // 有效创建为 documnet 绑定 esc 事件
+    document.addEventListener('keyup', cancelEdit)
+
+    // 以下情况可能造成 cell 高度产生较大变化
     if (
         // 多选框
         localControlType.value === 'checkBox' ||
@@ -378,8 +408,6 @@ onMounted(() => {
         (localControlType.value === 'selectTree' &&
             (localControlProps.value as SelectTreeProps)?.multiple)
     ) {
-        if (!editCellContentRef.value) return
-
         // 获取当前控件所处的表格，以判断是哪种表格
         const currentTableDom =
             editCellContentRef.value.parentNode.parentNode.parentNode.parentNode.parentNode
@@ -465,17 +493,20 @@ const textToControl = () => {
 }
 
 const controlToText = () => {
+    if (localData.value.edit) return
     cellStatus.value = CellStatus.TEXT
     triggerCellEdited()
 }
 
 // 便捷触发 cellEdit
 const triggerCellEdited = () => {
-    onCellEdited(localData.value, props.index, props.columnConfig.prop)
+    if (localData.value.edit) return
+    onCellEdited?.(localData.value, props.index, props.columnConfig.prop)
 }
 
 // 延迟从 控件 => 文本（部分控件的子控件收起存在动画延迟，如时间类控件）
 const delayControlToText = () => {
+    if (localData.value.edit) return
     const timeId = setTimeout(() => {
         controlToText()
         clearTimeout(timeId)
@@ -485,18 +516,16 @@ const delayControlToText = () => {
 // 键盘 esc 退出编辑
 function cancelEdit(e: KeyboardEvent) {
     if (e.key !== 'Escape' || cellStatus.value === CellStatus.TEXT) return
+
+    if (localData.value.edit) {
+        localData.value.edit = false
+        return
+    }
+
     if (cellStatus.value === CellStatus.CONTROL) {
         cellStatus.value = CellStatus.TEXT
     }
 }
-
-onBeforeMount(() => {
-    document.addEventListener('keyup', cancelEdit)
-})
-onBeforeUnmount(() => {
-    document.removeEventListener('keyup', cancelEdit)
-    ob && ob.disconnect()
-})
 
 // 校验时间选择类绑定值的格式是否正确
 const datePickerValueVerify = () => {
@@ -526,6 +555,12 @@ const datePickerValueVerify = () => {
     // 未传递 props，校验值是否为 Date
     return localPropRef.value instanceof Date
 }
+
+onBeforeUnmount(() => {
+    if (tdIsHidden.value) return
+    document.removeEventListener('keyup', cancelEdit)
+    ob && ob.disconnect()
+})
 </script>
 
 <style lang="scss" scoped>

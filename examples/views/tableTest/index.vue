@@ -1,11 +1,7 @@
 <template>
+    行内编辑
     <div class="examples-base-wrapper">
-        <el-button type="primary" @click="addSelectData">
-            添加 Select 数据
-        </el-button>
-        <div>
-            <g-table :config="tableConfig" />
-        </div>
+        <g-table :config="tableConfig" />
     </div>
 </template>
 
@@ -22,7 +18,8 @@ import {
     TableColumnProps,
     TableConfig,
     SelectControlConfig,
-    SelectTreeProps
+    SelectTreeProps,
+    BaseTableDataItem
 } from '@component/index'
 import dayjs from 'dayjs'
 import treeData from '../selectTreeTest/data.json'
@@ -324,13 +321,30 @@ const tableColumns = reactive<TableColumnProps[]>([
     {
         prop: 'opertion',
         label: '操作',
-        width: 200,
+        width: 160,
         fixed: 'right',
         render(row) {
             return (
                 <>
-                    <el-button type='text'>编辑</el-button>
-                    <el-button type='text'>人员设置</el-button>
+                    {!row.edit ? (
+                        <el-button
+                            type='text'
+                            onClick={() => {
+                                row.edit = true
+                                console.log(`%c 编辑，数据：`, 'color: #f56c6c;', row)
+                            }}>
+                            编辑
+                        </el-button>
+                    ) : (
+                        <el-button
+                            type='text'
+                            onClick={() => {
+                                row.edit = false
+                                console.log(`%c 保存，数据：`, 'color: #67c23a;', row)
+                            }}>
+                            保存
+                        </el-button>
+                    )}
                     <el-button type='text' class='btn-danger'>
                         删除
                     </el-button>
@@ -340,7 +354,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     }
 ])
 
-const tableConfig = reactive<TableConfig<any>>({
+const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
     instance: null,
     columns: tableColumns,
     rowKey: 'id',
@@ -362,43 +376,18 @@ const tableConfig = reactive<TableConfig<any>>({
 /**
  * 转换数据
  */
-function mapData(source) {
-    return source.map((item) => {
-        return {
+function mapData(source): BaseTableDataItem[] {
+    return source.map((item: BaseTableDataItem) => {
+        const obj: BaseTableDataItem = {
+            edit: false,
             ...item,
             selectMultiple: item.selectMultiple?.split(','),
             checkbox: item.checkbox?.split(','),
             selectTreeMultiple: item.selectTreeMultiple?.split(',')
         }
+        return obj
     })
-}
-
-const addSelectData = () => {
-    const selectOptions = Object.keys(foodsMapping).map((key) => ({
-        label: foodsMapping[key],
-        value: key
-    }))
-
-    ;(
-        tableColumns.find((column) => column.prop === 'select')
-            ?.controlConfig as SelectControlConfig
-    ).options = selectOptions
 }
 </script>
 
-<style lang="scss" scoped>
-.examples-base-wrapper {
-    display: flex;
-    flex-direction: column;
-
-    > button {
-        width: 200px;
-        margin-bottom: 10px;
-    }
-
-    > div {
-        flex: 1;
-        overflow: hidden;
-    }
-}
-</style>
+<style lang="scss" scoped></style>
