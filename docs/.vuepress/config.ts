@@ -10,7 +10,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     lang: 'zh-CN',
     title: 'Ve-Global',
     description: '基于 vue3+element-plus+ts 的组件库',
-    base: "/", //部署站点的基础路径
+    base: "/element-component", //部署站点的基础路径
     // dest: path.resolve(__dirname,'../../public'),
 
     // 主题配置
