@@ -32,8 +32,8 @@ pages:
    - node_modules/
 
  script:
-   - npm install # npm install
-   - npm run docs:build # npm run docs:build
+   - yarn install -g # npm install
+   - yarn docs:build # npm run docs:build
    - rm -fr public
    - mkdir public && cp -fr docs/.vuepress/dist/* public
  artifacts:
