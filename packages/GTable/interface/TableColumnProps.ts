@@ -1,6 +1,7 @@
-import { BaseTableDataItem } from '../index'
 import { VNode } from 'vue'
 import TableEditCellControlConfig from './TableEditCellControlConfig'
+import { BaseTableDataItem } from '../../index'
+import { RuleItem } from 'async-validator'
 
 export default interface TableColumnProps {
     /**
@@ -165,4 +166,8 @@ export default interface TableColumnProps {
      * 编辑控件类型
      */
     controlConfig?: TableEditCellControlConfig
+    /**
+     * 控件验证规则
+     */
+    rules?: RuleItem | RuleItem[]
 }

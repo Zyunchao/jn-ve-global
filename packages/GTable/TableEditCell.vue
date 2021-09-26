@@ -24,7 +24,11 @@
                 v-else-if="
                     columnConfig.controlConfig && !tdIsHidden && cellStatus === CellStatus.CONTROL
                 "
-                class="control"
+                :class="[
+                    'control',
+                    { 'is-required': controlIsRequired && !tdIsHidden },
+                    { 'validate-reject': !validateRes }
+                ]"
                 @dblclick.stop
             >
                 <!-- input 输入框 -->
@@ -39,14 +43,16 @@
 
                 <!-- InputNumber -->
                 <template v-if="localControlType === 'inputNumber'">
-                    <el-input-number
-                        v-model="localPropRef"
-                        size="mini"
-                        v-bind="localControlProps"
-                        style="width: 100%"
-                        @blur="controlToText"
-                        @change="triggerCellEdited"
-                    />
+                    <div class="inputnumber-control-wrapper">
+                        <el-input-number
+                            v-model="localPropRef"
+                            size="mini"
+                            v-bind="localControlProps"
+                        />
+                        <el-button type="text" size="mini" @click="controlToText">
+                            确定
+                        </el-button>
+                    </div>
                 </template>
 
                 <!-- 下拉选择（多选情况特殊） -->
@@ -54,9 +60,9 @@
                     <el-select
                         v-if="
                             !localControlProps ||
-                            localControlProps.multiple === undefined ||
-                            localControlProps.multiple === false ||
-                            (localControlProps.multiple && Array.isArray(localPropRef))
+                                localControlProps.multiple === undefined ||
+                                localControlProps.multiple === false ||
+                                (localControlProps.multiple && Array.isArray(localPropRef))
                         "
                         v-model="localPropRef"
                         v-bind="localControlProps"
@@ -67,7 +73,6 @@
                                 if (!show) delayControlToText()
                             }
                         "
-                        @remove-tag="triggerCellEdited"
                     >
                         <el-option
                             v-for="selectOption in columnConfig.controlConfig.options"
@@ -260,9 +265,9 @@
                     <LGSelectTree
                         v-if="
                             !localControlProps ||
-                            localControlProps.multiple === undefined ||
-                            localControlProps.multiple === false ||
-                            (localControlProps.multiple && Array.isArray(localPropRef))
+                                localControlProps.multiple === undefined ||
+                                localControlProps.multiple === false ||
+                                (localControlProps.multiple && Array.isArray(localPropRef))
                         "
                         v-model="localPropRef"
                         :tree-data="columnConfig.controlConfig.treeData"
@@ -311,6 +316,9 @@ import FunctionalComponent from '../FunctionalComponent'
 import ResizeObserver from 'resize-observer-polyfill'
 import { SelectProps, DatePickerControlConfig, SliderProps, SelectTreeProps } from '../GForm'
 import LGSelectTree from '../GSelectTree/index.vue'
+import Schema, { ErrorList, FieldErrorList, RuleItem } from 'async-validator'
+import { ElMessage } from 'element-plus'
+import _ from 'lodash'
 
 enum CellStatus {
     /**
@@ -345,6 +353,8 @@ const props = defineProps({
     index: [Number, String]
 })
 
+const localCellPropInitValue = Symbol('localCellPropInitValue')
+
 // 组件 ref 引用
 const editCellContentRef = ref<HTMLElement>(null)
 // 动画时间
@@ -359,6 +369,7 @@ const cellStatus = ref<CellStatus>(CellStatus.TEXT)
 const localData = computed<BaseTableDataItem>(() => props.data)
 // 行字段的同步引用
 const localPropRef = toRef(localData.value, props.columnConfig.prop)
+let localPropCopy: any = localCellPropInitValue
 // 控件类型
 const localControlType = ref(props.columnConfig.controlConfig?.type)
 // 控件配置 props
@@ -366,22 +377,46 @@ const localControlProps = ref(props.columnConfig.controlConfig?.props)
 // ResizeObserver 实例，供取消监听使用
 let ob: ResizeObserver = null
 // 当前组件所处的 td 是否隐藏
-let tdIsHidden = ref<boolean>(false)
+const tdIsHidden = ref<boolean>(false)
+// esc 是否触发
+const escTrigger = ref<boolean>(false)
+// 检验器
+let validator: Schema = null
+/**
+ * 校验结果
+ *  成功：正常流程
+ *  失败：组织一切关闭控件的操作
+ */
+let validateRes = ref<boolean>(true)
+// 必填项
+const controlIsRequired = computed<boolean>(() => {
+    if (props.columnConfig.rules) {
+        if (Array.isArray(props.columnConfig.rules)) {
+            return props.columnConfig.rules.some((ruleItem) => ruleItem.required)
+        }
+        return props.columnConfig.rules.required
+    }
+    return false
+})
 
+// 行编辑总控
 watch(
     () => localData.value.edit,
     (edit) => {
         if (edit) {
             textToControl()
         } else {
+            // 校验失败
+            if (!validateRes.value) {
+                localData.value.edit = true
+                return
+            }
+
             cellStatus.value = CellStatus.TEXT
         }
     }
 )
 
-/**
- * 同步表格 cell 的高度
- */
 onMounted(() => {
     if (!editCellContentRef.value) return
 
@@ -392,8 +427,39 @@ onMounted(() => {
     tdIsHidden.value = tdDom.classList.value.includes('is-hidden')
     if (tdIsHidden.value) return
 
+    // 复制当前单元格的值（取消编辑备用）
+    localPropCopy = _.cloneDeep(localPropRef.value)
+
     // 有效创建为 documnet 绑定 esc 事件
     document.addEventListener('keyup', cancelEdit)
+
+    // 添加校验器
+    if (props.columnConfig.rules) {
+        const descriptor = {
+            [props.columnConfig.prop]: props.columnConfig.rules
+        }
+        validator = new Schema(descriptor)
+
+        // 监听数据改变，执行校验
+        watch(
+            () => localPropRef.value,
+            (val) => {
+                validator
+                    .validate(localData.value)
+                    .then((res) => {
+                        validateRes.value = true
+                    })
+                    .catch((errProps: { errors: ErrorList; fields: FieldErrorList }) => {
+                        validateRes.value = false
+
+                        const msg: string = errProps.errors.find((item) => {
+                            return item.field === props.columnConfig.prop
+                        })?.message
+                        ElMessage.error(msg)
+                    })
+            }
+        )
+    }
 
     // 以下情况可能造成 cell 高度产生较大变化
     if (
@@ -493,38 +559,40 @@ const textToControl = () => {
 }
 
 const controlToText = () => {
+    // 校验失败，无意义触发
+    if (!validateRes.value) return
+    // 总控编辑，不需要单独触发
     if (localData.value.edit) return
-    cellStatus.value = CellStatus.TEXT
-    triggerCellEdited()
-}
+    // esc 取消，无效改变
+    if (escTrigger.value) return
 
-// 便捷触发 cellEdit
-const triggerCellEdited = () => {
-    if (localData.value.edit) return
+    cellStatus.value = CellStatus.TEXT
+    localPropCopy = _.cloneDeep(localPropRef.value)
     onCellEdited?.(localData.value, props.index, props.columnConfig.prop)
 }
 
 // 延迟从 控件 => 文本（部分控件的子控件收起存在动画延迟，如时间类控件）
 const delayControlToText = () => {
-    if (localData.value.edit) return
-    const timeId = setTimeout(() => {
-        controlToText()
-        clearTimeout(timeId)
-    }, parseInt(animationTime.value))
+    setTimeout(controlToText, parseInt(animationTime.value))
 }
 
-// 键盘 esc 退出编辑
+// 键盘 esc 退出编辑（优先级最高）
 function cancelEdit(e: KeyboardEvent) {
     if (e.key !== 'Escape' || cellStatus.value === CellStatus.TEXT) return
+    escTrigger.value = true
 
-    if (localData.value.edit) {
-        localData.value.edit = false
-        return
-    }
+    // 初始化单元格数据
+    localPropCopy !== localCellPropInitValue && (localPropRef.value = localPropCopy)
+    // 初始化校验结果
+    validateRes.value = true
+    // 取消总控编辑
+    localData.value.edit = false
+    // 转换为文本模式
+    cellStatus.value = CellStatus.TEXT
 
-    if (cellStatus.value === CellStatus.CONTROL) {
-        cellStatus.value = CellStatus.TEXT
-    }
+    const timeId = setTimeout(() => {
+        escTrigger.value = false
+    }, parseInt(animationTime.value) + 50)
 }
 
 // 校验时间选择类绑定值的格式是否正确
@@ -605,6 +673,43 @@ $--cell-min-height: 29px;
 
     :deep(.control) {
         width: 100%;
+        position: relative;
+
+        &.is-required {
+            &::before {
+                content: '*';
+                color: red;
+                position: absolute;
+                left: -9px;
+                font-size: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        .el-input__inner {
+            transition: border, box-shadow v-bind(animationTime);
+        }
+
+        &.validate-reject {
+            .el-input__inner {
+                border-color: #f56c6c;
+                box-shadow: 0 0 10px rgba(245, 108, 108, 0.6), 0 0 10px rgba(245, 108, 108, 0.6);
+            }
+        }
+
+        .inputnumber-control-wrapper {
+            display: flex;
+            justify-content: space-between;
+
+            .el-input-number {
+                flex: 1;
+            }
+
+            .el-button {
+                margin-left: 4px;
+            }
+        }
 
         // checkbox
         .checkbox-wrapper {

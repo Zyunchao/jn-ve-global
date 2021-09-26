@@ -22,7 +22,7 @@ export function getTableProps(props: TableConfig<any>) {
  * @param props
  */
 export function getColumnProps(props: TableColumnProps) {
-    const { render, children, editable, controlConfig, ...columnProps } = props
+    const { render, children, editable, controlConfig, rules, ...columnProps } = props
 
     return columnProps
 }

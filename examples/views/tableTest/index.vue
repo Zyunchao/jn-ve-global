@@ -62,7 +62,14 @@ const tableColumns = reactive<TableColumnProps[]>([
         align: 'right',
         controlConfig: {
             type: 'input'
-        }
+        },
+        rules: [
+            {
+                required: true,
+                type: 'string',
+                message: '姓名是必填项'
+            }
+        ]
     },
     {
         prop: 'inputNumer',
@@ -70,8 +77,20 @@ const tableColumns = reactive<TableColumnProps[]>([
         width: 160,
         editable: true,
         controlConfig: {
-            type: 'inputNumber'
-        }
+            type: 'inputNumber',
+            props: {
+                min: 0
+            }
+        },
+        rules: [
+            {
+                required: true,
+                type: 'number',
+                min: 0,
+                max: 10,
+                message: '年龄在 0 - 10 之间'
+            }
+        ]
     },
     {
         prop: 'select',
@@ -87,6 +106,16 @@ const tableColumns = reactive<TableColumnProps[]>([
         },
         render(row) {
             return <>{foodsMapping[row.select]}</>
+        },
+        rules: {
+            required: true,
+            validator(rule, val, cb) {
+                if (val === 'noodles' || val === 'coconut') {
+                    return false
+                }
+                return true
+            },
+            message: '食物必选，且不能选择 “龙须面” 和 “椰子”'
         }
     },
     {
