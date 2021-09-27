@@ -6,6 +6,10 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/tableTest/index.vue')
     },
     {
+        path: '/edit-table-test',
+        component: () => import('@/views/tableTest/editDemo.vue')
+    },
+    {
         path: '/baseModule-test',
         component: () => import('@/views/baseModuleTest/index.vue')
     },

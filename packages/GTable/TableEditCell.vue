@@ -556,6 +556,9 @@ onMounted(() => {
 const textToControl = () => {
     if (cellStatus.value === CellStatus.TEXT) {
         cellStatus.value = CellStatus.CONTROL
+        setTimeout(() => {
+            tableInstance.value.doLayout()
+        }, parseInt(animationTime.value) + 50)
     }
 }
 
@@ -591,8 +594,9 @@ function cancelEdit(e: KeyboardEvent) {
     // 转换为文本模式
     cellStatus.value = CellStatus.TEXT
 
-    const timeId = setTimeout(() => {
+    setTimeout(() => {
         escTrigger.value = false
+        tableInstance.value.doLayout()
     }, parseInt(animationTime.value) + 50)
 }
 
