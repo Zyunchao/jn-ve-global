@@ -1,16 +1,19 @@
 <template>
-    <g-table :config="tableConfig" />
+    <div class="table-demo5">
+        <g-table :config="tableConfig" />
+    </div>
 </template>
 
 <script lang="tsx">
 export default {
-    name: 'TableTest'
+    name: 'TableDemo5'
 }
 </script>
 
 <script lang="tsx" setup>
 import { watch, reactive, nextTick, ref } from 'vue'
-import mockData from './editTableData'
+import mockData from './data/editTableData'
+import treeData from './data/treeData.json'
 import {
     TableColumnProps,
     TableConfig,
@@ -19,7 +22,6 @@ import {
     BaseTableDataItem
 } from '@component/index'
 import dayjs from 'dayjs'
-import treeData from '../selectTreeTest/data.json'
 import { findTargetById } from '@/utils/utils'
 
 const foodsMapping = {
@@ -52,25 +54,16 @@ const hobbyMapping = {
 const tableColumns = reactive<TableColumnProps[]>([
     {
         prop: 'input',
-        label: '姓名-Input',
+        label: 'Input',
         width: 160,
-        fixed: 'left',
         editable: true,
-        align: 'right',
         controlConfig: {
             type: 'input'
-        },
-        rules: [
-            {
-                required: true,
-                type: 'string',
-                message: '姓名是必填项'
-            }
-        ]
+        }
     },
     {
         prop: 'inputNumer',
-        label: '年龄-InputNumer',
+        label: 'InputNumer',
         width: 160,
         editable: true,
         controlConfig: {
@@ -78,20 +71,11 @@ const tableColumns = reactive<TableColumnProps[]>([
             props: {
                 min: 0
             }
-        },
-        rules: [
-            {
-                required: true,
-                type: 'number',
-                min: 0,
-                max: 10,
-                message: '年龄在 0 - 10 之间'
-            }
-        ]
+        }
     },
     {
         prop: 'select',
-        label: '食物-Select',
+        label: 'Select',
         width: 200,
         editable: true,
         controlConfig: {
@@ -103,32 +87,22 @@ const tableColumns = reactive<TableColumnProps[]>([
         },
         render(row) {
             return <>{foodsMapping[row.select]}</>
-        },
-        rules: {
-            required: true,
-            validator(rule, val, cb) {
-                if (val === 'noodles' || val === 'coconut') {
-                    return false
-                }
-                return true
-            },
-            message: '食物必选，且不能选择 “龙须面” 和 “椰子”'
         }
     },
     {
         prop: 'selectMultiple',
-        label: '食物多选-Select',
+        label: 'SelectMultiple',
         width: 200,
         editable: true,
         controlConfig: {
             type: 'select',
+            props: {
+                multiple: true
+            },
             options: Object.keys(foodsMapping).map((key) => ({
                 label: foodsMapping[key],
                 value: key
-            })),
-            props: {
-                multiple: true
-            }
+            }))
         },
         render(row) {
             return row.selectMultiple
@@ -140,7 +114,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'radio',
-        label: '性别-Radio',
+        label: 'Radio',
         width: 160,
         editable: true,
         controlConfig: {
@@ -156,7 +130,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'timePicker',
-        label: '现在时间-TimePicker',
+        label: 'TimePicker',
         width: 210,
         editable: true,
         controlConfig: {
@@ -173,7 +147,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'timeSelect',
-        label: '上班时间-TimeSelect',
+        label: 'TimeSelect',
         width: 200,
         editable: true,
         controlConfig: {
@@ -187,7 +161,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'datePicker',
-        label: '生日-DatePicker',
+        label: 'DatePicker',
         width: 220,
         editable: true,
         controlConfig: {
@@ -202,7 +176,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'dateTimePicker',
-        label: '生日-DateTimePicker',
+        label: 'DateTimePicker',
         width: 220,
         editable: true,
         controlConfig: {
@@ -217,7 +191,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'daterange',
-        label: '放假-Daterange',
+        label: 'Daterange',
         width: 260,
         editable: true,
         controlConfig: {
@@ -235,7 +209,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'checkbox',
-        label: '爱好-Checkbox',
+        label: 'Checkbox',
         minWidth: 200,
         editable: true,
         controlConfig: {
@@ -255,7 +229,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'colorPicker',
-        label: '幸运色-ColorPicker',
+        label: 'ColorPicker',
         width: 200,
         editable: true,
         controlConfig: {
@@ -272,7 +246,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'rate',
-        label: '评分-Rate',
+        label: 'Rate',
         width: 160,
         editable: true,
         controlConfig: {
@@ -284,7 +258,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'slider',
-        label: '进度-Slider',
+        label: 'Slider',
         width: 360,
         editable: true,
         controlConfig: {
@@ -311,7 +285,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'selectTree',
-        label: '组织-SelectTree',
+        label: 'SelectTree',
         width: 260,
         editable: true,
         controlConfig: {
@@ -324,7 +298,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     },
     {
         prop: 'selectTreeMultiple',
-        label: '组织-SelectTreeMultiple',
+        label: 'SelectTreeMultiple',
         width: 260,
         editable: true,
         controlConfig: {
@@ -341,40 +315,6 @@ const tableColumns = reactive<TableColumnProps[]>([
                         .map((item) => findTargetById(treeData, item)?.name || item)
                         .join('，')}
                 </span>
-            )
-        }
-    },
-    {
-        prop: 'opertion',
-        label: '操作',
-        width: 160,
-        fixed: 'right',
-        render(row) {
-            return (
-                <>
-                    {!row.edit ? (
-                        <el-button
-                            type='text'
-                            onClick={() => {
-                                row.edit = true
-                                console.log(`%c 编辑，数据：`, 'color: #f56c6c;', row)
-                            }}>
-                            编辑
-                        </el-button>
-                    ) : (
-                        <el-button
-                            type='text'
-                            onClick={() => {
-                                row.edit = false
-                                console.log(`%c 保存，数据：`, 'color: #67c23a;', row)
-                            }}>
-                            保存
-                        </el-button>
-                    )}
-                    <el-button type='text' class='btn-danger'>
-                        删除
-                    </el-button>
-                </>
             )
         }
     }
@@ -405,7 +345,6 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
 function mapData(source): BaseTableDataItem[] {
     return source.map((item: BaseTableDataItem) => {
         const obj: BaseTableDataItem = {
-            edit: false,
             ...item,
             selectMultiple: item.selectMultiple?.split(','),
             checkbox: item.checkbox?.split(','),
@@ -416,4 +355,8 @@ function mapData(source): BaseTableDataItem[] {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.table-demo5 {
+    height: 500px;
+}
+</style>

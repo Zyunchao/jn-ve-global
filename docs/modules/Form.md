@@ -67,7 +67,7 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 * [ColorPicker](https://element-plus.gitee.io/#/zh-CN/component/color-picker)
 * [Rate](https://element-plus.gitee.io/#/zh-CN/component/rate)
 * [Slider](https://element-plus.gitee.io/#/zh-CN/component/slider)
-* [SelectTree](/modules/SelectTree.html)
+* [SelectTree](/element-component/modules/SelectTree.html)
 
 <demo-block>
 

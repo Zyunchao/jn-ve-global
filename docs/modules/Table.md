@@ -8,9 +8,9 @@
 * 定制化样式
 * 集成分页
 
-表格与 [Form](/modules/Form.html#旧) 存在类似的问题，在使用 Element Table 时，要在 `<template>` 中配置多个 `<el-table-column>` 重复的配置及冗长的代码妨碍视觉，使代码可读性变差
+表格与 [Form](/element-component/modules/Form.html#旧) 存在类似的问题，在使用 Element Table 时，要在 `<template>` 中配置多个 `<el-table-column>` 重复的配置及冗长的代码妨碍视觉，使代码可读性变差
 
-当前组件的封装与 [Form](/modules/Form) 理念类似，都是通过配置对象，内部依照规则生成对应的模板，减少开发时 `<template>` 的代码量
+当前组件的封装与 [Form](/element-component/modules/Form) 理念类似，都是通过配置对象，内部依照规则生成对应的模板，减少开发时 `<template>` 的代码量
 
 ## 样例
 
@@ -87,7 +87,165 @@
 
 </demo-block>
 
-### 更多示例
+### 行内编辑
+
+:::danger 在使用行内编辑的时候，内部会涉及到如下性能敏感操作：
+
+* 单元格双击事件绑定
+* 控件频繁创建与销毁
+* 使用定时器
+* 为 `document` 添加 `Escape` 事件
+* `ResizeObserver` 的使用
+
+表格本身就是数据量比较大的控件，如果过度使用行内编辑，将带来较大的性能开销
+
+:::
+
+:::tip 使用行内编辑时，请遵循如下准则：
+如果是不分页表格（数据量过大），请勿使用行内编辑； <br/>
+非修改的字段，请勿定义为“可编辑”； <br/>
+“左右固定（ `fixed: 'left' | 'right'` ）” 的列，应避免定义为 “可编辑”；
+:::
+
+行内编辑的一个核心理念：**对表格数据某一行（dataList 中某一条数据）的操作**；
+
+其实就是将 Form 中的 model 操作换了一个场景操作，本身还是对于后台数据进行操作；
+
+其中包含：
+
+* 字段修改
+* 字段校验
+* 发送数据
+
+行内编辑也是基于各种控件完成的，为了降低使用成本，控件的配置和表单的配置几乎是一致的（表格内控件暂未提供自定义渲染）
+
+已支持的控件包括：
+
+* [Input](https://element-plus.gitee.io/#/zh-CN/component/input)
+* [InputNumber](https://element-plus.gitee.io/#/zh-CN/component/input-number)
+* [Select](https://element-plus.gitee.io/#/zh-CN/component/select)
+* [Radio](https://element-plus.gitee.io/#/zh-CN/component/radio)
+* [TimePicker](https://element-plus.gitee.io/#/zh-CN/component/time-picker)
+* [TimeSelect](https://element-plus.gitee.io/#/zh-CN/component/time-select)
+* [DatePicker](https://element-plus.gitee.io/#/zh-CN/component/date-picker)
+* [DateTimePicker](https://element-plus.gitee.io/#/zh-CN/component/datetime-picker)
+* [Checkbox](https://element-plus.gitee.io/#/zh-CN/component/checkbox)
+* [ColorPicker](https://element-plus.gitee.io/#/zh-CN/component/color-picker)
+* [Rate](https://element-plus.gitee.io/#/zh-CN/component/rate)
+* [Slider](https://element-plus.gitee.io/#/zh-CN/component/slider)
+* [SelectTree](/element-component/modules/SelectTree.html)
+
+#### 单字段编辑
+
+行内编辑拥有两种编辑模式：
+
+* 单字段编辑（鼠标双击单元格`dblclick`）
+* 整行编辑（需要为表格行数据添加额外字段）
+
+:::tip 注意
+在使用可编辑表格定义 Columns 时，如果有需要动态填充数据（如为 Select 填充待选项）的情况，Columns 一定要定义成响应式对象
+:::
+
+基本使用：在 Column 中定义 `editable: true` ，然后配置 `controlConfig` 。
+
+多数情况下，一些字段要展示的值和后台存储的值并不一致，我们多需要进行数据的转换，当前组件我们多使用 `render` 来实现单元格的自定义渲染，
+同样的，“可编辑” 单元格也是支持 `render` 的，详情请参考如下 `Select` 等。
+
+:::tip 控件绑定值注意项
+在 “可编辑单元格” 中，控件将会绑定表格数据中的某一条数据中的某一个字段（ `prop` ），对于普通的以 `string | number` 格式的控件，我们无需做特殊处理。
+
+但有一些（如： `Select多选` ， `CheckBox` ， `timePicker` ）控件在使用时需要绑定特殊格式的字段，所以我们要对表格数据对应的字段做符合控件绑定值格式的处理。
+
+而对于不符合控件需求的字段值，内部将抛出错误，不予创建控件（可参考 `TimePicker` 第一行数据）
+:::
+
+目前已知需要特殊处理字段的控件：
+
+* 多选的 Select：`any[]`
+* TimePicker：`Date`
+* DatePicker
+  + 未传递 valueFormat：`Date`
+  + 传递了 valueFormat：`string`
+* Daterange
+  + 未传递 valueFormat：`Date[]`
+  + 传递了 valueFormat：`string[]`
+* Checkbox：`any[]`
+* 多选的 SelectTree：`any[]`
+* Slider：`number`
+
+:::tip
+按 `esc` 可退出编辑， `esc` 退出编辑拥有最高权限
+:::
+
+<demo-block>
+
+<Table-demo5 />
+
+<template #code>
+
+@[code vue{334-339}](@demoroot/Table/demo5.vue)
+
+</template>
+
+</demo-block>
+
+:::tip
+编辑完成时，组件会向外抛出 `onCellEdited` 事件，在该事件里做后续操作，如：发送修改请求，**字段联动**...
+:::
+
+#### 整行编辑
+
+为表格数据的每一行添加一个 `edit: boolean` 的字段，后续操作这个 edit 字段即可操作整行的 “编辑” 状态
+
+> - true: 编辑
+> - false: 字段展示
+
+表格内操作的优先级： `Escape` > 单元格校验 > 行内编辑 > 单字段编辑
+
+:::tip
+整行编辑时， `onCellEdited` 事件将失效，后续的操作由事件驱动改变为数据模型驱动，即一切操作皆由数据体现
+
+* 发送请求：应在行的 edit 字段为 false （校验失败，将组织整行的控件切换）的前提下进行
+* 字段联动：需要使用 watch 监听具体的字段（监听整个数组，然后获取对应的行及下属字段），然后进行同一条数据不同字段的联动处理
+:::
+
+<demo-block>
+
+<Table-demo6 />
+
+<template #code>
+
+@[code vue{165-168}](@demoroot/Table/demo6.vue)
+
+</template>
+
+</demo-block>
+
+#### 单元格校验
+
+校验功能使用和 Form 相同的校验配置方式，内部使用 [async-validator](https://github.com/yiminghe/async-validator) 实现
+
+单元格校验的优先级仅次于 `esc` ，意味着如果校验不通过，将阻止后续操作，如：切换控件、 `onCellEdited` 的触发、行编辑取消
+
+:::tip
+在使用校验的时候，行编辑在保存数据（完成编辑）时，应该主动判断当前换行数据的 `edit` 是否为 true
+
+组件内部在某一单元格校验不通过是，会将 `row.edit` 重新置为 true，之间有间隙，故需要使用 `nextTick` 去判断其准确的状态值
+:::
+
+<demo-block>
+
+<Table-demo7 />
+
+<template #code>
+
+@[code vue{157-161}](@demoroot/Table/demo7.vue)
+
+</template>
+
+</demo-block>
+
+### 更多功能示例
 
 请参考 [Element Table](https://element-plus.gitee.io/#/zh-CN/component/table)
 
@@ -107,6 +265,7 @@ instance | 表格实例，用来调用表格的方法 | [TableInstance](https://
 pagination | 分页配置，不包含则无分页 | PaginationProps \| null \| undefined | --
 showSelection | 开启多选 | boolean | --
 selectedRows | 已选列表：获取已选列表 + 维护多选状态，不传递则不维护多选状态 | TBD[] | --
+onCellEdited | 编辑完成事件 | (row: TBD, index?: number \| string, field?: string) => void | --
 
 ### Table-column Attributes
 
@@ -119,6 +278,9 @@ selectedRows | 已选列表：获取已选列表 + 维护多选状态，不传�
 -----|-----|-----|-----
 render | 自定义渲染列 | (row?: BaseTableDataItem, index?: number) => JSX. Element \| VNode \| string \| number | --
 children| 多级嵌套表头 | TableColumnProps[] | --
+editable | 启用行编辑 | boolean | --
+controlConfig | 可编辑行控件配置 | TableEditCellControlConfig | --
+rules | 校验配置 | RuleItem \| RuleItem[] | --
 
 ### Pagination Attributes
 

@@ -2,7 +2,7 @@
 
 基础的增删改查模块组件化
 
-基于 [Form](/modules/Form) && [Table](/modules/Table)
+基于 [Form](/element-component/modules/Form) && [Table](/element-component/modules/Table)
 
 在查看当前组件前，最好已经阅读过当前组件库的 Form 和 Table 的文档
 
@@ -30,10 +30,10 @@
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
-searchFormProps | 搜索条件表单配置对象 | [FormProps](/modules/Form.html#form-attributes) | null
-tableColumns | 表格列配置 | [TableColumnProps](/modules/Table.html#table-column-attributes) | []
+searchFormProps | 搜索条件表单配置对象 | [FormProps](/element-component/modules/Form.html#form-attributes) | null
+tableColumns | 表格列配置 | [TableColumnProps](/element-component/modules/Table.html#table-column-attributes) | []
 tableData | 表格数据 | BaseTableDataItem[] | []
-tablePagination | 分页配置 | [PaginationProps](/modules/Table.html#pagination-attributes) | null
+tablePagination | 分页配置 | [PaginationProps](/element-component/modules/Table.html#pagination-attributes) | null
 btns | 按钮组 | BtnProps[] | []
 searchBtnHorizontal | 搜索按钮是否独占一行 | boolean | false
 loadTableMethods | 核心加载 table 数据的方法 | Function | --

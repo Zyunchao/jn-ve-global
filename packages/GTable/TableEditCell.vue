@@ -413,6 +413,7 @@ watch(
             }
 
             cellStatus.value = CellStatus.TEXT
+            localPropCopy = _.cloneDeep(localPropRef.value)
         }
     }
 )
@@ -692,7 +693,8 @@ $--cell-min-height: 29px;
         }
 
         &.validate-reject {
-            .el-input__inner {
+            .el-input__inner,
+            .checkbox-wrapper .el-checkbox-group {
                 border-color: #f56c6c;
                 box-shadow: 0 0 10px rgba(245, 108, 108, 0.6), 0 0 10px rgba(245, 108, 108, 0.6);
             }
