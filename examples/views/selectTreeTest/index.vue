@@ -1,6 +1,6 @@
 <template>
     <div class="examples-base-wrapper">
-        <g-select-tree v-model="avtiveVal" style="width: 400px;" :tree-data="mockData" />
+        <g-select-tree v-model="avtiveVal" style="width: 400px" :tree-data="mockData" />
     </div>
 </template>
 

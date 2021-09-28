@@ -55,8 +55,8 @@
                             <g-icon
                                 v-if="
                                     data.children &&
-                                        data.children.length > 0 &&
-                                        !Array.isArray(node.parent.data)
+                                    data.children.length > 0 &&
+                                    !Array.isArray(node.parent.data)
                                 "
                                 :icon="node.expanded ? 'folder' : 'aside-tree-node-close-icon'"
                             />

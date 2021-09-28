@@ -28,6 +28,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/tree-test',
         component: () => import('@/views/treeTest/index.vue')
+    },
+    {
+        path: '/upload-test',
+        component: () => import('@/views/uploadTest/index.vue')
     }
 ]
 

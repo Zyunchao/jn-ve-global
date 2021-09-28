@@ -24,8 +24,8 @@
                                 ? item.labelWidth
                                     ? item.labelWidth
                                     : localConfig.labelWidth
-                                        ? localConfig.labelWidth
-                                        : 'auto'
+                                    ? localConfig.labelWidth
+                                    : 'auto'
                                 : '0px'
                         "
                     >
@@ -222,6 +222,36 @@
                                     v-bind="item.controlConfig.props"
                                 />
                             </template>
+
+                            <!-- 上传文件 -->
+
+                            <template v-if="item.controlConfig.type === 'upload'">
+                                <el-upload
+                                    v-bind="getUploadProps(item.controlConfig)"
+                                    :on-success="
+                                        (res, file, fileList) => {
+                                            onSuccess(res, file, fileList, item.prop)
+                                        }
+                                    "
+                                    :on-error="
+                                        (err, file, fileList) => {
+                                            onError(err, file, fileList, item.prop)
+                                        }
+                                    "
+                                    :before-upload="
+                                        (file) => {
+                                            beforeUpload(file, item.prop)
+                                        }
+                                    "
+                                    :on-exceed="
+                                        (files, fileList) => {
+                                            onExceed(files, fileList, item.prop)
+                                        }
+                                    "
+                                >
+                                    <el-button size="mini" type="primary">点击上传</el-button>
+                                </el-upload>
+                            </template>
                         </template>
                     </el-form-item>
                 </el-col>
@@ -237,10 +267,12 @@ import {
     FormItemProps,
     FormInstance,
     RadioOptionProps,
-    RadioButtonOptionProps
+    RadioButtonOptionProps,
+    UploadProps
 } from './index'
 import FunctionalComponent from '../FunctionalComponent'
 import LGSelectTree from '../GSelectTree/index.vue'
+import { ElMessage } from 'element-plus'
 
 export default {
     name: 'GForm',
@@ -308,16 +340,16 @@ export default {
 
             // 具体控件的差异配置
             switch (item.controlConfig!.type) {
-            case 'input':
-                controlProps['placeholder'] = controlProps['placeholder']
-                    ? controlProps['placeholder']
-                    : `请输入${item.label}`
-                break
-            case 'select':
-                controlProps['placeholder'] = controlProps['placeholder']
-                    ? controlProps['placeholder']
-                    : `请选择${item.label}`
-                break
+                case 'input':
+                    controlProps['placeholder'] = controlProps['placeholder']
+                        ? controlProps['placeholder']
+                        : `请输入${item.label}`
+                    break
+                case 'select':
+                    controlProps['placeholder'] = controlProps['placeholder']
+                        ? controlProps['placeholder']
+                        : `请选择${item.label}`
+                    break
             }
 
             return controlProps
@@ -329,6 +361,71 @@ export default {
             return props
         }
 
+        // 获取upload控件属性
+        const getUploadProps = (item): UploadProps => {
+            for (const key in item.props) {
+                if (Object.prototype.hasOwnProperty.call(item.props, key)) {
+                    // 以下4个钩子函数已内部封装，不向外暴露
+                    if (
+                        key === 'onSuccess' ||
+                        key === 'onError' ||
+                        key === 'beforeUpload' ||
+                        key === 'onExceed'
+                    ) {
+                        delete item.props[key]
+                    }
+                }
+            }
+            console.log(item.props)
+            return { ...item.props }
+        }
+
+        // 上传文件之前的钩子
+        const beforeUpload = (file, prop): boolean => {
+            let singleSize: number
+            let flag: boolean = true
+            localConfig.value.formItems.forEach((el) => {
+                if (el.prop === prop) {
+                    if (el.controlConfig.props['size']) {
+                        singleSize = el.controlConfig.props['size']
+                        flag = file.size / 1024 / 1024 < el.controlConfig.props['size']
+                    }
+                }
+            })
+            if (!flag) {
+                ElMessage.warning(`单个文件上传大小不能超过 ${singleSize}MB!`)
+                return false
+            }
+            return true
+        }
+
+        // 文件超出个数限制时的钩子
+        const onExceed = (files, fileList, prop): void => {
+            let num
+            localConfig.value.formItems.forEach((el) => {
+                if (el.prop === prop) {
+                    num = el.controlConfig.props['limit']
+                }
+            })
+            ElMessage.warning(
+                `当前限制选择 ${num} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
+                    files.length + fileList.length
+                } 个文件`
+            )
+        }
+
+        // 文件上传成功时的钩子
+        const onSuccess = (res, file, fileList, prop): void => {
+            localConfig.value.model[prop] = res
+            ElMessage.success(`上传成功!`)
+        }
+
+        // 文件上传失败时的钩子
+        const onError = (err, file, fileList, prop): void => {
+            localConfig.value.model[prop] = null
+            ElMessage.warning(`上传失败!`)
+        }
+
         return {
             refreshLoad,
             localConfig,
@@ -337,6 +434,11 @@ export default {
             getFormItemConfigs,
             getItemControlProps,
             getOptionProps,
+            getUploadProps,
+            beforeUpload,
+            onSuccess,
+            onError,
+            onExceed,
             toRef
         }
     }
