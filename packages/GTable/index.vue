@@ -5,6 +5,7 @@
         :class="{
             'hide-pagination': !localConfig.pagination || localConfig.pagination.show === false
         }"
+        @paste.stop="tablePaste"
     >
         <!-- 表格 -->
         <div class="g-table-main">
@@ -67,11 +68,13 @@ export default {
 
 <script lang="ts" setup>
 import { PropType, watch, nextTick, computed, ref, reactive, toRaw, provide, readonly } from 'vue'
-import { TableConfig, TableMethods as TableInstance } from './index'
+import { TableConfig, TableMethods as TableInstance, TableColumnProps } from './index'
 import TableColumn from './TableColumn.vue'
 import { getTableProps } from './utils'
 import LGIcon from '../GIcon/index.vue'
 import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
+import { ElMessage } from 'element-plus'
+import Schema, { ErrorList, FieldErrorList, RuleItem, Rules } from 'async-validator'
 
 const props = defineProps({
     config: {
@@ -267,6 +270,119 @@ const toggleTableRowSelection = () => {
     })
 }
 // *********************↑ 表格多选，跨页多选 ↑**************************************************************************************
+
+// *********************↓ 粘贴 ↓***************************************************************************************************
+const tablePaste = async (e: ClipboardEvent) => {
+    if (!props.config.pastable) return
+    // 粘贴源数据
+    const pasteData = e.clipboardData.getData('Text').trim()
+    // 每一行
+    const rowArr = pasteData.split('\r\n')
+    // 每一行分割列得到粘贴的表格 源数据
+    const tableDataSource = rowArr.map((row) => row.split('\t'))
+    // 表格配置的列
+    const columnProps = props.config.columns
+        .map((column) => column.prop)
+        .filter((prop) => prop && prop !== 'opertion')
+
+    // 数据校验（列数校验）
+    const targetDataLengthIsCorrect = !tableDataSource.some(
+        (row) => row.length !== columnProps.length
+    )
+
+    if (!targetDataLengthIsCorrect) {
+        ElMessage.error('粘贴的数据不符合规则，请核对')
+        return
+    }
+
+    /**
+     * 获取 columns 的
+     *  1. 校验配置
+     *  2. 粘贴数据格式化
+     */
+    const descriptor: Rules = {},
+        pasteValueFormats: {
+            [field: string]: TableColumnProps['pasteValueFormat']
+        } = {}
+
+    // 生成校验器
+    props.config.columns.forEach((column) => {
+        if (!column.prop) return
+        column.rules && (descriptor[column.prop] = column.rules)
+        column.pasteValueFormat && (pasteValueFormats[column.prop] = column.pasteValueFormat)
+    })
+    const validator: Schema = new Schema(descriptor)
+
+    // 调用传递的格式化，格式化源数据
+    const tableDataFormatted = []
+    for (let rowI = 0; rowI < tableDataSource.length; rowI++) {
+        let rowData = {}
+        let rowSource = tableDataSource[rowI]
+
+        // 每一行都需要经过 props 的筛选处理
+        columnProps.forEach((prop, propIndex) => {
+            // 是否包含 “粘贴数据格式化” 方式
+            if (Object.keys(pasteValueFormats).includes(prop)) {
+                /**
+                 * 单元格合并的情况下，前一行和后续行的值应该相同，所以格式化的时候可能会需要到前一行的数据
+                 * 在这里将前一行（已经对应过 prop 的表格数据的某一行）的数据暴露给格式化
+                 */
+                const preField = rowI > 0 ? tableDataFormatted[rowI - 1][prop] : null
+                const currentField = pasteValueFormats[prop](rowSource[propIndex], preField, rowI)
+                rowData[prop] = currentField
+            } else rowData[prop] = rowSource[propIndex]
+        })
+        tableDataFormatted.push(rowData)
+    }
+
+    /**
+     * 过滤符合校验规则的（一般粘贴和可编辑结合使用，可编辑处校验，故返回所有数据）
+     * 校验规则应该是适用于可编辑表格的，所以要在转换数据过后，再进行数据的校验工作
+     */
+    const tableDataValidated = []
+    for (let rowI = 0; rowI < tableDataFormatted.length; rowI++) {
+        const rowData = tableDataFormatted[rowI]
+
+        const res = await validator
+            .validate(rowData)
+            .catch((errProps: { errors: ErrorList; fields: FieldErrorList }) => {
+                return errProps.errors
+            })
+
+        // res 不为空，说明 catch 有返回，校验出错
+        if (!!res) {
+            ElMessage({
+                type: 'error',
+                dangerouslyUseHTMLString: true,
+                message: `<p style="margin-bottom: 6px;">第 ${
+                    rowI + 1
+                } 行校验失败 ------------ </p>${res
+                    .map(
+                        (errInfo) =>
+                            '<p style="margin-bottom: 6px;">' +
+                            '<strong>' +
+                            (props.config.columns.find((column) => column.prop === errInfo.field)
+                                ?.label || errInfo.field) +
+                            '</strong>' +
+                            ': ' +
+                            errInfo.message +
+                            '</p>'
+                    )
+                    .join('')}`,
+                duration: 0,
+                showClose: true
+            })
+
+            // continue
+        }
+
+        tableDataValidated.push(rowData)
+    }
+
+    // 将处理过的数据抛出
+    props.config.onPasted?.(tableDataValidated)
+}
+// *********************↑ 粘贴 ↑***************************************************************************************************
 </script>
 
 <style lang="scss" scoped>

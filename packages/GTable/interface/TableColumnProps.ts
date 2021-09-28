@@ -168,6 +168,17 @@ export default interface TableColumnProps {
     controlConfig?: TableEditCellControlConfig
     /**
      * 控件验证规则
+     * rules 服务于两种情况：
+     *  1. 可编辑表格控件校验
+     *  2. 复制粘贴源数据校验
      */
     rules?: RuleItem | RuleItem[]
+    /**
+     * 粘贴数据的格式化
+     */
+    pasteValueFormat?: (
+        currentField: string | number,
+        preField?: any,
+        index?: number
+    ) => string | number | boolean | Date | any[] | object
 }

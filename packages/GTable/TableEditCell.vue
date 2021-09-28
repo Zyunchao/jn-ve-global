@@ -380,8 +380,6 @@ let ob: ResizeObserver = null
 const tdIsHidden = ref<boolean>(false)
 // esc 是否触发
 const escTrigger = ref<boolean>(false)
-// 检验器
-let validator: Schema = null
 /**
  * 校验结果
  *  成功：正常流程
@@ -439,7 +437,9 @@ onMounted(() => {
         const descriptor = {
             [props.columnConfig.prop]: props.columnConfig.rules
         }
-        validator = new Schema(descriptor)
+
+        // 检验器
+        let validator: Schema = new Schema(descriptor)
 
         // 监听数据改变，执行校验
         watch(
