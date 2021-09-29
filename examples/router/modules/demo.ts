@@ -28,6 +28,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/tree-test',
         component: () => import('@/views/treeTest/index.vue')
+    },
+    {
+        path: '/importExcel-test',
+        component: () => import('@/views/importExcelTest/index.vue')
     }
 ]
 

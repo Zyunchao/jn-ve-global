@@ -17,84 +17,35 @@ import { TableColumnProps, TableConfig } from '@component/index'
 
 const tableColumns = reactive<TableColumnProps[]>([
     {
-        prop: 'instituName',
-        label: '机构名称',
-        rules: [
-            {
-                required: true
-            }
-        ],
-        pasteValueFormat(current, pre) {
-            if (pre && current === '') {
-                return pre
-            }
-
-            return current
-        },
-        editable: true,
-        controlConfig: {
-            type: 'input'
-        }
+        type: 'index',
+        label: ''
     },
     {
-        prop: 'postId',
-        label: '职务编码',
-        width: 140,
-        rules: [
-            {
-                required: true
-            }
-        ],
-        pasteValueFormat(current, pre) {
-            if (pre && current === '') {
-                return pre
-            }
-
-            return current
-        },
-        editable: true,
-        controlConfig: {
-            type: 'input'
-        }
+        prop: 'age',
+        label: '年龄'
     },
     {
         prop: 'name',
-        label: '职务名称',
-        rules: [
-            {
-                required: true,
-                message: '职务名称不能为空'
-            }
-        ],
-        editable: true,
-        controlConfig: {
-            type: 'input'
-        }
-    },
-    {
-        prop: 'createBy',
-        label: '创建者',
-        rules: [
-            {
-                required: true,
-                message: '创建者不能为空'
-            }
-        ],
-        editable: true,
-        controlConfig: {
-            type: 'input'
-        }
+        label: '姓名'
     },
     {
         prop: 'sex',
-        label: '创建时间',
-        pasteValueFormat(current) {
-            return current === '男' ? 'm' : 'f'
-        },
-        editable: true,
-        controlConfig: {
-            type: 'input'
+        label: '性别',
+        excelValueFormat(current, pre) {
+            if (pre && current === '') {
+                return pre
+            }
+
+            return current
         }
+    },
+    {
+        prop: 'height',
+        label: '身高'
+    },
+    {
+        prop: 'hobby',
+        label: '爱好'
     },
     {
         prop: 'opertion',

@@ -176,7 +176,7 @@ export default interface TableColumnProps {
     /**
      * 粘贴数据的格式化
      */
-    pasteValueFormat?: (
+    excelValueFormat?: (
         currentField: string | number,
         preField?: any,
         index?: number

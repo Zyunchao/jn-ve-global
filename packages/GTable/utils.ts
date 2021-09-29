@@ -24,7 +24,7 @@ export function getTableProps(props: TableConfig<any>) {
  * @param props
  */
 export function getColumnProps(props: TableColumnProps) {
-    const { render, children, editable, controlConfig, rules, pasteValueFormat, ...columnProps } =
+    const { render, children, editable, controlConfig, rules, excelValueFormat, ...columnProps } =
         props
 
     return columnProps

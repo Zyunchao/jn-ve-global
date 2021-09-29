@@ -281,57 +281,70 @@ const tablePaste = async (e: ClipboardEvent) => {
     // 每一行分割列得到粘贴的表格 源数据
     const tableDataSource = rowArr.map((row) => row.split('\t'))
     // 表格配置的列
-    const columnProps = props.config.columns
-        .map((column) => column.prop)
-        .filter((prop) => prop && prop !== 'opertion')
-
-    // 数据校验（列数校验）
-    const targetDataLengthIsCorrect = !tableDataSource.some(
-        (row) => row.length !== columnProps.length
+    const localColumns = props.config.columns.filter(
+        (column) => column.prop && column.prop !== 'opertion'
     )
 
-    if (!targetDataLengthIsCorrect) {
+    // 判断表格配置的 label 是否与粘贴得到的 label 一致（顺序无关）
+    const localColumnsLabels = localColumns.map((column) => column.label)
+    const excelFirstRow = tableDataSource[0]
+
+    let disaffinity: boolean = false
+    localColumnsLabels.forEach((label) => {
+        if (!excelFirstRow.includes(label)) {
+            disaffinity = true
+        }
+    })
+
+    if (disaffinity) {
         ElMessage.error('粘贴的数据不符合规则，请核对')
         return
     }
 
-    /**
-     * 获取 columns 的
-     *  1. 校验配置
-     *  2. 粘贴数据格式化
-     */
-    const descriptor: Rules = {},
-        pasteValueFormats: {
-            [field: string]: TableColumnProps['pasteValueFormat']
-        } = {}
+    // 依据 Excel 第一行作为标题，拼装数据
+    const rowsSource = tableDataSource
+        .filter((_, rowI) => rowI > 0)
+        .map((rowSource) => {
+            let sourceRow = {}
+            excelFirstRow.forEach((key, keyI) => {
+                sourceRow[key] = rowSource[keyI]
+            })
 
-    // 生成校验器
-    props.config.columns.forEach((column) => {
-        if (!column.prop) return
+            return sourceRow
+        })
+
+    /**
+     * 获取 columns 配置的 rules
+     */
+    const descriptor: Rules = {}
+    localColumns.forEach((column) => {
         column.rules && (descriptor[column.prop] = column.rules)
-        column.pasteValueFormat && (pasteValueFormats[column.prop] = column.pasteValueFormat)
     })
     const validator: Schema = new Schema(descriptor)
 
-    // 调用传递的格式化，格式化源数据
+    /**
+     * 格式化
+     */
     const tableDataFormatted = []
-    for (let rowI = 0; rowI < tableDataSource.length; rowI++) {
+    for (let rowI = 0; rowI < rowsSource.length; rowI++) {
         let rowData = {}
-        let rowSource = tableDataSource[rowI]
+        let rowSource = rowsSource[rowI]
 
-        // 每一行都需要经过 props 的筛选处理
-        columnProps.forEach((prop, propIndex) => {
-            // 是否包含 “粘贴数据格式化” 方式
-            if (Object.keys(pasteValueFormats).includes(prop)) {
-                /**
-                 * 单元格合并的情况下，前一行和后续行的值应该相同，所以格式化的时候可能会需要到前一行的数据
-                 * 在这里将前一行（已经对应过 prop 的表格数据的某一行）的数据暴露给格式化
-                 */
-                const preField = rowI > 0 ? tableDataFormatted[rowI - 1][prop] : null
-                const currentField = pasteValueFormats[prop](rowSource[propIndex], preField, rowI)
-                rowData[prop] = currentField
-            } else rowData[prop] = rowSource[propIndex]
+        localColumns.forEach((column, columnIndex) => {
+            if (column.excelValueFormat) {
+                const preField = rowI > 0 ? tableDataFormatted[rowI - 1][column.prop] : null
+
+                const currentField = column.excelValueFormat(
+                    rowSource[column.label],
+                    preField,
+                    rowI
+                )
+                rowData[column['prop']] = currentField
+            } else {
+                rowData[column['prop']] = rowSource[column.label]
+            }
         })
+
         tableDataFormatted.push(rowData)
     }
 
