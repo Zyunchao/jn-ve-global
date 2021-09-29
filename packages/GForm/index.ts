@@ -11,6 +11,7 @@ export * from './interface/ColorPickerControlConfig'
 export * from './interface/RateControlConfig'
 export * from './interface/SliderControlConfig'
 export * from './interface/SelectTreeControlConfig'
+export * from './interface/UploadControlConfig'
 
 export { default as FormProps } from './interface/FormProps'
 export { default as FormItemProps } from './interface/FormItemProps'
@@ -22,3 +23,4 @@ export { default as ColorPickerControlConfig } from './interface/ColorPickerCont
 export { default as RateControlConfig } from './interface/RateControlConfig'
 export { default as SliderControlConfig } from './interface/SliderControlConfig'
 export { default as SelectTreeControlConfig } from './interface/SelectTreeControlConfig'
+export { default as UploadControlConfig } from './interface/UploadControlConfig'

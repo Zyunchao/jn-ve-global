@@ -32,6 +32,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/importExcel-test',
         component: () => import('@/views/importExcelTest/index.vue')
+    },
+    {
+        path: '/upload-test',
+        component: () => import('@/views/uploadTest/index.vue')
     }
 ]
 

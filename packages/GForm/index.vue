@@ -38,190 +38,11 @@
 
                         <!-- 配置式控件 -->
                         <template v-else>
-                            <!-- Input -->
-                            <template v-if="item.controlConfig.type === 'input'">
-                                <el-input
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="getItemControlProps(item)"
-                                />
-                            </template>
-
-                            <!-- InputNumber -->
-                            <template v-if="item.controlConfig.type === 'inputNumber'">
-                                <el-input-number
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="getItemControlProps(item)"
-                                />
-                            </template>
-
-                            <!-- Select -->
-                            <template v-if="item.controlConfig.type === 'select'">
-                                <el-select
-                                    v-model="localConfig.model[item.prop]"
-                                    style="width: 100%"
-                                    v-bind="getItemControlProps(item)"
-                                >
-                                    <el-option
-                                        v-for="selectOption in item.controlConfig.options"
-                                        :key="selectOption.value"
-                                        :label="selectOption.label"
-                                        :value="selectOption.value"
-                                        :disabled="selectOption.disabled"
-                                    >
-                                        <!-- 自定义渲染 Select 模板 -->
-                                        <template v-if="item.controlConfig.optionRender">
-                                            <FunctionalComponent
-                                                :render="
-                                                    item.controlConfig.optionRender(selectOption)
-                                                "
-                                            />
-                                        </template>
-                                    </el-option>
-                                </el-select>
-                            </template>
-
-                            <!-- Radio -->
-                            <template
-                                v-if="['radio', 'radioButton'].includes(item.controlConfig.type)"
-                            >
-                                <el-radio-group
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                >
-                                    <!-- radio 样式 -->
-                                    <template v-if="item.controlConfig.type === 'radio'">
-                                        <el-radio
-                                            v-for="radioOption in item.controlConfig.options"
-                                            :key="radioOption.value"
-                                            :label="radioOption.value"
-                                            v-bind="getOptionProps(radioOption)"
-                                        >
-                                            {{ radioOption.label }}
-                                        </el-radio>
-                                    </template>
-
-                                    <!-- 按钮样式 -->
-                                    <template v-if="item.controlConfig.type === 'radioButton'">
-                                        <el-radio-button
-                                            v-for="radioOption in item.controlConfig.options"
-                                            :key="radioOption.value"
-                                            :label="radioOption.value"
-                                            v-bind="getOptionProps(radioOption)"
-                                        >
-                                            {{ radioOption.label }}
-                                        </el-radio-button>
-                                    </template>
-                                </el-radio-group>
-                            </template>
-
-                            <!-- Switch -->
-                            <template v-if="item.controlConfig.type === 'switch'">
-                                <el-switch
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                />
-                            </template>
-
-                            <!-- 选择 时间&日期 类 -->
-                            <template v-if="item.controlConfig.type === 'timePicker'">
-                                <el-time-picker
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                    style="width: 100%"
-                                />
-                            </template>
-
-                            <template v-if="item.controlConfig.type === 'timeSelect'">
-                                <el-time-select
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                    style="width: 100%"
-                                />
-                            </template>
-
-                            <template v-if="item.controlConfig.type === 'datePicker'">
-                                <el-date-picker
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                    style="width: 100%"
-                                />
-                            </template>
-
-                            <template v-if="item.controlConfig.type === 'dateTimePicker'">
-                                <el-date-picker
-                                    v-model="localConfig.model[item.prop]"
-                                    type="datetime"
-                                    v-bind="item.controlConfig.props"
-                                    style="width: 100%"
-                                />
-                            </template>
-
-                            <!-- Checkbox -->
-                            <template
-                                v-if="
-                                    ['checkBox', 'checkBoxButton'].includes(item.controlConfig.type)
-                                "
-                            >
-                                <el-checkbox-group
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                >
-                                    <template v-if="item.controlConfig.type === 'checkBox'">
-                                        <el-checkbox
-                                            v-for="checkBoxOption in item.controlConfig.options"
-                                            :key="checkBoxOption.value"
-                                            :label="checkBoxOption.value"
-                                            v-bind="getOptionProps(checkBoxOption)"
-                                        >
-                                            {{ checkBoxOption.label }}
-                                        </el-checkbox>
-                                    </template>
-
-                                    <template v-if="item.controlConfig.type === 'checkBoxButton'">
-                                        <el-checkbox-button
-                                            v-for="checkBoxOption in item.controlConfig.options"
-                                            :key="checkBoxOption.value"
-                                            :label="checkBoxOption.value"
-                                            v-bind="getOptionProps(checkBoxOption)"
-                                        >
-                                            {{ checkBoxOption.label }}
-                                        </el-checkbox-button>
-                                    </template>
-                                </el-checkbox-group>
-                            </template>
-
-                            <!-- Rate 打分 -->
-                            <template v-if="item.controlConfig.type === 'rate'">
-                                <el-rate
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                />
-                            </template>
-
-                            <!-- Slider 滑块 -->
-                            <template v-if="item.controlConfig.type === 'slider'">
-                                <el-slider
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                />
-                            </template>
-
-                            <!-- ColorPicker 颜色选择器 -->
-                            <template v-if="item.controlConfig.type === 'colorPicker'">
-                                <el-color-picker
-                                    v-model="localConfig.model[item.prop]"
-                                    v-bind="item.controlConfig.props"
-                                />
-                            </template>
-
-                            <!-- 下拉树 -->
-                            <template v-if="item.controlConfig.type === 'selectTree'">
-                                <LGSelectTree
-                                    v-model="localConfig.model[item.prop]"
-                                    :tree-data="item.controlConfig.treeData"
-                                    v-bind="item.controlConfig.props"
-                                />
-                            </template>
+                            <FormItemControl
+                                :form-item-config="item"
+                                :control-config="item.controlConfig"
+                                :prop="toRef(localConfig.model, item.prop)"
+                            />
                         </template>
                     </el-form-item>
                 </el-col>
@@ -229,117 +50,67 @@
         </el-row>
     </el-form>
 </template>
-
 <script lang="ts">
-import { watch, PropType, ref, toRef, nextTick } from 'vue'
-import {
-    FormProps,
-    FormItemProps,
-    FormInstance,
-    RadioOptionProps,
-    RadioButtonOptionProps
-} from './index'
-import FunctionalComponent from '../FunctionalComponent'
-import LGSelectTree from '../GSelectTree/index.vue'
-
 export default {
-    name: 'GForm',
-    components: {
-        FunctionalComponent,
-        LGSelectTree
-    },
-    props: {
-        config: {
-            type: Object as PropType<FormProps>,
-            required: true
-        }
-    },
-    setup(props, { attrs, slots, emit }) {
-        const localInstance = ref<FormInstance | null>(null)
-        const refreshLoad = ref(true)
-        const localConfig = ref<FormProps>(props.config)
+    name: 'GForm'
+}
+</script>
 
-        // 监听 props config 与本地建立关联
-        // 总的来说，props.config 必须是一个 Proxy
-        watch(
-            () => props.config,
-            (config) => {
-                // 配置对象发生变化 RefInstance 需要重建
-                refreshLoad.value = false
-                nextTick(() => {
-                    refreshLoad.value = true
-                })
+<script lang="ts" setup>
+import { watch, PropType, ref, toRef, nextTick } from 'vue'
+import { FormProps, FormItemProps, FormInstance } from './index'
+import FunctionalComponent from '../FunctionalComponent'
+import FormItemControl from './formItemControl.vue'
 
-                localConfig.value = config
-            }
-        )
-
-        // 监听实例的变化，抛出
-        watch(
-            () => localInstance.value,
-            (instance) => {
-                instance && (localConfig.value.instance = instance)
-            }
-        )
-
-        /**
-         * 获取 form 配置（一级配置）
-         * 抛出自定义配置，剩余的即为 elemen-plus 原生配置
-         */
-        const getFormRootConfigs = () => {
-            const { instance, formItems, gutter, colon, ...formConfigs } = localConfig.value
-            return formConfigs
-        }
-
-        // 获取 formItem 的配置（二级配置）
-        const getFormItemConfigs = (item: FormItemProps) => {
-            const { span, controlConfig, render, hide, ...formItemConfigs } = item
-            return formItemConfigs
-        }
-
-        // 获取 控件 的配置（三级配置）
-        const getItemControlProps = (item: FormItemProps) => {
-            // console.log(`%c ${item.label}: props === `, 'color: #e6a23c;', item.controlConfig.props)
-
-            let controlProps = {
-                // placeholder: '',
-                ...item.controlConfig!.props
-            }
-
-            // 具体控件的差异配置
-            switch (item.controlConfig!.type) {
-            case 'input':
-                controlProps['placeholder'] = controlProps['placeholder']
-                    ? controlProps['placeholder']
-                    : `请输入${item.label}`
-                break
-            case 'select':
-                controlProps['placeholder'] = controlProps['placeholder']
-                    ? controlProps['placeholder']
-                    : `请选择${item.label}`
-                break
-            }
-
-            return controlProps
-        }
-
-        // 获取控件的 item 的配置（四级配置）
-        const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) => {
-            const { label, value, ...props } = radioOption
-            return props
-        }
-
-        return {
-            refreshLoad,
-            localConfig,
-            localInstance,
-            getFormRootConfigs,
-            getFormItemConfigs,
-            getItemControlProps,
-            getOptionProps,
-            toRef
-        }
+const props = defineProps({
+    config: {
+        type: Object as PropType<FormProps>,
+        required: true
     }
+})
+
+const localInstance = ref<FormInstance | null>(null)
+const refreshLoad = ref(true)
+const localConfig = ref<FormProps>(props.config)
+
+/**
+ * 监听 props config 与本地建立关联
+ * 总的来说，props.config 必须是一个 Proxy
+ */
+watch(
+    () => props.config,
+    (config) => {
+        // 配置对象发生变化 RefInstance 需要重建
+        refreshLoad.value = false
+        nextTick(() => {
+            refreshLoad.value = true
+        })
+
+        localConfig.value = config
+    }
+)
+
+// 监听实例的变化，抛出
+watch(
+    () => localInstance.value,
+    (instance) => {
+        instance && (localConfig.value.instance = instance)
+    }
+)
+
+/**
+ * 获取 form 配置（一级配置）
+ * 抛出自定义配置，剩余的即为 elemen-plus 原生配置
+ */
+const getFormRootConfigs = () => {
+    const { instance, formItems, gutter, colon, ...formConfigs } = localConfig.value
+    return formConfigs
+}
+
+// 获取 formItem 的配置（二级配置）
+const getFormItemConfigs = (item: FormItemProps) => {
+    const { span, controlConfig, render, hide, ...formItemConfigs } = item
+    return formItemConfigs
 }
 </script>
 

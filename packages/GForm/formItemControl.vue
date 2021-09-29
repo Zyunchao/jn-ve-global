@@ -1,0 +1,298 @@
+<template>
+    <template v-if="controlConfig">
+        <!-- Input -->
+        <template v-if="localControlType === 'input'">
+            <el-input v-model="localPropRef" v-bind="getItemControlProps()" />
+        </template>
+
+        <!-- InputNumber -->
+        <template v-if="localControlType === 'inputNumber'">
+            <el-input-number v-model="localPropRef" v-bind="getItemControlProps()" />
+        </template>
+
+        <!-- Select -->
+        <template v-if="localControlType === 'select'">
+            <el-select v-model="localPropRef" style="width: 100%" v-bind="getItemControlProps()">
+                <el-option
+                    v-for="selectOption in controlConfig.options"
+                    :key="selectOption.value"
+                    :label="selectOption.label"
+                    :value="selectOption.value"
+                    :disabled="selectOption.disabled"
+                >
+                    <!-- 自定义渲染 Select 模板 -->
+                    <template v-if="controlConfig.optionRender">
+                        <FunctionalComponent :render="controlConfig.optionRender(selectOption)" />
+                    </template>
+                </el-option>
+            </el-select>
+        </template>
+
+        <!-- Radio -->
+        <template v-if="['radio', 'radioButton'].includes(localControlType)">
+            <el-radio-group v-model="localPropRef" v-bind="controlConfig.props">
+                <!-- radio 样式 -->
+                <template v-if="localControlType === 'radio'">
+                    <el-radio
+                        v-for="radioOption in controlConfig.options"
+                        :key="radioOption.value"
+                        :label="radioOption.value"
+                        v-bind="getOptionProps(radioOption)"
+                    >
+                        {{ radioOption.label }}
+                    </el-radio>
+                </template>
+
+                <!-- 按钮样式 -->
+                <template v-if="localControlType === 'radioButton'">
+                    <el-radio-button
+                        v-for="radioOption in controlConfig.options"
+                        :key="radioOption.value"
+                        :label="radioOption.value"
+                        v-bind="getOptionProps(radioOption)"
+                    >
+                        {{ radioOption.label }}
+                    </el-radio-button>
+                </template>
+            </el-radio-group>
+        </template>
+
+        <!-- Switch -->
+        <template v-if="localControlType === 'switch'">
+            <el-switch v-model="localPropRef" v-bind="controlConfig.props" />
+        </template>
+
+        <!-- 选择 时间&日期 类 -->
+        <template v-if="localControlType === 'timePicker'">
+            <el-time-picker
+                v-model="localPropRef"
+                v-bind="controlConfig.props"
+                style="width: 100%"
+            />
+        </template>
+
+        <template v-if="localControlType === 'timeSelect'">
+            <el-time-select
+                v-model="localPropRef"
+                v-bind="controlConfig.props"
+                style="width: 100%"
+            />
+        </template>
+
+        <template v-if="localControlType === 'datePicker'">
+            <el-date-picker
+                v-model="localPropRef"
+                v-bind="controlConfig.props"
+                style="width: 100%"
+            />
+        </template>
+
+        <template v-if="localControlType === 'dateTimePicker'">
+            <el-date-picker
+                v-model="localPropRef"
+                type="datetime"
+                v-bind="controlConfig.props"
+                style="width: 100%"
+            />
+        </template>
+
+        <!-- Checkbox -->
+        <template v-if="['checkBox', 'checkBoxButton'].includes(localControlType)">
+            <el-checkbox-group v-model="localPropRef" v-bind="controlConfig.props">
+                <template v-if="localControlType === 'checkBox'">
+                    <el-checkbox
+                        v-for="checkBoxOption in controlConfig.options"
+                        :key="checkBoxOption.value"
+                        :label="checkBoxOption.value"
+                        v-bind="getOptionProps(checkBoxOption)"
+                    >
+                        {{ checkBoxOption.label }}
+                    </el-checkbox>
+                </template>
+
+                <template v-if="localControlType === 'checkBoxButton'">
+                    <el-checkbox-button
+                        v-for="checkBoxOption in controlConfig.options"
+                        :key="checkBoxOption.value"
+                        :label="checkBoxOption.value"
+                        v-bind="getOptionProps(checkBoxOption)"
+                    >
+                        {{ checkBoxOption.label }}
+                    </el-checkbox-button>
+                </template>
+            </el-checkbox-group>
+        </template>
+
+        <!-- Rate 打分 -->
+        <template v-if="localControlType === 'rate'">
+            <el-rate v-model="localPropRef" v-bind="controlConfig.props" />
+        </template>
+
+        <!-- Slider 滑块 -->
+        <template v-if="localControlType === 'slider'">
+            <el-slider v-model="localPropRef" v-bind="controlConfig.props" />
+        </template>
+
+        <!-- ColorPicker 颜色选择器 -->
+        <template v-if="localControlType === 'colorPicker'">
+            <el-color-picker v-model="localPropRef" v-bind="controlConfig.props" />
+        </template>
+
+        <!-- 下拉树 -->
+        <template v-if="localControlType === 'selectTree'">
+            <LGSelectTree
+                v-model="localPropRef"
+                :tree-data="controlConfig.treeData"
+                v-bind="controlConfig.props"
+            />
+        </template>
+
+        <!-- 上传文件 -->
+        <template v-if="localControlType === 'upload'">
+            <el-upload
+                v-bind="getUploadProps(controlConfig.props)"
+                :on-success="onSuccess"
+                :on-error="onError"
+                :before-upload="beforeUpload"
+                :on-exceed="onExceed"
+            >
+                <el-button size="mini" type="primary">
+                    点击上传
+                </el-button>
+            </el-upload>
+        </template>
+    </template>
+</template>
+
+<script lang="ts">
+export default {
+    name: 'FormItemControl'
+}
+</script>
+
+<script lang="ts" setup>
+import { PropType, watch, ref, computed, reactive, toRefs } from 'vue'
+import {
+    FormItemProps,
+    RadioOptionProps,
+    RadioButtonOptionProps,
+    UploadProps,
+    UploadControlConfig,
+    ControlConfig
+} from './index'
+import FunctionalComponent from '../FunctionalComponent'
+import LGSelectTree from '../GSelectTree/index.vue'
+import { ElMessage } from 'element-plus'
+
+const props = defineProps({
+    formItemConfig: {
+        type: Object as PropType<FormItemProps>
+    },
+    controlConfig: {
+        type: Object as PropType<ControlConfig>,
+        required: true,
+        default: null
+    },
+    prop: {
+        type: [String, Number, Boolean, Object, Array],
+        required: true
+    }
+})
+
+const localControlType = computed(() => props.controlConfig.type)
+const localPropRef = ref(props.prop)
+
+// 获取 控件 的配置（三级配置）
+const getItemControlProps = () => {
+    let controlProps = {
+        // placeholder: '',
+        ...props.controlConfig!.props
+    }
+
+    // 具体控件的差异配置
+    switch (props.controlConfig!.type) {
+    case 'input':
+        controlProps['placeholder'] = controlProps['placeholder']
+            ? controlProps['placeholder']
+            : `请输入${props.formItemConfig.label}`
+        break
+    case 'select':
+        controlProps['placeholder'] = controlProps['placeholder']
+            ? controlProps['placeholder']
+            : `请选择${props.formItemConfig.label}`
+        break
+    }
+
+    return controlProps
+}
+
+// 获取控件（Radio、Checkbox）的 item 的配置（四级配置）
+const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) => {
+    const { label, value, ...props } = radioOption
+    return props
+}
+
+// 获取 upload 控件属性 ↓---------------------------------------------------------------------------------------------
+const getUploadProps = (uploadProps: UploadControlConfig['props']): UploadProps => {
+    const { onSuccess, onError, beforeUpload, onExceed, ...props } = uploadProps
+    return props
+}
+
+// 上传文件之前的钩子
+const beforeUpload: UploadProps['beforeUpload'] = (file) => {
+    const controlConfig = props.controlConfig as UploadControlConfig
+    // 用户传递的优先执行
+    if (controlConfig.props.beforeUpload) return controlConfig.props.beforeUpload(file)
+
+    // 文件大小
+    const size: number = controlConfig.props['size']
+    if (size) {
+        if (file.size / 1024 / 1024 > size) {
+            ElMessage.warning(`单个文件上传大小不能超过 ${size}MB!`)
+            return false
+        }
+    }
+
+    return true
+}
+
+// 文件超出个数限制时的钩子
+const onExceed: UploadProps['onExceed'] = (files, fileList) => {
+    const controlConfig = props.controlConfig as UploadControlConfig
+    // 用户传递的优先执行
+    if (controlConfig.props.onExceed) {
+        controlConfig.props.onExceed()
+        return
+    }
+
+    let num = controlConfig.props.limit
+    ElMessage.warning(
+        `当前限制选择 ${num} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
+            files.length + fileList.length
+        } 个文件`
+    )
+}
+
+// 文件上传成功时的钩子（待处理）
+const onSuccess: UploadProps['onSuccess'] = (res, file, fileList) => {
+    localPropRef.value = res
+    ElMessage.success(`上传成功!`)
+
+    // 同时执行用户传递的 onSuccess
+    const controlConfig = props.controlConfig as UploadControlConfig
+    controlConfig.props.onSuccess?.(res, file, fileList)
+}
+
+// 文件上传失败时的钩子
+const onError: UploadProps['onError'] = (err, file, fileList) => {
+    localPropRef.value = ''
+    ElMessage.warning(`上传失败!`)
+
+    // 同时执行用户传递的 onError
+    const controlConfig = props.controlConfig as UploadControlConfig
+    controlConfig.props.onError?.(err, file, fileList)
+}
+// ------------------------------↑ upload ↑----------------------------------------------------------------------------------
+</script>
+
+<style lang="scss" scoped></style>

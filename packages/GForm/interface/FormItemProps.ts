@@ -16,7 +16,8 @@ import {
     ColorPickerControlConfig,
     RateControlConfig,
     SliderControlConfig,
-    SelectTreeControlConfig
+    SelectTreeControlConfig,
+    UploadControlConfig
 } from '../index'
 
 /**
@@ -33,6 +34,7 @@ import {
  * - Slider 滑块
  * - SelectTree 下拉树
  * - iconPicker 图标选择器
+ * - Upload 上传文件
  */
 export type ControlConfig =
     | InputControlConfig
@@ -51,6 +53,7 @@ export type ControlConfig =
     | RateControlConfig
     | SliderControlConfig
     | SelectTreeControlConfig
+    | UploadControlConfig
 
 type FormItemProps =
     | {
