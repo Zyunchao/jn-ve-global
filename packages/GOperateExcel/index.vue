@@ -1,9 +1,18 @@
 <template>
-    <el-button v-if="columnConfig" size="small" type="primary" @click="uploadTrigger.click()">
-        <span>导入Excel</span>
+    <el-button
+        v-if="columnConfig"
+        size="small"
+        type="primary"
+        v-bind="$attrs"
+        @click="handleTriggerBtn"
+    >
+        <slot>{{ mode === 'import' ? '导入Excel' : '下载模板' }}</slot>
+        <LGIcon :icon="mode === 'import' ? 'el-icon-upload2' : 'el-icon-right'" />
     </el-button>
+
+    <!-- 导入 trigger -->
     <input
-        ref="uploadTrigger"
+        ref="uploadTriggerRef"
         style="display: none"
         type="file"
         accept=".xlsx, .xls"
@@ -13,42 +22,65 @@
 
 <script lang="ts">
 export default {
-    name: 'GFilereadr'
+    name: 'GOperateExcel',
+    inheritAttrs: false
 }
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, reactive, PropType } from 'vue'
+import { toRaw, watch, ref, computed, reactive, PropType, useAttrs } from 'vue'
 import { ElMessage } from 'element-plus'
 import * as XLSX from 'xlsx'
 import { TableColumnProps } from '../GTable'
+import LGIcon from '../GIcon/index.vue'
+// import XLSXStyle from 'xlsx-style'
 
 const props = defineProps({
     columnConfig: {
         type: Object as PropType<TableColumnProps[]>,
         required: true,
         default: null
+    },
+    mode: {
+        type: String as PropType<'import' | 'template'>,
+        default: 'import'
+    },
+    fileName: {
+        type: String,
+        default: 'xxx模板.xlsx'
     }
 })
 
 const emits = defineEmits(['getData'])
 
-const uploadTrigger = ref<HTMLElement>(null)
+// 上传 input ref
+const uploadTriggerRef = ref<HTMLElement>(null)
+// 过滤有效列
+const localColumns = computed(() =>
+    props.columnConfig.filter((column) => !['selection', 'index', 'expand'].includes(column.type))
+)
+
+const handleTriggerBtn = () => {
+    if (props.mode === 'import') {
+        uploadTriggerRef.value.click()
+    } else if (props.mode === 'template') {
+        outputTemplate()
+    }
+}
 
 const onUploadChange = (e) => {
-    parse(e.target.files[0])
+    if (e.target.files.length > 0) {
+        parse(e.target.files[0])
+    }
 }
 
 const parse = (file) => {
     if (!props.columnConfig) {
-        ElMessage.warning('为传递 columnConfig')
+        ElMessage.warning('未传递 columnConfig')
         return
     }
 
-    // 过滤有效列
-    const localColumns = props.columnConfig.filter(
-        (column) => !['selection', 'index', 'expand'].includes(column.type)
-    )
+    if (!file) return
 
     // 通过FileReader对象读取文件
     const fileReader = new FileReader()
@@ -56,15 +88,10 @@ const parse = (file) => {
     fileReader.onload = (event) => {
         try {
             const { result } = event.target
-            // 以二进制流方式读取得到整份excel表格对象
             const workbook = XLSX.read(result, { type: 'binary' })
-            // 存储获取到的数据
             let data = []
-            // 遍历每张工作表进行读取（这里默认只读取第一张表）
             for (const sheet in workbook.Sheets) {
-                // esline-disable-next-line
                 if (workbook.Sheets.hasOwnProperty(sheet)) {
-                    // 利用 sheet_to_json 方法将 excel 转成 json 数据
                     data = data.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]))
                     // break; // 如果只取第一张表，就取消注释这行
                 }
@@ -76,7 +103,7 @@ const parse = (file) => {
                 let rowData = {}
                 let rowSource = data[rowI]
 
-                localColumns.forEach((column, columnIndex) => {
+                localColumns.value.forEach((column, columnIndex) => {
                     if (column.excelValueFormat) {
                         const preField = rowI > 0 ? tableDataFormatted[rowI - 1][column.prop] : null
 
@@ -95,12 +122,46 @@ const parse = (file) => {
             }
 
             emits('getData', tableDataFormatted)
+
+            // 重复上传同一个文件
+            ;(uploadTriggerRef.value as any).value = ''
         } catch (e) {
             ElMessage.error('parse error')
         }
     }
     // 以二进制方式打开文件
     fileReader.readAsBinaryString(file)
+}
+
+// 导出模板
+const outputTemplate = () => {
+    const titles = localColumns.value.map((column) => column.label)
+    const ws = XLSX.utils.aoa_to_sheet([titles])
+
+    ws['A1'].s = {
+        //为某个单元格设置单独样式
+        font: {
+            name: '宋体',
+            sz: 24,
+            bold: true,
+            color: { rgb: 'FFFFAA00' }
+        },
+        alignment: { horizontal: 'center', vertical: 'center', wrap_text: true },
+        fill: { bgcolor: { rgb: 'ffff00' } }
+    }
+
+    const tmpWB = {
+        SheetNames: [props.fileName],
+        Sheets: {
+            [props.fileName]: ws
+        }
+    }
+
+    try {
+        XLSX.writeFile(tmpWB, props.fileName)
+    } catch (error) {
+        console.log(`%c export template error:`, 'color: #f56c6c;', error)
+    }
 }
 </script>
 

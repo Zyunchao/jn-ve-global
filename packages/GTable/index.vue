@@ -74,7 +74,7 @@ import { getTableProps } from './utils'
 import LGIcon from '../GIcon/index.vue'
 import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
 import { ElMessage } from 'element-plus'
-import Schema, { ErrorList, FieldErrorList, RuleItem, Rules } from 'async-validator'
+import Schema, { ValidateError, ValidateFieldsError, Rules } from 'async-validator'
 
 const props = defineProps({
     config: {
@@ -356,20 +356,23 @@ const tablePaste = async (e: ClipboardEvent) => {
     for (let rowI = 0; rowI < tableDataFormatted.length; rowI++) {
         const rowData = tableDataFormatted[rowI]
 
-        const res = await validator
+        const res: boolean | ValidateError[] = await validator
             .validate(rowData)
-            .catch((errProps: { errors: ErrorList; fields: FieldErrorList }) => {
+            .then((res) => {
+                return true
+            })
+            .catch((errProps: { errors: ValidateError[]; fields: ValidateFieldsError }) => {
                 return errProps.errors
             })
 
         // res 不为空，说明 catch 有返回，校验出错
-        if (!!res) {
+        if (res !== true) {
             ElMessage({
                 type: 'error',
                 dangerouslyUseHTMLString: true,
                 message: `<p style="margin-bottom: 6px;">第 ${
                     rowI + 1
-                } 行校验失败 ------------ </p>${res
+                } 行校验失败 ------------ </p>${(res as ValidateError[])
                     .map(
                         (errInfo) =>
                             '<p style="margin-bottom: 6px;">' +
@@ -385,7 +388,6 @@ const tablePaste = async (e: ClipboardEvent) => {
                 duration: 0,
                 showClose: true
             })
-
             // continue
         }
 

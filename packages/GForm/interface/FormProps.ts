@@ -1,8 +1,8 @@
-import { FieldErrorList, RuleItem } from 'async-validator'
+import { ValidateFieldsError, RuleItem } from 'async-validator'
 import FormItemProps from './FormItemProps'
 
 interface Callback {
-    (isValid?: boolean, invalidFields?: FieldErrorList): void
+    (isValid?: boolean, invalidFields?: ValidateFieldsError): void
 }
 
 export interface ExtendRuleItem extends RuleItem {
@@ -15,7 +15,7 @@ export interface FormInstance {
     clearValidate: (props?: string | string[]) => void
     validateField: (
         props: string | string[],
-        cb: (isValid?: string, invalidFields?: FieldErrorList) => void
+        cb: (isValid?: string, invalidFields?: ValidateFieldsError) => void
     ) => void
     [k: string]: unknown
 }

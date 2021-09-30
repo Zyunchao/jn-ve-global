@@ -31,13 +31,11 @@ const tableColumns = reactive<TableColumnProps[]>([
     {
         prop: 'sex',
         label: '性别',
-        excelValueFormat(current, pre) {
-            if (pre && current === '') {
-                return pre
+        rules: [
+            {
+                required: true
             }
-
-            return current
-        }
+        ]
     },
     {
         prop: 'height',

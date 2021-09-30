@@ -1,5 +1,10 @@
 <template>
-    <g-import-excel :column-config="tableColumns" @getData="getData" />
+    <GOperateExcel
+        :column-config="tableColumns"
+        type="primary"
+        mode="template"
+        @getData="getData"
+    />
 </template>
 
 <script lang="ts">

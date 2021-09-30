@@ -135,35 +135,34 @@ Form 组件内部 item 的生成时，依赖 formItem 的 `prop` 属性，且与
 
 ```typescript
 interface RuleItem {
-  type?: RuleType; // default type is 'string'
-  required?: boolean;
-  pattern?: RegExp | string;
-  min?: number; // Range of type 'string' and 'array'
-  max?: number; // Range of type 'string' and 'array'
-  len?: number; // Length of type 'string' and 'array'
-  enum?: Array<string | number | boolean | null | undefined>; // possible values of type 'enum'
-  whitespace?: boolean;
-  fields?: Rules; // ignore when without required
-  options?: ValidateOption;
-  defaultField?: RuleItem; // 'object' or 'array' containing validation rules
-  transform?: (value: any) => any;
-  message?: string | (() => string);
-  // 异步自定义校验
-  asyncValidator?: (
-    rule: Rules,
-    value: any,
-    callback: (error: string | string[] | void) => void,
-    source: ValidateSource,
-    options: ValidateOption,
-  ) => void | Promise<void>;
-  // 自定义校验
-  validator?: (
-    rule: Rules,
-    value: any,
-    callback: (error: string | string[] | void) => void,
-    source: ValidateSource,
-    options: ValidateOption,
-  ) => boolean | Error | Error[];
+    type?: RuleType;
+    required?: boolean;
+    pattern?: RegExp | string;
+    min?: number;
+    max?: number;
+    len?: number;
+    enum?: Array<string | number | boolean | null | undefined>;
+    whitespace?: boolean;
+    fields?: Record<string, Rule>;
+    options?: ValidateOption;
+    defaultField?: Rule;
+    transform?: (value: Value) => Value;
+    message?: string | ((a?: string) => string);
+    // 异步自定义校验
+    asyncValidator?: (
+      rule: InternalRuleItem, 
+      value: Value, 
+      callback: (error?: string | Error) => void, 
+      source: Values, options: ValidateOption
+    ) => void | Promise<void>;
+    // 自定义校验
+    validator?: (
+      rule: InternalRuleItem, 
+      value: Value, 
+      callback: (error?: string | Error) => void, 
+      source: Values, 
+      options: ValidateOption
+    ) => SyncValidateResult | void;
 }
 
 // 适应 Element 的控件，配置触发方式

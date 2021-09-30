@@ -316,7 +316,7 @@ import FunctionalComponent from '../FunctionalComponent'
 import ResizeObserver from 'resize-observer-polyfill'
 import { SelectProps, DatePickerControlConfig, SliderProps, SelectTreeProps } from '../GForm'
 import LGSelectTree from '../GSelectTree/index.vue'
-import Schema, { ErrorList, FieldErrorList, RuleItem } from 'async-validator'
+import Schema, { ValidateError } from 'async-validator'
 import { ElMessage } from 'element-plus'
 import _ from 'lodash'
 
@@ -450,7 +450,7 @@ onMounted(() => {
                     .then((res) => {
                         validateRes.value = true
                     })
-                    .catch((errProps: { errors: ErrorList; fields: FieldErrorList }) => {
+                    .catch((errProps: { errors: ValidateError[] }) => {
                         validateRes.value = false
 
                         const msg: string = errProps.errors.find((item) => {

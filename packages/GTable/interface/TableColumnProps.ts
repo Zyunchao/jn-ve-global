@@ -1,7 +1,7 @@
 import { VNode } from 'vue'
 import TableEditCellControlConfig from './TableEditCellControlConfig'
 import { BaseTableDataItem } from '../../index'
-import { RuleItem } from 'async-validator'
+import { Rule } from 'async-validator'
 
 export default interface TableColumnProps {
     /**
@@ -172,7 +172,7 @@ export default interface TableColumnProps {
      *  1. 可编辑表格控件校验
      *  2. 复制粘贴源数据校验
      */
-    rules?: RuleItem | RuleItem[]
+    rules?: Rule
     /**
      * 粘贴数据的格式化
      */
