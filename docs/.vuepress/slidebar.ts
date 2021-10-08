@@ -8,7 +8,8 @@ export default [
         children: [
             { text: 'Form', link: '/modules/Form.md' },
             { text: 'Tabs', link: '/modules/Tabs.md' },
-            { text: 'SelectTree', link: '/modules/SelectTree.md' }
+            { text: 'SelectTree', link: '/modules/SelectTree.md' },
+            { text: 'OperateExcel', link: '/modules/OperateExcel.md' },
         ]
     },
     {

@@ -280,9 +280,12 @@ const tablePaste = async (e: ClipboardEvent) => {
     const rowArr = pasteData.split('\r\n')
     // 每一行分割列得到粘贴的表格 源数据
     const tableDataSource = rowArr.map((row) => row.split('\t'))
-    // 表格配置的列
+    // 表格配置的有效数据列（包含 prop 且 type 不为 ['selection', 'index', 'expand'] 的列皆为有效列）
     const localColumns = props.config.columns.filter(
-        (column) => column.prop && column.prop !== 'opertion'
+        (column) =>
+            !['selection', 'index', 'expand'].includes(column.type) &&
+            column.prop &&
+            column.prop !== 'opertion'
     )
 
     // 判断表格配置的 label 是否与粘贴得到的 label 一致（顺序无关）

@@ -1,17 +1,21 @@
 <template>
     <el-button
-        v-if="columnConfig"
+        v-if="columnsConfig"
         size="small"
         type="primary"
         v-bind="$attrs"
         @click="handleTriggerBtn"
     >
         <slot>{{ mode === 'import' ? '导入Excel' : '下载模板' }}</slot>
-        <LGIcon :icon="mode === 'import' ? 'el-icon-upload2' : 'el-icon-right'" />
+        <LGIcon
+            style="margin-left: 6px"
+            :icon="mode === 'import' ? 'el-icon-upload2' : 'el-icon-download'"
+        />
     </el-button>
 
     <!-- 导入 trigger -->
     <input
+        v-if="mode === 'import'"
         ref="uploadTriggerRef"
         style="display: none"
         type="file"
@@ -36,7 +40,7 @@ import LGIcon from '../GIcon/index.vue'
 // import XLSXStyle from 'xlsx-style'
 
 const props = defineProps({
-    columnConfig: {
+    columnsConfig: {
         type: Object as PropType<TableColumnProps[]>,
         required: true,
         default: null
@@ -47,17 +51,23 @@ const props = defineProps({
     },
     fileName: {
         type: String,
-        default: 'xxx模板.xlsx'
+        default: 'xxx模板'
     }
 })
 
-const emits = defineEmits(['getData'])
+const emits = defineEmits(['parsed'])
 
 // 上传 input ref
 const uploadTriggerRef = ref<HTMLElement>(null)
-// 过滤有效列
+
+// 表格配置的有效数据列（包含 prop 且 type 不为 ['selection', 'index', 'expand'] 的列皆为有效列）
 const localColumns = computed(() =>
-    props.columnConfig.filter((column) => !['selection', 'index', 'expand'].includes(column.type))
+    props.columnsConfig.filter(
+        (column) =>
+            !['selection', 'index', 'expand'].includes(column.type) &&
+            column.prop &&
+            column.prop !== 'opertion'
+    )
 )
 
 const handleTriggerBtn = () => {
@@ -75,8 +85,8 @@ const onUploadChange = (e) => {
 }
 
 const parse = (file) => {
-    if (!props.columnConfig) {
-        ElMessage.warning('未传递 columnConfig')
+    if (!props.columnsConfig) {
+        ElMessage.warning('未传递 columnsConfig')
         return
     }
 
@@ -121,7 +131,7 @@ const parse = (file) => {
                 tableDataFormatted.push(rowData)
             }
 
-            emits('getData', tableDataFormatted)
+            emits('parsed', tableDataFormatted)
 
             // 重复上传同一个文件
             ;(uploadTriggerRef.value as any).value = ''
@@ -158,7 +168,7 @@ const outputTemplate = () => {
     }
 
     try {
-        XLSX.writeFile(tmpWB, props.fileName)
+        XLSX.writeFile(tmpWB, `${props.fileName}.xlsx`)
     } catch (error) {
         console.log(`%c export template error:`, 'color: #f56c6c;', error)
     }

@@ -1,9 +1,9 @@
 <template>
     <GOperateExcel
-        :column-config="tableColumns"
+        :columns-config="tableColumns"
         type="primary"
         mode="template"
-        @getData="getData"
+        @parsed="onParsed"
     />
 </template>
 
@@ -51,7 +51,7 @@ const tableColumns = reactive<TableColumnProps[]>([
     }
 ])
 
-const getData = (data) => {
+const onParsed = (data) => {
     console.log(`%c 获取到的数据 == `, 'color: #67c23a;', data)
 }
 </script>

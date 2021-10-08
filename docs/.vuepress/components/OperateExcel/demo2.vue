@@ -1,19 +1,16 @@
 <template>
-    <div class="examples-base-wrapper">
-        <g-table :config="tableConfig" />
-    </div>
+    <GOperateExcel :columns-config="tableColumns" mode="template" file-name="测试模板2" />
 </template>
 
 <script lang="tsx">
 export default {
-    name: 'TableTest'
+    name: 'OperateExcelDemo2'
 }
 </script>
 
 <script lang="tsx" setup>
-import { watch, reactive, ref } from 'vue'
-import mockData from './data.json'
-import { TableColumnProps, TableConfig } from '@component/index'
+import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
+import { TableConfig, TableColumnProps, BaseTableDataItem } from '@component/GTable'
 
 const tableColumns = reactive<TableColumnProps[]>([
     {
@@ -78,24 +75,6 @@ const tableColumns = reactive<TableColumnProps[]>([
         }
     }
 ])
-
-const tableConfig = reactive<TableConfig<any>>({
-    instance: null,
-    columns: tableColumns,
-    rowKey: 'index',
-    stripe: true,
-    pastable: true,
-    data: [],
-    onPasted(data) {
-        tableConfig.data = data.map((item, index) => {
-            item.edit = false
-            item.index = index
-            return item
-        })
-
-        console.log(`%c tableConfig.data == `, 'color: #e6a23c;', tableConfig.data)
-    }
-})
 </script>
 
 <style lang="scss" scoped></style>

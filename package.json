@@ -18,7 +18,10 @@
     },
     "peerDependencies": {
         "element-plus": "^1.1.0-beta.18",
-        "vue": "^3.2.19"
+        "lodash": "^4.17.21",
+        "resize-observer-polyfill": "^1.5.1",
+        "vue": "^3.2.19",
+        "xlsx": "^0.17.2"
     },
     "scripts": {
         "dev": "vite",
