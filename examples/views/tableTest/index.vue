@@ -17,10 +17,6 @@ import { TableColumnProps, TableConfig } from '@component/index'
 
 const tableColumns = reactive<TableColumnProps[]>([
     {
-        type: 'index',
-        label: ''
-    },
-    {
         prop: 'age',
         label: '年龄'
     },

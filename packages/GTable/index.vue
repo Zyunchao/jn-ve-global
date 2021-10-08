@@ -279,7 +279,7 @@ const tablePaste = async (e: ClipboardEvent) => {
     // 每一行
     const rowArr = pasteData.split('\r\n')
     // 每一行分割列得到粘贴的表格 源数据
-    const tableDataSource = rowArr.map((row) => row.split('\t'))
+    const excelDataSource = rowArr.map((row) => row.split('\t'))
     // 表格配置的有效数据列（包含 prop 且 type 不为 ['selection', 'index', 'expand'] 的列皆为有效列）
     const localColumns = props.config.columns.filter(
         (column) =>
@@ -290,30 +290,41 @@ const tablePaste = async (e: ClipboardEvent) => {
 
     // 判断表格配置的 label 是否与粘贴得到的 label 一致（顺序无关）
     const localColumnsLabels = localColumns.map((column) => column.label)
-    const excelFirstRow = tableDataSource[0]
+    const excelFirstRow = excelDataSource[0]
+    let disaffinity = localColumnsLabels.some((label) => !excelFirstRow.includes(label))
 
-    let disaffinity: boolean = false
-    localColumnsLabels.forEach((label) => {
-        if (!excelFirstRow.includes(label)) {
-            disaffinity = true
-        }
-    })
-
-    if (disaffinity) {
-        ElMessage.error('粘贴的数据不符合规则，请核对')
+    /**
+     * 第一行不符合条件存在两种情况：
+     *  1. 表头本身不符合
+     *  2. 未粘贴表头（依据列数判断数据是否合理）
+     */
+    if (disaffinity && excelDataSource.some((row) => row.length !== localColumnsLabels.length)) {
+        ElMessage.error('粘贴的数据不符合，请核对')
         return
     }
 
-    // 依据 Excel 第一行作为标题，拼装数据
-    const rowsSource = tableDataSource
-        .filter((_, rowI) => rowI > 0)
-        .map((rowSource) => {
-            let sourceRow = {}
-            excelFirstRow.forEach((key, keyI) => {
-                sourceRow[key] = rowSource[keyI]
-            })
+    /**
+     * 拼装数据
+     *  1. 存在表头
+     *  2. 不存在表头
+     */
+    const rowsSource = !disaffinity
+        ? excelDataSource
+            .filter((_, rowI) => rowI > 0)
+            .map((rowSource) => {
+                let sourceRow = {}
+                excelFirstRow.forEach((key, keyI) => {
+                    sourceRow[key] = rowSource[keyI]
+                })
 
-            return sourceRow
+                return sourceRow
+            })
+        : excelDataSource.map((row) => {
+            let temp = {}
+            localColumnsLabels.forEach((label, labelI) => {
+                temp[label] = row[labelI]
+            })
+            return temp
         })
 
     /**
