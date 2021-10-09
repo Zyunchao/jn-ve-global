@@ -38,7 +38,11 @@ export default defineConfig({
             output: {
                 // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
                 globals: {
-                    vue: 'Vue'
+                    vue: 'Vue',
+                    lodash: '_',
+                    'resize-observer-polyfill': 'ResizeObserver',
+                    'async-validator': 'Schema',
+                    'xlsx': 'XLSX'
                 }
             }
         }
