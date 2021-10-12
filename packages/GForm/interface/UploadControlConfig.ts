@@ -1,3 +1,11 @@
+export interface BaseResponse {
+    code: '000000' | '500000' | '800403'
+    data: any
+    msg: string
+    status: number | string
+    success: boolean
+}
+
 export interface UploadProps {
     /**
      * 必填参数，上传的地址
@@ -5,6 +13,8 @@ export interface UploadProps {
     action: string
     /**
      * 必填，接受上传的文件类型（thumbnail-mode 模式下此参数无效）
+     * 用逗号隔开的 MIME 类型列表
+     * 参见：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
      */
     accept: string
     /**
@@ -84,7 +94,7 @@ export interface UploadProps {
     /**
      * 文件上传成功时的钩子
      */
-    onSuccess?: (response?: any, file?: File, fileList?: File[]) => void
+    onSuccess?: (response?: BaseResponse, file?: File, fileList?: File[]) => void
     /**
      * 文件上传失败时的钩子
      */

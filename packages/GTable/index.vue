@@ -26,7 +26,7 @@
                 >
                     <!-- 排除多选，保险措施 -->
                     <TableColumn
-                        v-if="columnConfig.type !== 'selection'"
+                        v-if="!(localConfig.showSelection && columnConfig.type === 'selection')"
                         :column-config="columnConfig"
                     />
                 </template>
@@ -161,7 +161,7 @@ const localSelectedRows = ref([])
 watch(
     () => localConfig.value.selectedRows,
     (rows) => {
-        if (!rows) return
+        if (!rows || !localConfig.value.showSelection) return
 
         /**
          * 通过标记本地已选行的数组，来获取新增加的数据，使新加的数据选中

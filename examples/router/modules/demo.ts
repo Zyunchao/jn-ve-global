@@ -10,12 +10,20 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/tableTest/editDemo.vue')
     },
     {
+        path: '/selection-table-test',
+        component: () => import('@/views/tableTest/selectionDemo.vue')
+    },
+    {
         path: '/baseModule-test',
         component: () => import('@/views/baseModuleTest/index.vue')
     },
     {
         path: '/form-test',
         component: () => import('@/views/formTest/index.vue')
+    },
+    {
+        path: '/upload-test',
+        component: () => import('@/views/formTest/uploadTest.vue')
     },
     {
         path: '/selectTree-test',

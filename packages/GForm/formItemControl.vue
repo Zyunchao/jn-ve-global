@@ -273,10 +273,14 @@ const onExceed: UploadProps['onExceed'] = (files, fileList) => {
     )
 }
 
-// 文件上传成功时的钩子（待处理）
+// 文件上传成功时的钩子
 const onSuccess: UploadProps['onSuccess'] = (res, file, fileList) => {
-    localPropRef.value = res
-    ElMessage.success(`上传成功!`)
+    if (res.code === '000000') {
+        localPropRef.value = res.data
+        ElMessage.success(`上传成功!`)
+    } else {
+        ElMessage.error(res.msg)
+    }
 
     // 同时执行用户传递的 onSuccess
     const controlConfig = props.controlConfig as UploadControlConfig
