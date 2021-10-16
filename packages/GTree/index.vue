@@ -127,6 +127,8 @@ const props = defineProps({
     }
 })
 
+const emits = defineEmits(['get-tree-ref'])
+
 const treeRef = ref<any>(null)
 const filterText = ref<string>('')
 const expandAll = ref<boolean>(true)
@@ -136,6 +138,14 @@ watch(
     () => filterText.value,
     (newValue) => {
         treeRef.value.filter(newValue)
+    }
+)
+
+// 抛出树的 ref
+watch(
+    () => treeRef.value,
+    (instance) => {
+        if (instance) emits('get-tree-ref', instance)
     }
 )
 

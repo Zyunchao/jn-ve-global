@@ -6,7 +6,7 @@
 
 <template #version>
 
-1.2.3
+1.2.5
 
 </template>
 
@@ -31,6 +31,7 @@
 <h4>Tree</h4>
 
 1. 新增取消显示按钮区域的 api
+2. 增加抛出 Tree 的 ref 的 api
 
 </update-log-block>
 

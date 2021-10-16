@@ -57,3 +57,4 @@ mode | 树类型 | 'default' \| 'other' | 'default'
 defaultProps | 配置树的 props | object | {children: 'children', label: 'name' }
 btns | 扩展按钮配置数组 | BtnProps[] | []
 showBtnArea | 是否显示上方按钮区域 | boolean | true
+get-tree-ref | 获取树的 ref | treeInstance | null
