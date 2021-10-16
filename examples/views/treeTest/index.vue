@@ -5,6 +5,7 @@
                 :data="treeData"
                 :btns="btns"
                 show-checkbox
+                :show-btn-area="false"
                 @node-click="nodeClick"
                 @check="nodeClick"
             />

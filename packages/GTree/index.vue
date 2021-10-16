@@ -1,7 +1,7 @@
 <template>
     <div class="aside-tree">
         <!-- 顶部操作区域 -->
-        <div class="btns-wrapper">
+        <div v-if="showBtnArea" class="btns-wrapper">
             <div class="btns">
                 <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
                     <el-button
@@ -74,104 +74,101 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, watch, reactive, toRefs } from 'vue'
+export default defineComponent({
+    name: 'GTree'
+})
+</script>
+
+<script lang="ts" setup>
+import { defineComponent, PropType, watch, ref } from 'vue'
 import { BtnProps } from '../index'
 import { TreeData } from '../GSelectTree/index'
 
-export default defineComponent({
-    name: 'GTree',
-    props: {
-        /**
-         * 树数据
-         */
-        data: {
-            type: Array as PropType<TreeData[]>,
-            default: () => []
-        },
-        /**
-         * 类别 'default' | 'other'
-         */
-        mode: {
-            type: String,
-            default: 'default'
-        },
-        /**
-         * 默认配置选项
-         */
-        defaultProps: {
-            type: Object,
-            default: () => {
-                return {
-                    children: 'children',
-                    label: 'name'
-                }
+const props = defineProps({
+    /**
+     * 树数据
+     */
+    data: {
+        type: Array as PropType<TreeData[]>,
+        default: () => []
+    },
+    /**
+     * 类别 'default' | 'other'
+     */
+    mode: {
+        type: String,
+        default: 'default'
+    },
+    /**
+     * 默认配置选项
+     */
+    defaultProps: {
+        type: Object,
+        default: () => {
+            return {
+                children: 'children',
+                label: 'name'
             }
-        },
-        /**
-         * 配置按钮组
-         */
-        btns: {
-            type: Array as PropType<BtnProps[]>,
-            default: () => []
         }
     },
-    setup() {
-        const state = reactive<{
-            treeRef: any
-            filterText: string
-            expandAll: boolean
-        }>({
-            treeRef: null,
-            filterText: '',
-            expandAll: true
-        })
-
-        watch(
-            () => state.filterText,
-            (newValue) => {
-                state.treeRef.filter(newValue)
-            }
-        )
-
-        const filterNode = (value, data) => {
-            if (!value) return true
-            return data.name.indexOf(value) !== -1
-        }
-
-        const unfold = () => {
-            changeTreeNodeUnfold(state.treeRef.store.root)
-        }
-
-        const packUp = () => {
-            changeTreeNodeStatusPackUp(state.treeRef.store.root)
-        }
-
-        function changeTreeNodeUnfold(node) {
-            for (let i = 0; i < node.childNodes.length; i++) {
-                node.childNodes[i].expanded = state.expandAll
-                if (node.childNodes[i].childNodes.length > 0) {
-                    changeTreeNodeUnfold(node.childNodes[i])
-                }
-            }
-        }
-
-        function changeTreeNodeStatusPackUp(node) {
-            for (let i = 0; i < node.childNodes.length; i++) {
-                node.childNodes[i].expanded = !state.expandAll
-                if (node.childNodes[i].childNodes.length > 0) {
-                    changeTreeNodeStatusPackUp(node.childNodes[i])
-                }
-            }
-        }
-
-        return {
-            ...toRefs(state),
-            filterNode,
-            unfold,
-            packUp
-        }
+    /**
+     * 配置按钮组
+     */
+    btns: {
+        type: Array as PropType<BtnProps[]>,
+        default: () => []
+    },
+    /**
+     * 是否展示顶部按钮区域
+     */
+    showBtnArea: {
+        type: Boolean,
+        default: true
     }
 })
+
+const treeRef = ref<any>(null)
+const filterText = ref<string>('')
+const expandAll = ref<boolean>(true)
+
+// 树的过滤
+watch(
+    () => filterText.value,
+    (newValue) => {
+        treeRef.value.filter(newValue)
+    }
+)
+
+const filterNode = (value, data) => {
+    if (!value) return true
+    return data.name.indexOf(value) !== -1
+}
+
+const unfold = () => {
+    changeTreeNodeUnfold(treeRef.value.store.root)
+}
+
+const packUp = () => {
+    changeTreeNodeStatusPackUp(treeRef.value.store.root)
+}
+
+function changeTreeNodeUnfold(node) {
+    for (let i = 0; i < node.childNodes.length; i++) {
+        node.childNodes[i].expanded = expandAll.value
+        if (node.childNodes[i].childNodes.length > 0) {
+            changeTreeNodeUnfold(node.childNodes[i])
+        }
+    }
+}
+
+function changeTreeNodeStatusPackUp(node) {
+    for (let i = 0; i < node.childNodes.length; i++) {
+        node.childNodes[i].expanded = !expandAll.value
+        if (node.childNodes[i].childNodes.length > 0) {
+            changeTreeNodeStatusPackUp(node.childNodes[i])
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -29,7 +29,9 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 .update-log-block {
     border: 1px solid #ddd;
     border-radius: 4px;
-    
+    margin-bottom: 40px;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+
     :deep(p) {
         margin: 0;
     }
