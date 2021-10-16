@@ -55,8 +55,8 @@
                             <g-icon
                                 v-if="
                                     data.children &&
-                                    data.children.length > 0 &&
-                                    !Array.isArray(node.parent.data)
+                                        data.children.length > 0 &&
+                                        !Array.isArray(node.parent.data)
                                 "
                                 :icon="node.expanded ? 'folder' : 'aside-tree-node-close-icon'"
                             />
@@ -239,6 +239,8 @@ $--base-padding-lr: 14px;
                     background-size: 100% 100%;
                     background-repeat: no-repeat;
                     background-position: center;
+                    width: 14px;
+                    height: 14px;
 
                     &.is-leaf {
                         background: none !important;
