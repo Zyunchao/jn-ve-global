@@ -2,12 +2,12 @@
     <template v-if="controlConfig">
         <!-- Input -->
         <template v-if="localControlType === 'input'">
-            <el-input v-model="localPropRef" v-bind="getItemControlProps()" />
+            <el-input v-model.trim="localPropRef" v-bind="getItemControlProps()" />
         </template>
 
         <!-- InputNumber -->
         <template v-if="localControlType === 'inputNumber'">
-            <el-input-number v-model="localPropRef" v-bind="getItemControlProps()" />
+            <el-input-number v-model.number="localPropRef" v-bind="getItemControlProps()" />
         </template>
 
         <!-- Select -->
