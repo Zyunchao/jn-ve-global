@@ -234,6 +234,11 @@ $--base-padding-lr: 14px;
         padding-left: $--base-padding-lr;
 
         :deep(.el-tree) {
+            // &,
+            .el-tree-node {
+                width: fit-content;
+            }
+
             .el-tree-node__content {
                 height: 30px;
                 align-items: center;
