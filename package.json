@@ -1,6 +1,6 @@
 {
     "name": "jn-ve-global",
-    "version": "1.2.6",
+    "version": "1.2.8",
     "author": "zyc",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
@@ -17,7 +17,7 @@
         "./style.css": "./dist/style.css"
     },
     "peerDependencies": {
-        "element-plus": "^1.1.0-beta.18",
+        "element-plus": "1.1.0-beta.18",
         "lodash": "^4.17.21",
         "resize-observer-polyfill": "^1.5.1",
         "vue": "^3.2.19",
@@ -31,7 +31,7 @@
         "docs:build": "vuepress build docs"
     },
     "dependencies": {
-        "element-plus": "^1.1.0-beta.18",
+        "element-plus": "1.1.0-beta.18",
         "lodash": "^4.17.21",
         "resize-observer-polyfill": "^1.5.1",
         "vue": "^3.2.19",

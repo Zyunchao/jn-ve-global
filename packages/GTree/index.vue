@@ -42,6 +42,7 @@
                     :filter-node-method="filterNode"
                     :props="defaultProps"
                     v-bind="$attrs"
+                    :default-checked-keys="localDefaultCheckedKeys"
                 >
                     <!-- 节点图标 -->
                     <template #default="{ node, data }">
@@ -80,9 +81,11 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { defineComponent, PropType, watch, ref } from 'vue'
+import { defineComponent, PropType, watch, watchEffect, ref } from 'vue'
 import { BtnProps } from '../index'
 import { TreeData } from '../GSelectTree/index'
+import { nodeHasChildren } from './utils'
+import _ from 'lodash'
 
 const props = defineProps({
     /**
@@ -124,6 +127,23 @@ const props = defineProps({
     showBtnArea: {
         type: Boolean,
         default: true
+    },
+    /**
+     * 默认勾选的节点的 key 的数组
+     * 需要传递 node-key='id'
+     */
+    defaultCheckedKeys: {
+        type: Array as PropType<string[] | number[]>,
+        default: () => []
+    },
+    /**
+     * 过滤传递的默认勾选的 key 的数组中的父节点
+     * 如果传递的选中节点中包含父节点，那么就会到值其下的子节点全部选中
+     * 有些情况下，可能希望由子控制父，而不是由父控制子
+     */
+    filterParentCheckedKeysFlag: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -132,6 +152,7 @@ const emits = defineEmits(['get-tree-ref'])
 const treeRef = ref<any>(null)
 const filterText = ref<string>('')
 const expandAll = ref<boolean>(true)
+const localDefaultCheckedKeys = ref<any[]>()
 
 // 树的过滤
 watch(
@@ -140,6 +161,25 @@ watch(
         treeRef.value.filter(newValue)
     }
 )
+
+// 处理默认选中的数据
+watchEffect(() => {
+    if (
+        props.data.length > 0 &&
+        props.defaultCheckedKeys.length > 0 &&
+        props.filterParentCheckedKeysFlag
+    ) {
+        localDefaultCheckedKeys.value = props.defaultCheckedKeys
+            .map((id) => {
+                const isParentNode = nodeHasChildren(props.data, id)
+                if (isParentNode) return null
+                else return id
+            })
+            .filter((item) => !!item)
+    } else {
+        localDefaultCheckedKeys.value = props.defaultCheckedKeys
+    }
+})
 
 // 抛出树的 ref
 watch(
@@ -237,6 +277,7 @@ $--base-padding-lr: 14px;
             // &,
             .el-tree-node {
                 width: fit-content;
+                min-width: 100%;
             }
 
             .el-tree-node__content {

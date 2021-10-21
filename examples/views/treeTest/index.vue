@@ -6,6 +6,8 @@
                 :btns="btns"
                 show-checkbox
                 :show-btn-area="false"
+                :default-checked-keys="defaultCheckedKeys"
+                :filter-parent-checked-keys-flag="true"
                 @node-click="nodeClick"
                 @check="nodeClick"
             />
@@ -14,6 +16,10 @@
         <div class="demo2">
             <g-tree :data="treeData" :btns="btns" mode="other" :node-click="nodeClick" />
         </div>
+
+        <el-button @click="addNode">
+            添加节点
+        </el-button>
     </div>
 </template>
 
@@ -36,6 +42,28 @@ const btns: BtnProps[] = [
     //     }
     // }
 ]
+
+const defaultCheckedKeys = ref<string[]>(['1424688522159378434'])
+
+watch(
+    () => defaultCheckedKeys.value,
+    (val) => {
+        console.log(`%c defaultCheckedKeys ==   `, 'color: #e6a23c;', val)
+    },
+    {
+        deep: true
+    }
+)
+
+const addNode = () => {
+    defaultCheckedKeys.value = [
+        '1424688522159378434',
+        '1425375466908475393',
+        '1425375784899633153',
+        '1425375928718123010',
+        '1425374852916895745'
+    ]
+}
 
 const nodeClick = (data, node) => {
     console.log(`%c data == `, 'color: #e6a23c;', data, node)
