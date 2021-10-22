@@ -13,7 +13,22 @@
         <!-- 按钮组 -->
         <div v-if="btns.length > 0" class="btns-wrapper">
             <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
+                <!-- 按钮权限 Code -->
+                <template v-if="btn.authCode">
+                    <el-button
+                        v-auth="btn.authCode"
+                        :type="btn.type || 'primary'"
+                        size="small"
+                        :disabled="btn.disabled"
+                        @click="btn.onClick"
+                    >
+                        {{ btn.label }}
+                    </el-button>
+                </template>
+
+                <!-- 无权限校验的 -->
                 <el-button
+                    v-else
                     :type="btn.type || 'primary'"
                     size="small"
                     :disabled="btn.disabled"
@@ -108,6 +123,13 @@ export default defineComponent({
         noSearchLabel: {
             type: Boolean,
             default: false
+        },
+        /**
+         * 搜索按钮的鉴权 code
+         */
+        searchBtnAuthCode: {
+            type: String,
+            default: ''
         }
     },
     emits: ['getTableInstance'],
@@ -143,16 +165,34 @@ export default defineComponent({
                                         }}>
                                         重置
                                     </el-button>
-                                    <el-button
-                                        icon='el-icon-search'
-                                        type='primary'
-                                        onClick={() => {
-                                            if (!props.loadTableMethods)
-                                                throw new Error('core load-table-methods 未找到')
-                                            props.loadTableMethods?.(1)
-                                        }}>
-                                        查询
-                                    </el-button>
+                                    {props.searchBtnAuthCode ? (
+                                        <el-button
+                                            v-auth={props.searchBtnAuthCode}
+                                            icon='el-icon-search'
+                                            type='primary'
+                                            onClick={() => {
+                                                if (!props.loadTableMethods)
+                                                    throw new Error(
+                                                        'core load-table-methods 未找到'
+                                                    )
+                                                props.loadTableMethods?.(1)
+                                            }}>
+                                            查询
+                                        </el-button>
+                                    ) : (
+                                        <el-button
+                                            icon='el-icon-search'
+                                            type='primary'
+                                            onClick={() => {
+                                                if (!props.loadTableMethods)
+                                                    throw new Error(
+                                                        'core load-table-methods 未找到'
+                                                    )
+                                                props.loadTableMethods?.(1)
+                                            }}>
+                                            查询
+                                        </el-button>
+                                    )}
                                 </>
                             )
                         }

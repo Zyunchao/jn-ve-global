@@ -11,4 +11,7 @@ import Router from '@/router'
 import GlobalComponents from '@component/register'
 
 const app = createApp(App)
+
+app.directive('auth', {})
+
 app.use(ElementPlus, { locale }).use(GlobalComponents).use(Router).mount('#app')
