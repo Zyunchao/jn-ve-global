@@ -24,6 +24,7 @@ export default defineComponent({
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 
     .main {
         flex: 1;
@@ -39,7 +40,7 @@ export default defineComponent({
 
     .footer {
         padding-top: 10px;
-        height: 100px;
+        height: 70px;
         text-align: center;
     }
 }

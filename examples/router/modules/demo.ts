@@ -44,6 +44,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/upload-test',
         component: () => import('@/views/uploadTest/index.vue')
+    },
+    {
+        path: '/baseDrawerContentTest-test',
+        component: () => import('@/views/baseDrawerContentTest/index.vue')
     }
 ]
 
