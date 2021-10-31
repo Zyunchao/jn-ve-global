@@ -120,6 +120,14 @@ type FormItemProps =
            * 是否隐藏
            */
           hide?: boolean
+          /**
+           * 控件分组
+           */
+          group?: string | string[]
+          /**
+           * 扩展字段
+           */
+          [k: string]: any
       }
     | {
           /**
@@ -185,6 +193,14 @@ type FormItemProps =
            * 是否隐藏
            */
           hide?: boolean
+          /**
+           * 控件分组
+           */
+          group?: string | string[]
+          /**
+           * 扩展字段
+           */
+          [k: string]: any
       }
 
 export default FormItemProps

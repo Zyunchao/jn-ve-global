@@ -1,5 +1,8 @@
 <template>
-    <div class="base-module-root" :class="[$attrs.class, { 'no-padding': noSearchLabel }]">
+    <div
+        class="base-module-root"
+        :class="[$attrs.class, { 'no-padding': noSearchLabel || !searchFormProps }]"
+    >
         <!-- 搜索 -->
         <div v-if="searchFormProps" class="search-wrapper">
             <div v-if="!noSearchLabel" class="top">

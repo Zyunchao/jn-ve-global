@@ -9,7 +9,7 @@
         <el-row :gutter="localConfig.gutter ?? 20">
             <template v-for="item in localConfig.formItems" :key="item.prop">
                 <!-- 栅格 col -->
-                <el-col v-show="!item.hide" :span="item.span ?? 6">
+                <el-col v-if="!item.hide" :span="item.span ?? 6">
                     <el-form-item
                         v-bind="getFormItemConfigs(item)"
                         :label="

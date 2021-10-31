@@ -4,14 +4,27 @@
         <div v-if="showBtnArea" class="btns-wrapper">
             <div class="btns">
                 <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
-                    <el-button
-                        :type="btn.type || 'primary'"
-                        size="mini"
-                        :disabled="btn.disabled"
-                        @click="btn.onClick"
-                    >
-                        {{ btn.label }}
-                    </el-button>
+                    <template v-if="btn.authCode">
+                        <el-button
+                            v-auth="btn.authCode"
+                            :type="btn.type || 'primary'"
+                            size="mini"
+                            :disabled="btn.disabled"
+                            @click="btn.onClick"
+                        >
+                            {{ btn.label }}
+                        </el-button>
+                    </template>
+                    <template v-else>
+                        <el-button
+                            :type="btn.type || 'primary'"
+                            size="mini"
+                            :disabled="btn.disabled"
+                            @click="btn.onClick"
+                        >
+                            {{ btn.label }}
+                        </el-button>
+                    </template>
                 </template>
             </div>
             <div class="tree-icons">

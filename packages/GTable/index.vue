@@ -92,7 +92,7 @@ const tableProps = computed(() => getTableProps(props.config))
 const localConfig = computed(() => props.config)
 
 // 提供表格的 onCellEdited 事件
-provide(onCellEditKey, props.config.onCellEdited)
+provide(onCellEditKey, props.config?.onCellEdited)
 // 表格实例
 provide(tableInstanceKey, localInstance)
 
