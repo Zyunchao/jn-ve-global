@@ -14,7 +14,7 @@
         </div>
 
         <!-- 按钮组 -->
-        <div v-if="btns.length > 0" class="btns-wrapper">
+        <div v-if="btns && btns.length > 0" class="btns-wrapper">
             <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
                 <!-- 按钮权限 Code -->
                 <template v-if="btn.authCode">
@@ -148,9 +148,7 @@ export default defineComponent({
                 ) {
                     const searchBtns: FormItemProps = {
                         prop: 'opertion-btn',
-                        class: `content-center search-btn-item ${
-                            props.btns.length > 0 ? 'no-margin-b' : ''
-                        }`,
+                        class: `content-center search-btn-item`,
                         span: props.searchBtnHorizontal
                             ? 24
                             : tempWrapper.value.formItems[tempWrapper.value.formItems.length - 1]

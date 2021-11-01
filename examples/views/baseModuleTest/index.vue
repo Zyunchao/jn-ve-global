@@ -1,6 +1,7 @@
 <template>
     <div class="examples-base-wrapper">
         <GBaseModule
+            search-btn-horizontal
             :search-form-props="searchFormProps"
             :load-table-methods="loadTable"
             :btns="btns"
@@ -76,6 +77,76 @@ export default defineComponent({
                 label: '添加',
                 onClick: () => {
                     tablePagination.total += 10
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
+                }
+            },
+            {
+                label: '授权',
+                type: 'success',
+                onClick: () => {
+                    console.log(`%c 添加 === `, 'color: #e6a23c;')
                 }
             },
             {
