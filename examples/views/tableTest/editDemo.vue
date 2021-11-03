@@ -390,6 +390,7 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
     columns: tableColumns,
     rowKey: 'id',
     stripe: true,
+    highlightCurrentRow: true,
     pagination: {
         pageSize: 10,
         currentPage: 1,

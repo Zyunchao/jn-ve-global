@@ -42,7 +42,8 @@ export default defineConfig({
                     lodash: '_',
                     'resize-observer-polyfill': 'ResizeObserver',
                     'async-validator': 'Schema',
-                    'xlsx': 'XLSX'
+                    'xlsx': 'XLSX',
+                    'element-plus': 'elementPlus'
                 }
             }
         }

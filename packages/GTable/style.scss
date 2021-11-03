@@ -106,6 +106,14 @@ $--base-border-color: #e8e8e8;
                     }
                 }
             }
+
+            /* 选中行 */
+            tr.current-row {
+                td {
+                    background-color: var(--el-color-primary-light-8) !important;
+                    font-weight: 600;
+                }
+            }
         }
 
         :deep(.el-table--group) {
