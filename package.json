@@ -28,7 +28,8 @@
         "build": "vite build",
         "serve": "vite preview",
         "docs:dev": "vuepress dev docs",
-        "docs:build": "vuepress build docs"
+        "docs:build": "vuepress build docs",
+        "docs:build:github": "vuepress build docs github"
     },
     "dependencies": {
         "element-plus": "1.1.0-beta.18",

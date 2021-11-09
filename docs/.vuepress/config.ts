@@ -6,8 +6,12 @@ import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 const path = require('path')
 
-// 部署站点的基础路径
-const base = process.env.NODE_ENV === 'production' ? '/element-component/' : '/'
+/**
+ * 部署站点的基础路径
+ * 生产 & 非github 添加二级路径
+ * 生产 & gitHub || dev 取根路径
+ */
+const base = process.env.NODE_ENV === 'production' && !process.argv[4] ? '/element-component/' : '/'
 
 export default defineUserConfig<DefaultThemeOptions>({
     lang: 'zh-CN',
