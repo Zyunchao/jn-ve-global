@@ -69,12 +69,12 @@ export default {
 <script lang="ts" setup>
 import { PropType, watch, nextTick, computed, ref, reactive, toRaw, provide, readonly } from 'vue'
 import { TableConfig, TableMethods as TableInstance, TableColumnProps } from './index'
-import TableColumn from './TableColumn.vue'
 import { getTableProps } from './utils'
 import LGIcon from '../GIcon/index.vue'
 import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
 import { ElMessage } from 'element-plus'
 import Schema, { ValidateError, ValidateFieldsError, Rules } from 'async-validator'
+import TableColumn from './component/TableColumn.vue'
 
 const props = defineProps({
     config: {

@@ -47,10 +47,10 @@ export default {
 
 <script lang="tsx" setup>
 import { PropType, ref, computed, isProxy, onBeforeMount } from 'vue'
-import { TableColumnProps } from './index'
-import { getColumnProps } from './utils'
-import FunctionalComponent from '../FunctionalComponent'
-import TableEditCell from './TableEditCell.vue'
+import { TableColumnProps } from '../index'
+import { getColumnProps } from '../utils'
+import FunctionalComponent from '../../FunctionalComponent'
+import TableEditCell from '../component/TableEditCell.vue'
 
 const props = defineProps({
     columnConfig: {

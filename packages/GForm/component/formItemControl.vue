@@ -179,9 +179,9 @@ import {
     UploadProps,
     UploadControlConfig,
     ControlConfig
-} from './index'
-import FunctionalComponent from '../FunctionalComponent'
-import LGSelectTree from '../GSelectTree/index.vue'
+} from '../index'
+import FunctionalComponent from '../../FunctionalComponent'
+import LGSelectTree from '../../GSelectTree/index.vue'
 import { ElMessage } from 'element-plus'
 
 const props = defineProps({

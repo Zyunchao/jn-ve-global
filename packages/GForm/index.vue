@@ -60,7 +60,7 @@ export default {
 import { watch, PropType, ref, toRef, nextTick } from 'vue'
 import { FormProps, FormItemProps, FormInstance } from './index'
 import FunctionalComponent from '../FunctionalComponent'
-import FormItemControl from './formItemControl.vue'
+import FormItemControl from './component/formItemControl.vue'
 
 const props = defineProps({
     config: {

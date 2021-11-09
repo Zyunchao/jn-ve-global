@@ -310,12 +310,12 @@ import {
     onBeforeUnmount,
     onUnmounted
 } from 'vue'
-import { TableColumnProps, BaseTableDataItem } from './index'
-import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
-import FunctionalComponent from '../FunctionalComponent'
+import { TableColumnProps, BaseTableDataItem } from '../index'
+import { onCellEditKey, tableInstanceKey } from '../constant/InjectionKeys'
+import FunctionalComponent from '../../FunctionalComponent'
 import ResizeObserver from 'resize-observer-polyfill'
-import { SelectProps, DatePickerControlConfig, SliderProps, SelectTreeProps } from '../GForm'
-import LGSelectTree from '../GSelectTree/index.vue'
+import { SelectProps, DatePickerControlConfig, SliderProps, SelectTreeProps } from '../../GForm'
+import LGSelectTree from '../../GSelectTree/index.vue'
 import Schema, { ValidateError } from 'async-validator'
 import { ElMessage } from 'element-plus'
 import _ from 'lodash'
