@@ -89,6 +89,85 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 由于表单配置对象一般要在后续进行操作，所以，在定义这个配置对象时，一定要配置成响应式对象
 :::
 
+### 文件上传
+
+文件上传采用 [Element-plus Upload](https://element-plus.gitee.io/zh-CN/component/upload.html)
+
+扩展了：
+
+* 一键限制文件上传的大小（基于 `beforeUpload`）
+* 快捷获取响应结果
+* 头像预览
+
+:::tip 与后台交互，响应注意事项：
+
+```ts
+/**
+ * 文件上传成功时的钩子
+ * 注意：文件上传成功后，将期望存储的值（文件url || fileId）存储到表单的 model 字段中
+ * 存什么值取决于后台，这里目前和虞鹏飞对接的文件上传接口，需要存储 data 的 fileId
+ * 故：将返回的信息的 fileId 赋值给 model 中对应的字段
+ */
+const onSuccess: UploadProps['onSuccess'] = (res, file, fileList) => {
+    // 用户传递的优先执行
+    const controlConfig = props.controlConfig
+    if (controlConfig.props.onSuccess) {
+        controlConfig.props.onSuccess(res, file, fileList)
+        return
+    }
+
+    // 默认赋值行为
+    if (res.code === '000000') {
+        localPropRef.value = res.data.fileId
+        ElMessage.success(`上传成功!`)
+    } else {
+        ElMessage.error(res.msg)
+        localPropRef.value = ''
+    }
+}
+```
+
+:::
+
+<demo-block>
+
+<Form-uploadDemo />
+
+<template #code>
+
+@[code](@demoroot/Form/uploadDemo.vue)
+
+</template>
+
+</demo-block>
+
+:::tip 头像回显注意事项
+在 `listType === 'picture-card'` 的情况下，上传触发器会自动变成卡片形式，默认情况下会显示为上传文件的回显列表 <br/>
+但是上传头像只需要一个回显框即可，所以需要将 showFileList 置为 false，关闭 upload 的默认行为<br/>
+在以上基础之上，要手动创建 img（传递 imgUrl）用于回显
+:::
+
+#### Upload 扩展字段
+
+[Upload 基础属性](https://element-plus.gitee.io/zh-CN/component/upload.html#%E5%B1%9E%E6%80%A7)
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+size | 单个文件上传最大大小(单位：MB)，不传递则不限制 | number | --
+imgUrl | 上传头像回显的 img url | string \| 流 | --
+
+#### Upload 已内置钩子
+
+:::tip 事件钩子
+在当前封装的 upload 组件中，内置了 `beforeUpload` 、 `onExceed` 、 `onSuccess` 、 `onError` 等四个钩子的行为
+
+同时用户可自行传递定义行为，不同的钩子与内置钩子的执行方式不一致，行为如下: <br/>
+
+传递 `onExceed` 、 `onSuccess` 钩子将会覆盖内置钩子 <br/>
+传递 `beforeUpload` 将会在校验 `size` 后，执行用户传递的钩子 <br/>
+传递 `onError` 钩子会和内置钩子同时执行
+:::
+
 ### 自定义控件
 
 对于 “第三层” 配置，存在两种配置方式：

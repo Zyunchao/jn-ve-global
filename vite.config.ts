@@ -74,6 +74,13 @@ export default defineConfig({
     // 开发服务器
     server: {
         open: '/index.html',
-        port: 3066
+        port: 3066,
+        proxy: {
+            '/api': {
+                target: 'http://192.168.111.29:20000',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, '')
+            }
+        }
     }
 })

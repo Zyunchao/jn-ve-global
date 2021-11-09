@@ -22,10 +22,6 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/formTest/index.vue')
     },
     {
-        path: '/upload-test',
-        component: () => import('@/views/formTest/uploadTest.vue')
-    },
-    {
         path: '/selectTree-test',
         component: () => import('@/views/selectTreeTest/index.vue')
     },

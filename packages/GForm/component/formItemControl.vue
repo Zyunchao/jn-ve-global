@@ -149,17 +149,7 @@
 
         <!-- 上传文件 -->
         <template v-if="localControlType === 'upload'">
-            <el-upload
-                v-bind="getUploadProps(controlConfig.props)"
-                :on-success="onSuccess"
-                :on-error="onError"
-                :before-upload="beforeUpload"
-                :on-exceed="onExceed"
-            >
-                <el-button size="mini" type="primary">
-                    点击上传
-                </el-button>
-            </el-upload>
+            <UploadControl :control-config="controlConfig" :prop="prop" />
         </template>
     </template>
 </template>
@@ -172,17 +162,10 @@ export default {
 
 <script lang="ts" setup>
 import { PropType, watch, ref, computed, reactive, toRefs } from 'vue'
-import {
-    FormItemProps,
-    RadioOptionProps,
-    RadioButtonOptionProps,
-    UploadProps,
-    UploadControlConfig,
-    ControlConfig
-} from '../index'
+import { FormItemProps, RadioOptionProps, RadioButtonOptionProps, ControlConfig } from '../index'
 import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/index.vue'
-import { ElMessage } from 'element-plus'
+import UploadControl from './uploadControl.vue'
 
 const props = defineProps({
     formItemConfig: {
@@ -231,72 +214,6 @@ const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) 
     const { label, value, ...props } = radioOption
     return props
 }
-
-// 获取 upload 控件属性 ↓---------------------------------------------------------------------------------------------
-const getUploadProps = (uploadProps: UploadControlConfig['props']): UploadProps => {
-    const { onSuccess, onError, beforeUpload, onExceed, ...props } = uploadProps
-    return props
-}
-
-// 上传文件之前的钩子
-const beforeUpload: UploadProps['beforeUpload'] = (file) => {
-    const controlConfig = props.controlConfig as UploadControlConfig
-    // 用户传递的优先执行
-    if (controlConfig.props.beforeUpload) return controlConfig.props.beforeUpload(file)
-
-    // 文件大小
-    const size: number = controlConfig.props['size']
-    if (size) {
-        if (file.size / 1024 / 1024 > size) {
-            ElMessage.warning(`单个文件上传大小不能超过 ${size}MB!`)
-            return false
-        }
-    }
-
-    return true
-}
-
-// 文件超出个数限制时的钩子
-const onExceed: UploadProps['onExceed'] = (files, fileList) => {
-    const controlConfig = props.controlConfig as UploadControlConfig
-    // 用户传递的优先执行
-    if (controlConfig.props.onExceed) {
-        controlConfig.props.onExceed()
-        return
-    }
-
-    let num = controlConfig.props.limit
-    ElMessage.warning(
-        `当前限制选择 ${num} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
-            files.length + fileList.length
-        } 个文件`
-    )
-}
-
-// 文件上传成功时的钩子
-const onSuccess: UploadProps['onSuccess'] = (res, file, fileList) => {
-    if (res.code === '000000') {
-        localPropRef.value = res.data
-        ElMessage.success(`上传成功!`)
-    } else {
-        ElMessage.error(res.msg)
-    }
-
-    // 同时执行用户传递的 onSuccess
-    const controlConfig = props.controlConfig as UploadControlConfig
-    controlConfig.props.onSuccess?.(res, file, fileList)
-}
-
-// 文件上传失败时的钩子
-const onError: UploadProps['onError'] = (err, file, fileList) => {
-    localPropRef.value = ''
-    ElMessage.warning(`上传失败!`)
-
-    // 同时执行用户传递的 onError
-    const controlConfig = props.controlConfig as UploadControlConfig
-    controlConfig.props.onError?.(err, file, fileList)
-}
-// ------------------------------↑ upload ↑----------------------------------------------------------------------------------
 </script>
 
 <style lang="scss" scoped></style>

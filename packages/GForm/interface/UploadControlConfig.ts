@@ -51,6 +51,10 @@ export interface UploadProps {
      */
     showFileList?: boolean
     /**
+     * 	是否启用拖拽上传
+     */
+    drag?: boolean
+    /**
      * 文件列表的类型
      * default: text
      */
@@ -93,12 +97,19 @@ export interface UploadProps {
     onChange?: (file?: File, fileList?: File[]) => void
     /**
      * 文件上传成功时的钩子
+     * 注意：文件上传成功后，将期望存储的值（文件url || fileId）存储到表单的 model 字段中
+     * 存什么值取决于后台，这里目前和虞鹏飞对接的文件上传接口，需要存储 data 的 fileId
+     * 故：将返回的信息的 fileId 赋值给 model 中对应的字段
      */
     onSuccess?: (response?: BaseResponse, file?: File, fileList?: File[]) => void
     /**
      * 文件上传失败时的钩子
      */
     onError?: (err?: Error, file?: File, fileList?: File[]) => void
+    /**
+     * 文件上传时的钩子
+     */
+    onProgress?: (event?: ProgressEvent, file?: File, fileList?: File[]) => void
     /**
      * 上传文件之前的钩子，参数为上传的文件，
      * 若返回 false 或者返回 Promise 且被 reject，则停止上传。
@@ -108,12 +119,20 @@ export interface UploadProps {
      * 文件超出个数限制时的钩子
      */
     onExceed?: (files?: File[], fileList?: File[]) => void
+    /**
+     * 	覆盖默认的上传行为，可以自定义上传的实现
+     */
+    httpRequest?: Function
 
     // 自定义扩展 Props -----------------------------------------------------------------------
     /**
      * 单个文件上传最大大小(单位：MB)
      */
     size?: number
+    /**
+     * 上传头像回显的 img url
+     */
+    imgUrl?: any
 }
 
 export default interface UploadControlConfig {

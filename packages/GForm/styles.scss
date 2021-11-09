@@ -1,0 +1,94 @@
+$--base-font-size-m: 16px;
+$--base-font-color: #595959;
+
+.g-form {
+    font-size: $--base-font-size-m;
+
+    :deep(.el-form-item) {
+        .el-form-item__label {
+            font-size: $--base-font-size-m;
+        }
+
+        .el-form-item__content {
+            font-size: $--base-font-size-m;
+
+            .el-textarea,
+            .el-input {
+                font-size: inherit;
+            }
+
+            .el-rate {
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        // 自定义类名
+        &.content-left {
+            .el-form-item__content {
+                text-align: left;
+            }
+        }
+
+        &.content-right {
+            .el-form-item__content {
+                text-align: right;
+            }
+        }
+
+        &.content-center {
+            .el-form-item__content {
+                text-align: center;
+            }
+        }
+
+        &.no-margin-b {
+            margin-bottom: 0;
+        }
+
+        &.search-btn-item {
+            .el-form-item__content {
+                .el-button {
+                    padding: 0 22px;
+                    // display: inline-flex;
+                    // align-items: center;
+
+                    span {
+                        font-size: 16px;
+                        margin-left: 8px;
+                    }
+
+                    i {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+
+        // 禁用
+        .is-disabled {
+
+            // color: red;
+            input,
+            .el-textarea__inner {
+                color: $--base-font-color;
+            }
+
+            .el-radio__inner {
+                border: 1px solid $--base-font-color;
+
+                &:after {
+                    background-color: $--base-font-color;
+                    border-color: $--base-font-color;
+                }
+            }
+        }
+
+        .el-select {
+            .el-tag.el-tag--info {
+                color: #606266;
+            }
+        }
+    }
+}
