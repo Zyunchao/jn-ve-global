@@ -28,7 +28,7 @@
                 class="avatar-wrapper"
             >
                 <img :src="controlConfig.props.imgUrl" class="avatar">
-                <div class="shade" @click.stop="handleDeleImg">
+                <div v-if="!controlConfig.props.disabled" class="shade" @click.stop="handleDeleImg">
                     <g-icon icon="el-icon-delete" />
                 </div>
             </div>
@@ -83,7 +83,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
             return false
         }
     }
-    
+
     // 用户传递的优先执行
     if (controlConfig.props.beforeUpload) return controlConfig.props.beforeUpload(file)
 
@@ -149,6 +149,7 @@ const handleDeleImg = () => {
         type: 'warning'
     }).then(() => {
         localControlConfig.value.props.imgUrl = ''
+        localPropRef.value = ''
     })
 }
 </script>
@@ -166,6 +167,7 @@ const handleDeleImg = () => {
             position: absolute;
             top: 0;
             left: 0;
+            background-color: #fff;
 
             .avatar {
                 width: 100%;

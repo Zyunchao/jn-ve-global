@@ -8,6 +8,7 @@
         v-model="localSelectValue"
         :placeholder="placeholder"
         :multiple="multiple"
+        :disabled="disabled"
         popper-class="select-tree-item-wrapper"
         class="select-tree-select"
         style="width: 100%"
@@ -89,6 +90,13 @@ const props = defineProps({
      * 排除某些特定条件下，所有节点都可以选择
      */
     everyChoose: {
+        type: Boolean,
+        default: false
+    },
+    /**
+     * 禁用
+     */
+    disabled: {
         type: Boolean,
         default: false
     }

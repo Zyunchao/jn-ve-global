@@ -33,6 +33,10 @@ export interface SelectTreeProps {
      * status 出现则为 true，隐藏则为 false
      */
     onVisibleChange?: (status: boolean) => void
+    /**
+     * 禁用
+     */
+    disabled?: boolean
 }
 
 export default interface SelectTreeControlConfig {
