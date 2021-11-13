@@ -12,7 +12,7 @@
 
 <template #date>
 
-2021-11-9
+2021-11-13
 
 </template>
 
@@ -23,6 +23,12 @@
 1. 优化 Form 组件文件目录，添加 component 目录
 2. 优化文件上传组件
 3. 上传组件添加扩展字段
+
+<h3>新特性</h3>
+
+<h4>Table</h4>
+
+1. 增加隐藏指定列的 api
 
 </update-log-block>
 

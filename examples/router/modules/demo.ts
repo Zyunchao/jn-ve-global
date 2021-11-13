@@ -44,6 +44,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/baseDrawerContentTest-test',
         component: () => import('@/views/baseDrawerContentTest/index.vue')
+    },
+    {
+        path: '/hide-table-test',
+        component: () => import('@/views/tableTest/hideDemo.vue')
     }
 ]
 

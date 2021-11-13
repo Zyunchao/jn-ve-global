@@ -115,7 +115,7 @@ if (
 const elSelectRef = ref<any>(null)
 const elTreeRef = ref<any>(null)
 // select 绑定的值
-const localSelectValue = ref<string[] | string>(props.multiple ? [] : '')
+const localSelectValue = ref<string[] | string>(props.modelValue as any)
 
 // 监听变化，触发寻找值
 watchEffect(() => {

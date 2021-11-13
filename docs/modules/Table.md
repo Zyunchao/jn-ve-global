@@ -245,6 +245,27 @@
 
 </demo-block>
 
+### 动态隐藏列
+
+:::tip 注意
+
+* 在动态进行列的显隐时，必须将对应的 tableColumns 设置为响应式对象，否则，columns 的变化将不能及时的响应的页面上
+* 一定要在改变列的 hide 值后，使用 nextTick 调用 table 的 doLayout 方法，否则将会有可能造成列的布局错乱，同时也要给对应的 column 添加宽度（width）的配置
+
+:::
+
+<demo-block>
+
+<Table-hideColumnDemo />
+
+<template #code>
+
+@[code](@demoroot/Table/hideColumnDemo.vue)
+
+</template>
+
+</demo-block>
+
 ### 更多功能示例
 
 请参考 [Element Table](https://element-plus.gitee.io/#/zh-CN/component/table)
@@ -281,6 +302,8 @@ children| 多级嵌套表头 | TableColumnProps[] | --
 editable | 启用行编辑 | boolean | --
 controlConfig | 可编辑行控件配置 | TableEditCellControlConfig | --
 rules | 校验配置 | RuleItem \| RuleItem[] | --
+excelValueFormat | 粘贴数据的字段格式化规则 | (currentField: string \| number, preField?: any, index?: number) => string \| number \| boolean \| Date \| any[] \| object | --
+hide | 标识列是否隐藏 | boolean | --
 
 ### Pagination Attributes
 

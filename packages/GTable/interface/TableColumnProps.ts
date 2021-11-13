@@ -180,5 +180,9 @@ export default interface TableColumnProps {
         currentField: string | number,
         preField?: any,
         index?: number
-    ) => string | number | boolean | Date | any[] | object
+    ) => string | number | boolean | Date | any[] | object,
+    /**
+     * 隐藏列
+     */
+    hide?: boolean
 }

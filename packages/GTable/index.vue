@@ -24,9 +24,12 @@
                     v-for="(columnConfig, index) in localConfig.columns"
                     :key="`${columnConfig.label}-${index}`"
                 >
-                    <!-- 排除多选，保险措施 -->
+                    <!-- 排除多选 + 隐藏列 -->
                     <TableColumn
-                        v-if="!(localConfig.showSelection && columnConfig.type === 'selection')"
+                        v-if="
+                            !(localConfig.showSelection && columnConfig.type === 'selection') &&
+                                !columnConfig.hide
+                        "
                         :column-config="columnConfig"
                     />
                 </template>
