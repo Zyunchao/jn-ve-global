@@ -72,6 +72,11 @@ $--base-border-color: #e8e8e8;
                 }
             }
 
+            .el-table__header-wrapper {
+                position: relative;
+                z-index: 2;
+            }
+
             .el-table__fixed-right-patch {
                 background-color: $--tr-bgc;
                 top: -1px;
@@ -92,7 +97,7 @@ $--base-border-color: #e8e8e8;
                     position: absolute;
                     top: 50%;
                     left: 50%;
-                    transform: translate(-50%, -60%);
+                    transform: translate(-50%, -50%);
                     width: fit-content;
                     opacity: 0.5;
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="examples-base-wrapper">
+    <div class="self">
         <GBaseModule
             more-search-mode="pull-down"
             highlight-current-row
@@ -23,7 +23,7 @@ import {
     PaginationProps,
     BaseTableDataItem
 } from '@component/index'
-import mockData from './mock.json'
+import mockData from './data/mock.json'
 import SearchFormConfig from './component/SearchFormConfig'
 import TableColumns from './component/TableColumns'
 
@@ -67,4 +67,8 @@ const loadTable = (page: number) => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.self {
+    height: 700px;
+}
+</style>

@@ -18,6 +18,7 @@ import GlobalComponent from '@component/register'
 import 'virtual:svg-icons-register'
 
 export default ({ app, router, siteData }) => {
+    app.directive('auth', {})
     app.use(ElementPlus, { locale })
     app.use(GlobalComponent)
 }
