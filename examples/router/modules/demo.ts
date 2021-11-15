@@ -48,6 +48,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/hide-table-test',
         component: () => import('@/views/tableTest/hideDemo.vue')
+    },
+    {
+        path: '/dialog-test',
+        component: () => import('@/views/dialogTest/index.vue')
     }
 ]
 

@@ -22,4 +22,24 @@ export interface BtnProps {
      * 事件
      */
     onClick?: () => void
+    /**
+     * 按钮尺寸
+     */
+    size?: 'medium' | 'small' | 'mini'
+    /**
+     * 加载中
+     */
+    loading?: boolean
+    /**
+     * 是否为朴素按钮
+     */
+    plain?: boolean
+    /**
+     * 是否为圆角按钮
+     */
+    round?: boolean
+    /**
+     * 是否为圆形按钮
+     */
+    circle?: boolean
 }

@@ -9,14 +9,15 @@ export default [
             { text: 'Form', link: '/modules/Form.md' },
             { text: 'Tabs', link: '/modules/Tabs.md' },
             { text: 'SelectTree', link: '/modules/SelectTree.md' },
-            { text: 'OperateExcel', link: '/modules/OperateExcel.md' },
+            { text: 'OperateExcel', link: '/modules/OperateExcel.md' }
         ]
     },
     {
         text: '布局组件',
         children: [
             { text: 'BaseModule', link: '/modules/BaseModule.md' },
-            { text: 'BaseDrawerContent', link: '/modules/BaseDrawerContent.md' }
+            { text: 'BaseDrawerContent', link: '/modules/BaseDrawerContent.md' },
+            { text: 'Dialog', link: '/modules/Dialog.md' }
         ]
     },
     {
