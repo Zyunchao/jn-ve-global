@@ -68,6 +68,7 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 * [Rate](https://element-plus.gitee.io/#/zh-CN/component/rate)
 * [Slider](https://element-plus.gitee.io/#/zh-CN/component/slider)
 * [SelectTree](/element-component/modules/SelectTree.html)
+* [ThousandsInput](/element-component/modules/Form.html#input-展示格式化千分位)
 
 <demo-block>
 
@@ -88,6 +89,25 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 :::tip 注意
 由于表单配置对象一般要在后续进行操作，所以，在定义这个配置对象时，一定要配置成响应式对象
 :::
+
+### ThousandsInput 展示格式化千分位
+
+在 input 的基础上，扩展了 ThousandsInput 组件：
+
+1. 限制只能输入数字
+2. 在输入的同时将数据格式化千分位的样式，搜集的数据不带千分位，仅数字（string 类型的 数值，即：'12345'，如需 number 类型的，可自行转换）
+
+<demo-block>
+
+<Form-thousandsInputDemo />
+
+<template #code>
+
+@[code](@demoroot/Form/thousandsInputDemo.vue)
+
+</template>
+
+</demo-block>
 
 ### 文件上传
 

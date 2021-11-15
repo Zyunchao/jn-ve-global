@@ -11,7 +11,8 @@ export default () =>
         {
             prop: 'name',
             label: '姓名',
-            width: 180
+            width: 180,
+            showOverflowTooltip: true
         },
         {
             prop: 'address',

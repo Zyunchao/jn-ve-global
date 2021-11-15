@@ -151,6 +151,11 @@
         <template v-if="localControlType === 'upload'">
             <UploadControl :control-config="controlConfig" :prop="prop" />
         </template>
+
+        <!-- 千分位展示 -->
+        <template v-if="localControlType === 'thousands'">
+            <el-input v-model="thousandsControlVal" v-bind="getItemControlProps()" />
+        </template>
     </template>
 </template>
 
@@ -166,6 +171,7 @@ import { FormItemProps, RadioOptionProps, RadioButtonOptionProps, ControlConfig 
 import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/index.vue'
 import UploadControl from './uploadControl.vue'
+import { toThousands } from '../utils'
 
 const props = defineProps({
     formItemConfig: {
@@ -195,6 +201,7 @@ const getItemControlProps = () => {
     // 具体控件的差异配置
     switch (props.controlConfig!.type) {
     case 'input':
+    case 'thousands':
         controlProps['placeholder'] = controlProps['placeholder']
             ? controlProps['placeholder']
             : `请输入${props.formItemConfig.label}`
@@ -214,6 +221,13 @@ const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) 
     const { label, value, ...props } = radioOption
     return props
 }
+
+// ------------------------------↓ 千分位展示 ↓------------------------------------------------------------------------------
+const thousandsControlVal = computed({
+    get: () => toThousands(localPropRef.value as string),
+    set: (val) => (localPropRef.value = val.replace(/^\.+|[^\d.]/g, ''))
+})
+// ------------------------------↑ 千分位展示 ↑------------------------------------------------------------------------------
 </script>
 
 <style lang="scss" scoped></style>

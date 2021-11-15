@@ -107,3 +107,9 @@ interface BtnProps {
     onClick?: () => void
 }
 ```
+
+## Event
+
+参数 | 说明 | 类型 | 默认值
+-----|-----|-----|-----
+@getTableInstance | 抛出表格实例 | (instance: TableMethods) => void | --
