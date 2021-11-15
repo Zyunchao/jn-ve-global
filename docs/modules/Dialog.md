@@ -1,6 +1,6 @@
 # Dialog
 
-处于对弹框样式的统一，将 [Element Dialog](https://element-plus.gitee.io/zh-CN/component/dialog.html)进行了二次封装
+出于对弹框样式的统一，将 [Element Dialog](https://element-plus.gitee.io/zh-CN/component/dialog.html)进行了二次封装
 
 组件统一了样式，并快捷创建传入的按钮配置
 
