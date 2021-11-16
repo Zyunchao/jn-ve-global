@@ -68,7 +68,7 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 * [Rate](https://element-plus.gitee.io/#/zh-CN/component/rate)
 * [Slider](https://element-plus.gitee.io/#/zh-CN/component/slider)
 * [SelectTree](/element-component/modules/SelectTree.html)
-* [ThousandsInput](/element-component/modules/Form.html#input-展示格式化千分位)
+* [FigureInput](/element-component/modules/Form.html#figureinput)
 
 <demo-block>
 
@@ -90,20 +90,20 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 由于表单配置对象一般要在后续进行操作，所以，在定义这个配置对象时，一定要配置成响应式对象
 :::
 
-### ThousandsInput 展示格式化千分位
+### FigureInput
 
-在 input 的基础上，扩展了 ThousandsInput 组件：
+FigureInput 意为数字、计算、的输入框；
 
-1. 限制只能输入数字
-2. 在输入的同时将数据格式化千分位的样式，搜集的数据不带千分位，仅数字（string 类型的 数值，即：'12345'，如需 number 类型的，可自行转换）
+1. 组件限制了只能输入数字或小数
+2. 组件提供了自定义的 `format`（展示格式化）、`valueFormat`（存储数据格式化，反格式化）方法入口
 
 <demo-block>
 
-<Form-thousandsInputDemo />
+<Form-figureInputDemo />
 
 <template #code>
 
-@[code](@demoroot/Form/thousandsInputDemo.vue)
+@[code](@demoroot/Form/figureInputDemo.vue)
 
 </template>
 

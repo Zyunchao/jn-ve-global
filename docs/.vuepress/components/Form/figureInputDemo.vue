@@ -28,7 +28,7 @@ let formConfig = ref<FormProps>({
             prop: 'money',
             label: '收集的数据',
             render(prop) {
-                return <h4>{prop.value}</h4>
+                return prop.value
             }
         },
         {
