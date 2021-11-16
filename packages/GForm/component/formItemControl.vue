@@ -154,7 +154,22 @@
 
         <!-- 千分位展示 -->
         <template v-if="localControlType === 'figureInput'">
-            <el-input v-model="figureInputControlVal" v-bind="getItemControlProps()" />
+            <!-- 负责搜集数据的框 -->
+            <el-input
+                v-show="!showInputShow"
+                ref="gatherFigureInputRef"
+                v-model="gatherFigureInputVal"
+                v-bind="getItemControlProps()"
+                @blur="gatherFigureInputControlBlur"
+            />
+            <!-- 展示的框 -->
+            <el-input
+                v-show="showInputShow"
+                ref="showFigureInputRef"
+                v-model="showFigureInputVal"
+                v-bind="getItemControlProps()"
+                @focus="showFigureInputControlFocus"
+            />
         </template>
     </template>
 </template>
@@ -166,7 +181,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { PropType, watch, ref, computed, reactive, toRefs } from 'vue'
+import { PropType, watch, ref, computed, nextTick, toRefs } from 'vue'
 import {
     FormItemProps,
     RadioOptionProps,
@@ -229,19 +244,14 @@ const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) 
 }
 
 // ------------------------------↓ 数字格式化 ↓------------------------------------------------------------------------------
-const figureInputControlVal = computed({
-    get: () => {
-        /**
-         * 用户自定义展示格式化方法
-         */
-        const controlConfig = props.controlConfig as FigureInputControlConfig
-        if (controlConfig.props && controlConfig.props.format) {
-            return controlConfig.props.format(localPropRef.value as string)
-        }
+// 展示 input 显示 flag
+const showInputShow = ref<boolean>(true)
+const gatherFigureInputRef = ref(null)
+const showFigureInputRef = ref(null)
 
-        // 原展示
-        return localPropRef.value
-    },
+// 搜集数据输入框绑定值，主要做限制数字
+const gatherFigureInputVal = computed({
+    get: () => localPropRef.value,
     set: (val) => {
         const controlConfig = props.controlConfig as FigureInputControlConfig
 
@@ -255,6 +265,39 @@ const figureInputControlVal = computed({
         }
     }
 })
+
+// 展示输入框绑定的值
+const showFigureInputVal = computed(() => {
+    /**
+     * 用户自定义展示格式化方法
+     */
+    const controlConfig = props.controlConfig as FigureInputControlConfig
+
+    if (controlConfig.props && controlConfig.props.format) {
+        return controlConfig.props.format(gatherFigureInputVal.value as string)
+    }
+
+    // 原展示
+    return gatherFigureInputVal.value
+})
+
+/**
+ * 展示框获取焦点，隐藏展示框
+ * 显示数据收集框，并使其获取焦点
+ */
+const showFigureInputControlFocus = () => {
+    showInputShow.value = false
+    nextTick(() => {
+        gatherFigureInputRef.value.focus()
+    })
+}
+
+/**
+ * 搜集数据框失去焦点，显示展示框
+ */
+const gatherFigureInputControlBlur = () => {
+    showInputShow.value = true
+}
 // ------------------------------↑ 数字格式化 ↑------------------------------------------------------------------------------
 </script>
 
