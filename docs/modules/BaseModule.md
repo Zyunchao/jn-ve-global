@@ -70,6 +70,22 @@
 
 </demo-block>
 
+## 自定义内容
+
+详见底部 slot 列表
+
+<demo-block>
+
+<BaseModule-coreCustom />
+
+<template #code>
+
+@[code](@demoroot/BaseModule/coreCustom.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 参数 | 说明 | 类型 | 默认值
@@ -113,3 +129,10 @@ interface BtnProps {
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
 @getTableInstance | 抛出表格实例 | (instance: TableMethods) => void | --
+
+## Slot
+
+参数 | 说明 | 类型 | 默认值
+-----|-----|-----|-----
+core | 替换表格，使用自定义内容 | -- | -- 
+middle-right | 按钮右侧的内容 | -- | --

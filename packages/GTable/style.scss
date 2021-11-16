@@ -93,6 +93,8 @@ $--base-border-color: #e8e8e8;
             }
 
             .el-table__empty-block {
+                min-height: 260px !important;
+
                 .el-table__empty-text {
                     position: absolute;
                     top: 50%;

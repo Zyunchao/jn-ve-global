@@ -21,38 +21,50 @@
             :more-search-mode="moreSearchMode"
         />
 
-        <!-- 按钮组 -->
-        <div v-if="btns && btns.length > 0" class="btns-wrapper">
-            <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
-                <!-- 按钮权限 Code -->
-                <template v-if="btn.authCode">
-                    <el-button
-                        v-auth="btn.authCode"
-                        :type="btn.type || 'primary'"
-                        size="small"
-                        :disabled="btn.disabled"
-                        @click="btn.onClick"
-                    >
-                        {{ btn.label }}
-                    </el-button>
-                </template>
+        <!-- 中间操作区域 -->
+        <div v-if="(btns && btns.length) || $slots['middle-right']" class="middle-opertion-wrapper">
+            <!-- 左 -->
+            <div class="middle-left-wrapper">
+                <!-- 按钮组 -->
+                <div v-if="btns && btns.length > 0" class="btns-wrapper">
+                    <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
+                        <!-- 按钮权限 Code -->
+                        <el-button
+                            v-if="btn.authCode"
+                            v-auth="btn.authCode"
+                            :type="btn.type || 'primary'"
+                            size="small"
+                            :disabled="btn.disabled"
+                            @click="btn.onClick"
+                        >
+                            {{ btn.label }}
+                        </el-button>
 
-                <!-- 无权限校验的 -->
-                <el-button
-                    v-else
-                    :type="btn.type || 'primary'"
-                    size="small"
-                    :disabled="btn.disabled"
-                    @click="btn.onClick"
-                >
-                    {{ btn.label }}
-                </el-button>
-            </template>
+                        <!-- 无权限校验的 -->
+                        <el-button
+                            v-else
+                            :type="btn.type || 'primary'"
+                            size="small"
+                            :disabled="btn.disabled"
+                            @click="btn.onClick"
+                        >
+                            {{ btn.label }}
+                        </el-button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- 右 -->
+            <div class="middle-right-wrapper">
+                <slot name="middle-right" />
+            </div>
         </div>
 
         <!-- 表格 -->
-        <div class="table-wrapper">
-            <LGTable v-loading="tableLoading" :config="localTableConfig" />
+        <div class="core-wrapper">
+            <slot name="core">
+                <LGTable v-loading="tableLoading" :config="localTableConfig" />
+            </slot>
         </div>
     </div>
 </template>
@@ -273,24 +285,40 @@ $--base-padding-lr: 28px;
         border-radius: 0;
         box-shadow: none;
 
-        .btns-wrapper,
-        .table-wrapper {
+        .middle-opertion-wrapper,
+        .core-wrapper {
             padding: 0;
         }
     }
 
-    .btns-wrapper {
-        flex: none;
+    /* 中间 */
+    .middle-opertion-wrapper {
         padding: 0 $--base-padding-lr;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
+        flex: none;
+        display: flex;
+        justify-content: space-between;
 
-        .el-button {
-            padding: 0 20px;
-            font-size: 14px;
+        /* 左 */
+        .middle-left-wrapper {
+            width: 60%;
+
+            .btns-wrapper {
+                .el-button {
+                    padding: 0 22px;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        /* 右 */
+        .middle-right-wrapper {
+            width: 38%;
         }
     }
 
-    .table-wrapper {
+    /* 核心 */
+    .core-wrapper {
         flex: 1;
         overflow: hidden;
         padding: 0 $--base-padding-lr $--base-padding-lr;
