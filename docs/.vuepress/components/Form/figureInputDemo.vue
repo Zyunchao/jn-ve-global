@@ -14,7 +14,7 @@
 import { reactive, watch, ref } from 'vue'
 import { FormProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
-import { toThousands } from '@component/GForm/utils'
+import { toThousands, restrictDecimals } from '@component/GForm/utils'
 
 let formConfig = ref<FormProps>({
     instance: null,
@@ -66,6 +66,25 @@ let formConfig = ref<FormProps>({
                 props: {
                     format: (val) => {
                         return val ? ((val as number) - 0).toFixed(4) : val
+                    }
+                }
+            }
+        },
+        {   
+            /**
+             * 存储格式化
+             */
+            prop: 'money',
+            label: '至多输入两位小数',
+            span: 24,
+            controlConfig: {
+                type: 'figureInput',
+                props: {
+                    format: (val) => {
+                        return val
+                    },
+                    valueFormat: (val) => {
+                        return restrictDecimals(val as string, 2)
                     }
                 }
             }
