@@ -153,8 +153,8 @@
         </template>
 
         <!-- 千分位展示 -->
-        <template v-if="localControlType === 'thousands'">
-            <el-input v-model="thousandsControlVal" v-bind="getItemControlProps()" />
+        <template v-if="localControlType === 'figureInput'">
+            <el-input v-model="figureInputControlVal" v-bind="getItemControlProps()" />
         </template>
     </template>
 </template>
@@ -167,11 +167,17 @@ export default {
 
 <script lang="ts" setup>
 import { PropType, watch, ref, computed, reactive, toRefs } from 'vue'
-import { FormItemProps, RadioOptionProps, RadioButtonOptionProps, ControlConfig } from '../index'
+import {
+    FormItemProps,
+    RadioOptionProps,
+    RadioButtonOptionProps,
+    ControlConfig,
+    FigureInputControlConfig
+} from '../index'
 import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/index.vue'
 import UploadControl from './uploadControl.vue'
-import { toThousands } from '../utils'
+import { clearNoNum } from '../utils'
 
 const props = defineProps({
     formItemConfig: {
@@ -201,7 +207,7 @@ const getItemControlProps = () => {
     // 具体控件的差异配置
     switch (props.controlConfig!.type) {
     case 'input':
-    case 'thousands':
+    case 'figureInput':
         controlProps['placeholder'] = controlProps['placeholder']
             ? controlProps['placeholder']
             : `请输入${props.formItemConfig.label}`
@@ -223,9 +229,31 @@ const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) 
 }
 
 // ------------------------------↓ 千分位展示 ↓------------------------------------------------------------------------------
-const thousandsControlVal = computed({
-    get: () => toThousands(localPropRef.value as string),
-    set: (val) => (localPropRef.value = val.replace(/^\.+|[^\d.]/g, ''))
+const figureInputControlVal = computed({
+    get: () => {
+        /**
+         * 用户自定义展示格式化方法
+         */
+        const controlConfig = props.controlConfig as FigureInputControlConfig
+        if (controlConfig.props && controlConfig.props.format) {
+            return controlConfig.props.format(localPropRef.value as string)
+        }
+
+        // 原展示
+        return localPropRef.value
+    },
+    set: (val) => {
+        const controlConfig = props.controlConfig as FigureInputControlConfig
+
+        // 限制只能输入整数 or 小数
+        localPropRef.value = clearNoNum(val as string)
+
+        // 将限制处理过的数据传递给用户的 valueFormat
+        if (controlConfig.props && controlConfig.props.valueFormat) {
+            localPropRef.value = controlConfig.props.valueFormat(localPropRef.value)
+            return
+        }
+    }
 })
 // ------------------------------↑ 千分位展示 ↑------------------------------------------------------------------------------
 </script>
