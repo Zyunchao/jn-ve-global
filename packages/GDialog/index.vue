@@ -7,9 +7,14 @@
         v-bind="$attrs"
         :custom-class="`custom-dialog ${$attrs['custom-class']}`"
     >
+        <!-- title -->
+        <template v-if="$slots.title" #title>
+            <slot name="title" />
+        </template>
+
         <!-- 弹框内容 -->
         <template #default>
-            <slot>dialogContent</slot>
+            <slot />
         </template>
 
         <!-- 底部按钮 -->

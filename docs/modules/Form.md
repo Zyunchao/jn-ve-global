@@ -119,7 +119,7 @@ FigureInput 意为数字、计算、的输入框；
 在 form 组件的 utils 中，为用户提供了两个实用的方法，使用时引入：
 
 ```ts
- import { toThousands, restrictDecimals } from 'jn-ve-global/package/GForm/utils'
+ import { toThousands, restrictDecimals } from 'jn-ve-global/packages/GForm/utils'
  ```
 
 ```ts

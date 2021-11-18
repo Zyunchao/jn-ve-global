@@ -22,6 +22,15 @@ $--base-font-color: #595959;
                 display: flex;
                 align-items: center;
             }
+
+            // 时间选择框
+            .el-date-editor {
+                &.el-range-editor {
+                    .el-range-separator {
+                        width: auto;
+                    }
+                }
+            }
         }
 
         // 自定义类名

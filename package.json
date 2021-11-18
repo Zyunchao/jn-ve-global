@@ -1,6 +1,6 @@
 {
     "name": "jn-ve-global",
-    "version": "1.3.7",
+    "version": "1.3.9",
     "author": "zyc",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
@@ -15,7 +15,8 @@
             "require": "./dist/jn-ve-global.umd.js"
         },
         "./style.css": "./dist/style.css",
-        "./dist/*": "./dist/*"
+        "./dist/*": "./dist/*",
+        "./packages/*": "./packages/*"
     },
     "peerDependencies": {
         "element-plus": "1.1.0-beta.18",
