@@ -26,6 +26,7 @@ import {
 import dayjs from 'dayjs'
 import treeData from '../selectTreeTest/data.json'
 import { findTargetById } from '@/utils/utils'
+import { toThousands } from '@component/GFigureInput/utils'
 
 const foodsMapping = {
     pastries: '黄金糕',
@@ -141,6 +142,21 @@ const tableColumns = reactive<TableColumnProps[]>([
                     ? row.selectMultiple.map((key) => foodsMapping[key] || key).join('，')
                     : row.selectMultiple
                 : ''
+        }
+    },
+    {
+        prop: 'money',
+        label: '工资-FigureInput',
+        width: 180,
+        editable: true,
+        controlConfig: {
+            type: 'figureInput',
+            props: {
+                format: (val) => toThousands(val)
+            }
+        },
+        render(row) {
+            return toThousands(row.money)
         }
     },
     {
@@ -390,7 +406,6 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
     columns: tableColumns,
     rowKey: 'id',
     stripe: true,
-    highlightCurrentRow: true,
     pagination: {
         pageSize: 10,
         currentPage: 1,

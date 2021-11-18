@@ -1,5 +1,54 @@
 # 更新日志
 
+<!-- ================== 1.3.9 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+1.3.9
+
+</template>
+
+<template #date>
+
+2021-11-18
+
+</template>
+<h3>新特性</h3>
+
+<h4>FigureInput</h4>
+
+1. 将数字格式化组件独立出来，并添加独立文档
+2. 将原先保存在 GForm/utils 中的方法提取到了 GFigureInput/utils（非兼容性，用户注意更改引用文件）
+
+<h4>Table</h4>
+
+1. 将 FigureInput 组件集成到了 EditTable 中
+
+<h3>优化</h3>
+
+<h4>Form</h4>
+
+1. 优化 RangePicker 的 rangeSeparator 的宽度
+2. 优化 FormItem 中 FigureInput 部分的代码
+
+<h4>Dialog</h4>
+
+1. 增加 title 的 slot
+
+<h3>Bug Fix</h3>
+
+<h4>Table</h4>
+
+1. 修复编辑表格，行的 edit 在初始创建时置为 true， 不生效的问题（重要）
+
+<h4>Package.json</h4>
+
+1. 增加组件库的导出目录（"./packages/*": "./packages"）
+
+</update-log-block>
+
 <!-- ================== 1.3.6 ======================================================================== -->
 
 <update-log-block>

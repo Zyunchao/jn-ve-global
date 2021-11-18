@@ -23,6 +23,7 @@ import {
 } from '@component/index'
 import dayjs from 'dayjs'
 import { findTargetById } from '@/utils/utils'
+import { toThousands } from '@component/GFigureInput/utils'
 
 const foodsMapping = {
     pastries: '黄金糕',
@@ -110,6 +111,18 @@ const tableColumns = reactive<TableColumnProps[]>([
                     ? row.selectMultiple.map((key) => foodsMapping[key] || key).join('，')
                     : row.selectMultiple
                 : ''
+        }
+    },
+    {
+        prop: 'money',
+        label: '工资-FigureInput',
+        width: 180,
+        editable: true,
+        controlConfig: {
+            type: 'figureInput',
+            props: {
+                format: (val) => toThousands(val)
+            }
         }
     },
     {

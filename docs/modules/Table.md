@@ -177,6 +177,12 @@
 按 `esc` 可退出编辑， `esc` 退出编辑拥有最高权限
 :::
 
+:::tip 注意
+在使用 FigureInput 组件作为行内编辑时，表格内部会采用传递给 FigureInput 组件的 fomat 方法格式化表格的文本显示；<br/>
+
+也可使用 render 格式化表格的展示数据
+:::
+
 <demo-block>
 
 <Table-demo5 />

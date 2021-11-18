@@ -11,7 +11,9 @@
         >
             <div v-if="textCellShow" class="text">
                 <!-- 普通文本 -->
-                <span v-if="!columnConfig.render">{{ localPropRef }}</span>
+                <span v-if="!columnConfig.render">{{
+                    figureInputValue === null ? localPropRef : figureInputValue
+                }}</span>
 
                 <!-- 自定义渲染 -->
                 <FunctionalComponent
@@ -283,6 +285,16 @@
                         </el-tag>
                     </div>
                 </template>
+
+                <!-- 数字格式化 -->
+                <template v-if="localControlType === 'figureInput'">
+                    <LGFigureInput
+                        v-model="localPropRef"
+                        v-bind="localControlProps"
+                        size="mini"
+                        @table-edit-hide="controlToText"
+                    />
+                </template>
             </div>
         </transition>
     </div>
@@ -317,6 +329,8 @@ import LGSelectTree from '../../GSelectTree/index.vue'
 import Schema, { ValidateError } from 'async-validator'
 import { ElMessage } from 'element-plus'
 import _ from 'lodash'
+import LGFigureInput from '../../GFigureInput/index.vue'
+import { FigureInputProps } from '../../GForm'
 
 enum CellStatus {
     /**
@@ -393,6 +407,21 @@ const controlIsRequired = computed<boolean>(() => {
         return props.columnConfig.rules.required
     }
     return false
+})
+
+/**
+ * figureInput 特殊处理值
+ */
+const figureInputValue = computed(() => {
+    if (localControlType.value !== 'figureInput') return null
+
+    const figureInputProps = localControlProps.value as FigureInputProps
+
+    if (figureInputProps.format) {
+        return figureInputProps.format(localPropRef.value as string)
+    }
+
+    return localPropRef.value
 })
 
 // 控制 text 的创建

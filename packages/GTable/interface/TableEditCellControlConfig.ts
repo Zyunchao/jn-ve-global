@@ -11,7 +11,8 @@ import {
     ColorPickerControlConfig,
     RateControlConfig,
     SliderControlConfig,
-    SelectTreeControlConfig
+    SelectTreeControlConfig,
+    FigureInputControlConfig
 } from '../../GForm'
 
 type TableEditCellControlConfig =
@@ -28,5 +29,6 @@ type TableEditCellControlConfig =
     | RateControlConfig
     | SliderControlConfig
     | SelectTreeControlConfig
+    | FigureInputControlConfig
 
 export default TableEditCellControlConfig

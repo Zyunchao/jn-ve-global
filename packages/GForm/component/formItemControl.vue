@@ -178,7 +178,6 @@ import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/index.vue'
 import UploadControl from './uploadControl.vue'
 import LGFigureInput from '../../GFigureInput/index.vue'
-import { clearNoNum } from '../utils'
 
 const props = defineProps({
     formItemConfig: {
