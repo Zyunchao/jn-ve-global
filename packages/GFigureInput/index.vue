@@ -27,7 +27,7 @@ export default {
 <script lang="ts" setup>
 import { nextTick, ref, computed, PropType } from 'vue'
 import { FigureInputProps } from '../GForm'
-import { clearNoNum } from '../GForm/utils'
+import { clearNoNum } from './utils'
 
 const props = defineProps({
     /**

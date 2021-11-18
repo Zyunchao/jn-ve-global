@@ -4,18 +4,19 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
 export default {
     name: 'FormDemo1'
 }
 </script>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 // 注意：组件文档的 demo 是基于本地路径引用的，在使用 npm 包时，应改为
 // import { FormProps } from 'jn-ve-global/packages/GForm
 import { FormProps } from '@component/GForm'
 import { reactive } from 'vue'
 import treeData from './data/treeData.json'
+import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
 
 /**
  * 基本表单数据模型都要发生变化的，所以在生成对象时，要定义成响应式对象
@@ -34,7 +35,7 @@ let formConfig = reactive<FormProps>({
     /**
      * model 是控件双向绑定数据的依赖对象，其里面的字段是自定义的
      * 也是发送给后台的参数列表
-     * 
+     *
      * 在 FormItems 的配置中，prop 需要制定 model 中的某一个字段，才能实现数据的绑定
      */
     model: {
@@ -52,7 +53,8 @@ let formConfig = reactive<FormProps>({
         rate: 3,
         slider: 50,
         selectTreeActive: '1425374958969872386',
-        selectTreeActiveM: ['1425374667260223489']
+        selectTreeActiveM: ['1425374667260223489'],
+        money: ''
     },
     /**
      * formItems 是第二层配置
@@ -241,7 +243,79 @@ let formConfig = reactive<FormProps>({
                     multiple: true
                 }
             }
+        },
+        // -----------------↓ FigureInput 样例 ↓-----------------------------------------------------------------------------
+        {
+            prop: 'money',
+            span: 24,
+            render(prop) {
+                return <h4 class='data-box'>FigureInput 样例：</h4>
+            }
+        },
+        {
+            prop: 'money',
+            label: '收集的数据',
+            span: 24,
+            render(prop) {
+                return <h4 class='data-box'>{prop.value}</h4>
+            }
+        },
+        {
+            prop: 'money',
+            label: '千分位',
+            span: 24,
+            controlConfig: {
+                type: 'figureInput',
+                props: {
+                    format: (val) => {
+                        return toThousands(val)
+                    }
+                }
+            }
+        },
+        {
+            prop: 'money',
+            label: '保留两位小数',
+            span: 24,
+            controlConfig: {
+                type: 'figureInput',
+                props: {
+                    format: (val) => {
+                        return val ? ((val as number) - 0).toFixed(2) : val
+                    }
+                }
+            }
+        },
+        {
+            prop: 'money',
+            label: '保留四位小数',
+            span: 24,
+            controlConfig: {
+                type: 'figureInput',
+                props: {
+                    format: (val) => {
+                        return val ? ((val as number) - 0).toFixed(4) : val
+                    }
+                }
+            }
+        },
+        {
+            prop: 'money',
+            label: '至多输入两位小数',
+            span: 24,
+            controlConfig: {
+                type: 'figureInput',
+                props: {
+                    format: (val) => {
+                        return val
+                    },
+                    valueFormat: (val) => {
+                        return restrictDecimals(val as string, 2)
+                    }
+                }
+            }
         }
+        // -----------------↑ FigureInput 样例 ↑-----------------------------------------------------------------------------
     ]
 })
 </script>
@@ -249,5 +323,10 @@ let formConfig = reactive<FormProps>({
 <style lang="scss" scoped>
 .wrapper {
     width: 700px;
+
+    :deep(.data-box) {
+        margin: 0;
+        line-height: 40px;
+    }
 }
 </style>

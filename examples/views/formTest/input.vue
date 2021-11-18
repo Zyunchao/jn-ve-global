@@ -7,6 +7,18 @@
         <el-button type="primary" @click="resetForm">
             重置
         </el-button>
+
+        <h1>GFigureInput</h1>
+        <div class="box">
+            <span>金额：</span>
+
+            <GFigureInput
+                v-model="figureVal"
+                :format="figureInputFormat"
+                :value-format="figureInputValueFormat"
+                placeholder="请输入...."
+            />
+        </div>
     </div>
 </template>
 
@@ -14,7 +26,7 @@
 import { reactive, watch, ref } from 'vue'
 import { FormProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
-import { toThousands } from '@component/GForm/utils'
+import { toThousands, restrictDecimals } from '@component/GForm/utils'
 
 let formConfig = ref<FormProps>({
     instance: null,
@@ -69,6 +81,25 @@ let formConfig = ref<FormProps>({
                     }
                 }
             }
+        },
+        {
+            /**
+             * 存储格式化
+             */
+            prop: 'money',
+            label: '至多输入两位小数',
+            span: 24,
+            controlConfig: {
+                type: 'figureInput',
+                props: {
+                    format: (val) => {
+                        return val
+                    },
+                    valueFormat: (val) => {
+                        return restrictDecimals(val as string, 2)
+                    }
+                }
+            }
         }
     ]
 })
@@ -90,6 +121,38 @@ const getData = () => {
 const resetForm = () => {
     formConfig.value.instance?.resetFields()
 }
+
+// --------------------------- 测试单个 figureInput
+const figureVal = ref<number>(123456)
+
+const figureInputFormat = (val) => {
+    return toThousands(val)
+}
+
+const figureInputValueFormat = (val) => {
+    return restrictDecimals(val as string, 4)
+}
+
+watch(
+    () => figureVal.value,
+    (val) => {
+        console.log(`%c 单个 input val === `, 'color: #67c23a;', val)
+    }
+)
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+h1 {
+    margin: 20px 0;
+}
+
+.box {
+    display: flex;
+    span {
+        width: 100px;
+        text-align: right;
+        line-height: 40px;
+        padding-right: 20px;
+    }
+}
+</style>

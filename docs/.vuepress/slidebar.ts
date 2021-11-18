@@ -9,7 +9,8 @@ export default [
             { text: 'Form', link: '/modules/Form.md' },
             { text: 'Tabs', link: '/modules/Tabs.md' },
             { text: 'SelectTree', link: '/modules/SelectTree.md' },
-            { text: 'OperateExcel', link: '/modules/OperateExcel.md' }
+            { text: 'OperateExcel', link: '/modules/OperateExcel.md' },
+            { text: 'FigureInput', link: '/modules/FigureInput.md' }
         ]
     },
     {
