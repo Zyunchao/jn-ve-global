@@ -9,23 +9,23 @@ export interface InputEvents {
     /**
      * 在 Input 失去焦点时触发
      */
-    blur?: (event: Event) => void
+    onBlur?: (event: Event) => void
     /**
      * 在 Input 获得焦点时触发
      */
-    focus?: (event: Event) => void
+    onFocus?: (event: Event) => void
     /**
      * 仅在输入框失去焦点或用户按下回车时触发
      */
-    change?: (value: string | number) => void
+    onChange?: (value: string | number) => void
     /**
      * 在 Input 值改变时触发
      */
-    input?: (value: string | number) => void
+    onInput?: (value: string | number) => void
     /**
      * 在点击由 clearable 属性生成的清空按钮时触发
      */
-    clear?: () => void
+    onClear?: () => void
     /**
      * 粘贴事件
      */

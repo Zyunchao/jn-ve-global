@@ -152,24 +152,9 @@
             <UploadControl :control-config="controlConfig" :prop="prop" />
         </template>
 
-        <!-- 千分位展示 -->
+        <!-- 数值格式化、计算；输入框 -->
         <template v-if="localControlType === 'figureInput'">
-            <!-- 负责搜集数据的框 -->
-            <el-input
-                v-show="!showInputShow"
-                ref="gatherFigureInputRef"
-                v-model="gatherFigureInputVal"
-                v-bind="getItemControlProps()"
-                @blur="gatherFigureInputControlBlur"
-            />
-            <!-- 展示的框 -->
-            <el-input
-                v-show="showInputShow"
-                ref="showFigureInputRef"
-                v-model="showFigureInputVal"
-                v-bind="getItemControlProps()"
-                @focus="showFigureInputControlFocus"
-            />
+            <LGFigureInput v-model="localPropRef" v-bind="getItemControlProps()" />
         </template>
     </template>
 </template>
@@ -192,6 +177,7 @@ import {
 import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/index.vue'
 import UploadControl from './uploadControl.vue'
+import LGFigureInput from '../../GFigureInput/index.vue'
 import { clearNoNum } from '../utils'
 
 const props = defineProps({
@@ -242,63 +228,6 @@ const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) 
     const { label, value, ...props } = radioOption
     return props
 }
-
-// ------------------------------↓ 数字格式化 ↓------------------------------------------------------------------------------
-// 展示 input 显示 flag
-const showInputShow = ref<boolean>(true)
-const gatherFigureInputRef = ref(null)
-const showFigureInputRef = ref(null)
-
-// 搜集数据输入框绑定值，主要做限制数字
-const gatherFigureInputVal = computed({
-    get: () => localPropRef.value,
-    set: (val) => {
-        const controlConfig = props.controlConfig as FigureInputControlConfig
-
-        // 限制只能输入整数 or 小数
-        localPropRef.value = clearNoNum(val as string)
-
-        // 将限制处理过的数据传递给用户的 valueFormat
-        if (controlConfig.props && controlConfig.props.valueFormat) {
-            localPropRef.value = controlConfig.props.valueFormat(localPropRef.value)
-            return
-        }
-    }
-})
-
-// 展示输入框绑定的值
-const showFigureInputVal = computed(() => {
-    /**
-     * 用户自定义展示格式化方法
-     */
-    const controlConfig = props.controlConfig as FigureInputControlConfig
-
-    if (controlConfig.props && controlConfig.props.format) {
-        return controlConfig.props.format(gatherFigureInputVal.value as string)
-    }
-
-    // 原展示
-    return gatherFigureInputVal.value
-})
-
-/**
- * 展示框获取焦点，隐藏展示框
- * 显示数据收集框，并使其获取焦点
- */
-const showFigureInputControlFocus = () => {
-    showInputShow.value = false
-    nextTick(() => {
-        gatherFigureInputRef.value.focus()
-    })
-}
-
-/**
- * 搜集数据框失去焦点，显示展示框
- */
-const gatherFigureInputControlBlur = () => {
-    showInputShow.value = true
-}
-// ------------------------------↑ 数字格式化 ↑------------------------------------------------------------------------------
 </script>
 
 <style lang="scss" scoped></style>
