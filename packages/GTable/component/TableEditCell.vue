@@ -9,7 +9,7 @@
             :name="`slide-${cellStatus === CellStatus.CONTROL ? 'right' : 'left'}`"
             mode="out-in"
         >
-            <div v-if="cellStatus === CellStatus.TEXT || !columnConfig.controlConfig" class="text">
+            <div v-if="textCellShow" class="text">
                 <!-- 普通文本 -->
                 <span v-if="!columnConfig.render">{{ localPropRef }}</span>
 
@@ -21,9 +21,7 @@
             </div>
 
             <div
-                v-else-if="
-                    columnConfig.controlConfig && !tdIsHidden && cellStatus === CellStatus.CONTROL
-                "
+                v-else-if="controlCellShow"
                 :class="[
                     'control',
                     { 'is-required': controlIsRequired && !tdIsHidden },
@@ -395,6 +393,50 @@ const controlIsRequired = computed<boolean>(() => {
         return props.columnConfig.rules.required
     }
     return false
+})
+
+// 控制 text 的创建
+const textCellShow = computed<boolean>(() => {
+    /**
+     * 优先级1
+     * 如果行数据内拥有 edit（不为 undefined），说明需要总控
+     * 如果传递了 controlConfig，且 edit 为 true，说明总控变为编辑状态
+     * text 文本将销毁
+     */
+    if (localData.value.edit !== undefined) {
+        if (localData.value.edit && props.columnConfig.controlConfig) {
+            return false
+        }
+    }
+
+    /**
+     * 优先级2
+     * 没有总控情况下，或总控为 false 情况下
+     * 控制权回到当前组件中
+     */
+    return cellStatus.value === CellStatus.TEXT || !props.columnConfig.controlConfig
+})
+
+// 控制控件的创建
+const controlCellShow = computed<boolean>(() => {
+    /**
+     * 优先级1
+     *  1. 传递了 columnConfig.controlConfig
+     *  2. 不是隐藏的 cell（横向滚动隐藏表格）
+     */
+    if (!props.columnConfig.controlConfig || tdIsHidden.value) return false
+
+    /**
+     * 优先级2
+     *  总控：row.edit = true
+     */
+    if (localData.value.edit === true) return true
+
+    /**
+     * 优先级3
+     *  自控：cellStatus === CellStatus.CONTROL
+     */
+    return cellStatus.value === CellStatus.CONTROL
 })
 
 // 行编辑总控
