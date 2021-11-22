@@ -1,16 +1,16 @@
 <template>
-    <div class="examples-base-wrapper">
+    <div class="examples-base-wrapper icon-test-wrapper">
         <p>
-            <span>本地Svg：</span>
+            <span>本地 Svg：</span>
             <g-icon icon="menu-open" />
             <g-icon icon="home-card-notify-icon" />
             <g-icon icon="notifiy-icon" />
         </p>
         <p>
             <span>Ele icon：</span>
-            <g-icon icon="el-icon-s-goods" />
-            <g-icon icon="el-icon-warning" />
-            <g-icon icon="el-icon-s-operation" />
+            <g-icon icon="el-WalletFilled" />
+            <g-icon icon="el-Basketball" />
+            <g-icon icon="el-ArrowDown" />
         </p>
         <p>
             <span>阿里 icon：</span>
@@ -21,27 +21,20 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-    name: 'IconTest',
-    setup() {}
-})
-</script>
+<script lang="ts" setup></script>
 
-<style lang="scss" scoped>
-.examples-base-wrapper {
+<style lang="scss">
+.icon-test-wrapper {
     font-size: 20px;
     p {
         margin-bottom: 20px;
+        display: flex;
+        align-items: center;
 
         i,
         svg {
-            font-size: 30px;
+            font-size: 30px !important;
             margin-right: 10px;
-            &:nth-of-type(2) {
-                color: red !important;
-            }
         }
     }
 }

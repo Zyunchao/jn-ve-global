@@ -9,13 +9,13 @@ import locale from 'element-plus/lib/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'
 
 // 阿里图标
-import '@assets/icons/ali/iconfont.css'
+// import '@assets/icons/ali/iconfont.css'
+// 本地 svg 图标
+// import 'virtual:svg-icons-register'
 
 // 全局组件
 import GlobalComponent from '@component/register'
 
-// 本地 svg 图标
-import 'virtual:svg-icons-register'
 
 export default ({ app, router, siteData }) => {
     app.directive('auth', {})

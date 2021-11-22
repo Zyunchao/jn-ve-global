@@ -19,6 +19,7 @@
         "./packages/*": "./packages/*"
     },
     "peerDependencies": {
+        "@element-plus/icons": "^0.0.11",
         "element-plus": "1.1.0-beta.18",
         "lodash": "^4.17.21",
         "resize-observer-polyfill": "^1.5.1",
@@ -34,6 +35,7 @@
         "docs:build:github": "vuepress build docs github"
     },
     "dependencies": {
+        "@element-plus/icons": "^0.0.11",
         "element-plus": "1.1.0-beta.18",
         "lodash": "^4.17.21",
         "resize-observer-polyfill": "^1.5.1",

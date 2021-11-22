@@ -1,3 +1,7 @@
+// 图标
+import '@assets/icons/ali/iconfont.css'
+import 'virtual:svg-icons-register'
+
 /**
  * 全局注册组件
  */

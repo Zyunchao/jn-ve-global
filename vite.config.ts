@@ -10,7 +10,7 @@ export default defineConfig({
         vueJsx(),
         viteSvgIcons({
             // 指定需要缓存的图标文件夹
-            iconDirs: [resolve(process.cwd(), 'examples/assets/icons/svg')],
+            iconDirs: [resolve(process.cwd(), 'packages/assets/icons/svg')],
             // 指定symbolId格式
             symbolId: 'custom-icon-[dir]-[name]'
         })
@@ -22,7 +22,8 @@ export default defineConfig({
         lib: {
             entry: resolve(__dirname, 'packages/register.ts'),
             name: 'jn-ve-global',
-            fileName: 'jn-ve-global'
+            fileName: 'jn-ve-global',
+            formats: ['es']
         },
         rollupOptions: {
             // 确保外部化处理那些你不想打包进库的依赖
@@ -33,18 +34,19 @@ export default defineConfig({
                 'lodash',
                 'async-validator',
                 'resize-observer-polyfill',
-                'xlsx'
+                'xlsx',
+                '@element-plus/icons'
             ],
             output: {
                 // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-                globals: {
-                    vue: 'Vue',
-                    lodash: '_',
-                    'resize-observer-polyfill': 'ResizeObserver',
-                    'async-validator': 'Schema',
-                    'xlsx': 'XLSX',
-                    'element-plus': 'elementPlus'
-                }
+                // globals: {
+                //     vue: 'Vue',
+                //     lodash: '_',
+                //     'resize-observer-polyfill': 'ResizeObserver',
+                //     'async-validator': 'Schema',
+                //     'xlsx': 'XLSX',
+                //     'element-plus': 'elementPlus'
+                // }
             }
         }
     },
