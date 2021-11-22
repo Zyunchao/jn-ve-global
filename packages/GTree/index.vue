@@ -204,7 +204,7 @@ watch(
 
 const filterNode = (value, data) => {
     if (!value) return true
-    return data.name.indexOf(value) !== -1
+    return data[props.defaultProps.label || 'name'].indexOf(value) !== -1
 }
 
 const unfold = () => {

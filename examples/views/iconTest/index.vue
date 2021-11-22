@@ -18,10 +18,26 @@
             <g-icon icon="ali-icon-applications" />
             <g-icon icon="ali-icon-zhiwei" />
         </p>
+
+        <h3>IconPicker</h3>
+        <div class="box">
+            <g-icon-picker v-model="selectedIcon" />
+        </div>
     </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ref, watch } from 'vue'
+
+const selectedIcon = ref<string>('')
+
+watch(
+    () => selectedIcon.value,
+    (icon) => {
+        console.log(`%c 所选 icon == `, 'color: #67c23a;', icon)
+    }
+)
+</script>
 
 <style lang="scss">
 .icon-test-wrapper {
@@ -32,10 +48,14 @@
         align-items: center;
 
         i,
-        svg {
+        svg.custom-svg-icon {
             font-size: 30px !important;
             margin-right: 10px;
         }
+    }
+
+    .box {
+        width: 600px;
     }
 }
 </style>

@@ -46,7 +46,9 @@ const elIconComponentName = computed(() => {
 .g-icon {
     vertical-align: top;
     line-height: 1;
-
+    width: auto;
+    height: auto;
+    
     svg {
         vertical-align: top;
     }

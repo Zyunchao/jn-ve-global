@@ -1,0 +1,103 @@
+$--select-input-height: 40px;
+$--base-icon-font-size: 30px;
+$--base-icon-font-color: #818080;
+$--base-active-color: #399ffb;
+
+// 组件本身
+.g-icon-picker-wrapper {
+
+    // 输入框
+    .el-input {
+        .el-input-group__prepend {
+
+            i,
+            svg {
+                font-size: 24px !important;
+                color: $--base-icon-font-color !important;
+            }
+        }
+
+        .el-input__suffix {
+            .el-input__suffix-inner {
+                height: calc(100% - 1px);
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                opacity: 0;
+                transition: opacity 0.2s;
+
+                i {
+                    font-size: 18px;
+                }
+            }
+        }
+
+        &:hover:not(&.is-disabled) {
+            .el-input__suffix {
+                .el-input__suffix-inner {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+// 弹出
+.el-popover.g-icon-picker-popper {
+    padding-right: 0 !important;
+
+    &>.el-scrollbar {
+        >.el-scrollbar__wrap {
+            .el-scrollbar__view {
+                padding-right: 12px;
+            }
+        }
+    }
+
+    .el-collapse {
+        .el-collapse-item {
+            .el-collapse-item__header {
+                font-size: 14px;
+            }
+
+            .el-collapse-item__wrap .el-collapse-item__content {
+                padding-bottom: 10px;
+
+                /* svg 图标 */
+                .local-icons-wrapper {
+                    display: flex;
+                    flex-wrap: wrap;
+
+                    svg {
+                        box-sizing: content-box;
+                        color: $--base-icon-font-color !important;
+                    }
+                }
+
+                /* 类名图标 */
+                i,
+                .local-icons-wrapper svg {
+                    color: $--base-icon-font-color;
+                    font-size: $--base-icon-font-size;
+                    margin-right: 12px;
+                    margin-bottom: 12px;
+                    cursor: pointer;
+                    border: 1px dashed transparent;
+                    border-radius: 6px;
+                    padding: 6px;
+                    transition: all 0.2s;
+
+                    &.is-active,
+                    &:hover {
+                        border-color: $--base-active-color;
+                        color: $--base-active-color !important;
+                    }
+
+                    &.is-active {
+                        border-style: solid;
+                    }
+                }
+            }
+        }
+    }
+}
