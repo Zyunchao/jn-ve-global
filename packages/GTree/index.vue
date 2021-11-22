@@ -254,7 +254,7 @@ $--base-padding-lr: 14px;
             flex: 1;
         }
 
-        .tree-icons {
+        :deep(.tree-icons) {
             display: flex;
             justify-content: center;
             align-items: center;

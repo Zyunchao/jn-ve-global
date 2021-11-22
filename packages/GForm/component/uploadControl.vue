@@ -29,10 +29,10 @@
             >
                 <img :src="controlConfig.props.imgUrl" class="avatar">
                 <div v-if="!controlConfig.props.disabled" class="shade" @click.stop="handleDeleImg">
-                    <g-icon icon="el-icon-delete" />
+                    <g-icon icon="el-Delete" />
                 </div>
             </div>
-            <g-icon icon="el-icon-plus" />
+            <g-icon icon="el-Plus" class="upload-trigger" />
         </template>
     </el-upload>
 </template>
@@ -160,6 +160,13 @@ const handleDeleImg = () => {
         position: relative;
         overflow: hidden;
 
+        .upload-trigger {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
         .avatar-wrapper {
             padding: 2px;
             width: 100%;
@@ -181,8 +188,10 @@ const handleDeleImg = () => {
                 width: 100%;
                 height: 100%;
                 background-color: rgba(0, 0, 0, 0.2);
-                opacity: 0;
                 transition: opacity 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
                 i {
                     color: #fff;

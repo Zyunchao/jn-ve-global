@@ -3,15 +3,16 @@
     <i
         v-if="iconIsValid && ['ali-'].some((prefix) => icon.indexOf(prefix) === 0)"
         :class="[icon, 'iconfont']"
+        v-bind="$attrs"
     />
 
     <!-- El Icon -->
-    <el-icon v-else-if="iconIsValid && elIconComponentName" v-bind="$attrs">
+    <el-icon v-else-if="iconIsValid && elIconComponentName" v-bind="$attrs" class="g-icon">
         <component :is="elIcons[elIconComponentName]" />
     </el-icon>
 
     <!-- 本地svg -->
-    <svg-icon v-else-if="iconIsValid" :name="icon" />
+    <svg-icon v-else-if="iconIsValid" :name="icon" v-bind="$attrs" />
 </template>
 
 <script lang="ts">
@@ -41,4 +42,13 @@ const elIconComponentName = computed(() => {
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.g-icon {
+    vertical-align: top;
+    line-height: 1;
+
+    svg {
+        vertical-align: top;
+    }
+}
+</style>
