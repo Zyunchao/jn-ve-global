@@ -11,14 +11,8 @@
                 <!-- 栅格 col -->
                 <el-col v-if="!item.hide" :span="item.span ?? 6">
                     <el-form-item
+                        :class="{ 'no-colon': localConfig.colon === false }"
                         v-bind="getFormItemConfigs(item)"
-                        :label="
-                            item.label
-                                ? localConfig.colon === undefined || localConfig.colon
-                                    ? `${item.label}：`
-                                    : item.label
-                                : ''
-                        "
                         :label-width="
                             item.label
                                 ? item.labelWidth
@@ -29,6 +23,19 @@
                                 : '0px'
                         "
                     >
+                        <!-- 自定义 label -->
+                        <template #label>
+                            <span v-if="item.label && typeof item.label === 'string'">
+                                {{ item.label }}
+                            </span>
+
+                            <!-- tsx -->
+                            <FunctionalComponent
+                                v-if="typeof item.label === 'function'"
+                                :render="item.label()"
+                            />
+                        </template>
+
                         <!-- 自定义 Render 控件 -->
                         <template v-if="item.render">
                             <FunctionalComponent
@@ -109,7 +116,7 @@ const getFormRootConfigs = () => {
 
 // 获取 formItem 的配置（二级配置）
 const getFormItemConfigs = (item: FormItemProps) => {
-    const { span, controlConfig, render, hide, ...formItemConfigs } = item
+    const { span, controlConfig, render, hide, label, ...formItemConfigs } = item
     return formItemConfigs
 }
 </script>

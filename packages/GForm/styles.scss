@@ -5,8 +5,20 @@ $--base-font-color: #595959;
     font-size: $--base-font-size-m;
 
     :deep(.el-form-item) {
+        &.no-colon {
+            .el-form-item__label {
+                &::after {
+                    content: '';
+                }
+            }
+        }
+
         .el-form-item__label {
             font-size: $--base-font-size-m;
+
+            &::after {
+                content: '：';
+            }
         }
 
         .el-form-item__content {

@@ -59,152 +59,96 @@ export type ControlConfig =
     | FigureInputControlConfig
     | IconPickerControlConfig
 
-type FormItemProps =
-    | {
-          /**
-           * 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
-           */
-          prop: string
-          /**
-           * 标签文本
-           */
-          label?: string
-          /**
-           * 表单域标签的的宽度，例如 '50px'。支持 auto。
-           */
-          labelWidth?: string
-          /**
-           * 是否必填，如不设置，则会根据校验规则自动生成
-           * default：false
-           */
-          required?: boolean
-          /**
-           * 表单验证规则, 具体配置见下表, 更多内容参考 async-validator
-           */
-          rules?: ExtendRuleItem | ExtendRuleItem[]
-          /**
-           * 表单域验证错误信息, 设置该值会使表单验证状态变为error，并显示该错误信息
-           */
-          error?: string
-          /**
-           * 是否显示校验错误信息
-           * default：true
-           */
-          showMessage?: boolean
-          /**
-           * 以行内形式展示校验信息
-           * default：false
-           */
-          inlineMessage?: (boolean | string)[]
-          /**
-           * 用于控制该表单域下组件的尺寸
-           */
-          size?: 'medium' | 'small' | 'mini'
+interface FormItemBaseProps {
+    /**
+     * 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
+     */
+    prop: string
+    /**
+     * 表单域标签的的宽度，例如 '50px'。支持 auto。
+     */
+    labelWidth?: string
+    /**
+     * 是否必填，如不设置，则会根据校验规则自动生成
+     * default：false
+     */
+    required?: boolean
+    /**
+     * 表单验证规则, 具体配置见下表, 更多内容参考 async-validator
+     */
+    rules?: ExtendRuleItem | ExtendRuleItem[]
+    /**
+     * 表单域验证错误信息, 设置该值会使表单验证状态变为error，并显示该错误信息
+     */
+    error?: string
+    /**
+     * 是否显示校验错误信息
+     * default：true
+     */
+    showMessage?: boolean
+    /**
+     * 以行内形式展示校验信息
+     * default：false
+     */
+    inlineMessage?: (boolean | string)[]
+    /**
+     * 用于控制该表单域下组件的尺寸
+     */
+    size?: 'medium' | 'small' | 'mini'
 
-          // 自定义扩展 Props -----------------------------------------------------------------------
+    // 自定义扩展 Props -----------------------------------------------------------------------
 
-          /**
-           * 控件配置
-           */
-          controlConfig: ControlConfig
-          /**
-           * FormItem 所占的栅格（1 - 24）
-           * default：6
-           */
-          span?: number
-          /**
-           * 渲染函数
-           */
-          render?: (prop?: any) => JSX.Element | VNode
-          /**
-           * className
-           */
-          class?: string
-          /**
-           * 是否隐藏
-           */
-          hide?: boolean
-          /**
-           * 控件分组
-           */
-          group?: string | string[]
-          /**
-           * 扩展字段
-           */
-          [k: string]: any
-      }
-    | {
-          /**
-           * 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
-           */
-          prop: string
-          /**
-           * 标签文本
-           */
-          label?: string
-          /**
-           * 表单域标签的的宽度，例如 '50px'。支持 auto。
-           */
-          labelWidth?: string
-          /**
-           * 是否必填，如不设置，则会根据校验规则自动生成
-           * default：false
-           */
-          required?: boolean
-          /**
-           * 表单验证规则, 具体配置见下表, 更多内容参考 async-validator
-           */
-          rules?: ExtendRuleItem | ExtendRuleItem[]
-          /**
-           * 表单域验证错误信息, 设置该值会使表单验证状态变为error，并显示该错误信息
-           */
-          error?: string
-          /**
-           * 是否显示校验错误信息
-           * default：true
-           */
-          showMessage?: boolean
-          /**
-           * 以行内形式展示校验信息
-           * default：false
-           */
-          inlineMessage?: (boolean | string)[]
-          /**
-           * 用于控制该表单域下组件的尺寸
-           */
-          size?: 'medium' | 'small' | 'mini'
+    /**
+     * 标签文本
+     * 原生需要一个字符串，
+     * 扩展可传递自定义渲染函数
+     */
+    label?: string | ((prop?: any) => JSX.Element | VNode | string | number)
+    /**
+     * FormItem 所占的栅格（1 - 24）
+     * default：6
+     */
+    span?: number
+    /**
+     * className
+     */
+    class?: string
+    /**
+     * 是否隐藏
+     */
+    hide?: boolean
+    /**
+     * 控件分组
+     */
+    group?: string | string[]
+    /**
+     * 扩展字段
+     */
+    [k: string]: any
+}
 
-          // 自定义扩展 Props -----------------------------------------------------------------------
+interface ControlFormItem extends FormItemBaseProps {
+    /**
+     * 控件配置
+     */
+    controlConfig: ControlConfig
+    /**
+     * 渲染函数
+     */
+    render?: (prop?: any) => JSX.Element | VNode | string | number
+}
 
-          /**
-           * 控件配置
-           */
-          controlConfig?: ControlConfig
-          /**
-           * FormItem 所占的栅格（1 - 24）
-           * default：6
-           */
-          span?: number
-          /**
-           * 渲染函数
-           */
-          render: (prop?: any) => JSX.Element | VNode
-          /**
-           * className
-           */
-          class?: string
-          /**
-           * 是否隐藏
-           */
-          hide?: boolean
-          /**
-           * 控件分组
-           */
-          group?: string | string[]
-          /**
-           * 扩展字段
-           */
-          [k: string]: any
-      }
+interface RenderFormItem extends FormItemBaseProps {
+    /**
+     * 控件配置
+     */
+    controlConfig?: ControlConfig
+    /**
+     * 渲染函数
+     */
+    render: (prop?: any) => JSX.Element | VNode | string | number
+}
+
+type FormItemProps = ControlFormItem | RenderFormItem
 
 export default FormItemProps
