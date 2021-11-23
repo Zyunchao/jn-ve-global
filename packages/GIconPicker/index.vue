@@ -129,7 +129,9 @@ const localSelectedIcon = computed<string>({
 watch(
     () => gIconPickerRootRef.value,
     (val) => {
-        popperWidth.value = val.offsetWidth
+        nextTick(() => {
+            popperWidth.value = val.offsetWidth
+        })
     }
 )
 
