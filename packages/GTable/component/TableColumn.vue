@@ -1,7 +1,9 @@
 <template>
     <el-table-column
         v-bind="columnProps"
-        :class-name="columnConfig.editable ? 'g-table-edit-cell' : ''"
+        :class-name="`${columnProps.className || ''}${
+            columnConfig.editable ? ' g-table-edit-cell' : ''
+        }`"
     >
         <!-- 
             1. column 嵌套，多级表头
