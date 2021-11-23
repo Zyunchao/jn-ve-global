@@ -10,7 +10,8 @@ export default [
             { text: 'Tabs', link: '/modules/Tabs.md' },
             { text: 'SelectTree', link: '/modules/SelectTree.md' },
             { text: 'OperateExcel', link: '/modules/OperateExcel.md' },
-            { text: 'FigureInput', link: '/modules/FigureInput.md' }
+            { text: 'FigureInput', link: '/modules/FigureInput.md' },
+            { text: 'IconPicker', link: '/modules/IconPicker.md' }
         ]
     },
     {

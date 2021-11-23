@@ -1,20 +1,58 @@
 <template>
     <div class="icon-wrapper">
-        <g-icon icon="el-icon-eleme" />
-        <g-icon icon="el-icon-goods" />
-        <g-icon icon="el-icon-success" />
+        <template v-for="icon in elIconKeys" :key="icon">
+            <div class="item">
+                <g-icon :icon="`el-${icon}`" />
+                <p>{{ `el-${icon}` }}</p>
+            </div>
+        </template>
     </div>
 </template>
 
+<script lang="ts" setup>
+import { elIconKeys } from '@component/GIconPicker/data/icons'
+</script>
+
 <style lang="scss" scoped>
 .icon-wrapper {
-    i {
-        font-size: 24px;
-        margin-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid #dcdfe6;
+    border-left: 1px solid #dcdfe6;
 
-        &:last-of-type {
-            color: #409eff;
+    .item {
+        box-sizing: border-box;
+        width: calc(100% / 6);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        border-right: 1px solid #dcdfe6;
+        border-bottom: 1px solid #dcdfe6;
+        padding: 16px;
+        padding-top: 20px;
+        transition: all 0.2s;
+
+        p {
+            margin: 0;
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+            line-height: 1.4;
         }
+
+        &:hover {
+            background-color: #f2f6fc;
+
+            &,
+            :deep(i) {
+                color: #53a8ff !important;
+            }
+        }
+    }
+
+    :deep(i) {
+        font-size: 24px;
+        transition: color 0.2s;
     }
 }
 </style>
