@@ -13,7 +13,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
 import { reactive, toRefs, ref } from 'vue'
 import { FormProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
@@ -54,12 +54,13 @@ export default {
                 slider: 50,
                 selectTreeActive: '1425374958969872386',
                 selectTreeActiveM: ['1425374667260223489'],
-                icon: ''
+                icon: '',
+                customLabel: ''
             },
             formItems: [
                 {
                     prop: 'name',
-                    label: '姓名',
+                    label: 'Input',
                     span: 12,
                     required: true,
                     controlConfig: {
@@ -68,7 +69,7 @@ export default {
                 },
                 {
                     prop: 'sex',
-                    label: '性别',
+                    label: 'Select',
                     span: 12,
                     controlConfig: {
                         type: 'select',
@@ -228,6 +229,27 @@ export default {
                             multiple: true
                         }
                     }
+                },
+                {
+                    prop: 'customLabel',
+                    label: () => {
+                        return (
+                            <span class='form-test-custom-label'>
+                                <span>自</span>
+                                <span>定</span>
+                                <span>义</span>
+                                <span>标</span>
+                                <span>签</span>
+                            </span>
+                        )
+                    },
+                    span: 12,
+                    controlConfig: {
+                        type: 'input',
+                        props: {
+                            placeholder: '自定义 label 需要传递 placeholder'
+                        }
+                    }
                 }
             ]
         })
@@ -250,4 +272,24 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.form-test-custom-label {
+    span {
+        &:first-of-type {
+            color: red;
+        }
+        &:nth-of-type(2) {
+            color: orange;
+        }
+        &:nth-of-type(3) {
+            color: blue;
+        }
+        &:nth-of-type(4) {
+            color: green;
+        }
+        &:nth-of-type(5) {
+            color: purple;
+        }
+    }
+}
+</style>
