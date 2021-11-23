@@ -27,6 +27,7 @@ export default {
             instance: null,
             labelPosition: 'right',
             labelWidth: '180px',
+            // disabled: true,
             model: {
                 name: '12345',
                 region: '',
@@ -43,7 +44,8 @@ export default {
                 rate: 3,
                 slider: 50,
                 selectTreeActive: '1425374958969872386',
-                selectTreeActiveM: ['1425374667260223489']
+                selectTreeActiveM: ['1425374667260223489'],
+                icon: ''
             },
             formItems: [
                 {
@@ -131,6 +133,25 @@ export default {
                     }
                 },
                 {
+                    prop: 'rate',
+                    label: 'Rate',
+                    span: 12,
+                    controlConfig: {
+                        type: 'rate',
+                        props: {
+                            max: 10
+                        }
+                    }
+                },
+                {
+                    prop: 'icon',
+                    label: 'IconPicker',
+                    span: 12,
+                    controlConfig: {
+                        type: 'iconPicker'
+                    }
+                },
+                {
                     prop: 'color',
                     label: 'ColorPicker',
                     span: 12,
@@ -164,17 +185,6 @@ export default {
                             { label: '夫妻肺片', value: '2' },
                             { label: '地三鲜', value: '3' }
                         ]
-                    }
-                },
-                {
-                    prop: 'rate',
-                    label: 'Rate',
-                    span: 12,
-                    controlConfig: {
-                        type: 'rate',
-                        props: {
-                            max: 10
-                        }
                     }
                 },
                 {

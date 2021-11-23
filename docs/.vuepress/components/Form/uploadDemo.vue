@@ -20,7 +20,7 @@ let formConfig = ref<FormProps>({
     formItems: [
         {
             prop: 'avatar',
-            label: '头像',
+            label: '图片预览',
             span: 24,
             controlConfig: {
                 type: 'upload',
@@ -33,7 +33,7 @@ let formConfig = ref<FormProps>({
                     name: 'file',
                     showFileList: false,
                     /**
-                     * 在 listType === 'picture-card' 的情况下，上传触发器会自动变成卡片形式，默认情况下会显示为上传文件的回显列表 
+                     * 在 listType === 'picture-card' 的情况下，上传触发器会自动变成卡片形式，默认情况下会显示为上传文件的回显列表
                      * 但是上传头像只需要一个回显框即可，所以需要将 showFileList 置为 false，关闭 upload 的默认行为
                      * 在以上基础之上，要手动创建 img 用于回显
                      */
@@ -55,24 +55,16 @@ let formConfig = ref<FormProps>({
         },
         {
             prop: 'uploadDemo',
-            label: '上传文件',
+            label: '文字列表',
             span: 24,
             controlConfig: {
                 type: 'upload',
                 props: {
                     action: '/api/kinso-basic-open-server/v1/document/image/upload',
-                    accept: 'image/*',
+                    accept: '*',
                     size: 2,
                     drag: false,
-                    listType: 'picture',
-                    name: 'file',
-                    imgUrl: '',
-                    onSuccess(res) {
-                        this.imgUrl = ErCodeImg
-                    },
-                    onError(err) {
-                        this.imgUrl = ErCodeImg
-                    }
+                    name: 'file'
                 }
             }
         }

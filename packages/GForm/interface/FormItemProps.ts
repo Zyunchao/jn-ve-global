@@ -18,7 +18,8 @@ import {
     SliderControlConfig,
     SelectTreeControlConfig,
     UploadControlConfig,
-    FigureInputControlConfig
+    FigureInputControlConfig,
+    IconPickerControlConfig
 } from '../index'
 
 /**
@@ -56,6 +57,7 @@ export type ControlConfig =
     | SelectTreeControlConfig
     | UploadControlConfig
     | FigureInputControlConfig
+    | IconPickerControlConfig
 
 type FormItemProps =
     | {

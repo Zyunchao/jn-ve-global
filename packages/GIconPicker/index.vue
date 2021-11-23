@@ -13,6 +13,7 @@
                     ref="elInputRef"
                     :model-value="localSelectedIcon"
                     readonly
+                    placeholder="请选择图标"
                     :disabled="disabled"
                 >
                     <template #prepend>

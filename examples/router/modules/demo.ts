@@ -54,8 +54,8 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/dialogTest/index.vue')
     },
     {
-        path: '/input-test',
-        component: () => import('@/views/formTest/input.vue')
+        path: '/figureInput-test',
+        component: () => import('@/views/formTest/figureInput.vue')
     }
 ]
 

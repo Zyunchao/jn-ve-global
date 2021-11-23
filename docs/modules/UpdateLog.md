@@ -28,7 +28,11 @@
 
 <h4>IconPicker</h4>
 
-新增 IconPicker 独立组件，为 form 提供选择图标的功能
+新增 IconPicker 独立组件
+
+<h4>Form</h4>
+
+1. 集成 IconPicker 组件
 
 <h3>Bug Fix</h3>
 

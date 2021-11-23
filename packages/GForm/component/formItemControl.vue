@@ -156,6 +156,11 @@
         <template v-if="localControlType === 'figureInput'">
             <LGFigureInput v-model="localPropRef" v-bind="getItemControlProps()" />
         </template>
+
+        <!-- 图标选择器 -->
+        <template v-if="localControlType === 'iconPicker'">
+            <LGIconPicker v-model="localPropRef" v-bind="controlConfig.props" />
+        </template>
     </template>
 </template>
 
@@ -178,6 +183,7 @@ import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/index.vue'
 import UploadControl from './uploadControl.vue'
 import LGFigureInput from '../../GFigureInput/index.vue'
+import LGIconPicker from '../../GIconPicker/index.vue'
 
 const props = defineProps({
     formItemConfig: {

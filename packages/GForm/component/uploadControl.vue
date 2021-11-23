@@ -175,6 +175,7 @@ const handleDeleImg = () => {
             top: 0;
             left: 0;
             background-color: #fff;
+            z-index: 2;
 
             .avatar {
                 width: 100%;
@@ -189,6 +190,7 @@ const handleDeleImg = () => {
                 height: 100%;
                 background-color: rgba(0, 0, 0, 0.2);
                 transition: opacity 0.2s;
+                opacity: 0;
                 display: flex;
                 align-items: center;
                 justify-content: center;

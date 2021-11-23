@@ -102,7 +102,7 @@ let formConfigPicture = ref<FormProps>({
                 type: 'upload',
                 props: {
                     action: '/api/kinso-basic-open-server/v1/document/image/upload',
-                    accept: 'image/*',
+                    accept: '*',
                     size: 2,
                     drag: false,
                     name: 'file',
@@ -130,7 +130,7 @@ let formConfigPictureCard = ref<FormProps>({
                 type: 'upload',
                 props: {
                     action: '/api/kinso-basic-open-server/v1/document/image/upload',
-                    accept: 'image/*',
+                    accept: '*',
                     size: 2,
                     drag: false,
                     name: 'file',
