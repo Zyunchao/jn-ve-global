@@ -50,8 +50,8 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/tableTest/hideDemo.vue')
     },
     {
-        path: '/dialog-test',
-        component: () => import('@/views/dialogTest/index.vue')
+        path: '/modal-test',
+        component: () => import('@/views/modalTest/index.vue')
     },
     {
         path: '/figureInput-test',

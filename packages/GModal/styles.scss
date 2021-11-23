@@ -1,0 +1,79 @@
+$--dialog-base-left-p: 40px;
+
+// 顶部
+@mixin titleStyle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px 18px $--dialog-base-left-p;
+
+    >span,
+    .el-dialog__title {
+        font-size: 24px;
+        color: #333333;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .el-drawer__close-btn,
+    .el-dialog__headerbtn {
+        position: initial;
+        top: initial;
+        right: initial;
+        flex: none;
+
+        i {
+            font-size: 22px !important;
+            color: #a9a9a9;
+        }
+    }
+}
+
+// dialoag 模式
+.g-custom-dialog {
+    .el-dialog__header {
+        @include titleStyle;
+    }
+
+    .el-dialog__body {
+        padding: 14px $--dialog-base-left-p 14px $--dialog-base-left-p;
+        min-height: 100px;
+    }
+
+    .el-dialog__footer {
+        padding: calc(48px - 14px) $--dialog-base-left-p 55px $--dialog-base-left-p;
+    }
+}
+
+// drawer 模式
+.g-custom-drawer {
+    .el-drawer__header {
+        @include titleStyle;
+        margin-bottom: 0;
+    }
+
+    .el-drawer__body {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+
+        .drawer-content {
+            padding: 14px 0 10px $--dialog-base-left-p;
+            height: 100%;
+            overflow: hidden;
+
+            .drawer-content-scrollbar {
+                .el-scrollbar__view {
+                    padding: 0;
+                    overflow: hidden;
+                    padding-right: $--dialog-base-left-p;
+                }
+            }
+        }
+
+        .drawer-footer {
+            flex: none;
+            padding: 10px $--dialog-base-left-p 35px $--dialog-base-left-p;
+        }
+    }
+}

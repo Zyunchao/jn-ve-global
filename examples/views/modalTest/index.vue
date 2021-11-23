@@ -5,9 +5,17 @@
         </el-button>
     </div>
 
-    <g-dialog v-model="dialogShow" custom-class="abcd" title="弹框" :btns="btns">
-        测试弹框内容
-    </g-dialog>
+    <g-modal
+        v-model="dialogShow"
+        :show-close="true"
+        custom-class="abcd"
+        width="70%"
+        title="评级登记"
+        :btns="btns"
+        type="drawer"
+    >
+        <FormTest is-component />
+    </g-modal>
 </template>
 
 <script lang="ts">
@@ -19,6 +27,7 @@ export default {
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { BtnProps } from '@component/index'
+import FormTest from '../formTest/index.vue'
 
 const dialogShow = ref<boolean>(false)
 

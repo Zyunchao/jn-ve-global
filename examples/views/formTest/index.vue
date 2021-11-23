@@ -1,12 +1,15 @@
 <template>
-    <div class="examples-base-wrapper">
+    <div :class="!isComponent ? 'examples-base-wrapper' : ''">
         <g-form :config="formConfig" />
-        <el-button type="primary" @click="getData">
-            获取数据
-        </el-button>
-        <el-button type="primary" @click="resetForm">
-            重置
-        </el-button>
+
+        <div v-if="!isComponent" class="btn-wrapper">
+            <el-button type="primary" @click="getData">
+                获取数据
+            </el-button>
+            <el-button type="primary" @click="resetForm">
+                重置
+            </el-button>
+        </div>
     </div>
 </template>
 
@@ -17,6 +20,12 @@ import treeData from '../selectTreeTest/data.json'
 
 export default {
     name: 'FormTest',
+    props: {
+        isComponent: {
+            type: Boolean,
+            default: false
+        }
+    },
     setup(props, context) {
         const state = reactive({
             checked: '1234',
