@@ -1,13 +1,13 @@
 {
     "name": "jn-ve-global",
-    "version": "1.3.9",
+    "version": "1.4.0",
     "author": "zyc",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
         "dist",
         "packages"
     ],
-    "main": "./dist/jn-ve-global.umd.js",
+    "main": "./dist/jn-ve-global.es.js",
     "module": "./dist/jn-ve-global.es.js",
     "exports": {
         ".": {
