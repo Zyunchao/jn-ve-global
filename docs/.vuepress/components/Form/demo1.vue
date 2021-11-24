@@ -12,7 +12,7 @@ export default {
 
 <script lang="tsx" setup>
 // 注意：组件文档的 demo 是基于本地路径引用的，在使用 npm 包时，应改为
-// import { FormProps } from 'jn-ve-global/packages/GForm
+// import { FormProps } from 'jn-ve-global/packages/GForm'
 import { FormProps } from '@component/GForm'
 import { reactive } from 'vue'
 import treeData from './data/treeData.json'
@@ -54,6 +54,7 @@ let formConfig = reactive<FormProps>({
         slider: 50,
         selectTreeActive: '1425374958969872386',
         selectTreeActiveM: ['1425374667260223489'],
+        icon: '',
         money: ''
     },
     /**
@@ -244,6 +245,14 @@ let formConfig = reactive<FormProps>({
                 }
             }
         },
+        // {
+        //     prop: 'icon',
+        //     label: 'IconPicker',
+        //     span: 24,
+        //     controlConfig: {
+        //         type: 'iconPicker'
+        //     }
+        // },
         // -----------------↓ FigureInput 样例 ↓-----------------------------------------------------------------------------
         {
             prop: 'money',

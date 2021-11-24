@@ -69,6 +69,7 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 * [Slider](https://element-plus.gitee.io/#/zh-CN/component/slider)
 * [SelectTree](/element-component/modules/SelectTree.html)
 * [FigureInput](/element-component/modules/FigureInput.html)
+* [IconPicker](/element-component/modules/IconPicker.html)
 
 <demo-block>
 
@@ -89,6 +90,28 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 :::tip 注意
 由于表单配置对象一般要在后续进行操作，所以，在定义这个配置对象时，一定要配置成响应式对象
 :::
+
+### 自定义渲染 label
+
+FormItem.label 可以传递字符串，也可以传递一个函数： `(prop?: any) => JSX. Element | VNode | string | number`
+
+:::tip 注意
+
+非自定义的 label，控件的 `placeholder` 将拼接 label 的值，但是自定义的 label 将无法拼接 `placeholder` ，故在使用自定义渲染 label 时，要为控件传递 `placeholder`
+
+:::
+
+<demo-block>
+
+<Form-customLabel />
+
+<template #code>
+
+@[code](@demoroot/Form/customLabel.vue)
+
+</template>
+
+</demo-block>
 
 ### 文件上传
 
@@ -281,6 +304,24 @@ interface ExtendRuleItem extends RuleItem {
 
 由上可见，两种添加方式是等效的
 
+### 控件组
+
+一个 FormItem 中可配置多个控件，行成控件组；
+
+将 ControlConfig 更换成 `ControlConfigs` 即可配置控件组
+
+<demo-block>
+
+<Form-controlGroup />
+
+<template #code>
+
+@[code](@demoroot/Form/controlGroup.vue)
+
+</template>
+
+</demo-block>
+
 ## GForm :config 配置列表
 
 ### Form Attributes
@@ -312,6 +353,9 @@ controlConfig | 控件配置 | ControlConfig | --
 render | 控件渲染函数 | (prop?: any) => JSX. Element \| VNode | --
 span| FormItem 所占的栅格（1 - 24） | number | 6
 class | 当前 formItem 的 className | string | --
+hide | 隐藏 item | boolean | --
+group | item 的类别组，无实际控制，做鉴别字段 | string \| string[] | --
+controlConfigs| 控件组（一个 item 多个控件）| ExtendControlConfig[] | --
 
 ### ControlConfig
 
@@ -326,3 +370,13 @@ class | 当前 formItem 的 className | string | --
 type | 控件类型 | string | --
 options | 待选列表 | array | --
 props | 具体的控件的配置对象 | {} | --
+
+### ExtendControlConfig
+
+继承 ControlConfig
+
+扩展字段：
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+after | 控件的后缀（两个控件间的分隔符） | string | --
