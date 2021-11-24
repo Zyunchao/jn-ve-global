@@ -46,7 +46,7 @@ export default {
                 time1: new Date(),
                 time2: '09:00',
                 date1: new Date(),
-                date2: new Date(),
+                date2: [],
                 color: '#ff3040',
                 food: ['0', '2'],
                 food2: ['1', '3'],
@@ -139,6 +139,18 @@ export default {
                         type: 'datePicker',
                         props: {
                             type: 'datetime'
+                        }
+                    }
+                },
+                {
+                    prop: 'date2',
+                    label: 'Daterange',
+                    span: 12,
+                    controlConfig: {
+                        type: 'datePicker',
+                        props: {
+                            type: 'daterange',
+                            unlinkPanels: true
                         }
                     }
                 },

@@ -56,6 +56,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/figureInput-test',
         component: () => import('@/views/formTest/figureInput.vue')
+    },
+    {
+        path: '/controlGroup-test',
+        component: () => import('@/views/formTest/controlGroup.vue')
     }
 ]
 

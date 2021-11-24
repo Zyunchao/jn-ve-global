@@ -36,15 +36,24 @@
                             />
                         </template>
 
-                        <!-- 自定义 Render 控件 -->
+                        <!-- 优先级1：自定义 Render 控件 -->
                         <template v-if="item.render">
                             <FunctionalComponent
                                 :render="item.render(toRef(localConfig.model, item.prop))"
                             />
                         </template>
 
-                        <!-- 配置式控件 -->
-                        <template v-else>
+                        <!-- 优先级2：配置式控件（组） -->
+                        <template v-else-if="item.controlConfigs && item.controlConfigs.length > 0">
+                            <FormItemControlGroup
+                                :form-item-config="item"
+                                :control-configs="item.controlConfigs"
+                                :prop="toRef(localConfig.model, item.prop)"
+                            />
+                        </template>
+
+                        <!-- 优先级3：配置式控件（单） -->
+                        <template v-else-if="item.controlConfig">
                             <FormItemControl
                                 :form-item-config="item"
                                 :control-config="item.controlConfig"
@@ -68,6 +77,7 @@ import { watch, PropType, ref, toRef, nextTick } from 'vue'
 import { FormProps, FormItemProps, FormInstance } from './index'
 import FunctionalComponent from '../FunctionalComponent'
 import FormItemControl from './component/formItemControl.vue'
+import FormItemControlGroup from './component/formItemControlGroup.vue'
 
 const props = defineProps({
     config: {
@@ -116,7 +126,8 @@ const getFormRootConfigs = () => {
 
 // 获取 formItem 的配置（二级配置）
 const getFormItemConfigs = (item: FormItemProps) => {
-    const { span, controlConfig, render, hide, label, ...formItemConfigs } = item
+    const { label, span, hide, group, render, controlConfigs, controlConfig, ...formItemConfigs } =
+        item
     return formItemConfigs
 }
 </script>

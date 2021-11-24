@@ -20,9 +20,10 @@
         </template>
 
         <!-- 底部按钮 -->
-        <template v-if="!hideFooter || $slots.footer" #footer>
-            <div v-if="!$slots.footer" class="modal-btn-wrapper">
-                <template v-if="btns && btns.length > 0">
+        <template v-if="!hideFooter && ($slots.footer || (btns && !!btns.length))" #footer>
+            <slot name="footer">
+                <!-- 按钮组 -->
+                <div v-if="btns && !!btns.length" class="modal-btn-wrapper">
                     <el-button
                         v-for="(btn, index) in btns"
                         :key="`${btn.label}-${index}`"
@@ -30,11 +31,8 @@
                     >
                         {{ btn.label }}
                     </el-button>
-                </template>
-            </div>
-
-            <!-- 用户自定义底部 -->
-            <slot v-else name="footer" />
+                </div>
+            </slot>
         </template>
     </el-dialog>
 
@@ -60,19 +58,17 @@
         </div>
 
         <!-- 底 -->
-        <div class="drawer-footer">
+        <div v-if="!hideFooter && ($slots.footer || (btns && !!btns.length))" class="drawer-footer">
             <slot name="footer">
                 <!-- 按钮组 -->
-                <div class="modal-btn-wrapper">
-                    <template v-if="btns && btns.length > 0">
-                        <el-button
-                            v-for="(btn, index) in btns"
-                            :key="`${btn.label}-${index}`"
-                            v-bind="btn"
-                        >
-                            {{ btn.label }}
-                        </el-button>
-                    </template>
+                <div v-if="btns && !!btns.length" class="modal-btn-wrapper">
+                    <el-button
+                        v-for="(btn, index) in btns"
+                        :key="`${btn.label}-${index}`"
+                        v-bind="btn"
+                    >
+                        {{ btn.label }}
+                    </el-button>
                 </div>
             </slot>
         </div>

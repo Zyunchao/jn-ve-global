@@ -59,6 +59,15 @@ export type ControlConfig =
     | FigureInputControlConfig
     | IconPickerControlConfig
 
+/**
+ * 控件组的配置
+ * 在 ControlConfig 的基础上，增加了 after 必填项
+ */
+export type ExtendControlConfig = ControlConfig & {
+    after: string
+}
+
+// formItem 基础参数
 interface FormItemBaseProps {
     /**
      * 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
@@ -124,31 +133,57 @@ interface FormItemBaseProps {
     /**
      * 扩展字段
      */
-    [k: string]: any
+    // [k: string]: any
 }
 
-interface ControlFormItem extends FormItemBaseProps {
-    /**
-     * 控件配置
-     */
-    controlConfig: ControlConfig
+// 单控件
+export interface ControlFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
     render?: (prop?: any) => JSX.Element | VNode | string | number
+    /**
+     * 控件组配置
+     */
+    controlConfigs?: ExtendControlConfig[]
+    /**
+     * 控件配置
+     */
+    controlConfig: ControlConfig
 }
 
-interface RenderFormItem extends FormItemBaseProps {
+// 多控件（组）
+export interface ControlsFormItem extends FormItemBaseProps {
+    /**
+     * 渲染函数
+     */
+    render?: (prop?: any) => JSX.Element | VNode | string | number
+    /**
+     * 控件组配置
+     */
+    controlConfigs: ExtendControlConfig[]
     /**
      * 控件配置
      */
     controlConfig?: ControlConfig
+}
+
+// Render
+export interface RenderFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
     render: (prop?: any) => JSX.Element | VNode | string | number
+    /**
+     * 控件组配置
+     */
+    controlConfigs?: ExtendControlConfig[]
+    /**
+     * 控件配置
+     */
+    controlConfig?: ControlConfig
 }
 
-type FormItemProps = ControlFormItem | RenderFormItem
+type FormItemProps = ControlFormItem | RenderFormItem | ControlsFormItem
 
 export default FormItemProps
