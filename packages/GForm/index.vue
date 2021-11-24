@@ -24,8 +24,8 @@
                         "
                     >
                         <!-- 自定义 label -->
-                        <template #label>
-                            <span v-if="item.label && typeof item.label === 'string'">
+                        <template v-if="item.label" #label>
+                            <span v-if="typeof item.label === 'string'">
                                 {{ item.label }}
                             </span>
 
