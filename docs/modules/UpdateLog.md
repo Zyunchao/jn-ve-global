@@ -12,7 +12,7 @@
 
 <template #date>
 
-2021-11-22
+2021-11-24
 
 </template>
 
@@ -33,12 +33,22 @@
 <h4>Form</h4>
 
 1. 集成 IconPicker 组件
+2. 增加自定义渲染 `FormItem label` 的功能
+3. FormItem 增加 `控件组` 的配置
+
+<h4>Modal</h4>
+
+新增组件，替换 dialog 组件，统一 dialog & drawer
 
 <h3>Bug Fix</h3>
 
 <h4>Tree</h4>
 
 1. 修复自定义 `treeProps` 时，搜索不生效的问题；
+
+<h4>Table</h4>
+
+1. 修复为 Cloumn 添加 className 不生效的问题
 
 </update-log-block>
 
@@ -74,10 +84,6 @@
 
 1. 优化 RangePicker 的 rangeSeparator 的宽度
 2. 优化 FormItem 中 FigureInput 部分的代码
-
-<h4>Dialog</h4>
-
-1. 增加 title 的 slot
 
 <h3>Bug Fix</h3>
 
@@ -119,13 +125,6 @@
 <h4>Form</h4>
 
 1. 增加控件 FigureInput（数字、计算、格式化）
-
-<h4>Dialog</h4>
-
-新增组件，功能
-
-1. 统一弹框的样式、位置
-2. 快捷配置按钮
 
 <h3>优化</h3>
 

@@ -1,17 +1,13 @@
 <template>
     <div class="examples-base-wrapper">
         <el-button type="primary" @click="handleClick">
-            显示
+            打开
         </el-button>
     </div>
 
-    <g-dialog v-model="dialogShow" append-to-body title="弹框">
-        测试弹框内容
-
-        <template #footer>
-            自定义底部内容
-        </template>
-    </g-dialog>
+    <g-modal v-model="dialogShow" append-to-body title="这是一个对话框" :btns="btns" type="dialog">
+        这是对话框的内容
+    </g-modal>
 </template>
 
 <script lang="ts">
@@ -36,11 +32,27 @@ watch(
     }
 )
 
+const btns = reactive<BtnProps[]>([
+    {
+        label: '提交',
+        type: 'primary',
+        loading: true,
+        onClick: () => {
+            console.log(`%c 提交`, 'color: #67c23a;')
+        }
+    },
+    {
+        label: '保存',
+        type: 'primary',
+        onClick: () => {
+            console.log(`%c 保存`, 'color: #67c23a;')
+        }
+    }
+])
+
 const handleClick = () => {
     dialogShow.value = true
 }
 </script>
 
 <style lang="scss" scoped></style>
-
-<style lang="scss"></style>

@@ -19,7 +19,7 @@ export default [
         children: [
             { text: 'BaseModule', link: '/modules/BaseModule.md' },
             { text: 'BaseDrawerContent', link: '/modules/BaseDrawerContent.md' },
-            { text: 'Dialog', link: '/modules/Dialog.md' }
+            { text: 'Modal', link: '/modules/Modal.md' }
         ]
     },
     {
