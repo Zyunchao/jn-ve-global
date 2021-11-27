@@ -21,36 +21,75 @@ let formConfig = ref<FormProps>({
     labelPosition: 'right',
     labelWidth: '180px',
     model: {
-        money: ['', '', '', '']
+        name: '',
+        money: []
     },
     formItems: [
         {
             prop: 'money',
             label: '金额范围',
-            span: 12,
+            span: 24,
+            rules: [],
             controlConfigs: [
                 {
                     type: 'input',
                     after: '至'
                 },
                 {
-                    type: 'figureInput',
+                    type: 'inputNumber',
                     after: '~'
                 },
                 {
-                    type: 'figureInput',
-                    after: '-'
-                },
-                {
                     type: 'select',
-                    after: '-',
+                    after: '~',
                     options: [
                         { label: '双龙大道', value: 's' },
                         { label: '天隆寺', value: 't' },
                         { label: '南京南', value: 'n' }
                     ]
+                },
+                {
+                    type: 'figureInput',
+                    after: '~',
+                    props: {
+                        placeholder: '保留两位小数',
+                        format: (val) => {
+                            return val ? ((val as number) - 0).toFixed(2) : val
+                        }
+                    }
+                },
+                {
+                    type: 'figureInput',
+                    after: '~',
+                    props: {
+                        placeholder: '千分位',
+                        format: (val) => {
+                            return toThousands(val) || val
+                        }
+                    }
+                },
+                {
+                    type: 'figureInput',
+                    after: '~',
+                    props: {
+                        placeholder: '至多输入两位小数',
+                        format: (val) => {
+                            return val
+                        },
+                        valueFormat: (val) => {
+                            return restrictDecimals(val as string, 2)
+                        }
+                    }
                 }
             ]
+        },
+        {
+            prop: 'name',
+            label: '姓名',
+            span: 12,
+            controlConfig: {
+                type: 'input'
+            }
         }
     ]
 })
@@ -58,7 +97,7 @@ let formConfig = ref<FormProps>({
 watch(
     () => formConfig.value.model,
     (model) => {
-        console.log(`%c model onChange === `, 'color: #67c23a;', model)
+        console.log(`%c 业务组件 model onChange === `, 'color: #67c23a;', model)
     },
     {
         deep: true
@@ -66,7 +105,9 @@ watch(
 )
 
 const getData = () => {
-    console.log(`%c model == `, 'color: #67c23a;', formConfig.value.model)
+    formConfig.value.instance.validate().then((res) => {
+        console.log(`%c model == `, 'color: #67c23a;', formConfig.value.model)
+    })
 }
 
 const resetForm = () => {

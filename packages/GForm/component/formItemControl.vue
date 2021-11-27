@@ -2,17 +2,33 @@
     <template v-if="controlConfig">
         <!-- Input -->
         <template v-if="localControlType === 'input'">
-            <el-input v-model.trim="localPropRef" v-bind="getItemControlProps()" />
+            <el-input
+                v-model.trim="localPropRef"
+                v-bind="getItemControlProps()"
+                @focus="emits('controlFocus')"
+                @blur="emits('controlBlur')"
+            />
         </template>
 
         <!-- InputNumber -->
         <template v-if="localControlType === 'inputNumber'">
-            <el-input-number v-model.number="localPropRef" v-bind="getItemControlProps()" />
+            <el-input-number
+                v-model.number="localPropRef"
+                v-bind="getItemControlProps()"
+                @focus="emits('controlFocus')"
+                @blur="emits('controlBlur')"
+            />
         </template>
 
         <!-- Select -->
         <template v-if="localControlType === 'select'">
-            <el-select v-model="localPropRef" style="width: 100%" v-bind="getItemControlProps()">
+            <el-select
+                v-model="localPropRef"
+                style="width: 100%"
+                v-bind="getItemControlProps()"
+                @focus="emits('controlFocus')"
+                @blur="emits('controlBlur')"
+            >
                 <el-option
                     v-for="selectOption in controlConfig.options"
                     :key="selectOption.value"
@@ -154,7 +170,12 @@
 
         <!-- 数值格式化、计算；输入框 -->
         <template v-if="localControlType === 'figureInput'">
-            <LGFigureInput v-model="localPropRef" v-bind="getItemControlProps()" />
+            <LGFigureInput
+                v-model="localPropRef"
+                v-bind="getItemControlProps()"
+                @focus="emits('controlFocus')"
+                @blur="emits('controlBlur')"
+            />
         </template>
 
         <!-- 图标选择器 -->
@@ -166,7 +187,8 @@
 
 <script lang="ts">
 export default {
-    name: 'FormItemControl'
+    name: 'FormItemControl',
+    inheritAttrs: false
 }
 </script>
 
@@ -199,6 +221,8 @@ const props = defineProps({
         required: true
     }
 })
+
+const emits = defineEmits(['controlFocus', 'controlBlur'])
 
 const localControlType = computed(() => props.controlConfig.type)
 const localPropRef = ref(props.prop)
