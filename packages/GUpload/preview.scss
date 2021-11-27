@@ -1,0 +1,78 @@
+.file-preview-wrapper {
+    max-height: 800px;
+
+    img {
+        max-height: 800px;
+    }
+}
+
+.g-custom-dialog.upload-preview-modal {
+
+    // 图片
+    &.img-modal {
+        box-shadow: none;
+        position: initial;
+        width: 0;
+        height: 0;
+        margin: 0;
+        padding: 0;
+
+        .el-dialog__header {
+            display: none;
+        }
+
+        .el-dialog__body {
+            height: 0;
+            width: 0;
+            padding: 0;
+            margin: 0;
+
+            .file-preview-wrapper {
+                width: auto;
+                height: auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    // pdf 预览
+    &.office-modal {
+        .el-dialog__header {
+            padding: 0;
+
+            .el-dialog__headerbtn {
+                position: absolute;
+                top: 6px;
+                right: 6px;
+            }
+        }
+
+        .file-preview-wrapper {
+            height: 750px;
+        }
+    }
+}
+
+
+// 去除刷新列表的动画
+.g-upload {
+
+    .el-upload-list--picture,
+    .el-upload-list--picture-card {
+
+        .el-list-leave-active,
+        .el-list-leave-to {
+            transition: none;
+            transform: translate(0, 0);
+        }
+
+        .el-list-enter-active,
+        .el-list-enter-to {
+            transition: none;
+            transform: translate(0, 0);
+        }
+    }
+}

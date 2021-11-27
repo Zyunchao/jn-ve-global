@@ -7,7 +7,7 @@
         destroy-on-close
         top="5vh"
         v-bind="$attrs"
-        :custom-class="`g-custom-dialog ${$attrs['custom-class']}`"
+        :custom-class="`g-custom-dialog ${$attrs['custom-class'] || ''}`"
     >
         <!-- title -->
         <template v-if="$slots.title" #title>
@@ -43,7 +43,7 @@
         :size="localWidth"
         destroy-on-close
         v-bind="$attrs"
-        :custom-class="`g-custom-drawer ${$attrs['custom-class']}`"
+        :custom-class="`g-custom-drawer ${$attrs['custom-class'] || ''}`"
     >
         <!-- title -->
         <template v-if="$slots.title" #title>
@@ -95,8 +95,7 @@ const props = defineProps({
      * 控制显示的 flag
      */
     modelValue: {
-        type: Boolean,
-        default: false
+        type: Boolean
     },
     /**
      * 按钮组

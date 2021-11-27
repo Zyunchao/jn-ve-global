@@ -60,6 +60,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/controlGroup-test',
         component: () => import('@/views/formTest/controlGroup.vue')
+    },
+    {
+        path: '/fileList-test',
+        component: () => import('@/views/uploadTest/fileList.vue')
     }
 ]
 
