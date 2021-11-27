@@ -398,6 +398,8 @@ const escTrigger = ref<boolean>(false)
  *  失败：组织一切关闭控件的操作
  */
 let validateRes = ref<boolean>(true)
+const currentCellValidator = ref<Schema>(null)
+
 // 必填项
 const controlIsRequired = computed<boolean>(() => {
     if (props.columnConfig.rules) {
@@ -475,14 +477,31 @@ watch(
         if (edit) {
             textToControl()
         } else {
-            // 校验失败
-            if (!validateRes.value) {
-                localData.value.edit = true
-                return
-            }
+            if (currentCellValidator.value === null) return
 
-            cellStatus.value = CellStatus.TEXT
-            localPropCopy = _.cloneDeep(localPropRef.value)
+            /**
+             * 每次点击保存都要主动校验
+             */
+            currentCellValidator.value
+                .validate(localData.value)
+                .then((res) => {
+                    validateRes.value = true
+
+                    // 校验成功，切换状态，并备份最新的编辑结果
+                    cellStatus.value = CellStatus.TEXT
+                    localPropCopy = _.cloneDeep(localPropRef.value)
+                })
+                .catch((errProps: { errors: ValidateError[] }) => {
+                    validateRes.value = false
+
+                    // 校验失败，阻止关闭编辑状态
+                    localData.value.edit = true
+
+                    const msg: string = errProps.errors.find((item) => {
+                        return item.field === props.columnConfig.prop
+                    })?.message
+                    ElMessage.error(msg)
+                })
         }
     }
 )
@@ -511,6 +530,8 @@ onMounted(() => {
 
         // 检验器
         let validator: Schema = new Schema(descriptor)
+
+        currentCellValidator.value = validator
 
         // 监听数据改变，执行校验
         watch(
