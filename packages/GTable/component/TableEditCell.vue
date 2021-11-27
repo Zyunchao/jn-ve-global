@@ -376,7 +376,7 @@ const onCellEdited = inject(onCellEditKey)
 // 获取 table 实例
 const tableInstance = inject(tableInstanceKey)
 // 当前单元格状态
-const cellStatus = ref<CellStatus>(CellStatus.TEXT)
+const cellStatus = ref<CellStatus>(!props.data.edit ? CellStatus.TEXT : CellStatus.CONTROL)
 // 行数据的本地引用
 const localData = computed<BaseTableDataItem>(() => props.data)
 // 行字段的同步引用
