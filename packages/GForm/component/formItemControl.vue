@@ -165,7 +165,11 @@
 
         <!-- 上传文件 -->
         <template v-if="localControlType === 'upload'">
-            <UploadControl :control-config="controlConfig" :prop="prop" />
+            <LGUpload
+                v-model="localPropRef"
+                v-model:fileList="localUploadFileList"
+                v-bind="controlConfig.props"
+            />
         </template>
 
         <!-- 数值格式化、计算；输入框 -->
@@ -193,19 +197,20 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { PropType, watch, ref, computed, nextTick, toRefs } from 'vue'
+import { PropType, watch, ref, computed, nextTick, toRefs, toRef } from 'vue'
 import {
     FormItemProps,
     RadioOptionProps,
     RadioButtonOptionProps,
     ControlConfig,
-    FigureInputControlConfig
+    UploadControlConfig
 } from '../index'
 import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/index.vue'
-import UploadControl from './uploadControl.vue'
 import LGFigureInput from '../../GFigureInput/index.vue'
 import LGIconPicker from '../../GIconPicker/index.vue'
+import LGUpload from '../../GUpload/index.vue'
+import UploadFile from '../../GUpload/interface/UploadFile'
 
 const props = defineProps({
     formItemConfig: {
@@ -226,6 +231,15 @@ const emits = defineEmits(['controlFocus', 'controlBlur'])
 
 const localControlType = computed(() => props.controlConfig.type)
 const localPropRef = ref(props.prop)
+
+/**
+ * 特殊处理 upload 的 fileList
+ */
+let localUploadFileList = null
+if (localControlType.value === 'upload') {
+    const config = props.controlConfig as UploadControlConfig
+    localUploadFileList = toRef(config.props, 'fileList')
+}
 
 // 获取 控件 的配置（三级配置）
 const getItemControlProps = () => {

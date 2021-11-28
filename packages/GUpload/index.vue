@@ -1,7 +1,7 @@
 <template>
     <el-upload
         ref="uploadRef"
-        :class="{'g-upload': true, 'is-disabled': disabled}"
+        :class="{ 'g-upload': true, 'is-disabled': disabled }"
         :file-list="localFileList"
         v-bind="getUploadProps()"
         :disabled="disabled"
@@ -131,6 +131,7 @@ import { getFileType, getFileTypeIcon } from './utils'
 import { imgSuffix, officeSuffix, officeSuffixNoPre } from './constant/fileTypeList'
 import UploadFile from './interface/UploadFile'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { hump2partition } from './utils'
 
 const props = defineProps({
     /**
@@ -171,7 +172,31 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['update:modelValue', 'update:fileList'])
-const attrs = useAttrs()
+const attrsSource = useAttrs()
+
+/**
+ * 传递参数有两种情况：
+ *  1. 单独使用：传递的参数为短横线分割
+ *  2. Form 中使用：传递的参数为驼峰命名
+ *
+ * 驼峰需要转换成短横线
+ */
+const attrs: {
+    [k: string]: any
+} = reactive({})
+
+watch(
+    () => attrsSource,
+    (attrsSource) => {
+        Object.keys(attrsSource).forEach((sk) => {
+            const partitionK = hump2partition(sk)
+            attrs[partitionK] = attrsSource[sk]
+        })
+    },
+    {
+        immediate: true
+    }
+)
 
 /**
  * 控件的类型：

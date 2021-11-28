@@ -1,15 +1,17 @@
 <template>
     <div :class="!isComponent ? 'examples-base-wrapper' : ''">
-        <g-form :config="formConfig" />
+        <el-scrollbar>
+            <g-form :config="formConfig" />
 
-        <div v-if="!isComponent" class="btn-wrapper">
-            <el-button type="primary" @click="getData">
-                获取数据
-            </el-button>
-            <el-button type="primary" @click="resetForm">
-                重置
-            </el-button>
-        </div>
+            <div v-if="!isComponent" class="btn-wrapper">
+                <el-button type="primary" @click="getData">
+                    获取数据
+                </el-button>
+                <el-button type="primary" @click="resetForm">
+                    重置
+                </el-button>
+            </div>
+        </el-scrollbar>
     </div>
 </template>
 
@@ -17,6 +19,9 @@
 import { reactive, toRefs, ref } from 'vue'
 import { FormProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
+import { watch } from 'fs'
+import { UploadControlConfig } from '@component/GForm'
+import FileSource from './fileList.json'
 
 export default {
     name: 'FormTest',
@@ -55,7 +60,8 @@ export default {
                 selectTreeActive: '1425374958969872386',
                 selectTreeActiveM: ['1425374667260223489'],
                 icon: '',
-                customLabel: ''
+                customLabel: '',
+                avatar: ''
             },
             formItems: [
                 {
@@ -262,9 +268,57 @@ export default {
                             placeholder: '自定义 label 需要传递 placeholder'
                         }
                     }
+                },
+                {
+                    prop: 'avatar',
+                    label: '附件',
+                    span: 24,
+                    controlConfig: {
+                        type: 'upload',
+                        props: {
+                            action: '/api/kinso-basic-open-server/v1/document/file/upload',
+                            fileList: FileSource.map((item) => {
+                                return {
+                                    name: item.fileRName,
+                                    url: item.filePath,
+                                    ...item
+                                }
+                            }),
+                            name: 'file',
+                            size: 2,
+                            listType: 'picture-card',
+                            disabled: false,
+                            onSuccess(res) {
+                                if (res.code === '000000') {
+                                    const config = formConfig.value.formItems.find(
+                                        (item) => item.prop === 'avatar'
+                                    ).controlConfig as UploadControlConfig
+
+                                    const fileList = config.props.fileList
+
+                                    console.log(
+                                        `%c onSuccess fileList == `,
+                                        'color: #67c23a;',
+                                        fileList
+                                    )
+                                }
+                            },
+                            onRemove() {
+                                const config = formConfig.value.formItems.find(
+                                    (item) => item.prop === 'avatar'
+                                ).controlConfig as UploadControlConfig
+
+                                const fileList = config.props.fileList
+
+                                console.log(`%c onRemove fileList == `, 'color: #67c23a;', fileList)
+                            }
+                        }
+                    }
                 }
             ]
         })
+
+        // watch(() => formConfig)
 
         const getData = () => {
             console.log(`%c model == `, 'color: #67c23a;', formConfig.value.model)

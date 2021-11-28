@@ -1,3 +1,5 @@
+import UploadFile from '../../GUpload/interface/UploadFile'
+
 export interface BaseResponse {
     code: '000000' | '500000' | '800403'
     data: any
@@ -16,7 +18,7 @@ export interface UploadProps {
      * 用逗号隔开的 MIME 类型列表
      * 参见：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
      */
-    accept: string
+    accept?: string
     /**
      * 设置上传的请求头部
      */
@@ -58,7 +60,7 @@ export interface UploadProps {
      * 文件列表的类型
      * default: text
      */
-    listType?: 'text' | 'picture' | 'picture-card'
+    listType?: 'text' | 'picture' | 'picture-card' | 'avatar'
     /**
      * 是否在选取文件后立即进行上传
      * default: true
@@ -67,7 +69,7 @@ export interface UploadProps {
     /**
      * 上传的文件列表
      */
-    fileList?: any[]
+    fileList?: UploadFile[]
     /**
      * 是否禁用
      * default: false
