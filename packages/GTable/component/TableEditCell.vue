@@ -295,6 +295,22 @@
                         @table-edit-hide="control2Text"
                     />
                 </template>
+
+                <!-- 错误信息，存在 rules 即创建 -->
+                <template v-if="columnConfig.rules">
+                    <el-tooltip
+                        popper-class="edit-cell-error-msg-tooltip"
+                        effect="dark"
+                        :content="validateMsg"
+                        placement="bottom"
+                    >
+                        <transition :name="`slide-${validateMsg ? 'right' : 'left'}`">
+                            <span v-if="validateMsg && !validateRes" class="error-msg">
+                                {{ validateMsg }}
+                            </span>
+                        </transition>
+                    </el-tooltip>
+                </template>
             </div>
         </transition>
     </div>
@@ -405,6 +421,7 @@ const escTrigger = ref<boolean>(false)
  */
 let validateRes = ref<boolean>(true)
 const currentCellValidator = ref<Schema>(null)
+const validateMsg = ref<string>('')
 
 // 必填项
 const controlIsRequired = computed<boolean>(() => {
@@ -502,6 +519,7 @@ watch(
                 .validate(localData.value)
                 .then((res) => {
                     validateRes.value = true
+                    validateMsg.value = ''
 
                     // 校验成功，切换状态，并备份最新的编辑结果
                     cellStatus.value = CellStatus.TEXT
@@ -516,7 +534,7 @@ watch(
                     const msg: string = errProps.errors.find((item) => {
                         return item.field === props.columnConfig.prop
                     })?.message
-                    ElMessage.error(msg)
+                    validateMsg.value = msg
                 })
         }
     }
@@ -557,6 +575,7 @@ onMounted(() => {
                     .validate(localData.value)
                     .then((res) => {
                         validateRes.value = true
+                        validateMsg.value = ''
                     })
                     .catch((errProps: { errors: ValidateError[] }) => {
                         validateRes.value = false
@@ -564,7 +583,7 @@ onMounted(() => {
                         const msg: string = errProps.errors.find((item) => {
                             return item.field === props.columnConfig.prop
                         })?.message
-                        ElMessage.error(msg)
+                        validateMsg.value = msg
                     })
             }
         )
@@ -809,10 +828,9 @@ $--cell-min-height: 29px;
                 content: '*';
                 color: red;
                 position: absolute;
-                left: -9px;
+                left: -10px;
                 font-size: 20px;
-                top: 50%;
-                transform: translateY(-50%);
+                top: 0;
             }
         }
 
@@ -824,7 +842,6 @@ $--cell-min-height: 29px;
             .el-input__inner,
             .checkbox-wrapper .el-checkbox-group {
                 border-color: #f56c6c;
-                box-shadow: 0 0 10px rgba(245, 108, 108, 0.6), 0 0 10px rgba(245, 108, 108, 0.6);
             }
         }
 
@@ -886,6 +903,27 @@ $--cell-min-height: 29px;
                 padding: 0;
             }
         }
+
+        > div {
+            z-index: 2;
+        }
+
+        // 错误信息
+        .error-msg {
+            width: 100%;
+            display: block;
+            color: #f56c6c;
+            font-size: 10px;
+            line-height: 12px;
+            height: 12px;
+            text-align: left;
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
     .slide-right-enter-active,
@@ -911,5 +949,10 @@ $--cell-min-height: 29px;
     .slide-left-leave-to {
         @extend .slide-right-enter-from;
     }
+}
+</style>
+<style lang="scss">
+.edit-cell-error-msg-tooltip {
+    color: #f56c6c !important;
 }
 </style>

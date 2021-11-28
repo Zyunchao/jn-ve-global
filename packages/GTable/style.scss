@@ -56,6 +56,17 @@ $--base-border-color: #e8e8e8;
                 tr {
                     td {
                         border-bottom: 1px solid $--base-border-color;
+
+                        .el-button {
+                            &.el-button--text {
+                                padding: 0;
+                                min-height: 20px;
+                            }
+                        }
+
+                        .cell {
+                            overflow: visible;
+                        }
                     }
 
                     &.el-table__row--striped {
