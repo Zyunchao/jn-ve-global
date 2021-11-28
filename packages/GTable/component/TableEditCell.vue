@@ -3,7 +3,7 @@
         v-if="localPropRef !== undefined && localPropRef !== null"
         ref="editCellContentRef"
         class="edit-cell-content"
-        @dblclick="textToControl"
+        @dblclick="text2Control"
     >
         <transition
             :name="`slide-${cellStatus === CellStatus.CONTROL ? 'right' : 'left'}`"
@@ -27,7 +27,7 @@
                 :class="[
                     'control',
                     { 'is-required': controlIsRequired && !tdIsHidden },
-                    { 'validate-reject': !validateRes }
+                    { 'is-error': !validateRes }
                 ]"
                 @dblclick.stop
             >
@@ -37,7 +37,7 @@
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         size="mini"
-                        @blur="controlToText"
+                        @blur="control2Text"
                     />
                 </template>
 
@@ -49,7 +49,7 @@
                             size="mini"
                             v-bind="localControlProps"
                         />
-                        <el-button type="text" size="mini" @click="controlToText">
+                        <el-button type="text" size="mini" @click="control2Text">
                             确定
                         </el-button>
                     </div>
@@ -101,7 +101,7 @@
                     <el-radio-group
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        @change="controlToText"
+                        @change="control2Text"
                     >
                         <el-radio
                             v-for="radioOption in columnConfig.controlConfig.options"
@@ -200,7 +200,7 @@
                             </el-checkbox>
                         </el-checkbox-group>
                         <div class="checkbox-confirm-btn-wrapper">
-                            <el-button size="mini" type="primary" @click="controlToText">
+                            <el-button size="mini" type="primary" @click="control2Text">
                                 确定
                             </el-button>
                         </div>
@@ -218,7 +218,7 @@
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         size="mini"
-                        @change="controlToText"
+                        @change="control2Text"
                     />
                 </template>
 
@@ -229,7 +229,7 @@
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         size="mini"
-                        @change="controlToText"
+                        @change="control2Text"
                     />
                     <div v-else>
                         <el-tag type="danger" size="small">
@@ -251,7 +251,7 @@
                                 localControlProps.marks &&
                                 Object.keys(localControlProps.marks).length > 0
                         }"
-                        @change="controlToText"
+                        @change="control2Text"
                     />
                     <div v-else>
                         <el-tag type="danger" size="small">
@@ -292,7 +292,7 @@
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         size="mini"
-                        @table-edit-hide="controlToText"
+                        @table-edit-hide="control2Text"
                     />
                 </template>
             </div>
@@ -365,6 +365,12 @@ const props = defineProps({
     index: [Number, String]
 })
 
+/**
+ * 单元格的初始值有可能为
+ * null | undefind | false | 0 | ''
+ * 等一切可能的假值，只有保证初始值不为 “初始值” 的情况下，备份才是有效的
+ * 否则为无效备份，不进行初始化
+ */
 const localCellPropInitValue = Symbol('localCellPropInitValue')
 
 // 组件 ref 引用
@@ -475,12 +481,22 @@ watch(
     () => localData.value.edit,
     (edit) => {
         if (edit) {
-            textToControl()
+            text2Control()
         } else {
-            if (currentCellValidator.value === null) return
+            /**
+             * 隐藏的单元格、没有 rules 的单元格直接放行
+             * 1. 将状态切换回 Text
+             * 2. 备份最新的数据
+             */
+            if (currentCellValidator.value === null) {
+                cellStatus.value = CellStatus.TEXT
+                localPropCopy = _.cloneDeep(localPropRef.value)
+                return
+            }
 
             /**
-             * 每次点击保存都要主动校验
+             * 有 rules，且不为隐藏
+             * 主动触发校验
              */
             currentCellValidator.value
                 .validate(localData.value)
@@ -645,7 +661,10 @@ onMounted(() => {
     }
 })
 
-const textToControl = () => {
+/**
+ * 文本转换到控件
+ */
+const text2Control = () => {
     if (cellStatus.value === CellStatus.TEXT) {
         cellStatus.value = CellStatus.CONTROL
         setTimeout(() => {
@@ -654,7 +673,10 @@ const textToControl = () => {
     }
 }
 
-const controlToText = () => {
+/**
+ * 控件到文本
+ */
+const control2Text = () => {
     // 校验失败，无意义触发
     if (!validateRes.value) return
     // 总控编辑，不需要单独触发
@@ -669,26 +691,36 @@ const controlToText = () => {
 
 // 延迟从 控件 => 文本（部分控件的子控件收起存在动画延迟，如时间类控件）
 const delayControlToText = () => {
-    setTimeout(controlToText, parseInt(animationTime.value))
+    setTimeout(control2Text, parseInt(animationTime.value))
 }
 
 // 键盘 esc 退出编辑（优先级最高）
 function cancelEdit(e: KeyboardEvent) {
-    if (e.key !== 'Escape' || cellStatus.value === CellStatus.TEXT) return
-    escTrigger.value = true
+    if (e.key !== 'Escape') return
+    isEscTrigger()
+    if (cellStatus.value === CellStatus.TEXT) return
 
     // 初始化单元格数据
     localPropCopy !== localCellPropInitValue && (localPropRef.value = localPropCopy)
     // 初始化校验结果
     validateRes.value = true
-    // 取消总控编辑
-    localData.value.edit = false
     // 转换为文本模式
     cellStatus.value = CellStatus.TEXT
 
     setTimeout(() => {
-        escTrigger.value = false
+        /**
+         * 取消总控编辑
+         * 在 esc 取消行总控时，将使所有的控件切换状态
+         * 在这里要保证所有的值都初始化后，再进行切换行总控
+         */
+        localData.value.edit && (localData.value.edit = false)
         tableInstance.value.doLayout()
+    }, parseInt(animationTime.value) + 50)
+}
+function isEscTrigger() {
+    escTrigger.value = true
+    setTimeout(() => {
+        escTrigger.value = false
     }, parseInt(animationTime.value) + 50)
 }
 
@@ -788,7 +820,7 @@ $--cell-min-height: 29px;
             transition: border, box-shadow v-bind(animationTime);
         }
 
-        &.validate-reject {
+        &.is-error {
             .el-input__inner,
             .checkbox-wrapper .el-checkbox-group {
                 border-color: #f56c6c;
