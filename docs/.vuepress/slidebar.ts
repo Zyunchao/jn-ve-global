@@ -11,7 +11,8 @@ export default [
             { text: 'SelectTree', link: '/modules/SelectTree.md' },
             { text: 'OperateExcel', link: '/modules/OperateExcel.md' },
             { text: 'FigureInput', link: '/modules/FigureInput.md' },
-            { text: 'IconPicker', link: '/modules/IconPicker.md' }
+            { text: 'IconPicker', link: '/modules/IconPicker.md' },
+            { text: 'Upload', link: '/modules/Upload.md' }
         ]
     },
     {
