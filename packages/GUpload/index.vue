@@ -1,9 +1,10 @@
 <template>
     <el-upload
         ref="uploadRef"
-        class="g-upload"
+        :class="{'g-upload': true, 'is-disabled': disabled}"
         :file-list="localFileList"
         v-bind="getUploadProps()"
+        :disabled="disabled"
         :accept="localAccept"
         :list-type="uploadListType"
         :limit="localLimit"
@@ -21,7 +22,7 @@
                 <div :class="['upload-btn', uploadListType]">
                     <g-icon v-if="['picture-card'].includes(uploadListType)" icon="el-Plus" />
 
-                    <el-button v-else size="small" type="primary">
+                    <el-button v-else size="small" type="primary" :disabled="disabled">
                         上传附件
                     </el-button>
                 </div>
@@ -29,7 +30,11 @@
             <div v-else class="avatar-upload">
                 <g-icon icon="el-Plus" />
                 <img v-if="currentFile && currentFile.url" :src="currentFile.url" alt="">
-                <div v-if="currentFile && currentFile.url" class="operation" @click.stop="">
+                <div
+                    v-if="!disabled && currentFile && currentFile.url"
+                    class="operation"
+                    @click.stop=""
+                >
                     <g-icon icon="el-View" @click="modalShow = true" />
                     <g-icon icon="el-Delete" @click="delAvatar" />
                 </div>
@@ -48,7 +53,7 @@
                 </div>
 
                 <!-- 按钮 -->
-                <div class="btns">
+                <div v-if="!disabled" class="btns">
                     <g-icon
                         v-if="showPreview(file.name)"
                         icon="el-View"
