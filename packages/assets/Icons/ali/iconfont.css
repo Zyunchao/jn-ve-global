@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2683065 */
-  src: url('iconfont.woff2?t=1631091398995') format('woff2'),
-       url('iconfont.woff?t=1631091398995') format('woff'),
-       url('iconfont.ttf?t=1631091398995') format('truetype');
+  src: url('iconfont.woff2?t=1638166890255') format('woff2'),
+       url('iconfont.woff?t=1638166890255') format('woff'),
+       url('iconfont.ttf?t=1638166890255') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ali-icon-quanping:before {
+  content: "\e8fa";
+}
+
+.ali-icon-quanping1:before {
+  content: "\ec13";
+}
+
+.ali-icon-quxiaoquanping_o:before {
+  content: "\eb98";
+}
+
+.ali-icon-quanping_o:before {
+  content: "\eb99";
+}
+
+.ali-icon-quanping2:before {
+  content: "\e62a";
+}
+
+.ali-icon-cancel-full-screen:before {
+  content: "\e688";
 }
 
 .ali-icon-checkbox-minus:before {
