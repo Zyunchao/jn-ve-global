@@ -18,6 +18,7 @@
             v-model:fileList="fileList"
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture-card"
+            download-hide
         />
 
         <h3>列表</h3>
@@ -26,6 +27,7 @@
             v-model:fileList="fileList"
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture"
+            del-hide
         />
 
         <h3>头像</h3>

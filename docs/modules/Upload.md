@@ -179,10 +179,12 @@ v-model \| modelValue | 组件内会抛出文件的业务id（fileId），列表
 v-model:fileList \| fileList | 组件内会抛出文件列表，或接收文件列表渲染指定的文件列表 | File[] | []
 size | 单个文件上传最大大小(单位：MB)，不传递则不限制 | number | 5
 imgUrl | 上传头像回显的 img url | string \| 流 | --
+downloadHide | 隐藏下载按钮 | boolean | false
+delHide | 隐藏删除按钮 | boolean | false
 
 ## Upload 扩展钩子
 
 参数|说明|类型|默认值
 -----|-----|-----|-----
 onDownload | 覆盖默认的下载行为，用户自定义 | (file: UploadFile) => void | null
-onPreview | 覆盖默认的预览行为，用户自定义 | (file: UploadFile) => void | null
+onMagnify | 覆盖默认的预览行为，用户自定义 | (file: UploadFile) => void | null

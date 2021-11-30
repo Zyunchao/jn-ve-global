@@ -23,6 +23,13 @@ $--base-font-color: #595959;
 
         .el-form-item__content {
             font-size: $--base-font-size-m;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+
+            >div {
+                width: 100%;
+            }
 
             .el-textarea,
             .el-input {

@@ -55,8 +55,8 @@
                         icon="el-View"
                         @click="filePreview(file)"
                     />
-                    <g-icon icon="el-Bottom" @click="fileDownload(file)" />
-                    <g-icon v-if="!disabled" icon="el-Delete" @click="delFile(file)" />
+                    <g-icon v-if="!downloadHide" icon="el-Bottom" @click="fileDownload(file)" />
+                    <g-icon v-if="!delHide" icon="el-Delete" @click="delFile(file)" />
                 </div>
 
                 <!-- 进度条 -->
@@ -175,9 +175,23 @@ const props = defineProps({
     /**
      * 预览的钩子，将会覆盖本地操作
      */
-    onPreview: {
+    onMagnify: {
         type: Function as PropType<(file: UploadFile) => void>,
         default: null
+    },
+    /**
+     * 隐藏下载按钮
+     */
+    downloadHide: {
+        type: Boolean,
+        default: false
+    },
+    /**
+     * 隐藏删除按钮
+     */
+    delHide: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -295,8 +309,8 @@ watch(
 // 预览
 const filePreview = (file: UploadFile) => {
     // 预览行为，覆盖本地
-    if (props.onPreview) {
-        props.onPreview(file)
+    if (props.onMagnify) {
+        props.onMagnify(file)
         return
     }
 
