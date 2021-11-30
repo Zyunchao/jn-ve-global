@@ -55,19 +55,19 @@ $--base-font-color: #595959;
         // 自定义类名
         &.content-left {
             .el-form-item__content {
-                text-align: left;
+                justify-content: start;
             }
         }
 
         &.content-right {
             .el-form-item__content {
-                text-align: right;
+                justify-content: end; 
             }
         }
 
         &.content-center {
             .el-form-item__content {
-                text-align: center;
+                justify-content: center;
             }
         }
 
