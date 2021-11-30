@@ -4,20 +4,37 @@
             更新列表
         </el-button>
 
+        <h3>Text</h3>
+        <g-upload
+            v-model="fileIds"
+            v-model:fileList="fileList"
+            action="/api/kinso-basic-open-server/v1/document/file/upload"
+            list-type="text"
+        />
+
+        <h3>照片墙</h3>
         <g-upload
             v-model="fileIds"
             v-model:fileList="fileList"
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture-card"
-            :on-remove="onRemove"
         />
 
+        <h3>列表</h3>
+        <g-upload
+            v-model="fileIds"
+            v-model:fileList="fileList"
+            action="/api/kinso-basic-open-server/v1/document/file/upload"
+            list-type="picture"
+        />
+
+        <h3>头像</h3>
         <g-upload
             v-model="avatarId"
             :img-url="imgUrl"
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="avatar"
-            :on-remove="onRemove"
+            disabled
         />
     </div>
 </template>
@@ -83,6 +100,12 @@ const onPreview = (file) => {
     console.groupEnd()
 }
 
+const onDownload = (file) => {
+    console.group(`%c onDownload`, 'color: #000;', +new Date())
+    console.log(`%c file == `, 'color: #67c23a;', file)
+    console.groupEnd()
+}
+
 const onProgress = (event, file, fileList) => {
     console.group(`%c onProgress`, 'color: #000;', +new Date())
     console.log(`%c event == `, 'color: #000;', event)
@@ -122,6 +145,10 @@ const onRemove = (file, fileList) => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+h3 {
+    margin: 20px 0 10px 0;
+}
+</style>
 
 <style lang="scss"></style>

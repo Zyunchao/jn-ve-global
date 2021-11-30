@@ -137,6 +137,25 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
 
 </demo-block>
 
+## 禁用
+
+禁用给标签添加 `disabled` 即可，禁用将改变组件行为：
+
+* 上传、删除不可用；
+* 预览、下载可用
+
+<demo-block>
+
+<Upload-disabled />
+
+<template #code>
+
+@[code](@demoroot/Upload/disabled.vue)
+
+</template>
+
+</demo-block>
+
 ## Upload 内置钩子
 
 :::tip 事件钩子
@@ -150,7 +169,7 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
 传递 `onError` 、 `onSuccess` 、 `onChange` 、 `onRemove` 钩子会和内置钩子同时执行。
 :::
 
-#### Upload 扩展字段
+## Upload 扩展字段
 
 [Upload 基础属性](https://element-plus.gitee.io/zh-CN/component/upload.html#%E5%B1%9E%E6%80%A7)
 
@@ -160,3 +179,10 @@ v-model \| modelValue | 组件内会抛出文件的业务id（fileId），列表
 v-model:fileList \| fileList | 组件内会抛出文件列表，或接收文件列表渲染指定的文件列表 | File[] | []
 size | 单个文件上传最大大小(单位：MB)，不传递则不限制 | number | 5
 imgUrl | 上传头像回显的 img url | string \| 流 | --
+
+## Upload 扩展钩子
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+onDownload | 覆盖默认的下载行为，用户自定义 | (file: UploadFile) => void | null
+onPreview | 覆盖默认的预览行为，用户自定义 | (file: UploadFile) => void | null

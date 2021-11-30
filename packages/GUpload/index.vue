@@ -30,13 +30,9 @@
             <div v-else class="avatar-upload">
                 <g-icon icon="el-Plus" />
                 <img v-if="currentFile && currentFile.url" :src="currentFile.url" alt="">
-                <div
-                    v-if="!disabled && currentFile && currentFile.url"
-                    class="operation"
-                    @click.stop=""
-                >
+                <div v-if="currentFile && currentFile.url" class="operation" @click.stop="">
                     <g-icon icon="el-View" @click="modalShow = true" />
-                    <g-icon icon="el-Delete" @click="delAvatar" />
+                    <g-icon v-if="!disabled" icon="el-Delete" @click="delAvatar" />
                 </div>
             </div>
         </template>
@@ -53,14 +49,14 @@
                 </div>
 
                 <!-- 按钮 -->
-                <div v-if="!disabled" class="btns">
+                <div class="btns">
                     <g-icon
                         v-if="showPreview(file.name)"
                         icon="el-View"
                         @click="filePreview(file)"
                     />
                     <g-icon icon="el-Bottom" @click="fileDownload(file)" />
-                    <g-icon icon="el-Delete" @click="delFile(file)" />
+                    <g-icon v-if="!disabled" icon="el-Delete" @click="delFile(file)" />
                 </div>
 
                 <!-- 进度条 -->
@@ -167,6 +163,20 @@ const props = defineProps({
      */
     imgUrl: {
         type: [String, Object],
+        default: null
+    },
+    /**
+     * 下载的钩子，将会覆盖本地操作
+     */
+    onDownload: {
+        type: Function as PropType<(file: UploadFile) => void>,
+        default: null
+    },
+    /**
+     * 预览的钩子，将会覆盖本地操作
+     */
+    onPreview: {
+        type: Function as PropType<(file: UploadFile) => void>,
         default: null
     }
 })
@@ -283,13 +293,27 @@ watch(
 )
 
 // 预览
-const filePreview = (file) => {
+const filePreview = (file: UploadFile) => {
+    // 预览行为，覆盖本地
+    if (props.onPreview) {
+        props.onPreview(file)
+        return
+    }
+
+    // 组件默认行为
     currentFile.value = file
     modalShow.value = true
 }
 
 // 下载
 const fileDownload = (file: UploadFile) => {
+    // 下载行为，覆盖本地
+    if (props.onDownload) {
+        props.onDownload(file)
+        return
+    }
+
+    // 默认下载行为
     let aDom = document.createElement('a')
     aDom.href = file.url
     aDom.setAttribute('download', file.name)
