@@ -188,3 +188,9 @@ delHide | 隐藏删除按钮 | boolean | false
 -----|-----|-----|-----
 onDownload | 覆盖默认的下载行为，用户自定义 | (file: UploadFile) => void | null
 onMagnify | 覆盖默认的预览行为，用户自定义 | (file: UploadFile) => void | null
+
+## Upload Event
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+getUploadRef | 获取组件内 upload 的实例 | (instance) => void | --

@@ -195,7 +195,7 @@ const props = defineProps({
     }
 })
 
-const emits = defineEmits(['update:modelValue', 'update:fileList'])
+const emits = defineEmits(['update:modelValue', 'update:fileList', 'getUploadRef'])
 const attrsSource = useAttrs()
 
 /**
@@ -264,6 +264,14 @@ const localFileList = computed({
 
 // 控件实例
 const uploadRef = ref(null)
+watch(
+    () => uploadRef.value,
+    (instance) => {
+        if (instance) {
+            emits('getUploadRef', instance)
+        }
+    }
+)
 
 // 预览框
 const modalShow = ref<boolean>(false)
