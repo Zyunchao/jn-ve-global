@@ -6,10 +6,11 @@
                 <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
                     <template v-if="btn.authCode">
                         <el-button
+                            v-show="!btn.hide"
                             v-auth="btn.authCode"
                             :type="btn.type || 'primary'"
+                            v-bind="btn"
                             size="mini"
-                            :disabled="btn.disabled"
                             @click="btn.onClick"
                         >
                             {{ btn.label }}
@@ -17,9 +18,10 @@
                     </template>
                     <template v-else>
                         <el-button
+                            v-show="!btn.hide"
                             :type="btn.type || 'primary'"
+                            v-bind="btn"
                             size="mini"
-                            :disabled="btn.disabled"
                             @click="btn.onClick"
                         >
                             {{ btn.label }}

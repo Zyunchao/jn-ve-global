@@ -24,13 +24,11 @@
             <slot name="footer">
                 <!-- 按钮组 -->
                 <div v-if="btns && !!btns.length" class="modal-btn-wrapper">
-                    <el-button
-                        v-for="(btn, index) in btns"
-                        :key="`${btn.label}-${index}`"
-                        v-bind="btn"
-                    >
-                        {{ btn.label }}
-                    </el-button>
+                    <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
+                        <el-button v-show="!btn.hide" v-bind="btn">
+                            {{ btn.label }}
+                        </el-button>
+                    </template>
                 </div>
             </slot>
         </template>
@@ -62,13 +60,11 @@
             <slot name="footer">
                 <!-- 按钮组 -->
                 <div v-if="btns && !!btns.length" class="modal-btn-wrapper">
-                    <el-button
-                        v-for="(btn, index) in btns"
-                        :key="`${btn.label}-${index}`"
-                        v-bind="btn"
-                    >
-                        {{ btn.label }}
-                    </el-button>
+                    <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
+                        <el-button v-show="!btn.hide" v-bind="btn">
+                            {{ btn.label }}
+                        </el-button>
+                    </template>
                 </div>
             </slot>
         </div>

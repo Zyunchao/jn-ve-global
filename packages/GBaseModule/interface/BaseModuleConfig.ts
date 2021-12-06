@@ -42,4 +42,8 @@ export interface BtnProps {
      * 是否为圆形按钮
      */
     circle?: boolean
+    /**
+     * 是否隐藏
+     */
+    hide?: boolean
 }

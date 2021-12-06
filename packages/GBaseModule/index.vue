@@ -31,10 +31,11 @@
                         <!-- 按钮权限 Code -->
                         <el-button
                             v-if="btn.authCode"
+                            v-show="!btn.hide"
                             v-auth="btn.authCode"
                             :type="btn.type || 'primary'"
+                            v-bind="btn"
                             size="small"
-                            :disabled="btn.disabled"
                             @click="btn.onClick"
                         >
                             {{ btn.label }}
@@ -43,9 +44,10 @@
                         <!-- 无权限校验的 -->
                         <el-button
                             v-else
+                            v-show="!btn.hide"
                             :type="btn.type || 'primary'"
+                            v-bind="btn"
                             size="small"
-                            :disabled="btn.disabled"
                             @click="btn.onClick"
                         >
                             {{ btn.label }}

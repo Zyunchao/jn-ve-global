@@ -49,9 +49,25 @@ const btns: BtnProps[] = [
     },
     {
         label: '授权',
-        type: 'success',
+        type: 'danger',
         onClick: () => {
             console.log(`%c 添加 === `, 'color: #e6a23c;')
+        }
+    },
+    {
+        label: '禁用',
+        disabled: true,
+        type: 'warning',
+        onClick: () => {
+            console.log(`%c 禁用 === `, 'color: #e6a23c;')
+        }
+    },
+    {
+        label: '加载中',
+        loading: true,
+        type: 'success',
+        onClick: () => {
+            console.log(`%c 加载中 === `, 'color: #e6a23c;')
         }
     }
 ]
