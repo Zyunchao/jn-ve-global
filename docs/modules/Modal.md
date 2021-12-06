@@ -59,7 +59,7 @@ dialog-body 最小高度统一设置为 '150px'；<br/>
 
 ## 去除底部
 
-隐藏底部行为或传递 hideFooter（优先级1），或不传递 btns 配置数组、或 btns 数组长度为0
+隐藏底部行为或传递 hideFooter（优先级1），或不传递 btns 配置数组、或 btns 数组长度为 0
 
 <demo-block>
 
