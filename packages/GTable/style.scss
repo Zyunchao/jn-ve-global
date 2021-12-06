@@ -65,7 +65,9 @@ $--base-border-color: #e8e8e8;
                         }
 
                         .cell {
-                            overflow: visible;
+                            &.is-edit {
+                                overflow: visible;
+                            }
                         }
                     }
 

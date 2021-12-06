@@ -686,11 +686,17 @@ onMounted(() => {
  */
 const text2Control = () => {
     if (cellStatus.value === CellStatus.TEXT) {
+        parentClassFlag('add')
         cellStatus.value = CellStatus.CONTROL
         setTimeout(() => {
             tableInstance.value.doLayout()
         }, parseInt(animationTime.value) + 50)
     }
+}
+
+const parentClassFlag = (type: 'add' | 'remove') => {
+    const cell = editCellContentRef.value.parentElement
+    cell.classList[type]('is-edit')
 }
 
 /**
@@ -703,6 +709,8 @@ const control2Text = () => {
     if (localData.value.edit) return
     // esc 取消，无效改变
     if (escTrigger.value) return
+
+    parentClassFlag('remove')
 
     cellStatus.value = CellStatus.TEXT
     localPropCopy = _.cloneDeep(localPropRef.value)
@@ -829,9 +837,13 @@ $--cell-min-height: 29px;
         min-height: $--cell-min-height;
         display: flex;
         align-items: center;
+        width: 100%;
 
         > span {
             flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
 
