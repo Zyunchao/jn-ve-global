@@ -86,6 +86,7 @@ import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } fro
 import LGForm from '../GForm/index.vue'
 import LGTable from '../GTable/index.vue'
 import TableSearch from './component/TableSearch.vue'
+import { RefreshLeft, Search } from '@element-plus/icons'
 
 const props = defineProps({
     /**
@@ -183,7 +184,7 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
         return (
             <>
                 <el-button
-                    icon='el-icon-refresh-left'
+                    icon={RefreshLeft}
                     onClick={() => {
                         props.searchFormProps.instance.resetFields()
                         if (!props.loadTableMethods)
@@ -195,8 +196,8 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                 {props.searchBtnAuthCode ? (
                     <el-button
                         v-auth={props.searchBtnAuthCode}
-                        icon='el-icon-search'
                         type='primary'
+                        icon={Search}
                         onClick={() => {
                             if (!props.loadTableMethods)
                                 throw new Error('core load-table-methods 未找到')
@@ -206,8 +207,8 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                     </el-button>
                 ) : (
                     <el-button
-                        icon='el-icon-search'
                         type='primary'
+                        icon={Search}
                         onClick={() => {
                             if (!props.loadTableMethods)
                                 throw new Error('core load-table-methods 未找到')

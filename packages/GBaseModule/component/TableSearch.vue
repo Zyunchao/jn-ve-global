@@ -155,7 +155,7 @@ const handleMoreSearch = () => {
 
 <style lang="scss" scoped>
 $--base-padding-lr: 28px;
-$--form-item-content-height: 42px;
+$--form-item-content-height: 38px;
 $--form-item-margin-b: 22px;
 
 // 查询表单

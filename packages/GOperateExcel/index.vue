@@ -7,10 +7,7 @@
         @click="handleTriggerBtn"
     >
         <slot>{{ mode === 'import' ? '导入Excel' : '下载模板' }}</slot>
-        <LGIcon
-            style="margin-left: 6px"
-            :icon="mode === 'import' ? 'el-icon-upload2' : 'el-icon-download'"
-        />
+        <LGIcon style="margin-left: 6px" :icon="mode === 'import' ? 'el-Upload' : 'el-Download'" />
     </el-button>
 
     <!-- 导入 trigger -->
