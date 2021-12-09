@@ -49,6 +49,15 @@ $--base-animation-date: 0.2s;
             }
         }
 
+        .avatar-upload,
+        .picture-card {
+            i {
+                margin-top: 0;
+            }
+        }
+
+
+
         /* 头像 */
         .avatar-upload {
             display: flex;

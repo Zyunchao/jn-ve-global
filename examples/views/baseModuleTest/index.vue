@@ -10,6 +10,8 @@
             :table-data="mockData.data1"
             :table-pagination="tablePagination"
             :table-loading="false"
+            @reset="onReset"
+            @search="onSearch"
         />
     </div>
 </template>
@@ -80,6 +82,14 @@ const loadTable = (page: number) => {
     }
 
     console.log(`%c params == `, 'color: #e6a23c;', params)
+}
+
+const onReset = () => {
+    console.log(`%c onReset run.......................`, 'color: #67c23a;')
+}
+
+const onSearch = () => {
+    console.log(`%c onSearch run..........................`, 'color: #f56c6c;')
 }
 </script>
 

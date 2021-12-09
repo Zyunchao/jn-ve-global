@@ -129,6 +129,8 @@ interface BtnProps {
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
 @getTableInstance | 抛出表格实例 | (instance: TableMethods) => void | --
+@reset | 重置钩子 | Function | --
+@search | 查询钩子 | Function | --
 
 ## Slot
 
