@@ -169,7 +169,7 @@ const props = defineProps({
     }
 })
 
-const emits = defineEmits(['getTableInstance', 'reset', 'search'])
+const emits = defineEmits(['getTableInstance'])
 const attrs = useAttrs()
 
 // 搜索按钮的配置
@@ -186,13 +186,16 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                 <el-button
                     icon={RefreshLeft}
                     onClick={() => {
+                        // 优先执行用户传递的 reset
+                        if (attrs.onReset && typeof attrs.onReset === 'function') {
+                            attrs.onReset()
+                            return
+                        }
+
                         props.searchFormProps.instance.resetFields()
                         if (!props.loadTableMethods)
                             throw new Error('core load-table-methods 未找到')
                         props.loadTableMethods?.(1)
-
-                        // 同步执行用户传递的 reset
-                        emits('reset', props.searchFormProps.instance)
                     }}>
                     重置
                 </el-button>
@@ -202,12 +205,15 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                         type='primary'
                         icon={Search}
                         onClick={() => {
+                            // 优先执行用户传递的 search
+                            if (attrs.onSearch && typeof attrs.onSearch === 'function') {
+                                attrs.onSearch()
+                                return
+                            }
+
                             if (!props.loadTableMethods)
                                 throw new Error('core load-table-methods 未找到')
                             props.loadTableMethods?.(1)
-
-                            // 同步执行用户绑定的 search
-                            emits('search')
                         }}>
                         查询
                     </el-button>
@@ -216,12 +222,15 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                         type='primary'
                         icon={Search}
                         onClick={() => {
+                            // 优先执行用户传递的 search
+                            if (attrs.onSearch && typeof attrs.onSearch === 'function') {
+                                attrs.onSearch()
+                                return
+                            }
+
                             if (!props.loadTableMethods)
                                 throw new Error('core load-table-methods 未找到')
                             props.loadTableMethods?.(1)
-
-                            // 同步执行用户绑定的 search
-                            emits('search')
                         }}>
                         查询
                     </el-button>
