@@ -26,8 +26,6 @@
 #    - node_modules       # 这里要缓存 node_modules，在下一次触发 gitlab-ci 时，缓存会被还原，就不用重复安装依赖。
 #    - dist               # 同时把 build 阶段生成的 dist 文件夹也缓存起来，在 deploy 阶段会用到。
 
-image: node:14.17.3
-
 pages:
  cache:
    paths:
