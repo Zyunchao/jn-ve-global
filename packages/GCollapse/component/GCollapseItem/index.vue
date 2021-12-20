@@ -62,13 +62,40 @@ const tableHeight = computed(() => `${props.height}px`)
 </script>
 
 <style lang="scss" scoped>
+$--icon-size: 18px;
+$--icon-l: 10px;
+
 .custom-collapse-item {
+    /* 头 */
     :deep(.el-collapse-item__header) {
+        height: 36px;
+        font-size: 18px;
+        color: #293545;
+        font-weight: 600;
+        border-bottom: none;
+        overflow: hidden;
+
+        > span {
+            position: relative;
+
+            &::after {
+                content: '';
+                width: 10000px;
+                height: 1px;
+                background-color: #e1e1e1;
+                position: absolute;
+                top: 50%;
+                left: calc(100% + $--icon-size + $--icon-l * 2);
+                transform: translateY(-50%);
+            }
+        }
+
         .active-icon {
-            font-size: 20px;
+            font-size: $--icon-size;
             transform: rotate(-90deg);
-            margin-left: 20px;
+            margin-left: $--icon-l;
             transition: transform 0.3s;
+            color: #adadad;
         }
 
         .el-collapse-item__arrow {
@@ -79,6 +106,15 @@ const tableHeight = computed(() => `${props.height}px`)
             .active-icon {
                 transform: rotate(-90deg) rotateY(180deg);
             }
+        }
+    }
+
+    // 内容区域
+    :deep(.el-collapse-item__wrap) {
+        border-bottom: none;
+
+        .el-collapse-item__content {
+            padding: 10px 20px 14px;
         }
     }
 

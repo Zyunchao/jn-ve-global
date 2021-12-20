@@ -9,7 +9,7 @@
                 <p>自定义内容........</p>
                 <p>自定义内容........</p>
             </GCollapseItem>
-            <GCollapseItem title="自定义2" name="4">
+            <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
                 <GTable :config="tableConfig" />
                 <GForm :config="formConfig" />
             </GCollapseItem>

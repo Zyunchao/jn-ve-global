@@ -1,5 +1,5 @@
 <template>
-    <el-collapse>
+    <el-collapse class="custom-collapse">
         <slot />
     </el-collapse>
 </template>
@@ -9,3 +9,8 @@ export default {
     name: 'GCollapse'
 }
 </script>
+<style lang="scss" scoped>
+.custom-collapse {
+    border: none;
+}
+</style>
