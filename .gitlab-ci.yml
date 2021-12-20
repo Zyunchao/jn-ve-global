@@ -32,7 +32,9 @@ pages:
    - node_modules/
 
  script:
+   - nvm use 14.17.3
    - yarn install -g # npm install
+   - nvm use 17.3.0
    - yarn docs:build # npm run docs:build
    - rm -fr public
    - mkdir public && cp -fr docs/.vuepress/dist/* public
