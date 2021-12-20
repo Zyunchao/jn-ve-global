@@ -20,7 +20,8 @@ export default [
         children: [
             { text: 'BaseModule', link: '/modules/BaseModule.md' },
             { text: 'BaseDrawerContent', link: '/modules/BaseDrawerContent.md' },
-            { text: 'Modal', link: '/modules/Modal.md' }
+            { text: 'Modal', link: '/modules/Modal.md' },
+            { text: 'Collapse', link: '/modules/Collapse.md' }
         ]
     },
     {
