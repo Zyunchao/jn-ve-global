@@ -73,7 +73,7 @@
 
 <script lang="ts">
 export default {
-    name: 'GDialog',
+    name: 'GModal',
     inheritAttrs: false
 }
 </script>

@@ -90,9 +90,9 @@
 </template>
 
 <script lang="ts">
-export default defineComponent({
+export default {
     name: 'GTree'
-})
+}
 </script>
 
 <script lang="ts" setup>

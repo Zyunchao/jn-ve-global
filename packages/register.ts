@@ -8,8 +8,10 @@ import 'virtual:svg-icons-register'
 const globalComponentFiles = import.meta.globEager('./**/index.vue')
 
 const components = Object.keys(globalComponentFiles).reduce((components: any, path: string) => {
-    const componentName = path.split('/')[1]
+    // const nameArr = path.split('/')
+    // const componentName = nameArr[nameArr.length - 2]
     const context = globalComponentFiles[path]
+    const componentName = context.default.name
     components[componentName] = context.default
     return components
 }, {})

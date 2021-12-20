@@ -73,7 +73,7 @@
 
 <script lang="tsx">
 export default {
-    name: 'BaseModule',
+    name: 'GBaseModule',
     inheritAttrs: false
 }
 </script>
