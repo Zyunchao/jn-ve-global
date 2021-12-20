@@ -1,5 +1,5 @@
 // 图标
-import './assets/icons/ali/iconfont.css'
+import '@component/assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
 
 /**

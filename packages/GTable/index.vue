@@ -175,11 +175,11 @@ watch(
             if (rows.length > 0) {
                 rows.forEach((row) => {
                     if (!localSelectedRows.value.some((item) => item === row)) {
-                        localInstance.value.toggleRowSelection(row, true)
+                        localInstance.value?.toggleRowSelection(row, true)
                     }
                 })
             } else {
-                localInstance.value.clearSelection()
+                localInstance.value?.clearSelection()
                 localSelectedRows.value = []
             }
         } else {
@@ -187,11 +187,11 @@ watch(
                 if (rows.length > 0) {
                     rows.forEach((row) => {
                         if (!localSelectedRows.value.some((item) => item === row)) {
-                            localInstance.value.toggleRowSelection(row, true)
+                            localInstance.value?.toggleRowSelection(row, true)
                         }
                     })
                 } else {
-                    localInstance.value.clearSelection()
+                    localInstance.value?.clearSelection()
                     localSelectedRows.value = []
                 }
             })
@@ -267,9 +267,9 @@ const localSelectAll = (selection: any[], row) => {
 const toggleTableRowSelection = () => {
     if (!localConfig.value.showSelection || !localConfig.value.selectedRows) return
 
-    localInstance.value.clearSelection()
+    localInstance.value?.clearSelection()
     localConfig.value.selectedRows.forEach((row) => {
-        localInstance.value.toggleRowSelection(row, true)
+        localInstance.value?.toggleRowSelection(row, true)
     })
 }
 // *********************↑ 表格多选，跨页多选 ↑**************************************************************************************

@@ -1,5 +1,5 @@
-import * as elIcons from '@element-plus/icons'
-import AliIconfontClass from '../../assets/Icons/ali/iconfont.css'
+import * as elIcons from '@element-plus/icons-vue'
+import AliIconfontClass from './iconfont.ts'
 
 /**
  * el icon 组件名字 list

@@ -5,7 +5,7 @@
 
 // 注册 Ele
 import ElementPlus from 'element-plus'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import locale from 'element-plus/es/locale/lang/zh-cn.mjs'
 import 'element-plus/dist/index.css'
 
 // 全局组件

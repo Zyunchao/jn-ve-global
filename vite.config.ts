@@ -35,7 +35,7 @@ export default defineConfig({
                 'async-validator',
                 'resize-observer-polyfill',
                 'xlsx',
-                '@element-plus/icons'
+                '@element-plus/icons-vue'
             ],
             output: {
                 // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
@@ -53,14 +53,6 @@ export default defineConfig({
 
     define: {
         'SVG_ROOT': JSON.stringify(resolve(__dirname, 'examples/assets/icons/svg'))
-    },
-
-    optimizeDeps: {
-        include: [
-            'element-plus/lib/locale/lang/zh-cn',
-            'element-plus/lib/locale/lang/en',
-            'element-plus/lib/locale/lang/zh-tw'
-        ]
     },
 
     // 别名

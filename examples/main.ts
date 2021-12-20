@@ -4,7 +4,7 @@ import '@assets/styles/index.scss'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import locale from 'element-plus/es/locale/lang/zh-cn.mjs'
 import Router from '@/router'
 
 import GlobalComponents from '@component/register'

@@ -81,6 +81,7 @@ module.exports = {
         'vue/no-template-shadow': 0, // 不允许在外部范围中声明的阴影变量的可变声明
         'vue/require-default-prop': 0, // props 需要默认值
         'vue/no-unused-components': 1,
+        'vue/multi-word-component-names': 0, // 要求组件名称总是多单词的
 
         // 非继承规则 --------------------------------------------------------
         'indent': [1, 4],

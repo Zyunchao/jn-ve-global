@@ -86,7 +86,7 @@ import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } fro
 import LGForm from '../GForm/index.vue'
 import LGTable from '../GTable/index.vue'
 import TableSearch from './component/TableSearch.vue'
-import { RefreshLeft, Search } from '@element-plus/icons'
+import { RefreshLeft, Search } from '@element-plus/icons-vue'
 
 const props = defineProps({
     /**
