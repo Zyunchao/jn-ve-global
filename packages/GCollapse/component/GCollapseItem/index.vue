@@ -1,0 +1,89 @@
+<template>
+    <el-collapse-item class="custom-collapse-item">
+        <template #title>
+            <span>{{ attrs.title }}</span>
+            <LGIcon icon="el-DArrowRight" class="active-icon" />
+        </template>
+
+        <!-- 内容 -->
+        <template #default>
+            <!-- 表单 -->
+            <div v-if="formConfig" class="form-wrapper">
+                <LGForm :config="formConfig" />
+            </div>
+
+            <!-- 表格 -->
+            <div v-if="tableConfig" class="table-wrapper">
+                <LGTable :config="tableConfig" />
+            </div>
+
+            <!-- 自定义 -->
+            <slot />
+        </template>
+    </el-collapse-item>
+</template>
+
+<script lang="ts">
+export default {
+    name: 'GCollapseItem'
+}
+</script>
+
+<script lang="ts" setup>
+import { toRaw, watch, ref, computed, reactive, useAttrs } from 'vue'
+import { FormProps, TableConfig } from '../../../index'
+import LGIcon from '../../../GIcon/index.vue'
+import LGForm from '../../../GForm/index.vue'
+import LGTable from '../../../GTable/index.vue'
+
+interface Props {
+    /**
+     * 表单配置
+     */
+    formConfig?: FormProps
+    /**
+     * 表格配置
+     */
+    tableConfig?: TableConfig<any>
+    /**
+     * 高度，表格可能需要最小高度
+     */
+    height?: number
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    formConfig: null,
+    tableConfig: null,
+    height: 300
+})
+
+const attrs = useAttrs()
+const tableHeight = computed(() => `${props.height}px`)
+</script>
+
+<style lang="scss" scoped>
+.custom-collapse-item {
+    :deep(.el-collapse-item__header) {
+        .active-icon {
+            font-size: 20px;
+            transform: rotate(-90deg);
+            margin-left: 20px;
+            transition: transform 0.3s;
+        }
+
+        .el-collapse-item__arrow {
+            display: none;
+        }
+
+        &.is-active {
+            .active-icon {
+                transform: rotate(-90deg) rotateY(180deg);
+            }
+        }
+    }
+
+    .table-wrapper {
+        height: v-bind(tableHeight);
+    }
+}
+</style>

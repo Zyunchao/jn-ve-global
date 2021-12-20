@@ -64,6 +64,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/fileList-test',
         component: () => import('@/views/uploadTest/fileList.vue')
+    },
+    {
+        path: '/collapse-test',
+        component: () => import('@/views/collapseTest/index.vue')
     }
 ]
 
