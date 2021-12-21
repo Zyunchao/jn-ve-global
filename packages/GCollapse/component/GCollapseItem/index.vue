@@ -75,20 +75,20 @@ $--icon-l: 10px;
         border-bottom: none;
         overflow: hidden;
 
-        > span {
-            position: relative;
+        // > span {
+        //     // position: relative;
 
-            &::after {
-                content: '';
-                width: 10000px;
-                height: 1px;
-                background-color: #e1e1e1;
-                position: absolute;
-                top: 50%;
-                left: calc(100% + $--icon-size + $--icon-l * 2);
-                transform: translateY(-50%);
-            }
-        }
+        //     // &::after {
+        //     //     content: '';
+        //     //     width: 10000px;
+        //     //     height: 1px;
+        //     //     background-color: #e1e1e1;
+        //     //     position: absolute;
+        //     //     top: 50%;
+        //     //     left: calc(100% + $--icon-size + $--icon-l * 2);
+        //     //     transform: translateY(-50%);
+        //     // }
+        // }
 
         .active-icon {
             font-size: $--icon-size;
