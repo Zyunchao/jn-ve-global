@@ -61,7 +61,7 @@ export default defineConfig({
             '@': resolve(__dirname, 'examples'),
             '@views': resolve(__dirname, 'examples/views'),
             '@component': resolve(__dirname, 'packages'),
-            '@assets': resolve(__dirname, 'packages/assets')
+            '@assets': resolve(__dirname, 'examples/assets')
         }
     },
 

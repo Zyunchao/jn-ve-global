@@ -48,9 +48,6 @@
                     :data="data"
                     node-key="id"
                     highlight-current
-                    :icon-class="`node-handler-custom-icon ${
-                        mode === 'default' ? 'default-tree-node' : 'mode-tree-node'
-                    }`"
                     :expand-on-click-node="false"
                     :default-expand-all="expandAll"
                     empty-text="暂无数据"
@@ -89,17 +86,18 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
 export default {
     name: 'GTree'
 }
 </script>
 
-<script lang="ts" setup>
-import { defineComponent, PropType, watch, watchEffect, ref } from 'vue'
+<script lang="tsx" setup>
+import { defineComponent, PropType, watch, watchEffect, ref, computed } from 'vue'
 import { BtnProps } from '../index'
 import { TreeData } from '../GSelectTree/index'
 import { nodeHasChildren } from './utils'
+import LGIcon from '../GIcon/index.vue'
 import _ from 'lodash'
 
 const props = defineProps({
@@ -302,30 +300,10 @@ $--base-padding-lr: 14px;
                 color: rgba(0, 0, 0, 0.85);
 
                 // 展开按钮图标
-                .node-handler-custom-icon {
-                    margin-right: 8px;
-                    background-size: 100% 100%;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    width: 14px;
-                    height: 14px;
-
-                    &.is-leaf {
-                        background: none !important;
-                    }
-
-                    &.default-tree-node {
-                        background-image: url(@assets/icons/svg/arrow-right.svg);
-                    }
-
-                    &.mode-tree-node {
-                        background-image: url(@assets/icons/svg/tree-sub.svg);
-
-                        &.expanded {
-                            transform: none;
-                            background-image: url(@assets/icons/svg/tree-add.svg);
-                        }
-                    }
+                .el-tree-node__expand-icon {
+                    font-size: 20px;
+                    margin: 0;
+                    margin-right: 4px;
                 }
 
                 // 节点内图标
@@ -335,8 +313,8 @@ $--base-padding-lr: 14px;
                     height: 100%;
                     margin-right: 6px;
 
-                    svg,
-                    i {
+                    > svg,
+                    > i {
                         font-size: 18px;
                         color: rgba(0, 0, 0, 1) !important;
 
