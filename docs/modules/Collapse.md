@@ -37,3 +37,11 @@
 </template>
 
 </demo-block>
+
+## CollapseItem Attributes
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+formConfig| 表单配置 | FormProps | null
+tableConfig| 表格配置 | TableConfig | null
+height| 高度，适用于表格 | number | 300
