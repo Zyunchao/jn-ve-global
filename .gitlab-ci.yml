@@ -33,7 +33,9 @@ pages:
 
  script:
    #- yarn install -g # npm install
-   - yarn docs:build # npm run docs:build
+   - npm install -g 
+   #- yarn docs:build # npm run docs:build
+   - npm run docs:build
    - rm -fr public
    - mkdir public && cp -fr docs/.vuepress/dist/* public
  artifacts:
