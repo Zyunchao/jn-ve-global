@@ -244,7 +244,15 @@ export default {
                         type: 'selectTree',
                         treeData: treeData,
                         props: {
-                            multiple: true
+                            multiple: true,
+                            treeProps: {
+                                children: 'children',
+                                label: 'name'
+                                // disabled: (data) => true
+                            },
+                            treeConfig: {
+                                checkStrictly: true
+                            }
                         }
                     }
                 },

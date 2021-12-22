@@ -38,8 +38,10 @@ v-mdoel | 绑定的数据 | string \| number \| array | ''
 treeData | 树数据 | TreeData[] | []
 multiple | 是否多选 | boolean | false
 placeholder | 占位符 | string | '请选择'
-treeProps | 修改 Tree 的 props | Object | {children: 'children', label: 'name'}
+treeProps | 修改 Tree 的 props | [TreeProps](https://element-plus.gitee.io/zh-CN/component/tree.html#props) | {children: 'children', label: 'name'}
 everyChoose | 这个参数具有针对性，在机构树中期望只选择机构，但是机构和区域不在同一张表中，存在重复的 id，故针对性的排除区域，只能选择机构，通过此参数，可以去除这个限制，意味着每个节点都可以选择 | boolean | false
+nonselectable | 向外暴露判断不可选择的节点的 type 数组 | string[] | ['QH', 'QW', 'QZ']
+treeConfig | [select 的原生配置](https://element-plus.gitee.io/zh-CN/component/select.html#select-%E5%B1%9E%E6%80%A7)，可直接加到标签上面；tree 的原生配置，需要以对象的形式传递给当前组件 | [TreeConfig](https://element-plus.gitee.io/zh-CN/component/tree.html#%E5%B1%9E%E6%80%A7) | null
 
 ```ts
 interface TreeData {

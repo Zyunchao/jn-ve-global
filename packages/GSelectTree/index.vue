@@ -9,6 +9,7 @@
         :placeholder="placeholder"
         :multiple="multiple"
         :disabled="disabled"
+        clearable
         popper-class="select-tree-item-wrapper"
         class="select-tree-select"
         style="width: 100%"
@@ -20,6 +21,7 @@
                 node-key="id"
                 class="select-tree-tree"
                 default-expand-all
+                v-bind="treeConfig"
                 :data="treeData"
                 :current-node-key="!multiple ? modelValue : undefined"
                 :default-checked-keys="multiple ? modelValue : undefined"
@@ -42,68 +44,70 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { nextTick, watch, PropType, watchEffect, ref } from 'vue'
-import { findTargetById, validValue } from '../utils/utils'
-import { TreeData } from './index'
+import { nextTick, watch, ref, computed } from 'vue'
+import { findTargetById } from '../utils/utils'
+import { TreeData } from './interface/TreeData'
+import TreeProps from './interface/TreeProps'
+import TreeConfig from './interface/TreeConfig'
 
-const props = defineProps({
+interface SelectTreeProps {
     /**
      * v-mdoel 绑定的 prop
      */
-    modelValue: {
-        type: [String, Number, Array],
-        default: ''
-    },
+    modelValue: string | number | Array<string> | Array<number>
     /**
      * 树的待选数据
      */
-    treeData: {
-        type: Array as PropType<TreeData[]>,
-        required: true,
-        default: () => []
-    },
+    treeData: TreeData[]
     /**
      * 多选
      */
-    multiple: {
-        type: Boolean,
-        default: false
-    },
+    multiple?: boolean
     /**
      * 占位符
      */
-    placeholder: {
-        type: String,
-        default: '请选择'
-    },
+    placeholder?: string
     /**
      * 树的节点属性配置
      */
-    treeProps: {
-        type: Object,
-        default: () => ({
-            children: 'children',
-            label: 'name'
-        })
-    },
+    treeProps?: TreeProps
     /**
      * 排除某些特定条件下，所有节点都可以选择
      */
-    everyChoose: {
-        type: Boolean,
-        default: false
-    },
+    everyChoose?: boolean
     /**
      * 禁用
      */
-    disabled: {
-        type: Boolean,
-        default: false
-    }
+    disabled?: boolean
+    /**
+     * 依据 node.type 判断不可选择的节点
+     */
+    nonselectable?: string[]
+    /**
+     * select 的原生配置，可直接加到标签上面
+     * tree 的原生配置，需要以对象的形式传递给当前组件
+     */
+    treeConfig?: TreeConfig
+}
+
+const props = withDefaults(defineProps<SelectTreeProps>(), {
+    modelValue: '',
+    treeData: () => [],
+    multiple: false,
+    placeholder: '请选择',
+    treeProps: () => ({
+        children: 'children',
+        label: 'name'
+    }),
+    everyChoose: false,
+    disabled: false,
+    nonselectable: () => ['QH', 'QW', 'QZ'],
+    treeConfig: null
 })
 
 const emits = defineEmits(['update:modelValue'])
 
+// 保险
 if (props.multiple && !Array.isArray(props.modelValue))
     throw new Error('多选模式下，modelValue 必须是数组')
 if (
@@ -114,86 +118,74 @@ if (
 
 const elSelectRef = ref<any>(null)
 const elTreeRef = ref<any>(null)
-// select 绑定的值
-const localSelectValue = ref<string[] | string>(props.modelValue as any)
 
-// 监听变化，触发寻找值
-watchEffect(() => {
-    if (props.treeData.length > 0 && validValue(props.modelValue)) {
-        setLocalSelectValue()
+// 将与父级绑定的值，进行转义
+const localSelectValue = computed({
+    get: () => {
+        // 任何无效值
+        if (!props.modelValue) return props.multiple ? [] : ''
+        // 无待选数据
+        if (!props.treeData.length) return props.modelValue
+
+        let selectShowTxt: string | string[] = ''
+        if (props.multiple) {
+            // 多选展示值
+            selectShowTxt = (props.modelValue as string[] | number[]).map((id: string | number) => {
+                return findTargetById(props.treeData, id, props.treeProps.label as string) || id
+            })
+        } else {
+            // 单选展示值
+            selectShowTxt =
+                findTargetById(
+                    props.treeData,
+                    props.modelValue as string | number,
+                    props.treeProps.label as string
+                ) || props.modelValue
+        }
+
+        return selectShowTxt
+    },
+    set: (val) => {
+        if (!(val as string[] | string).length) {
+            emits('update:modelValue', val)
+        }
     }
 })
 
-// 单选清空选中数据时，清空树的选中
+/**
+ * 清空树节点
+ * 1. 任何无效值
+ * 2. 绑定值为数组，且长度为 0
+ */
 watch(
     () => props.modelValue,
-    () => {
-        if (!props.multiple && !props.modelValue) {
-            elTreeRef.value?.setCurrentKey(null)
-        } else if (props.multiple && (props.modelValue as string[]).length === 0) {
-            elTreeRef.value?.setCheckedKeys([])
+    (val) => {
+        if (!val || (val && Array.isArray(val) && !val.length)) {
+            if (props.multiple) elTreeRef.value?.setCheckedKeys([])
+            else elTreeRef.value?.setCurrentKey(null)
         }
     }
 )
-
-// 获取选中的 key 对应的树数据的值
-function setLocalSelectValue() {
-    let selectValue: string[] | string
-
-    if (props.multiple) {
-        // 多选
-        selectValue = (props.modelValue as string[] | number[]).map((id: string | number) => {
-            return findTargetById(props.treeData, id, 'name')
-        })
-    } else {
-        // 单选
-        selectValue = findTargetById(props.treeData, props.modelValue as string | number, 'name')
-    }
-
-    /**
-     * 本地状态的赋值分为两种情况
-     * 1. 组件已生成，监听状态的变化即可
-     * 2. 组件未生成，且值已存在，此时，组件创建 watch 的执行要在 state 之前，防止 state 报错，需要异步设置本地状态值
-     */
-    nextTick(() => {
-        localSelectValue.value = selectValue
-    })
-}
 
 /**
  * 单选点击
  */
 const handleCurrentChange = (data) => {
     if (props.multiple) return
-
-    if (!props.everyChoose) {
-        /**
-         * QH, QW 是在选择角色时，对机构及部门的特殊处理
-         * 由于有些树的节点并非在一张表中，故 id 存在重复的问题，通过 类型 + id 才能确定唯一
-         */
-        if (!['QH', 'QW', 'QZ'].includes(data.type)) {
-            emits('update:modelValue', data.id)
-
-            // 收起下拉框
-            elSelectRef.value.blur()
-
-            nextTick(() => {
-                elSelectRef.value.focus()
-            })
-        }
-    } else {
-        /**
-         * 每个都可以选择
-         */
+    // 是否都可选择
+    if (props.everyChoose) {
         emits('update:modelValue', data.id)
-
-        // 收起下拉框
         elSelectRef.value.blur()
-
-        nextTick(() => {
-            elSelectRef.value.focus()
-        })
+    } else {
+        if (!props.nonselectable.includes(data.type)) {
+            emits('update:modelValue', data.id)
+            elSelectRef.value.blur()
+        }
     }
+
+    nextTick(() => {
+        elSelectRef.value.focus()
+    })
 }
 
 /**
@@ -203,6 +195,12 @@ const handleCheck = (data, { checkedNodes, checkedKeys }) => {
     if (!props.multiple) return
     emits('update:modelValue', checkedKeys)
 }
+
+// 抛出
+defineExpose({
+    elSelectRef,
+    elTreeRef
+})
 </script>
 
 <style lang="scss" scoped>
