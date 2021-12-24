@@ -1,8 +1,6 @@
 <template>
     <div class="examples-base-wrapper">
-        <div>
-            <g-table :config="tableConfig" />
-        </div>
+        <g-table :config="tableConfig" />
     </div>
 </template>
 
@@ -40,42 +38,42 @@ const tableColumns = reactive<TableColumnProps[]>([
     {
         prop: 'createTime',
         label: '创建时间'
-    },
-    {
-        prop: 'opertion',
-        label: '操作',
-        width: 300,
-        fixed: 'right',
-        render(row) {
-            return (
-                <>
-                    <el-button
-                        type='text'
-                        onClick={() => {
-                            tableColumns.find((column) => column.prop === 'instituName').hide =
-                                false
-
-                            nextTick(() => {
-                                tableConfig.instance.doLayout()
-                            })
-                        }}>
-                        显示
-                    </el-button>
-                    <el-button
-                        type='text'
-                        class='btn-danger'
-                        onClick={() => {
-                            tableColumns.find((column) => column.prop === 'instituName').hide = true
-                            nextTick(() => {
-                                tableConfig.instance.doLayout()
-                            })
-                        }}>
-                        隐藏
-                    </el-button>
-                </>
-            )
-        }
     }
+    // {
+    //     prop: 'opertion',
+    //     label: '操作',
+    //     width: 300,
+    //     fixed: 'right',
+    //     render(row) {
+    //         return (
+    //             <>
+    //                 <el-button
+    //                     type='text'
+    //                     onClick={() => {
+    //                         tableColumns.find((column) => column.prop === 'instituName').hide =
+    //                             false
+
+    //                         nextTick(() => {
+    //                             tableConfig.instance.doLayout()
+    //                         })
+    //                     }}>
+    //                     显示
+    //                 </el-button>
+    //                 <el-button
+    //                     type='text'
+    //                     class='btn-danger'
+    //                     onClick={() => {
+    //                         tableColumns.find((column) => column.prop === 'instituName').hide = true
+    //                         nextTick(() => {
+    //                             tableConfig.instance.doLayout()
+    //                         })
+    //                     }}>
+    //                     隐藏
+    //                 </el-button>
+    //             </>
+    //         )
+    //     }
+    // }
 ])
 
 const tableConfig = reactive<TableConfig<any>>({
@@ -83,6 +81,7 @@ const tableConfig = reactive<TableConfig<any>>({
     columns: tableColumns,
     rowKey: 'id',
     stripe: true,
+    data: mockData.data1,
     pagination: {
         pageSize: 10,
         currentPage: 1,
@@ -91,33 +90,90 @@ const tableConfig = reactive<TableConfig<any>>({
             tableConfig.data = mockData[`data${page}`]
         }
     },
-    data: mockData.data1
+    rowBtnConfig: {
+        width: 440,
+        maxCount: 4,
+        btns: [
+            {
+                label: '显示',
+                authCode: '...',
+                onClick(row, index) {
+                    console.log(`%c 第 ${index + 1} 行 == `, 'color: #67c23a;', row)
+
+                    tableColumns.find((column) => column.prop === 'instituName').hide = false
+
+                    nextTick(() => {
+                        tableConfig.instance.doLayout()
+                    })
+
+                    tableConfig.rowBtnConfig.btns[2].hide = false
+                }
+            },
+            {
+                label: '隐藏',
+                authCode: '...',
+                class: 'btn-danger',
+                onClick(row, index) {
+                    tableColumns.find((column) => column.prop === 'instituName').hide = true
+                    nextTick(() => {
+                        tableConfig.instance.doLayout()
+                    })
+                    tableConfig.rowBtnConfig.btns[2].hide = true
+                }
+            },
+            {
+                label: '可隐藏按钮',
+                authCode: '...',
+                hide: false,
+                loading: true,
+                onClick(row, index) {
+                    console.log(`%c 隐藏按钮 click....`, 'color: #ff3040;', row, index)
+                }
+            },
+            {
+                label: '按钮4',
+                loading: true,
+                onClick(row, index) {
+                    console.log(`%c 按钮4 click....`, 'color: #ff3040;', row, index)
+                }
+            },
+            {
+                label: '按钮5',
+                style: {
+                    color: 'red'
+                },
+                onClick(row, index) {
+                    console.log(`%c 按钮5 click....`, 'color: #ff3040;', row, index)
+                }
+            },
+            {
+                label: '按钮6',
+                onClick(row, index) {
+                    console.log(`%c 按钮6 click....`, 'color: #ff3040;', row, index)
+                }
+            },
+            {
+                label: '按钮7',
+                onClick(row, index) {
+                    console.log(`%c 按钮7 click....`, 'color: #ff3040;', row, index)
+                }
+            },
+            {
+                label: '按钮8',
+                onClick(row, index) {
+                    console.log(`%c 按钮8 click....`, 'color: #ff3040;', row, index)
+                }
+            }
+        ]
+    }
 })
 
 watch(
-    () => tableConfig.selectedRows,
-    (arr) => {
-        console.log(`%c selectedRows == `, 'color: green;', arr)
-    },
-    {
-        deep: true
+    () => tableConfig.instance,
+    (instance) => {
+        console.log(`%c instance == `, 'color: green;', instance)
     }
 )
 </script>
 
-<style lang="scss" scoped>
-.examples-base-wrapper {
-    display: flex;
-    flex-direction: column;
-
-    > button {
-        width: 200px;
-        margin-bottom: 10px;
-    }
-
-    > div {
-        flex: 1;
-        overflow: hidden;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

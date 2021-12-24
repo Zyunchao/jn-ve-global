@@ -13,6 +13,7 @@ export function getTableProps(props: TableConfig<any>) {
         onCellEdited,
         pastable,
         onPasted,
+        rowBtnConfig,
         ...tableProps
     } = props
 

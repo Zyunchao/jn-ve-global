@@ -9,7 +9,6 @@
         :placeholder="placeholder"
         :multiple="multiple"
         :disabled="disabled"
-        clearable
         popper-class="select-tree-item-wrapper"
         class="select-tree-select"
         style="width: 100%"

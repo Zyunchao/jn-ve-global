@@ -46,4 +46,12 @@ export interface BtnProps {
      * 是否隐藏
      */
     hide?: boolean
+    /**
+     * 类名
+     */
+    class?: string
+    /**
+     * 具体的行内样式
+     */
+    style?: { [k: string]: any } | string
 }

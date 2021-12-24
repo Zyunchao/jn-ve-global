@@ -78,21 +78,25 @@ import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
 import { ElMessage } from 'element-plus'
 import Schema, { ValidateError, ValidateFieldsError, Rules } from 'async-validator'
 import TableColumn from './component/TableColumn.vue'
+import AddOperationColumn from './component/OperationColumn/index'
 
-const props = defineProps({
-    config: {
-        type: Object as PropType<TableConfig<any> | null>,
-        required: true,
-        default: null
-    }
+interface Props {
+    config: TableConfig<any>
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    config: null
 })
 
 const localInstance = ref<TableInstance | null>(null)
 const refreshLoad = ref(true)
 // 提取 TbaleProps
 const tableProps = computed(() => getTableProps(props.config))
-// 本地关联 Config（只读引用）
+// 本地关联 Config，关联引用
 const localConfig = computed(() => props.config)
+
+// 追加操作按钮列
+AddOperationColumn(localConfig.value)
 
 // 提供表格的 onCellEdited 事件
 provide(onCellEditKey, props.config?.onCellEdited)
@@ -114,7 +118,8 @@ watch(
 watch(
     () => localInstance.value,
     (instance) => {
-        instance && (localConfig.value.instance = instance)
+        if (!instance) return
+        localConfig.value.instance = instance
         /**
          * 较少情况下会有布局错乱，使用 ele 提供的方法重新布局
          */
