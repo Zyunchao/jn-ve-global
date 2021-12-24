@@ -113,6 +113,9 @@ interface BtnProps {
      * 授权标识
      */
     authCode?: string
+    /**
+     * 按钮的类型，同 Element Button
+     */
     type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
     /**
      * 禁用
@@ -122,6 +125,38 @@ interface BtnProps {
      * 事件
      */
     onClick?: () => void
+    /**
+     * 按钮尺寸
+     */
+    size?: 'medium' | 'small' | 'mini'
+    /**
+     * 加载中
+     */
+    loading?: boolean
+    /**
+     * 是否为朴素按钮
+     */
+    plain?: boolean
+    /**
+     * 是否为圆角按钮
+     */
+    round?: boolean
+    /**
+     * 是否为圆形按钮
+     */
+    circle?: boolean
+    /**
+     * 是否隐藏
+     */
+    hide?: boolean
+    /**
+     * 类名
+     */
+    class?: string
+    /**
+     * 具体的行内样式
+     */
+    style?: { [k: string]: any } | string
 }
 ```
 
@@ -137,5 +172,5 @@ interface BtnProps {
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
-core | 替换表格，使用自定义内容 | -- | -- 
+core | 替换表格，使用自定义内容 | -- | --
 middle-right | 按钮右侧的内容 | -- | --
