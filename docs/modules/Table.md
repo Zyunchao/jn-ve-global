@@ -272,6 +272,33 @@
 
 </demo-block>
 
+### 操作按钮配置化
+
+:::tip 注意
+
+操作列配置化于 1.5.0 起适用
+
+:::
+
+在以往的表格使用中，操作列都是以 render 函数的方式增加，痛点在于：
+
+1. html 结构使得配置变得冗长
+2. 分模块配置时，配置文件与主文件不在一个作用域，无法便捷的使用主作用域中的变量
+
+基于各组件功能按钮的配置方式，现将表格的操作列的按钮提取成配置方式，**并扩展了按钮条件隐藏到更多操作中**
+
+<demo-block>
+
+<Table-oprationColumnConfiger />
+
+<template #code>
+
+@[code](@demoroot/Table/oprationColumnConfiger.vue)
+
+</template>
+
+</demo-block>
+
 ### 更多功能示例
 
 请参考 [Element Table](https://element-plus.gitee.io/#/zh-CN/component/table)
@@ -293,6 +320,9 @@ pagination | 分页配置，不包含则无分页 | PaginationProps \| null \| u
 showSelection | 开启多选 | boolean | --
 selectedRows | 已选列表：获取已选列表 + 维护多选状态，不传递则不维护多选状态 | TBD[] | --
 onCellEdited | 编辑完成事件 | (row: TBD, index?: number \| string, field?: string) => void | --
+pastable | 可粘贴的表格 | boolean | --
+onPasted | 粘贴完成事件 | (tableData: TBD[]) => void | --
+rowBtnConfig | 操作列（每一行的操作按钮）配置对象 | RowBtnConfig（见下表） | null
 
 ### Table-column Attributes
 
@@ -322,3 +352,11 @@ pageSize| 页面数据数量 | number | --
 currentPage | 当前页码 | number | --
 total | 数据总量 | number | --
 onChange | 分页变化 | (currentPage?: number, currentPageSize?: number) => void | --
+
+### RowBtnConfig 
+
+参数 | 说明 | 类型 | 默认值
+-----|-----|-----|-----
+btns | 按钮组配置 | TableRowBtnProps | []
+width | 操作列的宽度 | number | 200
+maxCount | 最多显示几个按钮，超出部分将于更多操作内显示 | number | --

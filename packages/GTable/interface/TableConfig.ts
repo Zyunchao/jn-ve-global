@@ -63,7 +63,7 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
          */
         width?: string | number
         /**
-         * 最大显示几个按钮
+         * 最多显示几个按钮，超出部分将于更多操作内显示
          */
         maxCount?: number
     }

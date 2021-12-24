@@ -166,6 +166,13 @@ const props = defineProps({
     moreSearchMode: {
         type: String as PropType<'pull-down' | 'popup'>,
         default: undefined
+    },
+    /**
+     * 表格操作列
+     */
+    rowBtnConfig: {
+        type: Object as PropType<TableConfig<any>['rowBtnConfig']>,
+        default: null
     }
 })
 
@@ -248,6 +255,7 @@ const localTableConfig = reactive<TableConfig<any>>({
     columns: props.tableColumns,
     data: props.tableData,
     pagination: props.tablePagination,
+    rowBtnConfig: props.rowBtnConfig,
     ...attrs
 })
 

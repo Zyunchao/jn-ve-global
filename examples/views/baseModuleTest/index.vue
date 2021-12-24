@@ -7,9 +7,10 @@
             :btns="btns"
             :load-table-methods="loadTable"
             :table-columns="tableColumns"
-            :table-data="mockData.data1"
+            :table-data="tableData"
             :table-pagination="tablePagination"
             :table-loading="false"
+            :row-btn-config="rowBtnConfig"
             @reset="onReset"
             @search="onSearch"
         />
@@ -17,33 +18,26 @@
 </template>
 
 <script lang="tsx" setup>
-import { defineComponent, reactive, toRefs } from 'vue'
-import {
-    BtnProps,
-    FormProps,
-    TableColumnProps,
-    PaginationProps,
-    BaseTableDataItem
-} from '@component/index'
+import { reactive, ref } from 'vue'
+import { BtnProps, PaginationProps, TableConfig } from '@component/index'
 import mockData from './mock.json'
 import SearchFormConfig from './component/SearchFormConfig'
 import TableColumns from './component/TableColumns'
 
 const searchFormConfig = SearchFormConfig()
 const tableColumns = TableColumns()
+const tableData = ref(mockData.data1)
 
-const tablePagination = {
+const tablePagination = reactive<PaginationProps>({
     currentPage: 1,
     pageSize: 10,
-    total: 50
-}
-
-const tablePagination2 = reactive<PaginationProps>({
-    currentPage: 1,
-    pageSize: 10,
-    total: 100
+    total: 30,
+    onChange(page, size) {
+        tableData.value = mockData[`data${page}`]
+    }
 })
 
+// 表格外操作按钮
 const btns: BtnProps[] = [
     {
         label: '添加',
@@ -73,6 +67,69 @@ const btns: BtnProps[] = [
         }
     }
 ]
+
+// 表格操作列按钮组
+const rowBtnConfig = reactive<TableConfig<any>['rowBtnConfig']>({
+    width: 400,
+    maxCount: 5,
+    btns: [
+        {
+            label: '显示',
+            onClick(row, index) {
+                rowBtnConfig.btns[3].hide = false
+            }
+        },
+        {
+            label: '隐藏',
+            style: {
+                color: 'red'
+            },
+            onClick(row, index) {
+                rowBtnConfig.btns[3].hide = true
+            }
+        },
+        {
+            label: '按钮3',
+            onClick(row, index) {
+                console.log(`%c 按钮3 click....`, 'color: #ff3040;', row, index)
+            }
+        },
+        {
+            label: '按钮4',
+            loading: true,
+            onClick(row, index) {
+                console.log(`%c 按钮4 click....`, 'color: #ff3040;', row, index)
+            }
+        },
+        {
+            label: '按钮5',
+            style: {
+                color: 'red'
+            },
+            onClick(row, index) {
+                console.log(`%c 按钮5 click....`, 'color: #ff3040;', row, index)
+            }
+        },
+        {
+            label: '按钮6',
+            onClick(row, index) {
+                console.log(`%c 按钮6 click....`, 'color: #ff3040;', row, index)
+            }
+        },
+        {
+            label: '按钮7',
+            onClick(row, index) {
+                console.log(`%c 按钮7 click....`, 'color: #ff3040;', row, index)
+            }
+        },
+        {
+            label: '按钮8',
+            onClick(row, index) {
+                console.log(`%c 按钮8 click....`, 'color: #ff3040;', row, index)
+            }
+        }
+    ]
+})
 
 const loadTable = (page: number) => {
     const params = {

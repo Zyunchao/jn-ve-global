@@ -101,6 +101,7 @@ tableLoading | 表格 loading flag | boolean | false
 noSearchLabel | 去除 “查询条件” label | boolean | false
 searchBtnAuthCode | 搜索按钮的鉴权 code | string | --
 moreSearchMode | 更多查询展示方式 | 'pull-down' \| 'popup' | undefined
+rowBtnConfig | 表格操作列配置对象 | TableConfig['rowBtnConfig'] | null
 
 ```ts
 interface BtnProps {
