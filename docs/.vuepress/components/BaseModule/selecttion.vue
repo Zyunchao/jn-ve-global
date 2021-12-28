@@ -21,7 +21,6 @@
                 :table-data="tableData"
                 :table-pagination="tablePagination"
                 :table-loading="false"
-                :row-btn-config="rowBtnConfig"
                 @reset="loadTable"
                 @search="loadTable"
             />
@@ -64,10 +63,9 @@ const searchFormConfig = reactive<FormProps>({
 
 const tableColumns = TableColumns()
 const tableData = ref(mockData.data1)
+
 const showSelection = ref<boolean>(true)
-
 const selectedRows = ref<any[]>([])
-
 watch(
     () => selectedRows.value,
     (list) => {
@@ -94,23 +92,6 @@ const btns: BtnProps[] = [
         onClick: () => {}
     }
 ]
-
-// 表格操作列按钮组
-const rowBtnConfig = reactive<TableConfig<any>['rowBtnConfig']>({
-    btns: [
-        {
-            label: '修改',
-            onClick(row, index) {}
-        },
-        {
-            label: '删除',
-            style: {
-                color: 'red'
-            },
-            onClick(row, index) {}
-        }
-    ]
-})
 
 const loadTable = (page: number) => {
     showSelection.value = !showSelection.value

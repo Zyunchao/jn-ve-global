@@ -31,6 +31,7 @@
 
 1. 集成 Table 的可配置操作列
 2. 添加可选页签功能
+3. 集成 Table 的多选功能
 
 <h3>优化</h3>
 
@@ -40,11 +41,15 @@
 
 <h4>SelectTree</h4>
 
-1. 重构代码
+重构代码
 
 <h4>Modal</h4>
 
 优化 Modal 的样式
+
+<h4>Table</h4>
+
+重构多选功能的代码
 
 </update-log-block>
 
