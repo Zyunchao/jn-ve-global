@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import { FormProps } from '@component/GForm'
+import { FormProps } from '@component/index'
 
 export default () =>
     reactive<FormProps>({

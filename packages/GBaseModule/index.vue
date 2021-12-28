@@ -209,7 +209,7 @@ const props = defineProps({
      */
     selectedRows: {
         type: Array as PropType<TableConfig<any>['selectedRows']>,
-        default: () => []
+        default: null
     }
 })
 

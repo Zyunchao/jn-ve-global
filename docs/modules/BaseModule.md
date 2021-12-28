@@ -102,6 +102,26 @@
 
 </demo-block>
 
+## 多选
+
+:::tip
+BaseModule 中的多选和 Table 的多选一致，有一个区别是 selectedRows 的绑定要以双向绑定的形式传递（内部需要抛出）
+
+传递的 showSelection 将以 attr 的方式传递给 Table 组件
+:::
+
+<demo-block>
+
+<BaseModule-selecttion />
+
+<template #code>
+
+@[code](@demoroot/BaseModule/selecttion.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 参数 | 说明 | 类型 | 默认值
@@ -120,6 +140,7 @@ moreSearchMode | 更多查询展示方式 | 'pull-down' \| 'popup' | undefined
 rowBtnConfig | 表格操作列配置对象 | TableConfig['rowBtnConfig'] | null
 tabs | 标签页配置数组 | Array<{ lable: string; value: string }> | []
 v-model:activeTab \| :activeTab | 双向绑定的激活的 tab 页的 value 值 | string | 默认第一个 tab 的 value
+v-model:selectedRows | 多选绑定的数组，不传递表示不维护选中列表 | array | null 
 
 ```ts
 interface BtnProps {
