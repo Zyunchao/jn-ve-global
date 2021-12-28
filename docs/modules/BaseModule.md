@@ -86,6 +86,22 @@
 
 </demo-block>
 
+## 带有 Tabs 的标签
+
+在父组件中，通过双向绑定（数据驱动事件处理），可以拿到激活的标签的值，多是通过监听这个值，进行业务的处理
+
+<demo-block>
+
+<BaseModule-tabs />
+
+<template #code>
+
+@[code](@demoroot/BaseModule/tabs.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 参数 | 说明 | 类型 | 默认值
@@ -102,6 +118,8 @@ noSearchLabel | 去除 “查询条件” label | boolean | false
 searchBtnAuthCode | 搜索按钮的鉴权 code | string | --
 moreSearchMode | 更多查询展示方式 | 'pull-down' \| 'popup' | undefined
 rowBtnConfig | 表格操作列配置对象 | TableConfig['rowBtnConfig'] | null
+tabs | 标签页配置数组 | Array<{ lable: string; value: string }> | []
+v-model:activeTab \| :activeTab | 双向绑定的激活的 tab 页的 value 值 | string | 默认第一个 tab 的 value
 
 ```ts
 interface BtnProps {

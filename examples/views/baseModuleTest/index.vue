@@ -1,6 +1,7 @@
 <template>
     <div class="examples-base-wrapper">
         <GBaseModule
+            v-model:activeTab="activeTab"
             more-search-mode="pull-down"
             highlight-current-row
             :search-form-props="searchFormConfig"
@@ -11,6 +12,7 @@
             :table-pagination="tablePagination"
             :table-loading="false"
             :row-btn-config="rowBtnConfig"
+            :tabs="moduleTabs"
             @reset="onReset"
             @search="onSearch"
         />
@@ -18,7 +20,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { BtnProps, PaginationProps, TableConfig } from '@component/index'
 import mockData from './mock.json'
 import SearchFormConfig from './component/SearchFormConfig'
@@ -67,6 +69,33 @@ const btns: BtnProps[] = [
         }
     }
 ]
+
+const activeTab = ref<string>('')
+const moduleTabs = reactive([
+    {
+        label: '全部',
+        value: 'all'
+    },
+    {
+        label: '审核中 0',
+        value: 'checkout'
+    },
+    {
+        label: '待签发 20',
+        value: 'issue'
+    },
+    {
+        label: '待领取 2',
+        value: 'get'
+    }
+])
+
+watch(
+    () => activeTab.value,
+    (val) => {
+        console.log(`%c 激活的 tab === `, 'color: #67c23a;', val)
+    }
+)
 
 // 表格操作列按钮组
 const rowBtnConfig = reactive<TableConfig<any>['rowBtnConfig']>({

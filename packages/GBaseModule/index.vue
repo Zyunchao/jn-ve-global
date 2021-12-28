@@ -8,7 +8,10 @@
         class="base-module-root"
         :class="[
             $attrs.class,
-            { 'no-padding': (noSearchLabel && !moreSearchMode) || !searchFormProps }
+            {
+                'no-padding': (noSearchLabel && !moreSearchMode) || !searchFormProps,
+                'tabs-layout': !!tabs.length
+            }
         ]"
     >
         <!-- 搜索 -->
@@ -65,7 +68,19 @@
         <!-- 表格 -->
         <div class="core-wrapper">
             <slot name="core">
-                <LGTable v-loading="tableLoading" :config="localTableConfig" />
+                <!-- tab页 -->
+                <div v-if="!!tabs.length" class="core-tab-wrapper">
+                    <el-tabs v-model="localActiveTab">
+                        <template v-for="(tab, index) in tabs" :key="`${tab.value}-${index}`">
+                            <el-tab-pane :label="tab.label" :name="tab.value" />
+                        </template>
+                    </el-tabs>
+                </div>
+
+                <!-- 表格 -->
+                <div class="core-table-wrapper">
+                    <LGTable v-loading="tableLoading" :config="localTableConfig" />
+                </div>
             </slot>
         </div>
     </div>
@@ -79,7 +94,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { useAttrs, PropType, reactive, watch, ref, computed } from 'vue'
+import { useAttrs, PropType, reactive, watch, ref, computed, getCurrentInstance } from 'vue'
 import { BtnProps } from './index'
 import { FormProps, FormItemProps } from '../GForm'
 import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } from '../GTable'
@@ -173,11 +188,39 @@ const props = defineProps({
     rowBtnConfig: {
         type: Object as PropType<TableConfig<any>['rowBtnConfig']>,
         default: null
+    },
+    /**
+     * tab 切换
+     */
+    tabs: {
+        type: Array as PropType<Array<{ lable: string; value: string }>>,
+        default: () => []
+    },
+    /**
+     * 激活的 tab
+     */
+    activeTab: {
+        type: String,
+        default: ''
     }
 })
 
-const emits = defineEmits(['getTableInstance'])
+const emits = defineEmits(['getTableInstance', 'update:activeTab'])
 const attrs = useAttrs()
+
+// 激活的 tab 页
+const localActiveTab = computed({
+    get: () => {
+        if (props.activeTab) return props.activeTab
+        if (!!props.tabs.length && props.tabs?.[0].value) {
+            emits('update:activeTab', props.tabs?.[0].value)
+        }
+        return ''
+    },
+    set: (val) => {
+        emits('update:activeTab', val)
+    }
+})
 
 // 搜索按钮的配置
 const searchBtnsConfig = computed<FormItemProps>(() => ({
@@ -273,7 +316,6 @@ watch(
         localTableConfig.data = data
     }
 )
-
 watch(
     () => props.tableColumns,
     (columns) => {
@@ -295,10 +337,17 @@ watch(
         deep: false
     }
 )
+
+// 抛出
+defineExpose({
+    tableInstance: localTableConfig.instance
+})
 </script>
 
 <style lang="scss" scoped>
-$--base-padding-lr: 28px;
+$--base-padding-lr: 24px;
+$--base-borer-color: #e8e8e8;
+$--tabs-height: 40px;
 
 .base-module-root {
     height: 100%;
@@ -316,7 +365,11 @@ $--base-padding-lr: 28px;
 
         .middle-opertion-wrapper,
         .core-wrapper {
-            padding: 0;
+            padding: 0 !important;
+        }
+
+        .core-wrapper {
+            margin: 0 !important;
         }
     }
 
@@ -350,7 +403,126 @@ $--base-padding-lr: 28px;
     .core-wrapper {
         flex: 1;
         overflow: hidden;
-        padding: 0 $--base-padding-lr $--base-padding-lr;
+        padding: 0 $--base-padding-lr 20px;
+
+        .core-table-wrapper {
+            height: 100%;
+        }
+    }
+
+    // 带有 tab 页的表格
+    &.tabs-layout {
+        .middle-opertion-wrapper {
+            padding: 0 calc($--base-padding-lr / 2);
+        }
+
+        .core-wrapper {
+            margin: 0 calc($--base-padding-lr / 2) 20px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-bottom: 1px solid $--base-borer-color;
+
+            // 标签页
+            .core-tab-wrapper {
+                height: $--tabs-height;
+                border-bottom: 1px solid $--base-borer-color;
+                margin-bottom: 10px;
+                background-color: #f4fbff;
+                flex: none;
+
+                :deep(.el-tabs) {
+                    .el-tabs__nav-wrap {
+                        &::after {
+                            display: none;
+                        }
+                    }
+
+                    .el-tabs__header {
+                        margin: 0;
+
+                        .el-tabs__active-bar {
+                            display: none;
+                        }
+
+                        .el-tabs__item {
+                            height: $--tabs-height;
+                            padding: 0 38px;
+                            font-size: 18px;
+                            color: #8a8989;
+                            border: 1px solid #f4fbff;
+                            border-bottom: none;
+                            transition: all 0.2s;
+
+                            &.is-active {
+                                border-color: $--base-borer-color;
+                                background-color: #fff;
+                                color: #0c0c0c;
+                            }
+                        }
+                    }
+
+                    .el-tabs__content {
+                        display: none;
+                    }
+                }
+            }
+
+            // 表格容器
+            .core-table-wrapper {
+                padding: 0 calc($--base-padding-lr / 2) 0;
+                flex: 1;
+                overflow: hidden;
+                height: auto;
+
+                :deep(.g-table-root) {
+                    border: none;
+
+                    .g-table-main {
+                        border: 1px solid $--base-borer-color;
+                        border-radius: 4px 4px 0 0;
+                        overflow: hidden;
+
+                        .el-table,
+                        .el-table__fixed-right,
+                        .el-table__fixed {
+                            &::before {
+                                display: none;
+                            }
+
+                            tbody {
+                                tr {
+                                    &:last-of-type {
+                                        td {
+                                            border-bottom: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &::before,
+            &::after {
+                content: '';
+                width: 1px;
+                height: calc(100% - $--tabs-height);
+                background-color: $--base-borer-color;
+                position: absolute;
+                top: $--tabs-height;
+            }
+
+            &::before {
+                left: 0;
+            }
+
+            &::after {
+                right: 0;
+            }
+        }
     }
 }
 </style>

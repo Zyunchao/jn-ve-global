@@ -30,6 +30,7 @@
 <h4>BaseModule</h4>
 
 1. 集成 Table 的可配置操作列
+2. 添加可选页签功能
 
 <h3>优化</h3>
 
@@ -40,6 +41,10 @@
 <h4>SelectTree</h4>
 
 1. 重构代码
+
+<h4>Modal</h4>
+
+优化 Modal 的样式
 
 </update-log-block>
 

@@ -160,12 +160,12 @@ $--form-item-margin-b: 22px;
 
 // 查询表单
 .search-wrapper {
-    padding: 17px 14px 0;
+    padding: 10px 24px 0;
 
     .top {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 19px;
+        margin-bottom: 20px;
         align-items: center;
 
         .title {
