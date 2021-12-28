@@ -53,7 +53,7 @@ import { PropType, watch, ref, computed, reactive, onMounted } from 'vue'
 import { FormProps, FormItemProps } from '../../GForm'
 import LGForm from '../../GForm/index.vue'
 import tableSearchMoreIcon from '@component/assets/icons/svg/table-search-more.svg'
-import { getStyle } from '../utils'
+import { getStyle } from '../../utils/utils'
 
 const props = defineProps({
     /**

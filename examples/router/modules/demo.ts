@@ -18,6 +18,10 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/baseModuleTest/index.vue')
     },
     {
+        path: '/baseModule-selection-test',
+        component: () => import('@/views/baseModuleTest/selectionDemo.vue')
+    },
+    {
         path: '/form-test',
         component: () => import('@/views/formTest/index.vue')
     },
