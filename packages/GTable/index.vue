@@ -167,10 +167,10 @@ watch(
         }
 
         nextTick(() => {
-            localInstance.value.clearSelection()
+            localInstance.value?.clearSelection()
             nextTick(() => {
                 rows.forEach((row) => {
-                    localInstance.value.toggleRowSelection(row, true)
+                    localInstance.value?.toggleRowSelection(row, true)
                 })
             })
         })
@@ -219,10 +219,10 @@ const localSelectAll = (selection: any[], row) => {
  */
 const toggleTableRowSelection = () => {
     if (!localConfig.value.showSelection || !localConfig.value.selectedRows) return
-    localInstance.value.clearSelection()
+    localInstance.value?.clearSelection()
     nextTick(() => {
         localConfig.value.selectedRows.forEach((row) => {
-            localInstance.value.toggleRowSelection(row, true)
+            localInstance.value?.toggleRowSelection(row, true)
         })
     })
 }
