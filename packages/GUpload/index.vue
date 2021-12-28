@@ -127,7 +127,7 @@ import { getFileType, getFileTypeIcon } from './utils'
 import { imgSuffix, officeSuffix, officeSuffixNoPre } from './constant/fileTypeList'
 import UploadFile from './interface/UploadFile'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { hump2Partition } from './utils'
+import { humpObj2PartitionObj } from '../utils/utils'
 
 const props = defineProps({
     /**
@@ -205,22 +205,7 @@ const attrsSource = useAttrs()
  *
  * 驼峰需要转换成短横线
  */
-const attrs: {
-    [k: string]: any
-} = reactive({})
-
-watch(
-    () => attrsSource,
-    (attrsSource) => {
-        Object.keys(attrsSource).forEach((sk) => {
-            const partitionK = hump2Partition(sk)
-            attrs[partitionK] = attrsSource[sk]
-        })
-    },
-    {
-        immediate: true
-    }
-)
+const attrs = computed<{ [k: string]: any }>(() => humpObj2PartitionObj(attrsSource))
 
 /**
  * 控件的类型：
@@ -228,28 +213,32 @@ watch(
  *  avatar 实际取得 'picture-card'；（内置配置，方便用户）
  */
 const uploadListType = computed<'text' | 'picture' | 'picture-card' | 'avatar' | unknown>(() => {
-    const type = attrs['list-type']
-    return type === 'avatar' ? 'picture-card' : attrs['list-type']
+    const type = attrs.value['list-type']
+    return type === 'avatar' ? 'picture-card' : attrs.value['list-type']
 })
 
 /**
  * avatar 模式将限制只能存在一个文件；（内置配置，方便用户）
  * 其他则取用户传递或不限制
  */
-const localLimit = computed(() => (attrs['list-type'] === 'avatar' ? 1 : attrs['limit']))
+const localLimit = computed(() =>
+    attrs.value['list-type'] === 'avatar' ? 1 : attrs.value['limit']
+)
 
 /**
  * avatar 模式将限制文件类型为 'image/*'
  * 其他这由用户指定
  */
-const localAccept = computed(() => (attrs['list-type'] === 'avatar' ? 'image/*' : attrs['accept']))
+const localAccept = computed(() =>
+    attrs.value['list-type'] === 'avatar' ? 'image/*' : attrs.value['accept']
+)
 
 /**
  * avatar 模式将取消文件列表的显示；（内置配置，方便用户）
  * avatar 相当于单选
  */
 const localShowFileList = computed(() =>
-    attrs['list-type'] === 'avatar' ? false : attrs['show-file-list']
+    attrs.value['list-type'] === 'avatar' ? false : attrs.value['show-file-list']
 )
 
 /**
@@ -298,7 +287,7 @@ const showPreview = (fileName: string) => {
 watch(
     () => props.imgUrl,
     (url) => {
-        if (url && attrs['list-type'] === 'avatar') {
+        if (url && attrs.value['list-type'] === 'avatar') {
             /**
              * avatar 模式将意味着查看照片模式，而 currentFile 需要一个 name 属性
              * 这里的 name 只是一个假象，为弹框模式做判断
@@ -374,7 +363,7 @@ const delAvatar = () => {
         emits('update:modelValue', '')
 
         // 同时执行用户传递的
-        ;(attrs as any)['on-remove']?.()
+        attrs.value['on-remove']?.()
     })
 }
 
@@ -385,7 +374,7 @@ const beforeUpload = (file: UploadFile) => {
      *  1. avatar 模式只支持 'image/*'
      *  2. 其他由用户决定
      */
-    if (attrs['list-type'] === 'avatar') {
+    if (attrs.value['list-type'] === 'avatar') {
         if (!file.type.includes('image/')) {
             ElMessage.warning('只能上传图片文件')
             return false
@@ -402,7 +391,7 @@ const beforeUpload = (file: UploadFile) => {
     }
 
     // 用户传递的
-    if (attrs.beforeUpload) return (attrs as any)['before-upload'](file)
+    if (attrs.value.beforeUpload) return attrs.value['before-upload'](file)
 
     return true
 }
@@ -410,8 +399,8 @@ const beforeUpload = (file: UploadFile) => {
 // 文件超出个数限制时的钩子
 const onExceed = (files: UploadFile, fileList: UploadFile[]) => {
     // 用户传递的优先执行
-    if ((attrs as any)['on-exceed']) {
-        ;(attrs as any)['on-exceed']()
+    if (attrs.value['on-exceed']) {
+        attrs.value['on-exceed']()
         return
     }
     let num = localLimit.value
@@ -436,7 +425,7 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
          * avatar 可以理解为单选模式，每次上传成功后的 file
          * 也就变成了当前活跃的 file
          */
-        if (attrs['list-type'] === 'avatar') {
+        if (attrs.value['list-type'] === 'avatar') {
             currentFile.value = file
         }
     } else {
@@ -445,7 +434,7 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
     }
 
     // 用户传递
-    ;(attrs as any)['on-success']?.(res, file, fileList)
+    attrs.value['on-success']?.(res, file, fileList)
 }
 
 // 文件上传失败时的钩子
@@ -453,7 +442,7 @@ const onError = (err, file: UploadFile, fileList: UploadFile[]) => {
     ElMessage.error(`上传失败!`)
 
     // 同时执行用户传递的
-    ;(attrs as any)['on-error']?.(err, file, fileList)
+    attrs.value['on-error']?.(err, file, fileList)
 }
 
 // 变化时 抛出 fileList
@@ -465,7 +454,7 @@ const onChange = (file: UploadFile, fileList: UploadFile[]) => {
      */
     if (file.fileId) {
         const fileIds = fileList.map((item) => item.fileId || '')
-        if (attrs['list-type'] === 'avatar') {
+        if (attrs.value['list-type'] === 'avatar') {
             emits('update:modelValue', file.fileId)
         } else {
             emits('update:modelValue', fileIds)
@@ -476,7 +465,7 @@ const onChange = (file: UploadFile, fileList: UploadFile[]) => {
     localFileList.value = fileList
 
     // 同时执行用户传递的
-    ;(attrs as any)['on-change']?.(file, fileList)
+    attrs.value['on-change']?.(file, fileList)
 }
 
 // 移除事件时抛出列表
@@ -484,7 +473,7 @@ const onRemove = (file: UploadFile, fileList: UploadFile[]) => {
     /**
      * 上传失败、调用 handleRemove 时会触发当前事件
      */
-    if (attrs['list-type'] === 'avatar') {
+    if (attrs.value['list-type'] === 'avatar') {
         emits('update:modelValue', '')
     } else {
         const fileIds = fileList.map((item) => item.fileId)
@@ -495,7 +484,7 @@ const onRemove = (file: UploadFile, fileList: UploadFile[]) => {
     localFileList.value = fileList
 
     // 同时执行用户传递的
-    ;(attrs as any)['on-remove']?.(file, fileList)
+    attrs.value['on-remove']?.(file, fileList)
 }
 
 /**
@@ -503,7 +492,7 @@ const onRemove = (file: UploadFile, fileList: UploadFile[]) => {
  */
 const getUploadProps = () => {
     let props = {}
-    Object.keys(attrs).forEach((key) => {
+    Object.keys(attrs.value).forEach((key) => {
         if (
             ![
                 'accept',
@@ -520,7 +509,7 @@ const getUploadProps = () => {
                 'on-remove'
             ].includes(key)
         ) {
-            props[key] = attrs[key]
+            props[key] = attrs.value[key]
         }
     })
 

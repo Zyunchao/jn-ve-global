@@ -50,27 +50,3 @@ export function getFileTypeIcon(fileName: string, url?: string) {
 
     return DefaulrFileLogo
 }
-
-/**
- * 驼峰转短横线
- * @param str 字符串
- * @returns 短横线
- */
-export function hump2Partition(str: string) {
-    return str.replace(/([A-Z])/g, (match, p1, offset, string) => {
-        // 一个捕获组捕获全部，所以match等于p1
-        return '-' + p1.toLowerCase()
-    })
-}
-
-/**
- * 短横线转驼峰
- * @param str 字符串
- * @returns 驼峰
- */
-export function partition2Hump(str: string) {
-    return str.replace(/(\-([a-z]))/g, (match, p1, p2, offset, string) => {
-        // 这里有两个捕获组，第一个捕获组捕获全部并包含了第二个捕获组，所以match等于p1
-        return p2.toUpperCase()
-    })
-}
