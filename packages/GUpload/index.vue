@@ -127,7 +127,7 @@ import { getFileType, getFileTypeIcon } from './utils'
 import { imgSuffix, officeSuffix, officeSuffixNoPre } from './constant/fileTypeList'
 import UploadFile from './interface/UploadFile'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { hump2partition } from './utils'
+import { hump2Partition } from './utils'
 
 const props = defineProps({
     /**
@@ -213,7 +213,7 @@ watch(
     () => attrsSource,
     (attrsSource) => {
         Object.keys(attrsSource).forEach((sk) => {
-            const partitionK = hump2partition(sk)
+            const partitionK = hump2Partition(sk)
             attrs[partitionK] = attrsSource[sk]
         })
     },

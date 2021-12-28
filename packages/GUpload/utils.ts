@@ -56,7 +56,7 @@ export function getFileTypeIcon(fileName: string, url?: string) {
  * @param str 字符串
  * @returns 短横线
  */
-export function hump2partition(str: string) {
+export function hump2Partition(str: string) {
     return str.replace(/([A-Z])/g, (match, p1, offset, string) => {
         // 一个捕获组捕获全部，所以match等于p1
         return '-' + p1.toLowerCase()
