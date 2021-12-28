@@ -114,7 +114,7 @@ export function validValue(val) {
 }
 
 /**
- * 驼峰转短横线
+ * 小驼峰转短横线
  * @param str 字符串
  * @returns 短横线
  */
@@ -128,19 +128,22 @@ export function hump2Partition(str: string) {
 /**
  * 将小驼峰字段的对象转换成短横线字段的对象
  * @param obj 要转换的对象
+ * @param excludes 排除的字段（字段将在最终的映射对象中排除）
  * @returns 短横线命名的对象
  */
-export function humpObj2PartitionObj(obj: object): object {
+export function humpObj2PartitionObj(obj: object, excludes?: Array<string> | string): object {
     const temp = {}
     Object.keys(obj).forEach((key) => {
-        const partitionK = hump2Partition(key)
-        temp[partitionK] = obj[key]
+        if (!excludes || !excludes.includes(key)) {
+            const partitionK = hump2Partition(key)
+            temp[partitionK] = obj[key]
+        }
     })
     return temp
 }
 
 /**
- * 短横线转驼峰
+ * 短横线转小驼峰
  * @param str 字符串
  * @returns 驼峰
  */
@@ -154,13 +157,16 @@ export function partition2Hump(str: string) {
 /**
  * 将短横线字段的对象转换成驼峰字段的对象
  * @param obj 要转换的对象
+ * @param excludes 排除的字段（字段将在最终的映射对象中排除）
  * @returns 短横线命名的对象
  */
-export function partitionObj2HumpObj(obj: object): object {
+export function partitionObj2HumpObj(obj: object, excludes?: Array<string> | string): object {
     const temp = {}
     Object.keys(obj).forEach((key) => {
-        const partitionK = partition2Hump(key)
-        temp[partitionK] = obj[key]
+        if (!excludes || !excludes.includes(key)) {
+            const partitionK = partition2Hump(key)
+            temp[partitionK] = obj[key]
+        }
     })
     return temp
 }

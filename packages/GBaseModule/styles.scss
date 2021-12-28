@@ -1,0 +1,180 @@
+$--base-padding-lr: 24px;
+$--base-borer-color: #e8e8e8;
+$--tabs-height: 40px;
+
+.base-module-root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+
+    &.no-padding {
+        border-radius: 0;
+        box-shadow: none;
+
+        .middle-opertion-wrapper,
+        .core-wrapper {
+            padding: 0 !important;
+        }
+
+        .core-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+    /* 中间 */
+    .middle-opertion-wrapper {
+        padding: 0 $--base-padding-lr;
+        margin-bottom: 10px;
+        flex: none;
+        display: flex;
+        justify-content: space-between;
+
+        /* 左 */
+        .middle-left-wrapper {
+            width: 60%;
+
+            .btns-wrapper {
+                .el-button {
+                    padding: 0 22px;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        /* 右 */
+        .middle-right-wrapper {
+            width: 38%;
+        }
+    }
+
+    /* 核心 */
+    .core-wrapper {
+        flex: 1;
+        overflow: hidden;
+        padding: 0 $--base-padding-lr 20px;
+
+        .core-table-wrapper {
+            height: 100%;
+        }
+    }
+
+    // 带有 tab 页的表格
+    &.tabs-layout {
+        .middle-opertion-wrapper {
+            padding: 0 calc($--base-padding-lr / 2);
+        }
+
+        .core-wrapper {
+            margin: 0 calc($--base-padding-lr / 2) 20px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-bottom: 1px solid $--base-borer-color;
+
+            // 标签页
+            .core-tab-wrapper {
+                height: $--tabs-height;
+                border-bottom: 1px solid $--base-borer-color;
+                margin-bottom: 10px;
+                background-color: #f4fbff;
+                flex: none;
+
+                :deep(.el-tabs) {
+                    .el-tabs__nav-wrap {
+                        &::after {
+                            display: none;
+                        }
+                    }
+
+                    .el-tabs__header {
+                        margin: 0;
+
+                        .el-tabs__active-bar {
+                            display: none;
+                        }
+
+                        .el-tabs__item {
+                            height: $--tabs-height;
+                            padding: 0 38px;
+                            font-size: 18px;
+                            color: #8a8989;
+                            border: 1px solid #f4fbff;
+                            border-bottom: none;
+                            transition: all 0.2s;
+
+                            &.is-active {
+                                border-color: $--base-borer-color;
+                                background-color: #fff;
+                                color: #0c0c0c;
+                            }
+                        }
+                    }
+
+                    .el-tabs__content {
+                        display: none;
+                    }
+                }
+            }
+
+            // 表格容器
+            .core-table-wrapper {
+                padding: 0 calc($--base-padding-lr / 2) 0;
+                flex: 1;
+                overflow: hidden;
+                height: auto;
+
+                :deep(.g-table-root) {
+                    border: none;
+
+                    .g-table-main {
+                        border: 1px solid $--base-borer-color;
+                        border-radius: 4px 4px 0 0;
+                        overflow: hidden;
+
+                        .el-table,
+                        .el-table__fixed-right,
+                        .el-table__fixed {
+                            &::before {
+                                display: none;
+                            }
+
+                            tbody {
+                                tr {
+                                    &:last-of-type {
+                                        td {
+                                            border-bottom: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &::before,
+            &::after {
+                content: '';
+                width: 1px;
+                height: calc(100% - $--tabs-height);
+                background-color: $--base-borer-color;
+                position: absolute;
+                top: $--tabs-height;
+            }
+
+            &::before {
+                left: 0;
+            }
+
+            &::after {
+                right: 0;
+            }
+        }
+    }
+}

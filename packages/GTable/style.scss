@@ -134,6 +134,12 @@ $--base-border-color: #e8e8e8;
                     font-weight: 600;
                 }
             }
+
+
+            // 复选框
+            .el-checkbox {
+                height: auto;
+            }
         }
 
         :deep(.el-table--group) {

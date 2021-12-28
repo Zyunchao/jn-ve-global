@@ -13,7 +13,7 @@ export default interface TableMethods {
     /**
      * 用于多选表格，切换全选和全不选
      */
-    toggleAllSelection: () => void
+    toggleAllSelection: (selected?: boolean) => void
     /**
      * 用于可展开表格与树形表格，切换某一行的展开状态
      * 如果使用了第二个参数，则是设置这一行展开与否（expanded 为 true 则展开）

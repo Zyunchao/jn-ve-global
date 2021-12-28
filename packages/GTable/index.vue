@@ -13,7 +13,6 @@
                 v-bind="tableProps"
                 ref="localInstance"
                 height="100%"
-                @selection-change="localOnSelectionChange"
                 @select="localSelect"
                 @select-all="localSelectAll"
             >
@@ -123,7 +122,9 @@ watch(
         /**
          * 较少情况下会有布局错乱，使用 ele 提供的方法重新布局
          */
-        instance.doLayout()
+        nextTick(() => {
+            instance.doLayout()
+        })
     }
 )
 
@@ -157,124 +158,72 @@ if (localConfig.value.pagination) {
 // *********************↓ 表格多选，跨页多选 ↓**************************************************************************************
 /**
  * 如果表格没有传递 config.selectedRows 将被理解为不维护所选行
- *
- * 一个规则：
- * 内部点击抛出外部，同步保存在 “内部所选数组”
- * 外部传递，先使其选中，然后再维护进内部数组
- * 这样一来，行成一个存储差，外部传递与内部存储的差集，就是要选中的数据
  */
-const localSelectedRows = ref([])
-
-// 监听外部选中行 ==> 向内配置
 watch(
     () => localConfig.value.selectedRows,
-    (rows) => {
-        if (!rows || !localConfig.value.showSelection) return
-
-        /**
-         * 通过标记本地已选行的数组，来获取新增加的数据，使新加的数据选中
-         * 已选中的数据略过
-         */
-
-        if (localInstance.value) {
-            if (rows.length > 0) {
-                rows.forEach((row) => {
-                    if (!localSelectedRows.value.some((item) => item === row)) {
-                        localInstance.value?.toggleRowSelection(row, true)
-                    }
-                })
-            } else {
-                localInstance.value?.clearSelection()
-                localSelectedRows.value = []
-            }
-        } else {
-            nextTick(() => {
-                if (rows.length > 0) {
-                    rows.forEach((row) => {
-                        if (!localSelectedRows.value.some((item) => item === row)) {
-                            localInstance.value?.toggleRowSelection(row, true)
-                        }
-                    })
-                } else {
-                    localInstance.value?.clearSelection()
-                    localSelectedRows.value = []
-                }
-            })
+    (rows, oldRows) => {
+        if (!localConfig.value.showSelection || !rows) {
+            return
         }
+
+        nextTick(() => {
+            localInstance.value.clearSelection()
+            nextTick(() => {
+                rows.forEach((row) => {
+                    localInstance.value.toggleRowSelection(row, true)
+                })
+            })
+        })
     },
     {
+        // 外部可能会有数组的 push、splice 等不改引用改原数组的操作
         deep: true,
         immediate: true
     }
 )
 
-// 根据 selection 变化事件，保证无重复添加到数组中
-const localOnSelectionChange = (selection: any[]) => {
-    if (!localConfig.value.showSelection || !localConfig.value.selectedRows) return
-
-    selection.forEach((row) => {
-        // 抛出
-        if (!localConfig.value.selectedRows.some((item) => item === row)) {
-            localConfig.value.selectedRows.push(toRaw(row))
-        }
-
-        // 内部存储
-        if (!localSelectedRows.value.some((localItem) => localItem === row)) {
-            localSelectedRows.value.push(toRaw(row))
-        }
-    })
-}
-
-// 点击复选框时，依据 选中 or 取消选中，在保存的已勾选数组中排除掉 “取消选中”
-const localSelect = (selection: any[], row) => {
-    if (!localConfig.value.showSelection || !localConfig.value.selectedRows) return
-
-    let selected: boolean = selection.some((item) => item === row)
-
-    // 取消选中，进行排除
-    if (!selected) {
-        // 维护外部
-        localConfig.value.selectedRows = localConfig.value.selectedRows.filter(
-            (item) => item !== row
-        )
-
-        // 维护内部
-        localSelectedRows.value = localSelectedRows.value.filter((localItem) => localItem !== row)
+/**
+ * 点击复选框，向外抛出已选数组
+ */
+const localSelect = (selection: any[], row: any) => {
+    if (!localConfig.value.showSelection || !localConfig.value.selectedRows) {
+        return
     }
+    localConfig.value.selectedRows = selection
 }
 
 /**
- * 点击 全选 Checkbox，判断 全选 or 全不选
- * 已知 Element-plus table 全选&反选 仅是对当前表格数据进行操作
- * 可以依据当前的 localConfig.data 进行已选行的排除
+ * 要理解两个概念：
+ *  1. 全局维护的选中数组：外部传递的 selectedRows
+ *  2. 事件维护的选中数组：table实例.toggleRowSelection(row, true) 的数组
+ *
+ * 在 watch 中，将这两者进行的等效设置
+ *
+ * 在内部选中行发生变化时，将选中数据抛出，实际由外部维护了选中行
+ * 在内部无论当前页中的 data 是否存在这个选中的数据，！选中维护数组！都包含了这一项
+ *  - 当前页 data 中存在于 选中数组，就选中
+ *  - 不存在，就无显示
+ *
+ * 而在外部维护的这个状态数组，会传递给组件的任意事件，（select、select-all）
+ * 事件会对这个数组进行维护，无论谁（单选框 or 全选框）维护这个这个数组，都只能基于当前页面的 data 中的数据进行维护
+ * 也就是说，非当前页的数据，事件是维护不到的
+ * 故，能够实现当前页的勾选数据，只能在他自己的页码（data）中维护
  */
 const localSelectAll = (selection: any[], row) => {
     if (!localConfig.value.showSelection || !localConfig.value.selectedRows) return
-
-    // 如果当前表格的 selection 的长度大于 0，说明是全选，否则就是全不选
-    let selectedAll: boolean = selection.length > 0
-
-    // 全不选：将所有的已选行中匹配当前表格 data 的数据全部排除掉
-    if (!selectedAll) {
-        // 维护外部
-        localConfig.value.selectedRows = localConfig.value.selectedRows.filter(
-            (item) => !localConfig.value.data.some((dataItem) => dataItem === item)
-        )
-
-        // 维护内部
-        localSelectedRows.value = localSelectedRows.value.filter(
-            (localItem) => !localConfig.value.data.some((dataItem) => dataItem === localItem)
-        )
-    }
+    localConfig.value.selectedRows = selection
 }
 
-// 切换分页情况下：依据所有已选行进行表格行选中状态的切换
+/**
+ * 切换分页情况下：依据所有已选行进行表格行选中状态的切换
+ */
 const toggleTableRowSelection = () => {
     if (!localConfig.value.showSelection || !localConfig.value.selectedRows) return
-
-    localInstance.value?.clearSelection()
-    localConfig.value.selectedRows.forEach((row) => {
-        localInstance.value?.toggleRowSelection(row, true)
+    localInstance.value.clearSelection()
+    nextTick(() => {
+        localConfig.value.selectedRows.forEach((row) => {
+            localInstance.value.toggleRowSelection(row, true)
+        })
     })
 }
 // *********************↑ 表格多选，跨页多选 ↑**************************************************************************************

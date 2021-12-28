@@ -1,6 +1,17 @@
 <template>
+    <el-button type="primary" @click="handleAdd">
+        点击添加选中
+    </el-button>
+    <el-button type="success" @click="handleCheck">
+        点击切换选中
+    </el-button>
+    <el-button type="warning" @click="handleSub">
+        点击减少选中
+    </el-button>
     <div class="examples-base-wrapper">
         <GBaseModule
+            v-model:selected-rows="selectedRows"
+            :show-selection="showSelection"
             :search-form-props="searchFormConfig"
             :btns="btns"
             :load-table-methods="loadTable"
@@ -9,6 +20,8 @@
             :table-pagination="tablePagination"
             :table-loading="false"
             :row-btn-config="rowBtnConfig"
+            @reset="loadTable"
+            @search="loadTable"
         />
     </div>
 </template>
@@ -48,6 +61,19 @@ const searchFormConfig = reactive<FormProps>({
 
 const tableColumns = TableColumns()
 const tableData = ref(mockData.data1)
+const showSelection = ref<boolean>(true)
+
+const selectedRows = ref<any[]>([])
+
+watch(
+    () => selectedRows.value,
+    (list) => {
+        console.log(`%c 父级 selectionRow ==== `, 'color: #f56c6c;', list)
+    },
+    {
+        deep: true
+    }
+)
 
 const tablePagination = reactive<PaginationProps>({
     currentPage: 1,
@@ -55,6 +81,8 @@ const tablePagination = reactive<PaginationProps>({
     total: 30,
     onChange(page, size) {
         tableData.value = mockData[`data${page}`]
+
+        console.log(`%c 选中行 === `, 'color: #67c23a;', selectedRows.value)
     }
 })
 
@@ -84,13 +112,24 @@ const rowBtnConfig = reactive<TableConfig<any>['rowBtnConfig']>({
 })
 
 const loadTable = (page: number) => {
-    const params = {
-        page: tablePagination.currentPage,
-        size: tablePagination.pageSize,
-        ...searchFormConfig.model
-    }
+    showSelection.value = !showSelection.value
+}
 
-    console.log(`%c params == `, 'color: #e6a23c;', params)
+let count = 0
+const handleAdd = () => {
+    selectedRows.value.push(mockData['data1'][count++])
+}
+
+const handleSub = () => {
+    console.log(`%c count ==== `, 'color: #67c23a;', count, selectedRows.value)
+
+    selectedRows.value.splice(--count, 1)
+
+    console.log(`%c count ==== `, 'color: #67c23a;', count, selectedRows.value)
+}
+
+const handleCheck = () => {
+    selectedRows.value = [mockData['data1'][4], mockData['data1'][5]]
 }
 </script>
 

@@ -94,7 +94,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { useAttrs, PropType, reactive, watch, ref, computed, getCurrentInstance } from 'vue'
+import { useAttrs, PropType, reactive, watch, ref, computed, nextTick, toRef, markRaw } from 'vue'
 import { BtnProps } from './index'
 import { FormProps, FormItemProps } from '../GForm'
 import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } from '../GTable'
@@ -102,6 +102,7 @@ import LGForm from '../GForm/index.vue'
 import LGTable from '../GTable/index.vue'
 import TableSearch from './component/TableSearch.vue'
 import { RefreshLeft, Search } from '@element-plus/icons-vue'
+import { partitionObj2HumpObj, assignOwnProp } from '../utils/utils'
 
 const props = defineProps({
     /**
@@ -202,11 +203,19 @@ const props = defineProps({
     activeTab: {
         type: String,
         default: ''
+    },
+    /**
+     * 选中行的维护数组
+     */
+    selectedRows: {
+        type: Array as PropType<TableConfig<any>['selectedRows']>,
+        default: () => []
     }
 })
 
-const emits = defineEmits(['getTableInstance', 'update:activeTab'])
+const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selectedRows'])
 const attrs = useAttrs()
+const humpAttrs = computed(() => partitionObj2HumpObj(attrs, ['onReset', 'onSearch']))
 
 // 激活的 tab 页
 const localActiveTab = computed({
@@ -290,7 +299,7 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
     }
 }))
 
-// 包装本地表格配置
+// 包装本地表格配置（中转站）
 const localTableConfig = reactive<TableConfig<any>>({
     instance: null,
     rowKey: 'id',
@@ -299,29 +308,52 @@ const localTableConfig = reactive<TableConfig<any>>({
     data: props.tableData,
     pagination: props.tablePagination,
     rowBtnConfig: props.rowBtnConfig,
-    ...attrs
+    selectedRows: props.selectedRows,
+    ...humpAttrs.value
 })
 
+/* --------------- 向外抛出 ------------------------------------------------------------------- */
+// 实例
 watch(
     () => localTableConfig.instance,
     (instance) => {
         emits('getTableInstance', instance)
     }
 )
+// 选中行
+watch(
+    () => localTableConfig.selectedRows,
+    (list) => {
+        emits('update:selectedRows', list)
+    }
+)
 
-// 表格数据初始化（与父级建立关系）
+/* --------------- 向内关联 ------------------------------------------------------------------- */
+// 未定义为 props 的 table 的参数
+watch(
+    () => humpAttrs.value,
+    (obj) => {
+        assignOwnProp(localTableConfig, obj, ['instance', 'columns', 'data'])
+        nextTick(() => {
+            localTableConfig.instance.doLayout()
+        })
+    }
+)
+// 数据
 watch(
     () => props.tableData,
     (data) => {
         localTableConfig.data = data
     }
 )
+// 列
 watch(
     () => props.tableColumns,
     (columns) => {
         localTableConfig.columns = columns
     }
 )
+// 分页
 watch(
     () => props.tablePagination,
     (val) => {
@@ -337,6 +369,13 @@ watch(
         deep: false
     }
 )
+// 选中行的状态数组
+watch(
+    () => props.selectedRows,
+    (list) => {
+        localTableConfig.selectedRows = list
+    }
+)
 
 // 抛出
 defineExpose({
@@ -345,184 +384,5 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-$--base-padding-lr: 24px;
-$--base-borer-color: #e8e8e8;
-$--tabs-height: 40px;
-
-.base-module-root {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    background-color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.04);
-    display: flex;
-    flex-direction: column;
-
-    &.no-padding {
-        border-radius: 0;
-        box-shadow: none;
-
-        .middle-opertion-wrapper,
-        .core-wrapper {
-            padding: 0 !important;
-        }
-
-        .core-wrapper {
-            margin: 0 !important;
-        }
-    }
-
-    /* 中间 */
-    .middle-opertion-wrapper {
-        padding: 0 $--base-padding-lr;
-        margin-bottom: 10px;
-        flex: none;
-        display: flex;
-        justify-content: space-between;
-
-        /* 左 */
-        .middle-left-wrapper {
-            width: 60%;
-
-            .btns-wrapper {
-                .el-button {
-                    padding: 0 22px;
-                    font-size: 14px;
-                }
-            }
-        }
-
-        /* 右 */
-        .middle-right-wrapper {
-            width: 38%;
-        }
-    }
-
-    /* 核心 */
-    .core-wrapper {
-        flex: 1;
-        overflow: hidden;
-        padding: 0 $--base-padding-lr 20px;
-
-        .core-table-wrapper {
-            height: 100%;
-        }
-    }
-
-    // 带有 tab 页的表格
-    &.tabs-layout {
-        .middle-opertion-wrapper {
-            padding: 0 calc($--base-padding-lr / 2);
-        }
-
-        .core-wrapper {
-            margin: 0 calc($--base-padding-lr / 2) 20px;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            border-bottom: 1px solid $--base-borer-color;
-
-            // 标签页
-            .core-tab-wrapper {
-                height: $--tabs-height;
-                border-bottom: 1px solid $--base-borer-color;
-                margin-bottom: 10px;
-                background-color: #f4fbff;
-                flex: none;
-
-                :deep(.el-tabs) {
-                    .el-tabs__nav-wrap {
-                        &::after {
-                            display: none;
-                        }
-                    }
-
-                    .el-tabs__header {
-                        margin: 0;
-
-                        .el-tabs__active-bar {
-                            display: none;
-                        }
-
-                        .el-tabs__item {
-                            height: $--tabs-height;
-                            padding: 0 38px;
-                            font-size: 18px;
-                            color: #8a8989;
-                            border: 1px solid #f4fbff;
-                            border-bottom: none;
-                            transition: all 0.2s;
-
-                            &.is-active {
-                                border-color: $--base-borer-color;
-                                background-color: #fff;
-                                color: #0c0c0c;
-                            }
-                        }
-                    }
-
-                    .el-tabs__content {
-                        display: none;
-                    }
-                }
-            }
-
-            // 表格容器
-            .core-table-wrapper {
-                padding: 0 calc($--base-padding-lr / 2) 0;
-                flex: 1;
-                overflow: hidden;
-                height: auto;
-
-                :deep(.g-table-root) {
-                    border: none;
-
-                    .g-table-main {
-                        border: 1px solid $--base-borer-color;
-                        border-radius: 4px 4px 0 0;
-                        overflow: hidden;
-
-                        .el-table,
-                        .el-table__fixed-right,
-                        .el-table__fixed {
-                            &::before {
-                                display: none;
-                            }
-
-                            tbody {
-                                tr {
-                                    &:last-of-type {
-                                        td {
-                                            border-bottom: none;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            &::before,
-            &::after {
-                content: '';
-                width: 1px;
-                height: calc(100% - $--tabs-height);
-                background-color: $--base-borer-color;
-                position: absolute;
-                top: $--tabs-height;
-            }
-
-            &::before {
-                left: 0;
-            }
-
-            &::after {
-                right: 0;
-            }
-        }
-    }
-}
+@import './styles.scss';
 </style>
