@@ -45,7 +45,7 @@ export interface BtnProps {
     /**
      * 是否隐藏
      */
-    hide?: boolean
+    hide?: boolean | ((row?: any, index?: number) => boolean)
     /**
      * 类名
      */

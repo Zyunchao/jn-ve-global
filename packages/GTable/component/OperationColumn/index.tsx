@@ -41,7 +41,7 @@ export default (config: TableConfig<any>) => {
                     return (
                         <>
                             {btns
-                                .filter((btn) => !btn.hide)
+                                .filter((btn) => !hiddenBtn(btn.hide, row, index))
                                 .map((btn) => {
                                     return createBtn(btn, row, index)
                                 })}
@@ -53,7 +53,7 @@ export default (config: TableConfig<any>) => {
                 return (
                     <>
                         {btns
-                            .filter((btn) => !btn.hide)
+                            .filter((btn) => !hiddenBtn(btn.hide, row, index))
                             .filter((_, index) => index < maxCount)
                             .map((btn) => createBtn(btn, row, index))}
 
@@ -62,7 +62,7 @@ export default (config: TableConfig<any>) => {
                             row={row}
                             index={index}
                             btns={btns
-                                .filter((btn) => !btn.hide)
+                                .filter((btn) => !hiddenBtn(btn.hide, row, index))
                                 .filter((_, index) => index >= maxCount)}
                         />
                     </>
@@ -105,4 +105,22 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
             {btn.label}
         </el-button>
     )
+}
+
+/**
+ * 获取按钮的隐藏状态
+ * @param btnHide 状态
+ * @param row 当前行
+ * @param index 当前行 index
+ * @returns 状态值 boolean
+ */
+function hiddenBtn(btnHide: TableRowBtnProps<any>['hide'], row: BaseTableDataItem, index: number) {
+    // 简单的布尔值
+    if (typeof btnHide === 'boolean') return btnHide
+
+    // 函数
+    if (typeof btnHide === 'function') return btnHide(row, index)
+
+    // 未填 undefined（不控制显隐）
+    return false
 }

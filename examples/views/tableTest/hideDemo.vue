@@ -95,6 +95,17 @@ const tableConfig = reactive<TableConfig<any>>({
         maxCount: 4,
         btns: [
             {
+                label: '条件创建',
+                authCode: '...',
+                hide: (row, index) => {
+                    return index % 2 === 0
+                },
+                style: {
+                    color: 'green'
+                },
+                onClick(row, index) {}
+            },
+            {
                 label: '显示',
                 authCode: '...',
                 onClick(row, index) {

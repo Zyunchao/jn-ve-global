@@ -41,6 +41,18 @@ const tableData: BaseTableDataItem[] = [
         date: '2016-05-04',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1517 弄'
+    },
+    {
+        id: '3',
+        date: '2016-05-06',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1515 弄'
+    },
+    {
+        id: '4',
+        date: '2016-05-08',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
     }
 ]
 
@@ -58,15 +70,23 @@ const tableConfig = reactive<TableConfig<any>>({
         maxCount: 4,
         btns: [
             {
+                label: '条件创建的按钮',
+                hide: (row, index) => {
+                    return index % 2 === 0
+                },
+                style: {
+                    color: 'green'
+                },
+                onClick(row, index) {}
+            },
+            {
                 label: '显示',
-                authCode: '...',
                 onClick(row, index) {
                     tableConfig.rowBtnConfig.btns[2].hide = false
                 }
             },
             {
                 label: '隐藏',
-                authCode: '...',
                 class: 'btn-danger',
                 onClick(row, index) {
                     tableConfig.rowBtnConfig.btns[2].hide = true
@@ -74,7 +94,6 @@ const tableConfig = reactive<TableConfig<any>>({
             },
             {
                 label: '被隐藏按钮',
-                authCode: '...',
                 hide: false,
                 loading: true
             },
