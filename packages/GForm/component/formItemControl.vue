@@ -3,11 +3,19 @@
         <!-- Input -->
         <template v-if="localControlType === 'input'">
             <el-input
+                v-show="!inputDisabled || !exceedBoxWidht"
+                ref="elInputRef"
                 v-model.trim="localPropRef"
                 v-bind="getItemControlProps()"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"
             />
+
+            <template v-if="inputDisabled && exceedBoxWidht">
+                <el-tooltip :content="localPropRef" placement="top-start">
+                    <el-input :model-value="localPropRef" v-bind="getItemControlProps()" />
+                </el-tooltip>
+            </template>
         </template>
 
         <!-- InputNumber -->
@@ -197,7 +205,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { PropType, watch, ref, computed, nextTick, toRefs, toRef } from 'vue'
+import { ref, computed, toRef, onMounted, watch, onUnmounted } from 'vue'
 import {
     FormItemProps,
     RadioOptionProps,
@@ -237,6 +245,66 @@ const emits = defineEmits(['controlFocus', 'controlBlur'])
 
 const localControlType = computed(() => props.controlConfig.type)
 const localPropRef = ref(props.prop)
+
+/* -------------------- input 禁用时，tooltip 处理 ------------------------------------------------------------------------- */
+const elInputRef = ref(null)
+const inputDisabled = ref<boolean>(null)
+const exceedBoxWidht = ref<boolean>(false)
+
+if (props.controlConfig.type === 'input') {
+    // 观察器的配置（需要观察什么变动）
+    const config: MutationObserverInit = { attributes: true }
+
+    // 当观察到变动时执行的回调函数
+    const callback = function (mutationsList: MutationRecord[], observer: MutationObserver) {
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                setInputDisabled(mutation.target as HTMLElement)
+            }
+        }
+    }
+
+    const setInputDisabled = (dom: HTMLElement) => {
+        const classList = dom.classList
+        // null ===> boolean
+        inputDisabled.value = classList.value.includes('is-disabled')
+    }
+
+    // 创建一个观察器实例并传入回调函数
+    let observer = new MutationObserver(callback)
+
+    onMounted(() => {
+        // 选择需要观察变动的节点
+        const targetNode = elInputRef.value.$el as HTMLElement
+        // 以上述配置开始观察目标节点
+        observer.observe(targetNode, config)
+        // 挂载立即执行一次
+        setInputDisabled(targetNode)
+    })
+
+    onUnmounted(() => {
+        // 卸载，停止观察
+        observer.disconnect()
+        observer = null
+    })
+
+    watch(
+        () => inputDisabled.value,
+        (disabled) => {
+            if (!disabled) return
+
+            const targetDom = elInputRef.value.$el as HTMLElement
+            const fontSize = 16
+            const baseP = 15
+            const boxWidth = targetDom.offsetWidth
+            const contentLength = (localPropRef.value as string).length
+
+            // 判断内容是否超出 input 的宽度
+            exceedBoxWidht.value = contentLength * fontSize > boxWidth - baseP * 2
+        }
+    )
+}
+/* -------------------- input 禁用时，tooltip 处理 ------------------------------------------------------------------------- */
 
 /**
  * 特殊处理 upload 的 fileList

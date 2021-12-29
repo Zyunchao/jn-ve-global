@@ -33,6 +33,10 @@
 2. 添加可选页签功能
 3. 集成 Table 的多选功能
 
+<h4>Form</h4>
+
+1. FormItem > Input 在禁用且内容超出 input 的宽度时，进行内容 toolTip 的展示（自动开启）
+
 <h3>优化</h3>
 
 <h4>Icon</h4>

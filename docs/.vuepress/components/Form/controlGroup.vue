@@ -72,18 +72,4 @@ const resetForm = () => {
 }
 </script>
 
-<style lang="scss" scoped>
-h1 {
-    margin: 20px 0;
-}
-
-.box {
-    display: flex;
-    span {
-        width: 100px;
-        text-align: right;
-        line-height: 40px;
-        padding-right: 20px;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

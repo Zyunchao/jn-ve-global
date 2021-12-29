@@ -244,6 +244,22 @@ interface ExtendRuleItem extends RuleItem {
 
 </demo-block>
 
+### 控件内容超出宽度，显示 ToolTip
+
+目前仅 Input 控件做了适配
+
+<demo-block>
+
+<Form-showToolTip />
+
+<template #code>
+
+@[code](@demoroot/Form/showToolTip.vue)
+
+</template>
+
+</demo-block>
+
 ## GForm :config 配置列表
 
 ### Form Attributes
