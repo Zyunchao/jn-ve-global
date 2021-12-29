@@ -82,6 +82,7 @@ module.exports = {
         'vue/require-default-prop': 0, // props 需要默认值
         'vue/no-unused-components': 1,
         'vue/multi-word-component-names': 0, // 要求组件名称总是多单词的
+        'vue/v-on-event-hyphenation': 0, // 在模板中的自定义组件上强制实施 v-on 事件命名样式
 
         // 非继承规则 --------------------------------------------------------
         'indent': [1, 4],

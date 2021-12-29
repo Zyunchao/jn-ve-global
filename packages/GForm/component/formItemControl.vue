@@ -212,19 +212,25 @@ import LGIconPicker from '../../GIconPicker/index.vue'
 import LGUpload from '../../GUpload/index.vue'
 import UploadFile from '../../GUpload/interface/UploadFile'
 
-const props = defineProps({
-    formItemConfig: {
-        type: Object as PropType<FormItemProps>
-    },
-    controlConfig: {
-        type: Object as PropType<ControlConfig>,
-        required: true,
-        default: null
-    },
-    prop: {
-        type: [String, Number, Boolean, Object, Array],
-        required: true
-    }
+interface Props {
+    /**
+     * FormItem 的配置参数
+     */
+    formItemConfig: FormItemProps
+    /**
+     * 输入控件的配置参数
+     */
+    controlConfig: ControlConfig
+    /**
+     * 表单绑定的值（ref 引用）
+     */
+    prop: string | number | boolean | object | Array<any>
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    formItemConfig: null,
+    controlConfig: null,
+    prop: null
 })
 
 const emits = defineEmits(['controlFocus', 'controlBlur'])
@@ -244,7 +250,6 @@ if (localControlType.value === 'upload') {
 // 获取 控件 的配置（三级配置）
 const getItemControlProps = () => {
     let controlProps = {
-        // placeholder: '',
         ...props.controlConfig!.props
     }
 

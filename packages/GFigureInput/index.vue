@@ -50,7 +50,7 @@ const props = defineProps({
     }
 })
 
-const emits = defineEmits(['update:modelValue', 'table-edit-hide'])
+const emits = defineEmits(['update:modelValue', 'tableEditHide'])
 
 // 展示 input 显示 flag
 const showInputShow = ref<boolean>(true)
@@ -100,7 +100,7 @@ const showFigureInputControlFocus = () => {
  * 搜集数据框失去焦点，显示展示框
  */
 const gatherFigureInputControlBlur = () => {
-    emits('table-edit-hide')
+    emits('tableEditHide')
     showInputShow.value = true
 }
 </script>

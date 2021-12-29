@@ -11,8 +11,8 @@
                 :form-item-config="formItemConfig"
                 :control-config="extendControlConfig2ControlConfig(extControlConfig)"
                 :prop="toRef(localPropRef, index)"
-                @controlFocus="onFocus"
-                @controlBlur="onBlur"
+                @controlFocus="wrapperClass('add')"
+                @controlBlur="wrapperClass('remove')"
             />
 
             <!-- 分隔符 -->
@@ -37,28 +37,25 @@ import { PropType, ref, toRef, watch, nextTick } from 'vue'
 import { FormItemProps, ExtendControlConfig, ControlConfig } from '../index'
 import FormItemControl from './formItemControl.vue'
 
-const props = defineProps({
+interface Props {
     /**
      * 当前控件 formItem 的配置对象
      */
-    formItemConfig: {
-        type: Object as PropType<FormItemProps>
-    },
+    formItemConfig: FormItemProps
     /**
      * 当前控制组的配置列表
      */
-    controlConfigs: {
-        type: Array as PropType<ExtendControlConfig[]>,
-        required: true,
-        default: () => []
-    },
+    controlConfigs: ExtendControlConfig[]
     /**
      * 绑定的值，必须是数组
      */
-    prop: {
-        type: Object as PropType<any[]>,
-        required: true
-    }
+    prop: any[] | object
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    formItemConfig: null,
+    controlConfigs: () => [],
+    prop: () => []
 })
 
 let localPropRef = ref(props.prop)
@@ -66,7 +63,8 @@ const groupWrapperRef = ref<HTMLElement>(null)
 const propRefChangeFlag = ref<boolean>(false)
 
 /**
- * 在重置表单的 model 时，props.prop 会更换引用
+ * 在重置表单的 model 时，因为当前组件使用的是数组引用
+ * 届时 props.prop 会更换引用
  * 但是控件绑定的还是上一个数组引用的某一个 item 的引用
  * 所以，要在 prop 更换引用时，更换控件绑定最新数组的 item 的引用
  * 在这里使用销毁控件再重新创建的方式，如果有更好的方法，请替换
@@ -92,14 +90,6 @@ const extendControlConfig2ControlConfig = (config: ExtendControlConfig): Control
 // 给容器添加 | 移除类名
 const wrapperClass = (type: 'add' | 'remove') => {
     groupWrapperRef.value.classList[type]('is-focus')
-}
-
-const onFocus = () => {
-    wrapperClass('add')
-}
-
-const onBlur = () => {
-    wrapperClass('remove')
 }
 </script>
 
