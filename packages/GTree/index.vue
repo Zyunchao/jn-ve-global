@@ -42,7 +42,7 @@
 
         <!-- 树 -->
         <div class="tree-wrapper">
-            <el-scrollbar>
+            <el-scrollbar class="tree-scrollbar">
                 <el-tree
                     ref="treeRef"
                     :data="data"
@@ -58,21 +58,37 @@
                 >
                     <!-- 节点图标 -->
                     <template #default="{ node, data }">
-                        <span v-if="mode === 'default'" class="tree-node-icon-wrapper">
-                            <!-- 这里判断不对，待修改，可能需要依据节点的 type 判断 -->
-                            <g-icon
+                        <span
+                            v-if="mode === 'default'"
+                            :class="[
+                                'tree-node-icon-wrapper',
+                                {
+                                    'no-icon':
+                                        !data.industryId &&
+                                        (!data.children || !data.children.length)
+                                }
+                            ]"
+                        >
+                            <!-- 根节点 -->
+                            <LGIcon
                                 v-if="Array.isArray(node.parent.data)"
                                 icon="org"
                                 class="root-icon"
                             />
-                            <g-icon
-                                v-if="
-                                    data.children &&
+
+                            <!-- 子节点 -->
+                            <LGIcon
+                                v-else-if="
+                                    !data.industryId &&
+                                        data.children &&
                                         data.children.length > 0 &&
                                         !Array.isArray(node.parent.data)
                                 "
                                 :icon="node.expanded ? 'folder' : 'aside-tree-node-close-icon'"
                             />
+
+                            <!-- 机构 -->
+                            <LGIcon v-else-if="data.industryId" icon="tree-node-institution-icon" />
                         </span>
 
                         <span>{{ node.label }}</span>
@@ -93,7 +109,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { defineComponent, PropType, watch, watchEffect, ref, computed } from 'vue'
+import { PropType, watch, watchEffect, ref } from 'vue'
 import { BtnProps } from '../index'
 import { TreeData } from '../GSelectTree/index'
 import { nodeHasChildren } from './utils'
@@ -160,7 +176,7 @@ const props = defineProps({
     }
 })
 
-const emits = defineEmits(['get-tree-ref'])
+const emits = defineEmits(['getTreeRef'])
 
 const treeRef = ref<any>(null)
 const filterText = ref<string>('')
@@ -198,7 +214,7 @@ watchEffect(() => {
 watch(
     () => treeRef.value,
     (instance) => {
-        if (instance) emits('get-tree-ref', instance)
+        if (instance) emits('getTreeRef', instance)
     }
 )
 
@@ -232,103 +248,13 @@ function changeTreeNodeStatusPackUp(node) {
         }
     }
 }
+
+// 抛出
+defineExpose({
+    treeRef
+})
 </script>
 
 <style lang="scss" scoped>
-$--base-padding-lr: 14px;
-
-.aside-tree {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    // 按钮区域
-    .btns-wrapper {
-        display: flex;
-        padding: 12px $--base-padding-lr 0;
-        justify-content: space-between;
-        flex: none;
-
-        .btns {
-            flex: 1;
-        }
-
-        :deep(.tree-icons) {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            svg {
-                cursor: pointer;
-                margin-right: 14px;
-                color: #a7a7a7 !important;
-
-                &:hover {
-                    color: #399ffb !important;
-                }
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
-    }
-
-    // 搜索框
-    .input-wrapper {
-        padding: 12px $--base-padding-lr 12px;
-    }
-
-    // 树容器
-    .tree-wrapper {
-        flex: 1;
-        overflow: hidden;
-        padding-left: $--base-padding-lr;
-
-        :deep(.el-tree) {
-            // &,
-            .el-tree-node {
-                width: fit-content;
-                min-width: 100%;
-            }
-
-            .el-tree-node__content {
-                height: 30px;
-                align-items: center;
-                font-size: 14px;
-                color: rgba(0, 0, 0, 0.85);
-
-                // 展开按钮图标
-                .el-tree-node__expand-icon {
-                    font-size: 20px;
-                    margin: 0;
-                    margin-right: 4px;
-                }
-
-                // 节点内图标
-                .tree-node-icon-wrapper {
-                    display: flex;
-                    align-items: center;
-                    height: 100%;
-                    margin-right: 6px;
-
-                    > svg,
-                    > i {
-                        font-size: 18px;
-                        color: rgba(0, 0, 0, 1) !important;
-
-                        &.root-icon {
-                            color: #1890ff !important;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .white {
-        height: 10px;
-    }
-}
+@import './styles.scss';
 </style>

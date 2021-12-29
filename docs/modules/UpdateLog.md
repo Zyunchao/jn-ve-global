@@ -37,6 +37,10 @@
 
 1. FormItem > Input 在禁用且内容超出 input 的宽度时，进行内容 toolTip 的展示（自动开启）
 
+<h4>Tree</h4>
+
+1. 增加机构的图标
+
 <h3>优化</h3>
 
 <h4>Icon</h4>

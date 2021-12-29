@@ -2,7 +2,7 @@
     <div class="examples-base-wrapper">
         <div class="demo1">
             <g-tree
-                :data="treeData"
+                :data="orgTreeData"
                 :btns="btns"
                 show-checkbox
                 :show-btn-area="false"
@@ -14,7 +14,7 @@
         </div>
 
         <div class="demo2">
-            <g-tree :data="treeData" :btns="btns" mode="other" :node-click="nodeClick" />
+            <g-tree :data="treeData" :btns="btns" :node-click="nodeClick" />
         </div>
 
         <el-button @click="addNode">
@@ -32,6 +32,7 @@ export default {
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import treeData from './data/treeData.json'
+import orgTreeData from './data/orgTreeData.json'
 import { BtnProps } from '@component/index'
 
 const btns: BtnProps[] = [
