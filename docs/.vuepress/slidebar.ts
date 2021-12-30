@@ -31,5 +31,9 @@ export default [
             { text: 'Table', link: '/modules/Table.md' },
             { text: 'Tree', link: '/modules/Tree.md' }
         ]
+    },
+    {
+        text: '基础组件',
+        children: [{ text: 'DebounceButton', link: '/modules/DebounceButton.md' }]
     }
 ]
