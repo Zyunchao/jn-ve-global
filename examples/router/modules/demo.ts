@@ -72,6 +72,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/collapse-test',
         component: () => import('@/views/collapseTest/index.vue')
+    },
+    {
+        path: '/chart-test',
+        component: () => import('@/views/chartTest/index.vue')
     }
 ]
 
