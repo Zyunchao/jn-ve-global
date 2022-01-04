@@ -1,5 +1,5 @@
 <template>
-    <Bar v-if="chartType === 'bar'" ref="chartsInstance" :config="config" v-bind="$attrs" />
+    <BarOrLine v-if="chartType === 'bar'" :config="config" v-bind="$attrs" />
 </template>
 
 <script lang="ts">
@@ -11,7 +11,7 @@ export default {
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, PropType, toRef } from 'vue'
 import ChartConfig from './interface/ChartConfig'
-import Bar from './component/bar.vue'
+import BarOrLine from './component/barOrLine.vue'
 
 const props = defineProps({
     config: {
@@ -21,7 +21,6 @@ const props = defineProps({
 })
 
 const chartType = computed(() => props.config.type)
-const chartsInstance = ref(null)
 </script>
 
 <style lang="scss" scoped></style>

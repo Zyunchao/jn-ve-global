@@ -4,7 +4,7 @@ import {
     YAXisComponentOption
 } from 'echarts/types/dist/echarts'
 
-export default interface Bar {
+export default interface BarOrLine {
     /**
      * 类型：bar
      */
@@ -47,4 +47,8 @@ export default interface Bar {
      * 调色板
      */
     colors?: string[]
+    /**
+     * 是否显示工具箱
+     */
+    hideToolBox?: boolean
 }

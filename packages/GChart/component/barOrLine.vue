@@ -4,19 +4,20 @@
 
 <script lang="ts">
 export default {
-    name: 'GChartBarCom'
+    name: 'GChartBarOrLine'
 }
 </script>
 
 <script lang="ts" setup>
 import { toRef, watch, ref, computed, reactive, PropType, onMounted } from 'vue'
-import BarConfig from '../interface/Bar'
+import BarOrLineConfig from '../interface/BarOrLine'
 import Basic from './basic.vue'
 import {
     BarSeriesOption,
     XAXisComponentOption,
     EChartsOption,
-    YAXisComponentOption
+    YAXisComponentOption,
+    LineSeriesOption
 } from 'echarts/types/dist/echarts'
 import _ from 'lodash'
 import { size2Rem, isObject } from '../utils'
@@ -28,7 +29,7 @@ document.querySelector('html').style.fontSize = '100px'
 
 const props = defineProps({
     config: {
-        type: Object as PropType<BarConfig>,
+        type: Object as PropType<BarOrLineConfig>,
         default: null
     }
 })
@@ -154,10 +155,10 @@ const yAxis = computed<EChartsOption['yAxis']>(() => {
 })
 
 /* ---------- series ------------------------------------------------------------ */
-const baseSeries: BarSeriesOption = {
+const baseSeries: BarSeriesOption | LineSeriesOption = {
     type: 'bar'
 }
-const series = computed<EChartsOption['series']>(() => {
+const series = computed<BarSeriesOption | LineSeriesOption>(() => {
     const seriesData = props.config.data
 
     // 单
@@ -190,11 +191,11 @@ const series = computed<EChartsOption['series']>(() => {
         })
     }
 
-    return null
+    return {}
 })
 
 /* ---------- EChartsOption ------------------------------------------------------------ */
-const barOption = reactive<EChartsOption>({
+const barOption = computed<EChartsOption>(() => ({
     color: colors.value,
     title: {
         show: !!props.config.title,
@@ -235,7 +236,7 @@ const barOption = reactive<EChartsOption>({
         data: Object.keys(props.config.data)
     },
     toolbox: {
-        show: true,
+        show: !props.config.hideToolBox,
         itemSize: size2Rem(15),
         itemGap: size2Rem(13),
         feature: {
@@ -289,7 +290,7 @@ const barOption = reactive<EChartsOption>({
     xAxis: xAxis.value,
     yAxis: yAxis.value,
     series: series.value
-})
+}))
 </script>
 
 <style lang="scss" scoped></style>

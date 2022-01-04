@@ -1,6 +1,6 @@
 import InitOpts from './InitOpts'
-import BarProps from './Bar'
+import BarOrLineProps from './BarOrLine'
 
-type ChartConfig = BarProps
+type ChartConfig = BarOrLineProps
 
 export default ChartConfig
