@@ -39,7 +39,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     },
 
     // 打包工具：网站的开发和构建
-    bundler: '@vuepress/vite',
+    bundler: '@vuepress/bundler-vite',
     bundlerConfig: {
         viteOptions: {
             plugins: [

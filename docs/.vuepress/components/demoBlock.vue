@@ -1,20 +1,22 @@
 <template>
-    <div class="demo-block">
-        <div class="component-wrapper">
-            <slot />
+    <ClientOnly>
+        <div class="demo-block">
+            <div class="component-wrapper">
+                <slot />
+            </div>
+            <div ref="sourceWrapperRef" :class="['source-wrapper', { expanded: expanded }]">
+                <slot name="code" />
+            </div>
+            <div class="open-handle-wrapper" @click="handleChanleExpanded">
+                <i :class="['el-icon-caret-bottom', { expanded: expanded }]" />
+                {{ !expanded ? '显示代码' : '隐藏代码' }}
+            </div>
         </div>
-        <div ref="sourceWrapperRef" :class="['source-wrapper', { expanded: expanded }]">
-            <slot name="code" />
-        </div>
-        <div class="open-handle-wrapper" @click="handleChanleExpanded">
-            <i :class="['el-icon-caret-bottom', { expanded: expanded }]" />
-            {{ !expanded ? '显示代码' : '隐藏代码' }}
-        </div>
-    </div>
+    </ClientOnly>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, watch } from 'vue'
 export default defineComponent({
     name: 'DemoBlock'
 })
@@ -30,10 +32,17 @@ const handleChanleExpanded = () => {
     expanded.value = !expanded.value
 }
 
-onMounted(() => {
-    // 动态获取代码区域的高度
-    sourceHeight.value = `${sourceWrapperRef.value.querySelector('.language-vue').clientHeight}px`
-})
+watch(
+    () => sourceWrapperRef.value,
+    (instance) => {
+        if (instance) {
+            // 动态获取代码区域的高度
+            sourceHeight.value = `${
+                sourceWrapperRef.value.querySelector('.language-vue').clientHeight
+            }px`
+        }
+    }
+)
 </script>
 
 <style lang="scss" scoped>

@@ -22,10 +22,6 @@ import {
 import _ from 'lodash'
 import { size2Rem, isObject } from '../utils'
 import defaultColors from '../constant/colors'
-import { fontSize12, fontSize14, fontSize16 } from '../constant/constant'
-
-// 假设的 rem 值
-document.querySelector('html').style.fontSize = '100px'
 
 const props = defineProps({
     config: {
@@ -33,6 +29,11 @@ const props = defineProps({
         default: null
     }
 })
+
+const fontSize16 = size2Rem(16)
+const fontSize14 = size2Rem(14)
+const fontSize12 = size2Rem(12)
+const fontSize10 = size2Rem(10)
 
 /* ---------- xAxis ------------------------------------------------------------ */
 const colors = computed(() =>
