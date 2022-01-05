@@ -2,32 +2,32 @@
     <div class="examples-base-wrapper">
         <!-- 单数据 -->
         <div class="chart-box">
-            <GChart ref="chart1Ref" :config="singleBarConfig" />
+            <GChart :config="singleBarConfig" />
         </div>
 
         <!-- 多数据 -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchBarConfig" />
+            <GChart :config="muchBarConfig" />
         </div>
 
         <!-- 多数据堆叠 -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchStackBarConfig" />
+            <GChart :config="muchStackBarConfig" />
         </div>
 
         <!-- 多 y -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchYBarConfig" />
+            <GChart :config="muchYBarConfig" />
         </div>
 
         <!-- 多 x -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchXBarConfig" />
+            <GChart :config="muchXBarConfig" />
         </div>
 
         <!-- 自定义颜色 -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="customColorBarConfig" />
+            <GChart :config="customColorBarConfig" />
         </div>
     </div>
 </template>
@@ -43,9 +43,6 @@ import { toRaw, watch, ref, computed, reactive, toRefs, onMounted } from 'vue'
 import * as echarts from 'echarts'
 import ChartConfig from '@component/GChart/interface/ChartConfig'
 import { ECharts, EChartsOption } from 'echarts'
-
-const chart1Ref = ref(null)
-const chart2Ref = ref(null)
 
 // 单条
 const singleBarConfig = ref<ChartConfig>({

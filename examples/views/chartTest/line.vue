@@ -2,32 +2,32 @@
     <div class="examples-base-wrapper">
         <!-- 单数据 -->
         <div class="chart-box">
-            <GChart ref="chart1Ref" :config="singleLineConfig" />
+            <GChart :config="singleLineConfig" />
         </div>
 
         <!-- 显示区域面积（线） -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchLineAreaConfig" />
+            <GChart :config="muchLineAreaConfig" />
         </div>
 
         <!-- 平滑曲线 -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchLineSmoothConfig" />
+            <GChart :config="muchLineSmoothConfig" />
         </div>
 
         <!-- 多数据堆叠 -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchStackLineConfig" />
+            <GChart :config="muchStackLineConfig" />
         </div>
 
         <!-- 多 y -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchYLineConfig" />
+            <GChart :config="muchYLineConfig" />
         </div>
 
         <!-- 多 x -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchXLineConfig" />
+            <GChart :config="muchXLineConfig" />
         </div>
     </div>
 </template>
@@ -43,9 +43,6 @@ import { toRaw, watch, ref, computed, reactive, toRefs, onMounted } from 'vue'
 import * as echarts from 'echarts'
 import ChartConfig from '@component/GChart/interface/ChartConfig'
 import { ECharts, EChartsOption } from 'echarts'
-
-const chart1Ref = ref(null)
-const chart2Ref = ref(null)
 
 // 单条
 const singleLineConfig = ref<ChartConfig>({
