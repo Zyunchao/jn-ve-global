@@ -1,4 +1,12 @@
 <template>
+    <div class="btn-box">
+        <el-button type="success" @click="add">
+            增加尺寸
+        </el-button>
+        <el-button type="primary" @click="sub">
+            减小尺寸
+        </el-button>
+    </div>
     <div class="examples-base-wrapper">
         <!-- 单数据 -->
         <div class="chart-box">
@@ -133,7 +141,7 @@ const muchXBarConfig = ref<ChartConfig>({
         },
         'x3': {
             name: '',
-            data: ['衬衫3', '羊毛衫3', '雪纺衫3', '裤子3', '高跟鞋3', '袜子3', '高跟鞋3'],
+            data: ['衬衫3', '羊毛衫32', '雪纺衫3', '裤子3', '高跟鞋3', '袜子3', '高跟鞋3'],
             offset: 30,
             position: 'bottom'
         }
@@ -157,17 +165,32 @@ const customColorBarConfig = ref<ChartConfig>({
         '人数': [60, 20, 46, 10, 40, 70]
     }
 })
+
+let itemW = ref<string>('500px')
+let itemH = ref<string>('300px')
+
+const add = () => {
+    itemW.value = `${parseInt(itemW.value) + 10}px`
+    itemH.value = `${parseInt(itemH.value) + 10}px`
+}
+const sub = () => {
+    itemW.value = `${parseInt(itemW.value) - 10}px`
+    itemH.value = `${parseInt(itemH.value) - 10}px`
+}
 </script>
 
 <style lang="scss" scoped>
+.btn-box {
+    margin: 10px 20px;
+}
 .examples-base-wrapper {
     margin: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 40px);
 
     .chart-box {
-        width: 500px;
-        height: 300px;
+        width: v-bind(itemW);
+        height: v-bind(itemH);
         margin-bottom: 30px;
         border: 1px solid #e0e0e0;
         border-radius: 4px;
