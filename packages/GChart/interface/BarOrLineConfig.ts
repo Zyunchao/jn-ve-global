@@ -4,8 +4,9 @@ import {
     XAXisComponentOption,
     YAXisComponentOption
 } from 'echarts/types/dist/echarts'
+import BaseConfig from './BaseConfig'
 
-export default interface BarOrLineConfig {
+export default interface BarOrLineConfig extends BaseConfig {
     /**
      * 类型：bar
      */
@@ -36,23 +37,10 @@ export default interface BarOrLineConfig {
         | {
               [k: string]: BarSeriesOption['data'] | LineSeriesOption['data']
           }
-
-    /**
-     * 标题
-     */
-    title?: string
     /**
      * 是否堆叠
      */
     stackX?: boolean
-    /**
-     * 调色板
-     */
-    colors?: string[]
-    /**
-     * 是否显示工具箱
-     */
-    hideToolBox?: boolean
     /**
      * 是否显示区域面积图
      */
