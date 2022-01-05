@@ -1,5 +1,6 @@
 import {
     BarSeriesOption,
+    LineSeriesOption,
     XAXisComponentOption,
     YAXisComponentOption
 } from 'echarts/types/dist/echarts'
@@ -31,8 +32,9 @@ export default interface BarOrLine {
      */
     data:
         | BarSeriesOption['data']
+        | LineSeriesOption['data']
         | {
-              [k: string]: BarSeriesOption['data']
+              [k: string]: BarSeriesOption['data'] | LineSeriesOption['data']
           }
 
     /**
@@ -51,4 +53,12 @@ export default interface BarOrLine {
      * 是否显示工具箱
      */
     hideToolBox?: boolean
+    /**
+     * 是否显示区域面积图
+     */
+    showLineArea?: boolean
+    /**
+     * 是否平滑曲线显示
+     */
+    lineSmooth?: boolean
 }

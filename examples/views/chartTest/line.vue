@@ -5,9 +5,14 @@
             <GChart ref="chart1Ref" :config="singleLineConfig" />
         </div>
 
-        <!-- 多数据 -->
+        <!-- 显示区域面积（线） -->
         <div class="chart-box">
-            <GChart ref="chart2Ref" :config="muchLineConfig" />
+            <GChart ref="chart2Ref" :config="muchLineAreaConfig" />
+        </div>
+
+        <!-- 平滑曲线 -->
+        <div class="chart-box">
+            <GChart ref="chart2Ref" :config="muchLineSmoothConfig" />
         </div>
 
         <!-- 多数据堆叠 -->
@@ -23,11 +28,6 @@
         <!-- 多 x -->
         <div class="chart-box">
             <GChart ref="chart2Ref" :config="muchXLineConfig" />
-        </div>
-
-        <!-- 自定义颜色 -->
-        <div class="chart-box">
-            <GChart ref="chart2Ref" :config="customColorLineConfig" />
         </div>
     </div>
 </template>
@@ -74,16 +74,29 @@ const singleLineConfig = ref<ChartConfig>({
     ]
 })
 
-// 多数据
-const muchLineConfig = ref<ChartConfig>({
-    title: '多数据',
+// 显示区域面积（线）
+const muchLineAreaConfig = ref<ChartConfig>({
+    title: '显示区域面积（线）',
     type: 'line',
     x: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
     data: {
         '销量': [5, 20, 36, 10, 10, 20],
-        '价格': [50, 10, 16, 40, 60, 20],
-        '人数': [60, 20, 46, 10, 40, 70]
-    }
+        '价格': [50, 10, 16, 40, 60, 30]
+    },
+    showLineArea: true
+})
+
+// 平滑曲线
+const muchLineSmoothConfig = ref<ChartConfig>({
+    title: '平滑曲线',
+    type: 'line',
+    x: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+    data: {
+        '销量': [5, 20, 36, 10, 10, 20],
+        '价格': [50, 10, 16, 40, 60, 30]
+    },
+    showLineArea: true,
+    lineSmooth: true
 })
 
 // 多数据堆叠
@@ -142,20 +155,8 @@ const muchXLineConfig = ref<ChartConfig>({
         '销量': [5, 20, 36, 10, 10, 20],
         '价格': [50, 10, 16, 40, 60, 20],
         '人数': [60, 20, 46, 10, 40, 70]
-    }
-})
-
-// 自定义颜色
-const customColorLineConfig = ref<ChartConfig>({
-    title: '自定义颜色',
-    type: 'line',
-    colors: ['pink', 'skyblue', 'orange'],
-    x: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
-    data: {
-        '销量': [5, 20, 36, 10, 10, 20],
-        '价格': [50, 10, 16, 40, 60, 20],
-        '人数': [60, 20, 46, 10, 40, 70]
-    }
+    },
+    colors: ['pink', 'skyblue', 'orange']
 })
 </script>
 

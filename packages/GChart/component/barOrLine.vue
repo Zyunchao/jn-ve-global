@@ -156,13 +156,21 @@ const yAxis = computed<EChartsOption['yAxis']>(() => {
 })
 
 /* ---------- series ------------------------------------------------------------ */
-const baseSeries: BarSeriesOption | LineSeriesOption = {}
+const baseBarSeries: BarSeriesOption = {}
+const baseLineSeries = computed<LineSeriesOption>(() => ({
+    areaStyle: {
+        opacity: props.config.showLineArea ? 0.3 : 0
+    },
+    smooth: !!props.config.lineSmooth
+}))
 const series = computed<BarSeriesOption | LineSeriesOption>(() => {
     const seriesData = props.config.data
 
     // 单
     if (_.isArray(seriesData)) {
         const type = _.isString(props.config.type) ? props.config.type : props.config.type[0]
+
+        const baseSeries = type === 'bar' ? baseBarSeries : baseLineSeries.value
 
         return {
             ...baseSeries,
@@ -174,7 +182,8 @@ const series = computed<BarSeriesOption | LineSeriesOption>(() => {
     // 多
     if (isObject(seriesData)) {
         return Object.keys(seriesData).map((key, index) => {
-            let type = ''
+            let type: 'bar' | 'line' = 'bar'
+
             if (_.isString(props.config.type)) {
                 type = props.config.type
             } else if (_.isArray(props.config.type)) {
@@ -185,6 +194,8 @@ const series = computed<BarSeriesOption | LineSeriesOption>(() => {
                     type = props.config.type[props.config.type.length - 1]
                 }
             }
+
+            const baseSeries = type === 'bar' ? baseBarSeries : baseLineSeries.value
 
             return {
                 ...baseSeries,
