@@ -35,6 +35,10 @@ const fontSize14 = size2Rem(14)
 const fontSize12 = size2Rem(12)
 const fontSize10 = size2Rem(10)
 
+const boxPaddingTop = computed(() =>
+    props.config.hideToolBox && !props.config.title ? size2Rem(25) : 0
+)
+
 /* ---------- xAxis ------------------------------------------------------------ */
 const colors = computed(() =>
     props.config.colors && !!props.config.colors.length ? props.config.colors : defaultColors
@@ -235,7 +239,7 @@ const barOption = computed<EChartsOption>(() => ({
         left: size2Rem(4)
     },
     grid: {
-        top: size2Rem(_.isArray(props.config.data) ? 45 : 85),
+        top: size2Rem(_.isArray(props.config.data) ? 45 : 85) - boxPaddingTop.value,
         left: size2Rem(50),
         right: size2Rem(
             isObject(props.config.y) && Object.keys(props.config.y).length >= 2
@@ -249,12 +253,13 @@ const barOption = computed<EChartsOption>(() => ({
         )
     },
     legend: {
-        top: size2Rem(
-            (isObject(props.config.y) && !!Object.keys(props.config.y).length) ||
-                (isObject(props.config.x) && !!Object.keys(props.config.x).length)
-                ? 28
-                : 40
-        ),
+        top:
+            size2Rem(
+                (isObject(props.config.y) && !!Object.keys(props.config.y).length) ||
+                    (isObject(props.config.x) && !!Object.keys(props.config.x).length)
+                    ? 28
+                    : 40
+            ) - boxPaddingTop.value,
         left: size2Rem(20),
         padding: size2Rem(5),
         itemGap: size2Rem(14),
