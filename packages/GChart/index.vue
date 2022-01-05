@@ -1,5 +1,10 @@
 <template>
-    <BarOrLine v-if="chartType === 'bar'" :config="config" v-bind="$attrs" />
+    <!-- 柱 或 线 -->
+    <BarOrLine
+        v-if="chartType.includes('bar') || chartType.includes('line')"
+        :config="config"
+        v-bind="$attrs"
+    />
 </template>
 
 <script lang="ts">

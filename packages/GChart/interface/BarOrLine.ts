@@ -8,7 +8,7 @@ export default interface BarOrLine {
     /**
      * 类型：bar
      */
-    type: 'bar'
+    type: 'bar' | 'line' | Array<'bar' | 'line'>
     /**
      * xAxis
      */

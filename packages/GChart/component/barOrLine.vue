@@ -76,7 +76,7 @@ const xAxis = computed<EChartsOption['xAxis']>(() => {
     }
 
     // 多
-    if (_.isObject(xConfig)) {
+    if (isObject(xConfig)) {
         return Object.keys(xConfig).map((key, index) => {
             const temp = {
                 name: key,
@@ -131,7 +131,7 @@ const yAxis = computed<EChartsOption['yAxis']>(() => {
     }
 
     // 多
-    if (_.isObject(yConfig)) {
+    if (isObject(yConfig)) {
         return Object.keys(yConfig).map((key, index) => {
             const temp = {
                 name: key,
@@ -156,32 +156,48 @@ const yAxis = computed<EChartsOption['yAxis']>(() => {
 })
 
 /* ---------- series ------------------------------------------------------------ */
-const baseSeries: BarSeriesOption | LineSeriesOption = {
-    type: 'bar'
-}
+const baseSeries: BarSeriesOption | LineSeriesOption = {}
 const series = computed<BarSeriesOption | LineSeriesOption>(() => {
     const seriesData = props.config.data
 
     // 单
     if (_.isArray(seriesData)) {
+        const type = _.isString(props.config.type) ? props.config.type : props.config.type[0]
+
         return {
             ...baseSeries,
+            type,
             data: seriesData
         }
     }
 
     // 多
-    if (_.isObject(seriesData)) {
+    if (isObject(seriesData)) {
         return Object.keys(seriesData).map((key, index) => {
+            let type = ''
+            if (_.isString(props.config.type)) {
+                type = props.config.type
+            } else if (_.isArray(props.config.type)) {
+                const currentType = props.config.type[index]
+                if (currentType) {
+                    type = currentType
+                } else {
+                    type = props.config.type[props.config.type.length - 1]
+                }
+            }
+
             return {
                 ...baseSeries,
                 name: key,
+                type,
                 yAxisIndex:
+                    isObject(props.config.y) &&
                     !!Object.keys(props.config.y).length &&
                     index < Object.keys(props.config.y).length
                         ? index
                         : 0,
                 xAxisIndex:
+                    isObject(props.config.x) &&
                     !!Object.keys(props.config.x).length &&
                     index < Object.keys(props.config.x).length
                         ? index
@@ -222,7 +238,12 @@ const barOption = computed<EChartsOption>(() => ({
         )
     },
     legend: {
-        top: size2Rem(28),
+        top: size2Rem(
+            (isObject(props.config.y) && !!Object.keys(props.config.y).length) ||
+                (isObject(props.config.x) && !!Object.keys(props.config.x).length)
+                ? 28
+                : 40
+        ),
         left: size2Rem(20),
         padding: size2Rem(5),
         itemGap: size2Rem(14),
