@@ -9,9 +9,9 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRef, watch, ref, computed, reactive, PropType, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import BarOrLineConfig from '../interface/BarOrLineConfig'
-import Basic from './basic.vue'
+import Basic from './GChartBasic/index.vue'
 import {
     BarSeriesOption,
     XAXisComponentOption,
@@ -23,11 +23,12 @@ import _ from 'lodash'
 import { size2Rem, isObject } from '../utils'
 import defaultColors from '../constant/colors'
 
-const props = defineProps({
-    config: {
-        type: Object as PropType<BarOrLineConfig>,
-        default: null
-    }
+interface Props {
+    config: BarOrLineConfig
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    config: null
 })
 
 const fontSize16 = size2Rem(16)
@@ -35,6 +36,7 @@ const fontSize14 = size2Rem(14)
 const fontSize12 = size2Rem(12)
 const fontSize10 = size2Rem(10)
 
+/* ---------- 顶部额外的距离 ------------------------------------------------------------ */
 const boxPaddingTop = computed(() =>
     props.config.hideToolBox && !props.config.title ? size2Rem(25) : 0
 )

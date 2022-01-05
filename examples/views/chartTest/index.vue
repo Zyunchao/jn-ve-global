@@ -4,6 +4,8 @@
         <Bar v-if="activeName === 'bar'" />
         <Line v-if="activeName === 'line'" />
         <BarWithLine v-if="activeName === 'barWithLine'" />
+        <Pie v-if="activeName === 'pie'" />
+        <Custom v-if="activeName === 'custom'" />
     </div>
 </template>
 
@@ -18,8 +20,10 @@ import { ref } from 'vue'
 import Bar from './bar.vue'
 import Line from './line.vue'
 import BarWithLine from './barWithLine.vue'
+import Pie from './pie.vue'
+import Custom from './custom.vue'
 
-const activeName = ref<string>('bar')
+const activeName = ref<string>('pie')
 
 const tabList = [
     {
@@ -37,6 +41,10 @@ const tabList = [
     {
         label: '饼图',
         value: 'pie'
+    },
+    {
+        label: '自定义',
+        value: 'custom'
     }
 ]
 </script>

@@ -16,12 +16,12 @@ import ResizeObserver from 'resize-observer-polyfill'
 import { ECharts, EChartsOption } from 'echarts'
 import _ from 'lodash'
 
-const props = defineProps({
-    option: {
-        type: Object as PropType<EChartsOption>,
-        required: true,
-        default: () => ({})
-    }
+interface Props {
+    option: EChartsOption
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    option: () => ({})
 })
 
 const emits = defineEmits(['getChartInstance'])

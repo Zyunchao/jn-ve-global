@@ -5,6 +5,9 @@
         :config="config"
         v-bind="$attrs"
     />
+
+    <!-- 饼图 -->
+    <Pie v-if="chartType.includes('pie')" :config="config" v-bind="$attrs" />
 </template>
 
 <script lang="ts">
@@ -17,6 +20,7 @@ export default {
 import { toRaw, watch, ref, computed, reactive, PropType, toRef } from 'vue'
 import ChartConfig from './interface/ChartConfig'
 import BarOrLine from './component/barOrLine.vue'
+import Pie from './component/pie.vue'
 
 const props = defineProps({
     config: {
