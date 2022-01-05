@@ -5,7 +5,7 @@ import {
     YAXisComponentOption
 } from 'echarts/types/dist/echarts'
 
-export default interface BarOrLine {
+export default interface BarOrLineConfig {
     /**
      * 类型：bar
      */

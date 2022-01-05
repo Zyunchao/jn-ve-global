@@ -10,7 +10,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRef, watch, ref, computed, reactive, PropType, onMounted } from 'vue'
-import BarOrLineConfig from '../interface/BarOrLine'
+import BarOrLineConfig from '../interface/BarOrLineConfig'
 import Basic from './basic.vue'
 import {
     BarSeriesOption,
