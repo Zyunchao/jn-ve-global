@@ -76,6 +76,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/chart-test',
         component: () => import('@/views/chartTest/index.vue')
+    },
+    {
+        path: '/infoSelect-test',
+        component: () => import('@/views/infoSelect/index.vue')
     }
 ]
 
