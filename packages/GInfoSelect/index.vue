@@ -205,6 +205,7 @@ $--header-hieght: v-bind(optionItemBaseHeight);
                 overflow-x: auto !important;
                 margin-top: $--header-hieght !important;
                 padding-bottom: v-bind(optionWrapBaseBottom) !important;
+                margin-bottom: 0 !important;
                 box-sizing: content-box;
 
                 &::-webkit-scrollbar {
@@ -217,7 +218,7 @@ $--header-hieght: v-bind(optionItemBaseHeight);
 
                 &::-webkit-scrollbar-thumb {
                     background: #e8e8e8;
-                    border-radius: 6px;
+                    border-radius: 4px;
 
                     &:hover {
                         background: #a5a3a3;
@@ -243,6 +244,7 @@ $--header-hieght: v-bind(optionItemBaseHeight);
 
                 .el-select-dropdown__option-item {
                     width: fit-content !important;
+                    min-width: 100%;
                 }
             }
         }
