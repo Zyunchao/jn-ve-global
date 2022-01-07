@@ -79,21 +79,16 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, onMounted } from 'vue'
+import { toRaw, watch, ref, computed, onMounted, nextTick } from 'vue'
 import InfoSelectColumnProps from './interface/InfoSelectColumnProps'
 import FunctionalComponent from '../FunctionalComponent'
-
-interface BaseSelectOptionData {
-    value: string | number | boolean | object
-    label: string
-    [k: string]: any
-}
+import { SelectOptionProps } from '../index'
 
 interface Props {
     /**
      * 下拉框数据
      */
-    optionsData: BaseSelectOptionData[]
+    optionsData: SelectOptionProps[]
     /**
      * option 展示的列
      */
@@ -131,18 +126,34 @@ const infoHeaderWrap = ref<Element>(null)
 // 待选项的容器
 const optionItemWrapper = ref<Element>(null)
 
-onMounted(() => {
-    // 监听 el-select-dropdown__list 的横向滚动
-    const optionItemWrapperDom = infoSelectRef.value.querySelector(
-        '.info-select-popper .el-select-dropdown__list'
-    )
+watch(
+    () => props.optionsData,
+    (data) => {
+        if (data && !!data.length) {
+            setTimeout(() => {
+                // 监听 el-select-dropdown__list 的横向滚动
+                const optionItemWrapperDom = infoSelectRef.value.querySelector(
+                    '.info-select-popper .el-select-dropdown__list'
+                )
 
-    optionItemWrapper.value = optionItemWrapperDom
+                // 保险
+                if (!optionItemWrapperDom) return
 
-    optionItemWrapperDom.addEventListener('scroll', ({ target }) => {
-        infoHeaderWrap.value && (infoHeaderWrap.value.scrollLeft = (target as Element).scrollLeft)
-    })
-})
+                optionItemWrapper.value = optionItemWrapperDom
+
+                // 先解绑旧的，再绑定
+                optionItemWrapperDom.removeEventListener('scroll', scrollEventHandle)
+                optionItemWrapperDom.addEventListener('scroll', scrollEventHandle)
+            }, 100)
+        }
+    },
+    {
+        immediate: true
+    }
+)
+function scrollEventHandle(e: Event) {
+    infoHeaderWrap.value && (infoHeaderWrap.value.scrollLeft = (e.target as Element).scrollLeft)
+}
 
 // 数据包装
 const VALUE_K = 'value'
@@ -170,7 +181,7 @@ const visibleChange = (flag: boolean) => {
     dropdownShow.value = flag
 
     // 关闭下拉框后，位移清零
-    if (!flag) {
+    if (!flag && !!optionItemWrapper.value) {
         optionItemWrapper.value.scrollLeft = 0
     }
 }
@@ -246,6 +257,10 @@ $--header-hieght: v-bind(optionItemBaseHeight);
                     width: fit-content !important;
                     min-width: 100%;
                 }
+            }
+
+            .el-select-v2__empty {
+                margin-top: $--header-hieght;
             }
         }
     }
