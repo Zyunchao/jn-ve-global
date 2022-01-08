@@ -14,6 +14,7 @@ export * from './interface/SelectTreeControlConfig'
 export * from './interface/UploadControlConfig'
 export * from './interface/FigureInputControlConfig'
 export * from './interface/IconPickerControlConfig'
+export * from './interface/InfoSelectControlConfig'
 
 export { default as FormProps } from './interface/FormProps'
 export { default as FormItemProps } from './interface/FormItemProps'
@@ -28,3 +29,4 @@ export { default as SelectTreeControlConfig } from './interface/SelectTreeContro
 export { default as UploadControlConfig } from './interface/UploadControlConfig'
 export { default as FigureInputControlConfig } from './interface/FigureInputControlConfig'
 export { default as IconPickerControlConfig } from './interface/IconPickerControlConfig'
+export { default as InfoSelectControlConfig } from './interface/InfoSelectControlConfig'

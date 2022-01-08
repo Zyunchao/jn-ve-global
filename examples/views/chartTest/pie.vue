@@ -4,6 +4,10 @@
         <div class="chart-box">
             <GChart :config="singleLineConfig" />
         </div>
+
+        <div class="chart-box">
+            <GChart :config="singleLineConfig2" />
+        </div>
     </div>
 </template>
 
@@ -21,6 +25,33 @@ import { ECharts, EChartsOption } from 'echarts'
 
 // 单条
 const singleLineConfig = ref<ChartConfig>({
+    title: '单条数据',
+    type: 'pie',
+    labelPosition: 'outside',
+    radius: ['30%', '70%'],
+    // showBorder: true,
+    data: [
+        {
+            value: 335,
+            name: '直接访问直接访问直接访问直接访问'
+        },
+        {
+            value: 234,
+            name: '联盟广告'
+        },
+        {
+            value: 1548,
+            name: '搜索引擎'
+        },
+        {
+            value: 1000,
+            name: '搜索引擎222'
+        }
+    ]
+})
+
+// 单条
+const singleLineConfig2 = ref<ChartConfig>({
     title: '单条数据',
     type: 'pie',
     labelPosition: 'outside',

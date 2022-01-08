@@ -19,7 +19,8 @@ import {
     SelectTreeControlConfig,
     UploadControlConfig,
     FigureInputControlConfig,
-    IconPickerControlConfig
+    IconPickerControlConfig,
+    InfoSelectControlConfig
 } from '../index'
 
 /**
@@ -37,6 +38,7 @@ import {
  * - SelectTree 下拉树
  * - iconPicker 图标选择器
  * - Upload 上传文件
+ * - InfoSelect 以表格样式展示的下拉框（虚拟滚动）
  */
 export type ControlConfig =
     | InputControlConfig
@@ -58,6 +60,7 @@ export type ControlConfig =
     | UploadControlConfig
     | FigureInputControlConfig
     | IconPickerControlConfig
+    | InfoSelectControlConfig
 
 /**
  * 控件组的配置

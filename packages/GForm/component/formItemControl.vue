@@ -194,6 +194,17 @@
         <template v-if="localControlType === 'iconPicker'">
             <LGIconPicker v-model="localPropRef" v-bind="controlConfig.props" />
         </template>
+
+        <!-- 下拉树展示 -->
+        <template v-if="localControlType === 'infoSelect'">
+            <LGInfoSelect
+                v-model="localPropRef"
+                v-bind="controlConfig.props"
+                :options-data="controlConfig.options"
+                :columns="controlConfig.columns"
+                :option-props="controlConfig.optionProps"
+            />
+        </template>
     </template>
 </template>
 
@@ -219,6 +230,7 @@ import LGFigureInput from '../../GFigureInput/index.vue'
 import LGIconPicker from '../../GIconPicker/index.vue'
 import LGUpload from '../../GUpload/index.vue'
 import UploadFile from '../../GUpload/interface/UploadFile'
+import LGInfoSelect from '../../GInfoSelect/index.vue'
 
 interface Props {
     /**
@@ -330,6 +342,7 @@ const getItemControlProps = () => {
             : `请输入${props.formItemConfig.label}`
         break
     case 'select':
+    case 'infoSelect':
         controlProps['placeholder'] = controlProps['placeholder']
             ? controlProps['placeholder']
             : `请选择${props.formItemConfig.label}`
