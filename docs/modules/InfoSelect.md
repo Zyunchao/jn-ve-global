@@ -6,6 +6,8 @@
 :::tip
 组件基于 [Element Virtualized Select 虚拟化选择器](https://element-plus.gitee.io/zh-CN/component/select-v2.html)
 
+意味着用户可以一次性加载所有数据，然后虚拟化渲染
+
 搜索默认搜索绑定的 label 值，如需自定义搜索请参照Element官网的示例
 :::
 
