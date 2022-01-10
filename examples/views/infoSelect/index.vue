@@ -17,7 +17,6 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import mockData from './data/data.json'
 import InfoSelectColumnProps from '@component/GInfoSelect/interface/InfoSelectColumnProps'
 
-// 测试远程仓库联动
 const active = ref<string | string[]>('')
 
 watch(
