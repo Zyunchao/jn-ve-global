@@ -4,7 +4,7 @@
         <el-select-v2
             filterable
             :options="localSelectOptins"
-            popper-class="info-select-popper"
+            :popper-class="`info-select-popper ${currentPopperId}`"
             v-bind="$attrs"
             :height="popperHeight"
             style="width: 100%"
@@ -79,10 +79,11 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, onMounted, nextTick } from 'vue'
+import { toRaw, watch, ref, computed, onMounted, nextTick, onUnmounted } from 'vue'
 import InfoSelectColumnProps from './interface/InfoSelectColumnProps'
 import FunctionalComponent from '../FunctionalComponent'
 import { SelectOptionProps } from '../index'
+import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
     /**
@@ -125,6 +126,47 @@ const infoSelectRef = ref<Element>(null)
 const infoHeaderWrap = ref<Element>(null)
 // 待选项的容器
 const optionItemWrapper = ref<Element>(null)
+
+// 下拉框弹出层 dom 操作
+// 当前组件的下拉弹框的 id，多个组件时，保证下拉框唯一
+const currentPopperId = ref<string>(uuidv4())
+const popperRoot = ref<Element>(null)
+const popperTop = ref<string>('')
+const popperLeft = ref<string>('')
+
+// 观察器的配置（需要观察什么变动）
+const config: MutationObserverInit = { attributes: true }
+
+// 当观察到变动时执行的回调函数
+const callback = function (mutationsList: MutationRecord[], observer: MutationObserver) {
+    for (let mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            const pRootDom = mutation.target as HTMLElement
+            const display = pRootDom.style['display']
+            if (display !== 'none') {
+                popperTop.value = pRootDom.style.top
+                popperLeft.value = pRootDom.style.left
+            }
+        }
+    }
+}
+
+// 创建一个观察器实例并传入回调函数
+let observer = new MutationObserver(callback)
+
+onMounted(() => {
+    // 弹框根
+    const pRootDom = infoSelectRef.value.querySelector('.info-select-popper')
+    popperRoot.value = pRootDom
+    // 以上述配置开始观察目标节点
+    observer.observe(pRootDom, config)
+})
+
+onUnmounted(() => {
+    // 卸载，停止观察
+    observer.disconnect()
+    observer = null
+})
 
 watch(
     () => props.optionsData,
@@ -202,16 +244,23 @@ const getWidth = (width: string | number) => {
 
 <style lang="scss" scoped>
 $--header-hieght: v-bind(optionItemBaseHeight);
+$--base-zi: 9999;
 
 .g-info-select {
     position: relative;
     width: 100%;
     min-width: 100px;
 
+    :deep(*) {
+        box-sizing: border-box;
+    }
+
     /* 下拉框 */
     :deep(.el-select-v2) {
-        z-index: 1;
+        // 下拉框弹出和输入框是平级的
         .info-select-popper {
+            z-index: $--base-zi !important;
+            
             .el-select-dropdown__list {
                 overflow-x: auto !important;
                 margin-top: $--header-hieght !important;
@@ -272,10 +321,11 @@ $--header-hieght: v-bind(optionItemBaseHeight);
         height: $--header-hieght;
         background-color: #e8e8e8;
         position: absolute;
-        bottom: v-bind(headerBottom);
-        z-index: 2;
+        z-index: $--base-zi + 1;
         border-radius: 4px 4px 0 0;
         padding: 0 32px 0 20px;
+        top: v-bind(popperTop);
+        left: v-bind(popperLeft);
 
         .info-header {
             height: 100%;

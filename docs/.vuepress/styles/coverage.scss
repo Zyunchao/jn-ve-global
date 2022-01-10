@@ -1,0 +1,81 @@
+main.page {
+    .theme-default-content {
+        >table {
+            border-collapse: collapse;
+            margin: 1rem 0;
+            display: block;
+            overflow-x: auto;
+
+            tr {
+                border-top: 1px solid var(--c-border-dark);
+            }
+
+            tr:nth-child(2n) {
+                background-color: var(--c-bg-light);
+            }
+
+            th,
+            td {
+                border: 1px solid var(--c-border-dark);
+                padding: 0.6em 1em;
+            }
+        }
+
+        >table {
+            width: 100%;
+            display: table;
+
+            th,
+            td {
+                border: none;
+                text-align: left;
+
+                &:first-of-type {
+                    width: 130px;
+                }
+
+                &:nth-of-type(2) {
+                    width: 350px;
+                }
+
+                &:nth-of-type(3) {
+                    width: 250px;
+                }
+
+                &:nth-of-type(4) {
+                    width: 100px;
+                }
+            }
+
+            thead {
+                tr {
+                    border-top: none;
+                }
+            }
+        }
+    }
+}
+
+
+// 覆盖 vuepress 对 table 做的样式修改
+table {
+    border-collapse: initial;
+    margin: initial;
+    display: table;
+    // overflow-x: initial;
+    overflow: auto;
+}
+
+tr {
+    border-top: initial;
+}
+
+tr:nth-child(2n) {
+    background-color: initial;
+}
+
+th,
+td {
+    border: initial;
+    padding: initial;
+}

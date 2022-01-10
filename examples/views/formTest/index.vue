@@ -371,7 +371,10 @@ export default {
                     controlConfig: {
                         type: 'infoSelect',
                         options: infoSelectData as any,
-                        columns: infoSelectColumns.value
+                        columns: infoSelectColumns.value,
+                        props: {
+                            multiple: true
+                        }
                     }
                 },
                 {

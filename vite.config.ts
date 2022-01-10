@@ -36,7 +36,8 @@ export default defineConfig({
                 'resize-observer-polyfill',
                 'xlsx',
                 '@element-plus/icons-vue',
-                'echarts'
+                'echarts',
+                'uuid'
             ],
             output: {
                 // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量

@@ -1,7 +1,16 @@
 <template>
     <div class="examples-base-wrapper">
+        <el-button type="success" @click="changeData">
+            切换数据
+        </el-button>
         <div class="box">
-            <g-info-select v-model="active" multiple :options-data="mockData" :columns="columns" />
+            111
+            <g-info-select v-model="active" multiple :options-data="localData" :columns="columns" />
+        </div>
+
+        <div class="box">
+            222
+            <g-info-select v-model="active" multiple :options-data="localData" :columns="columns" />
         </div>
     </div>
 </template>
@@ -18,6 +27,7 @@ import mockData from './data/data.json'
 import InfoSelectColumnProps from '@component/GInfoSelect/interface/InfoSelectColumnProps'
 
 const active = ref<string | string[]>('')
+const localData = ref(mockData)
 
 watch(
     () => active.value,
@@ -25,6 +35,14 @@ watch(
         console.log(`%c 父级 active ===== `, 'color: #67c23a;', active.value)
     }
 )
+
+const changeData = () => {
+    if (localData.value.length) {
+        localData.value = []
+    } else {
+        localData.value = mockData
+    }
+}
 
 const columns = ref<InfoSelectColumnProps[]>([
     {
@@ -115,5 +133,6 @@ const columns = ref<InfoSelectColumnProps[]>([
 <style lang="scss" scoped>
 .box {
     width: 400px;
+    margin-bottom: 20px;
 }
 </style>

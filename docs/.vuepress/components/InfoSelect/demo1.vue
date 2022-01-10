@@ -1,7 +1,13 @@
 <template>
     <div class="examples-base-wrapper">
         <div class="box">
-            <g-info-select v-model="active" multiple :options-data="mockData" :columns="columns" />
+            单选：
+            <g-info-select v-model="active" :options-data="mockData" :columns="columns" />
+        </div>
+
+        <div class="box">
+            多选：
+            <g-info-select v-model="active2" multiple :options-data="mockData" :columns="columns" />
         </div>
     </div>
 </template>
@@ -18,6 +24,7 @@ import mockData from './data/data.json'
 import InfoSelectColumnProps from '@component/GInfoSelect/interface/InfoSelectColumnProps'
 
 const active = ref<string | string[]>('')
+const active2 = ref<string | string[]>([])
 
 watch(
     () => active.value,
@@ -115,9 +122,14 @@ const columns = ref<InfoSelectColumnProps[]>([
 <style lang="scss" scoped>
 .box {
     width: 400px;
+    margin-bottom: 20px;
 
     :deep(*) {
         box-sizing: border-box;
     }
+}
+
+.examples-base-wrapper {
+    height: 400px;
 }
 </style>
