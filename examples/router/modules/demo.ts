@@ -22,6 +22,10 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/baseModuleTest/selectionDemo.vue')
     },
     {
+        path: '/disToolTip-test',
+        component: () => import('@/views/formTest/disToolTip.vue')
+    },
+    {
         path: '/form-test',
         component: () => import('@/views/formTest/index.vue')
     },

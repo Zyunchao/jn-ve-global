@@ -301,18 +301,32 @@ if (props.controlConfig.type === 'input') {
     })
 
     watch(
-        () => inputDisabled.value,
-        (disabled) => {
-            if (!disabled) return
+        () => localPropRef.value,
+        (val) => {
+            if (!val) {
+                exceedBoxWidht.value = false
+                return
+            }
 
+            if(!inputDisabled.value) {
+                return
+            }
+            
             const targetDom = elInputRef.value.$el as HTMLElement
+            // 基础字体大小
             const fontSize = 16
+            // input 的 padding
             const baseP = 15
+            // input 的宽度
             const boxWidth = targetDom.offsetWidth
-            const contentLength = (localPropRef.value as string).length
+            // 字符串的长度
+            const contentLength = `${localPropRef.value}`.length
 
             // 判断内容是否超出 input 的宽度
             exceedBoxWidht.value = contentLength * fontSize > boxWidth - baseP * 2
+        },
+        {
+            immediate: true
         }
     )
 }
