@@ -1,5 +1,5 @@
 <template>
-    <Basic class="bar" :option="pieOption" />
+    <Basic class="pie" :option="pieOption" />
 </template>
 
 <script lang="tsx">
@@ -43,8 +43,10 @@ const colors = computed(() =>
 /* ---------- series ------------------------------------------------------------ */
 const series = computed<PieSeriesOption>(() => ({
     type: 'pie',
-    radius: props.config.radius || [0, '75%'],
+    radius: props.config.radius || [0, '70%'],
     data: props.config.data,
+    right: size2Rem(106),
+    top: props.config.title ? size2Rem(14) : 0,
     label: {
         color:
             props.config.labelPosition && props.config.labelPosition === 'outside'
@@ -86,23 +88,56 @@ const series = computed<PieSeriesOption>(() => ({
     tooltip: {
         padding: size2Rem(5),
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        formatter: () => {
+        formatter: (data) => {
             return `
-                <p>1234</p>
-                <span>5678</span>
+                <div class="pie-tooltip-wrapper">
+                    <span class="round" style="background-color: ${data.color};"></span>
+                    <span class="name">${data.name}：</span>
+                    <span class="value">${data.value}</span>
+                    <strong style="color: ${data.color};">|</strong>
+                    <span class="percent">${data.percent}%</span>
+                </div>
             `
         },
         textStyle: {
             fontSize: fontSize14
         }
-    }
+    },
+    roseType: props.config.roseType as any
 }))
 
 /* ---------- EChartsOption ------------------------------------------------------------ */
 const pieOption = computed<EChartsOption>(() => ({
     color: colors.value,
+    title: {
+        show: !!props.config.title,
+        text: props.config.title,
+        textStyle: {
+            fontSize: fontSize16
+        },
+        top: size2Rem(4),
+        left: size2Rem(4)
+    },
     tooltip: {
         show: true
+    },
+    legend: {
+        type: 'scroll',
+        orient: 'vertical',
+        top: size2Rem(30),
+        right: size2Rem(0),
+        padding: size2Rem(5),
+        itemGap: size2Rem(10),
+        itemWidth: size2Rem(20),
+        itemHeight: size2Rem(12),
+        itemStyle: {
+            borderWidth: 0
+        },
+        textStyle: {
+            width: size2Rem(80),
+            fontSize: size2Rem(12),
+            overflow: 'break'
+        }
     },
     toolbox: {
         show: !props.config.hideToolBox,
@@ -123,4 +158,23 @@ const pieOption = computed<EChartsOption>(() => ({
 }))
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.pie-tooltip-wrapper {
+    .round {
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        border-radius: 50%;
+        margin-right: 4px;
+    }
+
+    .name {
+        margin-right: 10px;
+    }
+
+    .value,
+    .percent {
+        font-weight: 600;
+    }
+}
+</style>
