@@ -2,12 +2,15 @@
     <!-- dialog 对话框 -->
     <el-dialog
         v-if="localType === 'dialog'"
-        v-model="localModalShow"
+        ref="modalRef"
         :width="localWidth"
         destroy-on-close
         top="5vh"
+        append-to-body
         v-bind="$attrs"
-        :custom-class="`g-custom-dialog ${$attrs['custom-class'] || ''}`"
+        :custom-class="`g-custom-dialog${
+            $attrs['custom-class'] ? ' ' + $attrs['custom-class'] : ''
+        }${isVerticalCenter ? ' vertical-center' : ''}`"
     >
         <!-- title -->
         <template v-if="$slots.title" #title>
@@ -37,9 +40,10 @@
     <!-- drawer 抽屉 -->
     <el-drawer
         v-if="localType === 'drawer'"
-        v-model="localModalShow"
+        ref="modalRef"
         :size="localWidth"
         destroy-on-close
+        append-to-body
         v-bind="$attrs"
         :custom-class="`g-custom-drawer ${$attrs['custom-class'] || ''}`"
     >
@@ -82,56 +86,57 @@ export default {
 import { toRaw, watch, ref, computed, reactive, toRefs, PropType, useAttrs } from 'vue'
 import { BtnProps } from '../GBaseModule/interface/BaseModuleConfig'
 
-const props = defineProps({
-    type: {
-        type: String as PropType<'dialog' | 'drawer'>,
-        default: 'dialog'
-    },
+interface Props {
     /**
-     * 控制显示的 flag
+     * 类型
      */
-    modelValue: {
-        type: Boolean
-    },
+    type?: 'dialog' | 'drawer'
     /**
-     * 按钮组
+     * 底部按钮组
      */
-    btns: {
-        type: Array as PropType<BtnProps[]>,
-        default: () => []
-    },
+    btns?: BtnProps[]
     /**
-     * 隐藏底部
+     * 隐藏底部，权重较高
      */
-    hideFooter: {
-        type: Boolean,
-        default: false
-    },
+    hideFooter?: boolean
     /**
      * 宽度
      */
-    width: {
-        type: [String, Number],
-        default: ''
-    }
-})
+    width?: string | number
+    /**
+     * 是否垂直居中
+     */
+    verticalCenter?: boolean
+}
 
-const emits = defineEmits(['update:modelValue'])
-
-// 与父级通信
-const localModalShow = computed({
-    get: () => props.modelValue,
-    set: (val) => emits('update:modelValue', val)
+const props = withDefaults(defineProps<Props>(), {
+    type: 'dialog',
+    btns: () => [],
+    hideFooter: false,
+    width: '',
+    verticalCenter: false
 })
 
 // 本地类型（做统一化控制）
 const localType = computed(() => props.type)
+
+const modalRef = ref(null)
 
 // 本地 width
 const localWidth = computed(() => {
     if (props.width) return props.width
     if (props.type === 'dialog') return '70%'
     return '50%'
+})
+
+// 垂直居中仅对 dialog 生效
+const isVerticalCenter = computed(() => props.type === 'dialog' && props.verticalCenter)
+
+// 抛出的
+defineExpose({
+    localType,
+    isVerticalCenter,
+    modalRef
 })
 </script>
 

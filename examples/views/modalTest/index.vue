@@ -23,7 +23,6 @@
     <g-modal
         v-model="dialogShow"
         :show-close="true"
-        custom-class="abcd"
         width="70%"
         title="评级登记"
         :btns="btns"
@@ -65,6 +64,13 @@ const btns = reactive<BtnProps[]>([
         }
     }
 ])
+
+watch(
+    () => dialogShow.value,
+    (flag) => {
+        console.log(`%c dialogShow === `, 'color: #67c23a;', flag)
+    }
+)
 </script>
 
 <style lang="scss" scoped></style>

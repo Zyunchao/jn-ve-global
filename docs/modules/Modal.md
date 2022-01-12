@@ -73,6 +73,26 @@ dialog-body 最小高度统一设置为 '150px'；<br/>
 
 </demo-block>
 
+## Dialog 垂直居中
+
+:::tip
+
+垂直居中仅适用于 dialog，且内容较少的弹框情况，如果内容较多，采用垂直居中的效果可能不尽人意
+
+:::
+
+<demo-block>
+
+<Modal-verticalCenter />
+
+<template #code>
+
+@[code](@demoroot/Modal/verticalCenter.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 参数|说明|类型|默认值
@@ -81,3 +101,4 @@ type | 弹框模式 | 'dialog' \| 'drawer' | 'dialog'
 btns | 弹框按钮配置依赖 | BtnProps[] | --
 hideFooter | 隐藏底部 | boolean | false
 width | 组件的宽度 | string \| number | dialog: '70%' \| drawer: '50%'
+verticalCenter | dialog 垂直居中 | boolean | false

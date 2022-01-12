@@ -43,6 +43,12 @@ $--dialog-base-left-p: 40px;
     .el-dialog__footer {
         padding: calc(48px - 14px) $--dialog-base-left-p 55px $--dialog-base-left-p;
     }
+
+    &.vertical-center {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        margin: 0 auto !important;
+    }
 }
 
 // drawer 模式
