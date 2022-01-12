@@ -1,6 +1,6 @@
 {
     "name": "jn-ve-global",
-    "version": "1.4.16",
+    "version": "1.5.0",
     "author": "zyc",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [

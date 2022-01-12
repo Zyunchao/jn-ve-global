@@ -141,5 +141,11 @@ const resetForm = () => {
     :deep(*) {
         box-sizing: border-box;
     }
+
+    :deep(ul) {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 }
 </style>

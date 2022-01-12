@@ -36,5 +36,26 @@ export default [
     {
         text: '基础组件',
         children: [{ text: 'DebounceButton', link: '/modules/DebounceButton.md' }]
+    },
+    {
+        text: 'ECharts',
+        children: [
+            {
+                text: 'Basic',
+                link: '/modules/Chart/Basic.md'
+            },
+            {
+                text: 'Bar',
+                link: '/modules/Chart/Bar.md'
+            },
+            {
+                text: 'Line',
+                link: '/modules/Chart/Line.md'
+            },
+            {
+                text: 'Pie',
+                link: '/modules/Chart/Pie.md'
+            }
+        ]
     }
 ]

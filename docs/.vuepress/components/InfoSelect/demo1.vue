@@ -127,6 +127,12 @@ const columns = ref<InfoSelectColumnProps[]>([
     :deep(*) {
         box-sizing: border-box;
     }
+    
+    :deep(ul) {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 }
 
 .examples-base-wrapper {
