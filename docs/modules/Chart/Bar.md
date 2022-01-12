@@ -4,6 +4,7 @@
 
 * 单数据
 * 多数据
+* 堆叠
 * 多轴
 * 自定义颜色
 * 工具箱
@@ -139,6 +140,28 @@ interface BarOrLineConfig extends BaseConfig {
 <template #code>
 
 @[code](@demoroot/Charts/bar/demo5.vue)
+
+</template>
+
+</demo-block>
+
+## 折线与柱状图结合
+
+::: tip
+
+柱状图和折线图的配置对象类型是同一个， `type` 字段可以是字符串，或者指定类型的数组
+
+如果类型是数组，则 type 的数组与 data 的数组下标一一对应
+
+:::
+
+<demo-block>
+
+<Charts-bar-demo6 />
+
+<template #code>
+
+@[code](@demoroot/Charts/bar/demo6.vue)
 
 </template>
 

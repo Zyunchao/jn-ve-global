@@ -6,13 +6,13 @@
 
 <template #version>
 
-1.4.16
+1.5.0
 
 </template>
 
 <template #date>
 
-2022-1-11
+2022-1-12
 
 </template>
 
@@ -20,7 +20,7 @@
 
 <h4>Collapse</h4>
 
-1. 新增折叠面板组件
+新增折叠面板组件
 
 <h4>Table</h4>
 
@@ -35,29 +35,34 @@
 
 <h4>Form</h4>
 
-1. FormItem > Input 在禁用且内容超出 input 的宽度时，进行内容 toolTip 的展示（自动开启）
+FormItem > Input 在禁用且内容超出 input 的宽度时，进行内容 toolTip 的展示（自动开启）
 
 <h4>Tree</h4>
 
-1. 增加机构的图标
+增加机构的图标
 
 <h4>DebounceButton</h4>
 
-1. 新增防抖按钮
+新增防抖按钮
 
 <h4>InfoSelect</h4>
 
-1. 新增多列展示的下拉框
+新增多列展示的下拉框
 
 <h4>Modal</h4>
 
-1. dialog 模式增加垂直居中 api
+dialog 模式增加垂直居中 api
+
+<h4>Chart</h4>
+
+1. 新增图标组件
+2. 内置对于常用的 柱状图、折线图、饼图等
 
 <h3>优化</h3>
 
 <h4>Icon</h4>
 
-1. 使用 @element-plus/icons-vue 包
+使用 @element-plus/icons-vue 包
 
 <h4>SelectTree</h4>
 

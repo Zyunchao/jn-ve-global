@@ -19,7 +19,7 @@ import ChartConfig from '@component/GChart/interface/ChartConfig'
 
 const chartConfig = ref<ChartConfig>({
     title: '多条 Y 轴',
-    type: 'bar',
+    type: 'line',
     x: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
     y: {
         '销量': {},
@@ -37,7 +37,7 @@ const chartConfig = ref<ChartConfig>({
 
 const chartConfig2 = ref<ChartConfig>({
     title: '多条 X 轴',
-    type: 'bar',
+    type: 'line',
     x: {
         'x1': {
             name: '',
