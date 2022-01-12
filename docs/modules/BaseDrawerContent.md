@@ -1,4 +1,4 @@
-# BaseDrawerContent
+# BaseDrawerContent（已废弃）
 
 模块基础的抽屉 `<el-drawer>` 内容布局容器
 
