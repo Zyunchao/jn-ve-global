@@ -66,5 +66,9 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
          * 最多显示几个按钮，超出部分将于更多操作内显示
          */
         maxCount?: number
+        /**
+         * 操作列的对齐方式
+         */
+        align?: 'left' | 'center' | 'right'
     }
 }

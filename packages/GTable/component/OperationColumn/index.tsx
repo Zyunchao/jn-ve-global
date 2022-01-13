@@ -35,6 +35,7 @@ export default (config: TableConfig<any>) => {
             label: '操作',
             width: rowBtnConfig.width || 200,
             fixed: 'right',
+            align: rowBtnConfig.align || 'left',
             render: (row, index) => {
                 // 正常展示
                 if (!showMore) {
