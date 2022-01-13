@@ -1,18 +1,14 @@
 <template>
-    <div ref="infoSelectRef" class="g-info-select">
-        <!-- 下拉框，虚拟滚动 -->
-        <el-select-v2
-            filterable
-            :options="localSelectOptins"
-            v-bind="$attrs"
-            :popper-class="`info-select-popper ${currentPopperId}`"
-            :height="popperHeight"
+    <div ref="autocompRef" class="g-info-autocomplete">
+        <el-autocomplete
             style="width: 100%"
+            v-bind="$attrs"
+            popper-class="info-autocomplete-popper"
+            :fetch-suggestions="fetchSuggestions"
             :popper-append-to-body="false"
-            @visible-change="visibleChange"
         >
             <template #default="{ item, $index }">
-                <ul class="select-option-custom-content">
+                <ul class="info-autocomp-custom-content">
                     <template
                         v-for="(column, columnIndex) in columns"
                         :key="`${column.prop}-${columnIndex}`"
@@ -51,7 +47,7 @@
                     </template>
                 </ul>
             </template>
-        </el-select-v2>
+        </el-autocomplete>
 
         <!-- 表头（依据 columns 生成） -->
         <transition :name="dropdownShow ? 'dropdown' : ''">
@@ -73,63 +69,41 @@
 
 <script lang="ts">
 export default {
-    name: 'GInfoSelect',
-    inheritAttrs: false
+    name: 'GInfoAutocomplete'
 }
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, onMounted, nextTick, onUnmounted } from 'vue'
-import InfoSelectColumnProps from './interface/InfoSelectColumnProps'
+import { toRaw, watch, ref, computed, reactive, toRefs, onMounted, onUnmounted } from 'vue'
+import InfoAutocompleteColumnProps from './interface/InfoAutocompleteColumnProps'
 import FunctionalComponent from '../FunctionalComponent'
-import { SelectOptionProps } from '../index'
-import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
     /**
-     * 下拉框数据
-     */
-    optionsData: SelectOptionProps[]
-    /**
      * option 展示的列
      */
-    columns: InfoSelectColumnProps[]
+    columns: InfoAutocompleteColumnProps[]
     /**
-     * option item 绑定的值
+     * 获取输入建议的方法， 仅当你的输入建议数据 resolve 时，通过调用 callback(data:[])  来返回它
      */
-    optionProps?: {
-        value: string
-        label: string
-    }
+    fetchSuggestions: (queryString?: string, callback?: (arg: any) => void) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    optionsData: () => [],
-    columns: () => [],
-    optionProps: () => ({
-        value: 'id',
-        label: 'name'
-    })
+    columns: () => []
 })
-
-// 高度计算
-const headerBottom = '-47px'
-const optionItemBaseHeight = '34px'
-const optionWrapBaseBottom = '14px'
-const optionMaxItemNum = 5
-const popperHeight = parseInt(optionItemBaseHeight) * optionMaxItemNum
 
 const dropdownShow = ref<boolean>(false)
 // 组件根
-const infoSelectRef = ref<Element>(null)
+const autocompRef = ref<HTMLElement>(null)
 // 表格头
 const infoHeaderWrapRef = ref<Element>(null)
-// 待选项的容器
-const optionItemWrapper = ref<Element>(null)
+// 滚动容器
+const scrollWrapRef = ref<HTMLElement>(null)
 
+// ------------- 隐藏 or 显示 + 表头位置获取 ----------------------------------------------------------------------
 // 下拉框弹出层 dom 操作
 // 当前组件的下拉弹框的 id，多个组件时，保证下拉框唯一
-const currentPopperId = ref<string>(uuidv4())
 const popperRoot = ref<Element>(null)
 const popperTop = ref<string>('')
 const popperLeft = ref<string>('')
@@ -140,25 +114,31 @@ const config: MutationObserverInit = { attributes: true }
 // 当观察到变动时执行的回调函数
 const callback = function (mutationsList: MutationRecord[], observer: MutationObserver) {
     for (let mutation of mutationsList) {
+        // 探查位置
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
             const pRootDom = mutation.target as HTMLElement
             const display = pRootDom.style['display']
+
             if (display !== 'none') {
                 popperTop.value = pRootDom.style.top
                 popperLeft.value = pRootDom.style.left
             }
+        }
+
+        // 探查显示 & 隐藏
+        if (mutation.type === 'attributes' && mutation.attributeName === 'aria-hidden') {
+            const pRootDom = mutation.target as HTMLElement
+            const ariaHidden = pRootDom.attributes['aria-hidden'].value
+            dropdownShow.value = ariaHidden === 'false'
         }
     }
 }
 
 // 创建一个观察器实例并传入回调函数
 let observer = new MutationObserver(callback)
-
 onMounted(() => {
-    // 弹框根
-    const pRootDom = infoSelectRef.value.querySelector('.info-select-popper')
+    const pRootDom = autocompRef.value.querySelector('.info-autocomplete-popper')
     popperRoot.value = pRootDom
-    // 以上述配置开始观察目标节点
     observer.observe(pRootDom, config)
 })
 
@@ -166,66 +146,27 @@ onUnmounted(() => {
     // 卸载，停止观察
     observer.disconnect()
     observer = null
+
+    // 滚动容器事件移除
+    scrollWrapRef.value.removeEventListener('scroll', scrollEventHandle)
 })
 
-watch(
-    () => props.optionsData,
-    (data) => {
-        if (data && !!data.length) {
-            setTimeout(() => {
-                // 监听 el-select-dropdown__list 的横向滚动
-                const optionItemWrapperDom = infoSelectRef.value.querySelector(
-                    '.info-select-popper .el-select-dropdown__list'
-                )
-
-                // 保险
-                if (!optionItemWrapperDom) return
-
-                optionItemWrapper.value = optionItemWrapperDom
-
-                // 先解绑旧的，再绑定
-                optionItemWrapperDom.removeEventListener('scroll', scrollEventHandle)
-                optionItemWrapperDom.addEventListener('scroll', scrollEventHandle)
-            }, 100)
-        }
-    },
-    {
-        immediate: true
-    }
-)
+// ------------- 表头横向滚动 ----------------------------------------------------------------------
+/**
+ * 监听横向滚动（表头追随）
+ * autocomplete 的列表容器不同于 infoSelect，这个 dom 是一直存在的，只不过父元素隐藏了
+ * 所以可以在 mounted 的时候绑定滚动事件
+ */
+onMounted(() => {
+    const scrollWrap = autocompRef.value.querySelector(
+        '.el-autocomplete-suggestion__wrap'
+    ) as HTMLElement
+    scrollWrapRef.value = scrollWrap
+    scrollWrap.addEventListener('scroll', scrollEventHandle)
+})
 function scrollEventHandle(e: Event) {
-    infoHeaderWrapRef.value && (infoHeaderWrapRef.value.scrollLeft = (e.target as Element).scrollLeft)
-}
-
-// 数据包装
-const VALUE_K = 'value'
-const LABEL_K = 'label'
-const localSelectOptins = computed(() =>
-    props.optionsData.map((item) => {
-        const target = { ...item }
-
-        // value
-        if (target[VALUE_K] === undefined || target[VALUE_K] === null) {
-            target[VALUE_K] = target[props.optionProps.value]
-        }
-
-        // key
-        if (target[LABEL_K] === undefined || target[LABEL_K] === null) {
-            target[LABEL_K] = item[props.optionProps.label]
-        }
-
-        return target
-    })
-)
-
-// 下拉框出现/隐藏
-const visibleChange = (flag: boolean) => {
-    dropdownShow.value = flag
-
-    // 关闭下拉框后，位移清零
-    if (!flag && !!optionItemWrapper.value) {
-        optionItemWrapper.value.scrollLeft = 0
-    }
+    infoHeaderWrapRef.value &&
+        (infoHeaderWrapRef.value.scrollLeft = (e.target as Element).scrollLeft)
 }
 
 // 依照配置项获取宽度
@@ -243,73 +184,47 @@ const getWidth = (width: string | number) => {
 </script>
 
 <style lang="scss" scoped>
-$--header-hieght: v-bind(optionItemBaseHeight);
+$--header-hieght: 34px;
 $--base-zi: 98;
 
-.g-info-select {
+.g-info-autocomplete {
     position: relative;
     width: 100%;
     min-width: 100px;
 
-    :deep(*) {
-        box-sizing: border-box;
-    }
+    /* 下拉选项 */
+    :deep(.info-autocomplete-popper) {
+        width: 100%;
+        z-index: $--base-zi !important;
+        padding-top: $--header-hieght;
 
-    /* 下拉框 */
-    :deep(.el-select-v2) {
-        // 下拉框弹出和输入框是平级的
-        .info-select-popper {
-            z-index: $--base-zi !important;
-            
-            .el-select-dropdown__list {
-                overflow-x: auto !important;
-                margin-top: $--header-hieght !important;
-                padding-bottom: v-bind(optionWrapBaseBottom) !important;
-                margin-bottom: 0 !important;
-                box-sizing: content-box;
+        .el-autocomplete-suggestion__wrap {
+            padding-top: 0;
+            max-height: 240px;
+        }
 
-                &::-webkit-scrollbar {
-                    height: v-bind(optionWrapBaseBottom);
-                }
-
-                &::-webkit-scrollbar-track {
-                    background-color: transparent;
-                }
-
-                &::-webkit-scrollbar-thumb {
-                    background: #e8e8e8;
-                    border-radius: 4px;
-
-                    &:hover {
-                        background: #a5a3a3;
-                    }
-                }
-
-                .select-option-custom-content {
-                    display: flex;
-
-                    li {
-                        height: $--header-hieght;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-
-                        span {
-                            &.option-text {
-                                line-height: $--header-hieght;
-                            }
-                        }
-                    }
-                }
-
-                .el-select-dropdown__option-item {
-                    width: fit-content !important;
-                    min-width: 100%;
-                }
+        .el-autocomplete-suggestion__list {
+            > li {
+                width: fit-content;
             }
+        }
 
-            .el-select-v2__empty {
-                margin-top: $--header-hieght;
+        /* 自定义内容 */
+        .info-autocomp-custom-content {
+            display: flex;
+
+            > li {
+                height: $--header-hieght;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                padding: 0;
+
+                span {
+                    &.option-text {
+                        line-height: $--header-hieght;
+                    }
+                }
             }
         }
     }
@@ -323,7 +238,7 @@ $--base-zi: 98;
         position: absolute;
         z-index: $--base-zi + 1;
         border-radius: 4px 4px 0 0;
-        padding: 0 32px 0 20px;
+        padding: 0 20px;
         top: v-bind(popperTop);
         left: v-bind(popperLeft);
 
@@ -355,4 +270,3 @@ $--base-zi: 98;
     opacity: 0;
 }
 </style>
-<style lang="scss"></style>

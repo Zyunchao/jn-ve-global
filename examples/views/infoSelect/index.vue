@@ -4,13 +4,22 @@
             切换数据
         </el-button>
         <div class="box">
-            111
+            下拉框1
             <g-info-select v-model="active" multiple :options-data="localData" :columns="columns" />
         </div>
 
         <div class="box">
-            222
+            下拉框2
             <g-info-select v-model="active" multiple :options-data="localData" :columns="columns" />
+        </div>
+
+        <div class="box">
+            <p>Input</p>
+            <g-info-autocomplete
+                v-model="activeInput"
+                :columns="columns"
+                :fetch-suggestions="querySearchAsync"
+            />
         </div>
     </div>
 </template>
@@ -29,10 +38,12 @@ import InfoSelectColumnProps from '@component/GInfoSelect/interface/InfoSelectCo
 const active = ref<string | string[]>('')
 const localData = ref(mockData)
 
+const activeInput = ref<string>('')
+
 watch(
-    () => active.value,
+    () => activeInput.value,
     (val) => {
-        console.log(`%c 父级 active ===== `, 'color: #67c23a;', active.value)
+        console.log(`%c 父级 activeInput ===== `, 'color: #67c23a;', activeInput.value)
     }
 )
 
@@ -41,6 +52,22 @@ const changeData = () => {
         localData.value = []
     } else {
         localData.value = mockData
+    }
+}
+
+let timeout: NodeJS.Timeout
+const querySearchAsync = (queryString: string, cb: (arg: any) => void) => {
+    const results = queryString ? mockData.filter(createFilter(queryString)) : mockData
+
+    clearTimeout(timeout)
+
+    timeout = setTimeout(() => {
+        cb(results)
+    }, 2000 * Math.random())
+}
+const createFilter = (queryString: string) => {
+    return (restaurant) => {
+        return restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
     }
 }
 
