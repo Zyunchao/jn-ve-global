@@ -60,5 +60,5 @@ label: 展示在下拉框中得值
 参数|说明|类型|默认值
 -----|-----|-----|-----
 optionsData | 下拉框数据 | SelectOptionProps[] | []
-columns | option 展示的列 | InfoSelectColumnProps | []
+columns | option 展示的列 | InfoColumnProps | []
 optionProps | option item 绑定的值 | { value: string; label: string} | { value: 'id', label: 'name'}

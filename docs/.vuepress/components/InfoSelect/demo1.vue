@@ -21,7 +21,7 @@ export default {
 <script lang="tsx" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import mockData from './data/data.json'
-import InfoSelectColumnProps from '@component/GInfoSelect/interface/InfoSelectColumnProps'
+import { InfoColumnProps } from '@component/index'
 
 const active = ref<string | string[]>('')
 const active2 = ref<string | string[]>([])
@@ -33,7 +33,7 @@ watch(
     }
 )
 
-const columns = ref<InfoSelectColumnProps[]>([
+const columns = ref<InfoColumnProps[]>([
     {
         prop: 'name',
         label: '客户端名称',
@@ -127,7 +127,7 @@ const columns = ref<InfoSelectColumnProps[]>([
     :deep(*) {
         box-sizing: border-box;
     }
-    
+
     :deep(ul) {
         list-style: none;
         padding: 0;

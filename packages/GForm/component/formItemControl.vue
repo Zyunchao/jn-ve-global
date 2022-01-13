@@ -230,7 +230,7 @@ import LGFigureInput from '../../GFigureInput/index.vue'
 import LGIconPicker from '../../GIconPicker/index.vue'
 import LGUpload from '../../GUpload/index.vue'
 import UploadFile from '../../GUpload/interface/UploadFile'
-import LGInfoSelect from '../../GInfoSelect/index.vue'
+import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
 
 interface Props {
     /**

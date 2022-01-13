@@ -17,6 +17,7 @@
             <p>Input</p>
             <g-info-autocomplete
                 v-model="activeInput"
+                value-key="name"
                 :columns="columns"
                 :fetch-suggestions="querySearchAsync"
             />
@@ -33,7 +34,7 @@ export default {
 <script lang="tsx" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import mockData from './data/data.json'
-import InfoSelectColumnProps from '@component/GInfoSelect/interface/InfoSelectColumnProps'
+import { InfoColumnProps } from '@component/index'
 
 const active = ref<string | string[]>('')
 const localData = ref(mockData)
@@ -71,7 +72,7 @@ const createFilter = (queryString: string) => {
     }
 }
 
-const columns = ref<InfoSelectColumnProps[]>([
+const columns = ref<InfoColumnProps[]>([
     {
         prop: 'name',
         label: '客户端名称',

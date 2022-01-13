@@ -1,5 +1,5 @@
 import { SelectOptionProps } from './SelectControlConfig'
-import InfoSelectColumnProps from '../../GInfoSelect/interface/InfoSelectColumnProps'
+import InfoColumnProps from '../../GInfoSA/interface/InfoColumnProps'
 
 /**
  * 下拉框参数
@@ -124,7 +124,7 @@ export default interface InfoSelectControlConfig {
     /**
      * option 展示的列
      */
-    columns: InfoSelectColumnProps[]
+    columns: InfoColumnProps[]
     /**
      * option item 绑定的值
      */

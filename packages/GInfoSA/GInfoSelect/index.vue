@@ -5,68 +5,26 @@
             filterable
             :options="localSelectOptins"
             v-bind="$attrs"
-            :popper-class="`info-select-popper ${currentPopperId}`"
+            popper-class="info-select-popper"
             :height="popperHeight"
             style="width: 100%"
             :popper-append-to-body="false"
             @visible-change="visibleChange"
         >
             <template #default="{ item, $index }">
-                <ul class="select-option-custom-content">
-                    <template
-                        v-for="(column, columnIndex) in columns"
-                        :key="`${column.prop}-${columnIndex}`"
-                    >
-                        <!-- 带有 toolTip -->
-                        <el-tooltip
-                            v-if="column.showOverflowTooltip"
-                            effect="dark"
-                            :content="item[column.prop]"
-                            placement="top-start"
-                        >
-                            <li
-                                :style="`width: ${getWidth(column.width)}; text-align: ${
-                                    column.align || 'left'
-                                };`"
-                            >
-                                <template v-if="column.render">
-                                    <FunctionalComponent :render="column.render(item, $index)" />
-                                </template>
-                                <span v-else class="option-text">{{ item[column.prop] }}</span>
-                            </li>
-                        </el-tooltip>
-
-                        <!-- 不带 toolTip -->
-                        <li
-                            v-else
-                            :style="`width: ${getWidth(column.width)}; text-align: ${
-                                column.align || 'left'
-                            };`"
-                        >
-                            <template v-if="column.render">
-                                <FunctionalComponent :render="column.render(item, $index)" />
-                            </template>
-                            <span v-else class="option-text">{{ item[column.prop] }}</span>
-                        </li>
-                    </template>
-                </ul>
+                <OptionCustomContent :columns="columns" :data="item" :index="$index" />
             </template>
         </el-select-v2>
 
         <!-- 表头（依据 columns 生成） -->
         <transition :name="dropdownShow ? 'dropdown' : ''">
-            <div v-if="dropdownShow" ref="infoHeaderWrapRef" class="info-header-wrap">
-                <div class="info-header">
-                    <span
-                        v-for="(column, index) in columns"
-                        :key="`${column.prop}-${index}`"
-                        :style="`width: ${getWidth(column.width)}; text-align: ${column.align};`"
-                        :title="column.label"
-                    >
-                        {{ column.label }}
-                    </span>
-                </div>
-            </div>
+            <InfoHeader
+                v-if="dropdownShow"
+                :popper-top="popperTop"
+                :popper-left="popperLeft"
+                :columns="columns"
+                :scroll-left="scrollLeft"
+            />
         </transition>
     </div>
 </template>
@@ -80,10 +38,12 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, onMounted, nextTick, onUnmounted } from 'vue'
-import InfoSelectColumnProps from './interface/InfoSelectColumnProps'
-import FunctionalComponent from '../FunctionalComponent'
-import { SelectOptionProps } from '../index'
-import { v4 as uuidv4 } from 'uuid'
+import InfoColumnProps from '../interface/InfoColumnProps'
+import FunctionalComponent from '../../FunctionalComponent'
+import { SelectOptionProps } from '../../index'
+import InfoHeader from '../component/infoHeader.vue'
+import OptionCustomContent from '../component/optionCustomContent.vue'
+import { getWidth } from '../utils'
 
 interface Props {
     /**
@@ -93,7 +53,7 @@ interface Props {
     /**
      * option 展示的列
      */
-    columns: InfoSelectColumnProps[]
+    columns: InfoColumnProps[]
     /**
      * option item 绑定的值
      */
@@ -127,9 +87,9 @@ const infoHeaderWrapRef = ref<Element>(null)
 // 待选项的容器
 const optionItemWrapper = ref<Element>(null)
 
+// ------------- 隐藏 or 显示 + 表头位置获取 ----------------------------------------------------------------------
 // 下拉框弹出层 dom 操作
 // 当前组件的下拉弹框的 id，多个组件时，保证下拉框唯一
-const currentPopperId = ref<string>(uuidv4())
 const popperRoot = ref<Element>(null)
 const popperTop = ref<string>('')
 const popperLeft = ref<string>('')
@@ -168,6 +128,9 @@ onUnmounted(() => {
     observer = null
 })
 
+// ------------- 表头横向滚动 ----------------------------------------------------------------------
+const scrollLeft = ref<number>(0)
+
 watch(
     () => props.optionsData,
     (data) => {
@@ -194,7 +157,7 @@ watch(
     }
 )
 function scrollEventHandle(e: Event) {
-    infoHeaderWrapRef.value && (infoHeaderWrapRef.value.scrollLeft = (e.target as Element).scrollLeft)
+    scrollLeft.value = (e.target as Element).scrollLeft
 }
 
 // 数据包装
@@ -227,19 +190,6 @@ const visibleChange = (flag: boolean) => {
         optionItemWrapper.value.scrollLeft = 0
     }
 }
-
-// 依照配置项获取宽度
-const getWidth = (width: string | number) => {
-    const widthVal = width ? parseFloat(`${width}`) : 100
-    const unit =
-        typeof width === 'number'
-            ? 'px'
-            : width && (width.includes('px') || width.includes('rem'))
-                ? ''
-                : 'px'
-
-    return `${widthVal}${unit}`
-}
 </script>
 
 <style lang="scss" scoped>
@@ -260,7 +210,7 @@ $--base-zi: 98;
         // 下拉框弹出和输入框是平级的
         .info-select-popper {
             z-index: $--base-zi !important;
-            
+
             .el-select-dropdown__list {
                 overflow-x: auto !important;
                 margin-top: $--header-hieght !important;
@@ -284,24 +234,7 @@ $--base-zi: 98;
                         background: #a5a3a3;
                     }
                 }
-
-                .select-option-custom-content {
-                    display: flex;
-
-                    li {
-                        height: $--header-hieght;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-
-                        span {
-                            &.option-text {
-                                line-height: $--header-hieght;
-                            }
-                        }
-                    }
-                }
-
+                
                 .el-select-dropdown__option-item {
                     width: fit-content !important;
                     min-width: 100%;
@@ -310,36 +243,6 @@ $--base-zi: 98;
 
             .el-select-v2__empty {
                 margin-top: $--header-hieght;
-            }
-        }
-    }
-
-    /* 头（遮挡） */
-    .info-header-wrap {
-        width: 100%;
-        overflow: hidden;
-        height: $--header-hieght;
-        background-color: #e8e8e8;
-        position: absolute;
-        z-index: $--base-zi + 1;
-        border-radius: 4px 4px 0 0;
-        padding: 0 32px 0 20px;
-        top: v-bind(popperTop);
-        left: v-bind(popperLeft);
-
-        .info-header {
-            height: 100%;
-            width: fit-content;
-            display: flex;
-            align-items: center;
-
-            span {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                color: #000000;
-                font-size: var(--el-font-size-base);
-                font-weight: 600;
             }
         }
     }

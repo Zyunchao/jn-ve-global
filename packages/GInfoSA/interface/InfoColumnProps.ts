@@ -1,6 +1,6 @@
 import { VNode } from 'vue'
 
-export default interface InfoSelectColumnProps {
+export default interface InfoColumnProps {
     /**
      * 显示的标题
      */

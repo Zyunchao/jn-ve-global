@@ -17,7 +17,7 @@
 
 <script lang="tsx">
 import { reactive, toRefs, ref } from 'vue'
-import { FormProps, InfoSelectColumnProps } from '@component/index'
+import { FormProps, InfoColumnProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
 import { watch } from 'fs'
 import { UploadControlConfig } from '@component/GForm'
@@ -38,7 +38,7 @@ export default {
             flag: false
         })
 
-        const infoSelectColumns = ref<InfoSelectColumnProps[]>([
+        const infoSelectColumns = ref<InfoColumnProps[]>([
             {
                 prop: 'name',
                 label: '客户端名称',

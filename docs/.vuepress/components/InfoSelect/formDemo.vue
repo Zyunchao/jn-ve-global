@@ -15,10 +15,10 @@
 
 <script lang="tsx" setup>
 import { ref } from 'vue'
-import { FormProps, InfoSelectColumnProps } from '@component/index'
+import { FormProps, InfoColumnProps } from '@component/index'
 import infoSelectData from './data/data.json'
 
-const infoSelectColumns = ref<InfoSelectColumnProps[]>([
+const infoSelectColumns = ref<InfoColumnProps[]>([
     {
         prop: 'name',
         label: '客户端名称',

@@ -4,5 +4,5 @@ export * from './GSelectTree'
 export * from './GBaseModule'
 export * from './GTabs'
 export * from './GChart'
-export * from './GInfoSelect'
-export * from './GInfoAutocomplete'
+
+export { default as InfoColumnProps } from './GInfoSA/interface/InfoColumnProps'
