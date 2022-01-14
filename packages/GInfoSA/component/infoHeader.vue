@@ -20,7 +20,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
+import { watch, ref } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import { getWidth } from '../utils'
 

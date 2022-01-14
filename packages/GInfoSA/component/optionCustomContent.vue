@@ -41,7 +41,6 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import FunctionalComponent from '../../FunctionalComponent'
 import { getWidth } from '../utils'
@@ -72,6 +71,10 @@ $--header-hieght: 34px;
     &.select {
         li {
             height: v-bind(headerJSHieght);
+
+            .option-text {
+                line-height: v-bind(headerJSHieght);
+            }
         }
     }
 
@@ -79,6 +82,10 @@ $--header-hieght: 34px;
         li {
             height: $--header-hieght;
             padding: 0;
+
+            .option-text {
+                line-height: $--header-hieght;
+            }
         }
     }
 
@@ -86,12 +93,6 @@ $--header-hieght: 34px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-
-        span {
-            &.option-text {
-                line-height: $--header-hieght;
-            }
-        }
     }
 }
 </style>
