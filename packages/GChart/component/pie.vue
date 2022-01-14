@@ -76,13 +76,13 @@ const series = computed<PieSeriesOption>(() => ({
     emphasis: {
         label: {
             fontSize: fontSize14,
-            color: 'auto'
+            color: 'inherit'
         }
     },
     select: {
         label: {
             fontSize: fontSize14,
-            color: 'auto'
+            color: 'inherit'
         }
     },
     tooltip: {
