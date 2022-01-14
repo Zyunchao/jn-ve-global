@@ -20,7 +20,8 @@ import {
     UploadControlConfig,
     FigureInputControlConfig,
     IconPickerControlConfig,
-    InfoSelectControlConfig
+    InfoSelectControlConfig,
+    InfoAutocompleteControlConfig
 } from '../index'
 
 /**
@@ -39,6 +40,7 @@ import {
  * - iconPicker 图标选择器
  * - Upload 上传文件
  * - InfoSelect 以表格样式展示的下拉框（虚拟滚动）
+ * - InfoAutocompleteControlConfig 以表格样式展示的输入建议框
  */
 export type ControlConfig =
     | InputControlConfig
@@ -61,6 +63,7 @@ export type ControlConfig =
     | FigureInputControlConfig
     | IconPickerControlConfig
     | InfoSelectControlConfig
+    | InfoAutocompleteControlConfig
 
 /**
  * 控件组的配置

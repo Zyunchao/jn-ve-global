@@ -6,14 +6,14 @@
                 v-show="!inputDisabled || !exceedBoxWidht"
                 ref="elInputRef"
                 v-model.trim="localPropRef"
-                v-bind="getItemControlProps()"
+                v-bind="localControlProps"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"
             />
 
             <template v-if="inputDisabled && exceedBoxWidht">
                 <el-tooltip :content="localPropRef" placement="top-start">
-                    <el-input :model-value="localPropRef" v-bind="getItemControlProps()" />
+                    <el-input :model-value="localPropRef" v-bind="localControlProps" />
                 </el-tooltip>
             </template>
         </template>
@@ -22,7 +22,7 @@
         <template v-if="localControlType === 'inputNumber'">
             <el-input-number
                 v-model.number="localPropRef"
-                v-bind="getItemControlProps()"
+                v-bind="localControlProps"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"
             />
@@ -33,7 +33,7 @@
             <el-select
                 v-model="localPropRef"
                 style="width: 100%"
-                v-bind="getItemControlProps()"
+                v-bind="localControlProps"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"
             >
@@ -184,7 +184,7 @@
         <template v-if="localControlType === 'figureInput'">
             <LGFigureInput
                 v-model="localPropRef"
-                v-bind="getItemControlProps()"
+                v-bind="localControlProps"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"
             />
@@ -195,14 +195,25 @@
             <LGIconPicker v-model="localPropRef" v-bind="controlConfig.props" />
         </template>
 
-        <!-- 下拉树展示 -->
+        <!-- 下拉框 多列展示 -->
         <template v-if="localControlType === 'infoSelect'">
             <LGInfoSelect
                 v-model="localPropRef"
-                v-bind="controlConfig.props"
+                v-bind="localControlProps"
                 :options-data="controlConfig.options"
                 :columns="controlConfig.columns"
                 :option-props="controlConfig.optionProps"
+            />
+        </template>
+
+        <!-- 带有输入建议且以表格形式展示的 input -->
+        <template v-if="localControlType === 'infoAutocomplete'">
+            <LGInfoAutocomplete
+                v-model="localPropRef"
+                v-bind="localControlProps"
+                :columns="controlConfig.columns"
+                :fetch-suggestions="controlConfig.fetchSuggestions"
+                :value-key="controlConfig.valueKey"
             />
         </template>
     </template>
@@ -231,6 +242,7 @@ import LGIconPicker from '../../GIconPicker/index.vue'
 import LGUpload from '../../GUpload/index.vue'
 import UploadFile from '../../GUpload/interface/UploadFile'
 import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
+import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 
 interface Props {
     /**
@@ -308,10 +320,10 @@ if (props.controlConfig.type === 'input') {
                 return
             }
 
-            if(!inputDisabled.value) {
+            if (!inputDisabled.value) {
                 return
             }
-            
+
             const targetDom = elInputRef.value.$el as HTMLElement
             // 基础字体大小
             const fontSize = 16
@@ -342,15 +354,16 @@ if (localControlType.value === 'upload') {
 }
 
 // 获取 控件 的配置（三级配置）
-const getItemControlProps = () => {
+const localControlProps = computed(() => {
     let controlProps = {
-        ...props.controlConfig!.props
+        ...props.controlConfig.props
     }
 
     // 具体控件的差异配置
     switch (props.controlConfig!.type) {
     case 'input':
     case 'figureInput':
+    case 'infoAutocomplete':
         controlProps['placeholder'] = controlProps['placeholder']
             ? controlProps['placeholder']
             : `请输入${props.formItemConfig.label}`
@@ -362,9 +375,9 @@ const getItemControlProps = () => {
             : `请选择${props.formItemConfig.label}`
         break
     }
-
+    
     return controlProps
-}
+})
 
 // 获取控件（Radio、Checkbox）的 item 的配置（四级配置）
 const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) => {

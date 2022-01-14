@@ -1,5 +1,5 @@
 import { SelectOptionProps } from './SelectControlConfig'
-import InfoColumnProps from '../../GInfoSA/interface/InfoColumnProps'
+import { InfoColumnProps } from '../../index'
 
 /**
  * 下拉框参数

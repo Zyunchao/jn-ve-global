@@ -9,7 +9,6 @@
         <GFigureInput
             v-model="figureVal"
             :format="format1"
-            :value-format="figureInputValueFormat"
             placeholder="请输入...."
         />
     </div>
@@ -18,7 +17,6 @@
         <GFigureInput
             v-model="figureVal"
             :format="format2"
-            :value-format="figureInputValueFormat"
             placeholder="请输入...."
         />
     </div>
@@ -27,7 +25,6 @@
         <GFigureInput
             v-model="figureVal"
             :format="format3"
-            :value-format="figureInputValueFormat"
             placeholder="请输入...."
         />
     </div>

@@ -1,15 +1,13 @@
 <template>
     <div class="examples-base-wrapper">
-        <el-scrollbar>
-            <g-form :config="formConfig" />
+        <g-form :config="formConfig" />
 
-            <el-button type="primary" @click="getData">
-                获取数据
-            </el-button>
-            <el-button type="primary" @click="resetForm">
-                重置
-            </el-button>
-        </el-scrollbar>
+        <el-button type="primary" @click="getData">
+            获取数据
+        </el-button>
+        <el-button type="primary" @click="resetForm">
+            重置
+        </el-button>
     </div>
 </template>
 
@@ -146,6 +144,12 @@ const resetForm = () => {
         list-style: none;
         padding: 0;
         margin: 0;
+    }
+
+    :deep(.el-button) {
+        &:first-of-type {
+            margin-left: 80px;
+        }
     }
 }
 </style>

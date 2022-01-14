@@ -23,3 +23,28 @@ fetchSuggestions 属性是必传的，内部通过主动调用回调，进行装
 </template>
 
 </demo-block>
+
+## 表单集成
+
+<demo-block>
+
+<InfoAutocomplete-formDemo />
+
+<template #code>
+
+@[code](@demoroot/InfoAutocomplete/formDemo.vue)
+
+</template>
+
+</demo-block>
+
+## Attributes
+
+基础属性请参考 [Element Autocomplete 属性](https://element-plus.gitee.io/zh-CN/component/input.html#autocomplete-%E5%B1%9E%E6%80%A77)
+
+### 扩展属性
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+columns | option 展示的列 | InfoColumnProps[] | []
+fetchSuggestions | 获取输入建议的方法， 仅当你的输入建议数据 resolve 时，通过调用 callback(data:[])  来返回它 | (queryString?: string, callback?: (arg: any) => void) => void | --

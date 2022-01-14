@@ -1,125 +1,117 @@
 <template>
     <div class="examples-base-wrapper">
-        <el-scrollbar>
-            <g-form :config="formConfig" />
+        <g-form :config="formConfig" />
 
-            <el-button type="primary" @click="getData">
-                获取数据
-            </el-button>
-            <el-button type="primary" @click="resetForm">
-                重置
-            </el-button>
-        </el-scrollbar>
+        <el-button type="primary" @click="getData">
+            获取数据
+        </el-button>
+        <el-button type="primary" @click="resetForm">
+            重置
+        </el-button>
     </div>
 </template>
 
 <script lang="tsx" setup>
 import { ref } from 'vue'
 import { FormProps, InfoColumnProps } from '@component/index'
-import infoSelectData from './data/data.json'
+import mockData from './data/data.json'
 
-const infoSelectColumns = ref<InfoColumnProps[]>([
+// 列配置
+const columns = ref<InfoColumnProps[]>([
     {
         prop: 'name',
-        label: '客户端名称',
-        width: 100
-    },
-    {
-        prop: 'clientId',
-        label: '客户端编码',
-        width: 200,
-        align: 'center'
-    },
-    {
-        prop: 'type',
-        label: '客户端类型',
-        width: 100
-    },
-    {
-        prop: 'category',
-        label: '授权类型',
-        width: 100
-    },
-    {
-        prop: 'certSystem',
-        label: '授权服务器来源',
+        label: '姓名',
         width: 150
     },
     {
-        prop: 'secret',
-        label: '客户端secret',
+        prop: 'instituId',
+        label: '机构编码',
+        width: 160
+    },
+    {
+        prop: 'instituName',
+        label: '机构名称',
+        width: 200
+    },
+    {
+        prop: 'loginName',
+        label: '用户登录名',
+        width: 150
+    },
+    {
+        prop: 'identity',
+        label: '用户身份',
         width: 140
     },
     {
-        prop: 'scopes',
-        label: '可授权资源',
-        width: 80
+        prop: 'sex',
+        label: '性别',
+        width: 100
     },
     {
-        prop: 'authorizedGrantTypes',
-        label: '授权模式',
-        width: 150
+        prop: 'idType',
+        label: '证件类型',
+        width: 240
     },
     {
-        prop: 'redirectUri',
-        label: '认证成功后的回调URI',
-        width: 140,
-        showOverflowTooltip: true
+        prop: 'idNumber',
+        label: '证件号码',
+        width: 240
     },
     {
-        prop: 'accessTokenValidity',
-        label: '登录维持时间(秒)',
-        width: 80
+        prop: 'phone',
+        label: '手机',
+        width: 200
     },
     {
-        prop: 'refreshTokenValidity',
-        label: '刷新Token有效时间(秒)',
-        width: 80
+        prop: 'email',
+        label: '邮箱',
+        width: 200
     },
     {
-        prop: 'trusted',
-        label: '是否信赖',
-        width: 80
-    },
-    {
-        prop: 'autoApprove',
-        label: '是否自动授权',
-        width: 80
-    },
-    {
-        prop: 'enabled',
-        label: '状态',
+        prop: 'status',
+        label: '用户状态',
         width: 80,
         render(item, index) {
             return (
-                <el-tag
-                    size='small'
-                    class='ml-2'
-                    type={item.enabled === '0' ? 'success' : 'danger'}>
-                    {item.enabled === '0' ? '正常' : '禁用'}
+                <el-tag size='small' class='ml-2' type={item.status === '0' ? 'success' : 'danger'}>
+                    {item.status === '0' ? '正常' : '禁用'}
                 </el-tag>
             )
         }
     }
 ])
 
+// 表单配置
+let timeout: NodeJS.Timeout
 let formConfig = ref<FormProps>({
     instance: null,
     labelPosition: 'right',
-    labelWidth: '180px',
+    labelWidth: '220px',
     // disabled: true,
     model: {
-        clientChannel: ''
+        user: ''
     },
     formItems: [
         {
-            prop: 'clientChannel',
-            label: '多列数据展示下拉框',
+            prop: 'user',
+            label: '多列数据展示输入建议',
             span: 12,
             controlConfig: {
-                type: 'infoSelect',
-                options: infoSelectData as any,
-                columns: infoSelectColumns.value
+                type: 'infoAutocomplete',
+                columns: columns.value,
+                valueKey: 'name',
+                fetchSuggestions: (queryString, cb) => {
+                    const results = queryString
+                        ? mockData.filter((item) => item.name === queryString)
+                        : mockData
+
+                    clearTimeout(timeout)
+
+                    timeout = setTimeout(() => {
+                        cb(results)
+                    }, 3000 * Math.random())
+                }
             }
         }
     ]
@@ -146,6 +138,12 @@ const resetForm = () => {
         list-style: none;
         padding: 0;
         margin: 0;
+    }
+
+    :deep(.el-button) {
+        &:first-of-type {
+            margin-left: 80px;
+        }
     }
 }
 </style>
