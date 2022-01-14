@@ -13,7 +13,8 @@ export default [
             { text: 'FigureInput', link: '/modules/FigureInput.md' },
             { text: 'IconPicker', link: '/modules/IconPicker.md' },
             { text: 'Upload', link: '/modules/Upload.md' },
-            { text: 'InfoSelect', link: '/modules/InfoSelect.md' }
+            { text: 'InfoSelect', link: '/modules/InfoSelect.md' },
+            { text: 'InfoAutocomplete', link: '/modules/InfoAutocomplete.md' }
         ]
     },
     {
