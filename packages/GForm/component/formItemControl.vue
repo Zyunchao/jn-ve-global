@@ -3,7 +3,7 @@
         <!-- Input -->
         <template v-if="localControlType === 'input'">
             <el-input
-                v-show="!inputDisabled || !exceedBoxWidht"
+                v-show="!inputDisabled || !exceedBoxWidth"
                 ref="elInputRef"
                 v-model.trim="localPropRef"
                 v-bind="localControlProps"
@@ -11,7 +11,7 @@
                 @blur="emits('controlBlur')"
             />
 
-            <template v-if="inputDisabled && exceedBoxWidht">
+            <template v-if="inputDisabled && exceedBoxWidth">
                 <el-tooltip :content="localPropRef" placement="top-start">
                     <el-input :model-value="localPropRef" v-bind="localControlProps" />
                 </el-tooltip>
@@ -227,7 +227,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, computed, toRef, onMounted, watch, onUnmounted } from 'vue'
+import { ref, computed, toRef, onMounted, watch, onUnmounted, watchEffect } from 'vue'
 import {
     FormItemProps,
     RadioOptionProps,
@@ -273,7 +273,7 @@ const localPropRef = ref(props.prop)
 /* -------------------- input 禁用时，tooltip 处理 ------------------------------------------------------------------------- */
 const elInputRef = ref(null)
 const inputDisabled = ref<boolean>(null)
-const exceedBoxWidht = ref<boolean>(false)
+const exceedBoxWidth = ref<boolean>(false)
 
 if (props.controlConfig.type === 'input') {
     // 观察器的配置（需要观察什么变动）
@@ -312,35 +312,29 @@ if (props.controlConfig.type === 'input') {
         observer = null
     })
 
-    watch(
-        () => localPropRef.value,
-        (val) => {
-            if (!val) {
-                exceedBoxWidht.value = false
-                return
-            }
-
-            if (!inputDisabled.value) {
-                return
-            }
-
-            const targetDom = elInputRef.value.$el as HTMLElement
-            // 基础字体大小
-            const fontSize = 16
-            // input 的 padding
-            const baseP = 15
-            // input 的宽度
-            const boxWidth = targetDom.offsetWidth
-            // 字符串的长度
-            const contentLength = `${localPropRef.value}`.length
-
-            // 判断内容是否超出 input 的宽度
-            exceedBoxWidht.value = contentLength * fontSize > boxWidth - baseP * 2
-        },
-        {
-            immediate: true
+    watchEffect(() => {
+        if (!localPropRef.value) {
+            exceedBoxWidth.value = false
+            return
         }
-    )
+
+        if (!inputDisabled.value) {
+            return
+        }
+
+        const targetDom = elInputRef.value.$el as HTMLElement
+        // 基础字体大小
+        const fontSize = 16
+        // input 的 padding
+        const baseP = 15
+        // input 的宽度
+        const boxWidth = targetDom.offsetWidth
+        // 字符串的长度
+        const contentLength = `${localPropRef.value}`.length
+
+        // 判断内容是否超出 input 的宽度
+        exceedBoxWidth.value = contentLength * fontSize > boxWidth - baseP * 2
+    })
 }
 /* -------------------- input 禁用时，tooltip 处理 ------------------------------------------------------------------------- */
 
@@ -375,7 +369,7 @@ const localControlProps = computed(() => {
             : `请选择${props.formItemConfig.label}`
         break
     }
-    
+
     return controlProps
 })
 
