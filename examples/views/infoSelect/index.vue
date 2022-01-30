@@ -20,6 +20,7 @@
                 value-key="name"
                 :columns="columns"
                 :fetch-suggestions="querySearchAsync"
+                @input="onChange"
             />
         </div>
     </div>
@@ -49,20 +50,25 @@ watch(
 )
 
 const changeData = () => {
-    if (localData.value.length) {
-        localData.value = []
-    } else {
-        localData.value = mockData
-    }
+    // if (localData.value.length) {
+    //     localData.value = []
+    // } else {
+    //     localData.value = mockData
+    // }
+
+    loadSync.value([])
 }
 
 let timeout: NodeJS.Timeout
+const loadSync = ref(null)
 const querySearchAsync = (queryString: string, cb: (arg: any) => void) => {
     const results = queryString ? mockData.filter(createFilter(queryString)) : mockData
 
     clearTimeout(timeout)
 
     timeout = setTimeout(() => {
+        loadSync.value = cb
+
         cb(results)
     }, 2000 * Math.random())
 }
@@ -70,6 +76,66 @@ const createFilter = (queryString: string) => {
     return (restaurant) => {
         return restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
     }
+}
+
+const onChange = () => {
+    setTimeout(() => {
+        console.log(`%c ???????????`, 'color: #f56c6c;')
+        loadSync.value([
+            {
+                'id': '1',
+                'clientId': '9999',
+                'instituId': '1',
+                'name': '1',
+                'type': '0',
+                'category': '1',
+                'certSystem': 'default',
+                'certSystemUrl': null,
+                'secret': '1234567',
+                'scopes': 'ALL',
+                'authorizedGrantTypes': 'password',
+                'redirectUri': '1',
+                'accessTokenValidity': 60000,
+                'refreshTokenValidity': 6500000,
+                'additionalInformation': '1',
+                'trusted': '1',
+                'autoApprove': '1',
+                'enabled': '1',
+                'isLock': '1',
+                'details': '1',
+                'createBy': null,
+                'createTime': null,
+                'updateBy': null,
+                'updateTime': null
+            },
+            {
+                'id': '1455411485270966274',
+                'clientId': '3421',
+                'instituId': 'SYS',
+                'name': '1',
+                'type': '0',
+                'category': '0',
+                'certSystem': 'default',
+                'certSystemUrl': null,
+                'secret': '1635819651810',
+                'scopes': 'ALL',
+                'authorizedGrantTypes': 'authorization_code',
+                'redirectUri': 'http://172.31.33.72:8089/bpm-server/login',
+                'accessTokenValidity': 1800,
+                'refreshTokenValidity': 172800,
+                'additionalInformation': null,
+                'trusted': '0',
+                'autoApprove': '0',
+                'enabled': '0',
+                'isLock': '2',
+                'details': '',
+                'createBy': null,
+                'createTime': null,
+                'updateBy': null,
+                'updateTime': null
+            }
+        ])
+    }, 4000)
 }
 
 const columns = ref<InfoColumnProps[]>([
