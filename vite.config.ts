@@ -21,34 +21,36 @@ export default defineConfig({
         sourcemap: false,
         lib: {
             entry: resolve(__dirname, 'packages/register.ts'),
-            name: 'jn-ve-global',
+            name: 'VeGlobal',
             fileName: 'jn-ve-global',
-            formats: ['es']
+            formats: ['es', 'umd']
         },
         rollupOptions: {
             // 确保外部化处理那些你不想打包进库的依赖
             external: [
                 'vue',
                 'element-plus',
+                '@element-plus/icons-vue',
                 'vue-router',
                 'lodash',
-                'async-validator',
+                // 'async-validator',
                 'resize-observer-polyfill',
                 'xlsx',
-                '@element-plus/icons-vue',
-                'echarts',
-                'uuid'
+                'echarts'
             ],
             output: {
-                // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-                // globals: {
-                //     vue: 'Vue',
-                //     lodash: '_',
-                //     'resize-observer-polyfill': 'ResizeObserver',
-                //     'async-validator': 'Schema',
-                //     'xlsx': 'XLSX',
-                //     'element-plus': 'elementPlus'
-                // }
+                // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量 ElementPlusIconsVue
+                globals: {
+                    vue: 'Vue',
+                    'element-plus': 'ElementPlus',
+                    '@element-plus/icons-vue': 'ElementPlusIconsVue',
+                    'vue-router': 'VueRouter',
+                    lodash: '_',
+                    // 'async-validator': 'Schema',
+                    'resize-observer-polyfill': 'ResizeObserver',
+                    'xlsx': 'XLSX',
+                    'echarts': 'echarts'
+                }
             }
         }
     },
@@ -69,7 +71,7 @@ export default defineConfig({
 
     // 开发服务器
     server: {
-        open: '/index.html',
+        // open: '/index.html',
         port: 3066,
         proxy: {
             '/api': {

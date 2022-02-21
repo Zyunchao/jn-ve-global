@@ -7,7 +7,7 @@
         "dist",
         "packages"
     ],
-    "main": "./dist/jn-ve-global.es.js",
+    "main": "./dist/jn-ve-global.umd.js",
     "module": "./dist/jn-ve-global.es.js",
     "exports": {
         ".": {
@@ -66,7 +66,7 @@
         "postcss-pxtorem": "^6.0.0",
         "sass": "^1.45.0",
         "typescript": "^4.5.4",
-        "vite": "2.7.10",
+        "vite": "2.8.3",
         "vite-plugin-svg-icons": "1.1.0",
         "vue-router": "^4.0.10",
         "vue-tsc": "^0.30.2",
