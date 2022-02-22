@@ -1,4 +1,4 @@
-import { BtnProps, TableConfig, TableRowBtnProps, BaseTableDataItem } from '../../../../index'
+import { TableRowBtnProps } from '../../../../index'
 
 /**
  * 过滤按钮有效原生参数

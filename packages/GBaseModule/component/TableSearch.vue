@@ -112,9 +112,9 @@ const localSearchBtnsFormConfig = reactive<FormProps>({
  */
 const localSearchFormConfig = ref(props.searchFormProps)
 if (
+    !localSearchFormConfig.value.formItems.some((formItem) => formItem.prop === 'opertion-btn') &&
     !props.searchBtnHorizontal &&
-    !props.moreSearchMode &&
-    !localSearchFormConfig.value.formItems.some((formItem) => formItem.prop === 'opertion-btn')
+    !props.moreSearchMode
 ) {
     localSearchFormConfig.value.formItems.push(props.searchBtnsConfig)
 }

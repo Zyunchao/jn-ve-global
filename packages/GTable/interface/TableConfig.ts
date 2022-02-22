@@ -22,6 +22,10 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
      */
     columns: TableColumnProps[]
     /**
+     * 表格实例，用来调用表格的方法
+     */
+    instance: TableInstance | null
+    /**
      * 一键开启多选
      */
     showSelection?: boolean
@@ -29,10 +33,6 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
      * 已选数组
      */
     selectedRows?: TBD[]
-    /**
-     * 表格实例，用来调用表格的方法
-     */
-    instance: TableInstance | null
     /**
      * 可编辑行编辑完成事件
      */
@@ -70,5 +70,9 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
          * 操作列的对齐方式
          */
         align?: 'left' | 'center' | 'right'
+        /**
+         * 标识是否追加操作按钮列
+         */
+        hide?: boolean
     }
 }

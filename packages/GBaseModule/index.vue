@@ -194,7 +194,7 @@ const props = defineProps({
      * tab 切换
      */
     tabs: {
-        type: Array as PropType<Array<{ lable: string; value: string }>>,
+        type: Array as PropType<Array<{ label: string; value: string }>>,
         default: () => []
     },
     /**

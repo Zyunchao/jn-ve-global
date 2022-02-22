@@ -28,7 +28,7 @@ export default (config: TableConfig<any>) => {
         const rowBtnConfig = config.rowBtnConfig
         const btns = rowBtnConfig.btns
         const maxCount = rowBtnConfig.maxCount
-        const showMore = !!maxCount
+        const showMore = !!maxCount && maxCount < rowBtnConfig.btns.length
 
         columns.push({
             prop: 'opertion',
@@ -36,6 +36,7 @@ export default (config: TableConfig<any>) => {
             width: rowBtnConfig.width || 200,
             fixed: 'right',
             align: rowBtnConfig.align || 'left',
+            hide: rowBtnConfig.hide,
             render: (row, index) => {
                 // 正常展示
                 if (!showMore) {
