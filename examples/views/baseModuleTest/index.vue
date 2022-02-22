@@ -104,8 +104,12 @@ const rowBtnConfig = reactive<TableConfig<any>['rowBtnConfig']>({
     btns: [
         {
             label: '显示',
+            disabled(row, index) {
+                return index % 2 === 0
+            },
             onClick(row, index) {
                 rowBtnConfig.btns[3].hide = false
+                rowBtnConfig.btns[5].disabled = false
             }
         },
         {
@@ -115,6 +119,7 @@ const rowBtnConfig = reactive<TableConfig<any>['rowBtnConfig']>({
             },
             onClick(row, index) {
                 rowBtnConfig.btns[3].hide = true
+                rowBtnConfig.btns[5].disabled = true
             }
         },
         {

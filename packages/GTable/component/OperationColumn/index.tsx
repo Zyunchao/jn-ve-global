@@ -83,6 +83,7 @@ export default (config: TableConfig<any>) => {
  */
 function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: number) {
     const btnSourceProps = getBtnProps(btn)
+    let disabled = typeof btn.disabled === 'function' ? btn.disabled(row, index) : btn.disabled
 
     /**
      * 需要鉴权 or 不需要鉴权的按钮
@@ -90,6 +91,7 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
     return btn.authCode ? (
         <el-button
             {...btnSourceProps}
+            disabled={disabled}
             type='text'
             v-auth={btn.authCode}
             onClick={() => {
@@ -100,6 +102,7 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
     ) : (
         <el-button
             {...btnSourceProps}
+            disabled={disabled}
             type='text'
             onClick={() => {
                 btn.onClick?.(row, index)

@@ -17,7 +17,7 @@ export interface BtnProps {
     /**
      * 禁用
      */
-    disabled?: boolean
+    disabled?: boolean | ((row?: any, index?: number) => boolean)
     /**
      * 事件
      */

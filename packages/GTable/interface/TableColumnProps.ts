@@ -185,4 +185,8 @@ export default interface TableColumnProps {
      * 隐藏列
      */
     hide?: boolean
+    /**
+     * 是否开启双击编辑
+     */
+    openDB?: boolean
 }

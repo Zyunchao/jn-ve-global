@@ -6,6 +6,6 @@ import { TableRowBtnProps } from '../../../../index'
  * @returns 参数
  */
 export function getBtnProps(btnConfig: TableRowBtnProps<any>) {
-    const { type, authCode, hide, onClick, label, ...props } = btnConfig
+    const { type, authCode, hide, onClick, label, disabled, ...props } = btnConfig
     return props
 }

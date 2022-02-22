@@ -3,7 +3,7 @@
         v-if="localPropRef !== undefined && localPropRef !== null"
         ref="editCellContentRef"
         class="edit-cell-content"
-        @dblclick="text2Control"
+        @dblclick="handleDB"
     >
         <transition
             :name="`slide-${cellStatus === CellStatus.CONTROL ? 'right' : 'left'}`"
@@ -814,6 +814,11 @@ const datePickerValueVerify = () => {
 
     // 未传递 props，校验值是否为 Date
     return localPropRef.value instanceof Date
+}
+
+// 双击是否开启编辑
+const handleDB = () => {
+    if(props.columnConfig.openDB) text2Control()
 }
 
 onBeforeUnmount(() => {
