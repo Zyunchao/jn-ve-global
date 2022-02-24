@@ -1,5 +1,5 @@
 <template>
-    <div ref="autocompRef" class="g-info-autocomplete">
+    <div ref="currentRootRef" class="g-info-autocomplete">
         <el-autocomplete
             style="width: 100%"
             v-bind="$attrs"
@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const dropdownShow = ref<boolean>(false)
 // 组件根
-const autocompRef = ref<HTMLElement>(null)
+const currentRootRef = ref<HTMLElement>(null)
 // 表格头
 const infoHeaderWrapRef = ref<Element>(null)
 // 滚动容器
@@ -104,7 +104,7 @@ const callback = function (mutationsList: MutationRecord[], observer: MutationOb
 // 创建一个观察器实例并传入回调函数
 let observer = new MutationObserver(callback)
 onMounted(() => {
-    const pRootDom = autocompRef.value.querySelector('.info-autocomplete-popper')
+    const pRootDom = currentRootRef.value.querySelector('.info-autocomplete-popper')
     popperRoot.value = pRootDom
     observer.observe(pRootDom, config)
 })
@@ -117,7 +117,7 @@ onMounted(() => {
  */
 const scrollLeft = ref<number>(0)
 onMounted(() => {
-    const scrollWrap = autocompRef.value.querySelector(
+    const scrollWrap = currentRootRef.value.querySelector(
         '.el-autocomplete-suggestion__wrap'
     ) as HTMLElement
     scrollWrapRef.value = scrollWrap

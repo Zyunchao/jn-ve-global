@@ -46,9 +46,21 @@ import FunctionalComponent from '../../FunctionalComponent'
 import { getWidth } from '../utils'
 
 interface Props {
+    /**
+     * 列的配置
+     */
     columns: InfoColumnProps[]
+    /**
+     * 当前行的数据
+     */
     data: object
+    /**
+     * 索引
+     */
     index: number
+    /**
+     * 类型
+     */
     type?: 'select' | 'autocomplete'
 }
 

@@ -83,7 +83,7 @@ const routes: Array<RouteConfig> = [
     },
     {
         path: '/infoSelect-test',
-        component: () => import('@/views/infoSelect/index.vue')
+        component: () => import('@/views/infoSAA/infoSelectTest/index.vue')
     }
 ]
 
