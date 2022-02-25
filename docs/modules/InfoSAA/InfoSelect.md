@@ -86,6 +86,20 @@ column 配置的 `prop` 将作为抛出参数的字段名称
 
 </demo-block>
 
+## 表格集成
+
+<demo-block>
+
+<InfoSAA-infoSelect-tableInside />
+
+<template #code>
+
+@[code](@demoroot/InfoSAA/infoSelect/tableInside.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 基础属性请参考 [Element Select 属性](https://element-plus.gitee.io/zh-CN/component/select.html#select-%E5%B1%9E%E6%80%A7)

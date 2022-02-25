@@ -19,7 +19,10 @@ export default [
         'rate': 5,
         'slider': 20,
         'selectTree': '1425375363846037505',
-        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505'
+        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
+        'infoSelect': '',
+        'infoSelectAll': '',
+        'infoAutocomplete': ''
     },
     {
         'id': '2',
@@ -39,7 +42,10 @@ export default [
         'rate': 4,
         'slider': 20,
         'selectTree': '1425375363846037505',
-        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505'
+        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
+        'infoSelect': '',
+        'infoSelectAll': '',
+        'infoAutocomplete': ''
     },
     {
         'id': '3',
@@ -59,7 +65,10 @@ export default [
         'rate': 3,
         'slider': 20,
         'selectTree': '1425375363846037505',
-        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505'
+        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
+        'infoSelect': '',
+        'infoSelectAll': '',
+        'infoAutocomplete': ''
     },
     {
         'id': '4',
@@ -79,7 +88,10 @@ export default [
         'rate': 2,
         'slider': 20,
         'selectTree': '1425375363846037505',
-        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505'
+        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
+        'infoSelect': '',
+        'infoSelectAll': '',
+        'infoAutocomplete': ''
     },
     {
         'id': '5',
@@ -99,6 +111,9 @@ export default [
         'rate': 1,
         'slider': 20,
         'selectTree': '1425374958969872386',
-        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505'
+        'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
+        'infoSelect': '',
+        'infoSelectAll': '',
+        'infoAutocomplete': ''
     }
 ]

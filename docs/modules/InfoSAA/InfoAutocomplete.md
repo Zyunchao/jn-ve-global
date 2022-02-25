@@ -38,6 +38,20 @@ fetchSuggestions 属性是必传的，内部通过主动调用回调，进行装
 
 </demo-block>
 
+## 表格集成
+
+<demo-block>
+
+<InfoSAA-infoAutocomplete-tableInside />
+
+<template #code>
+
+@[code](@demoroot/InfoSAA/infoAutocomplete/tableInside.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 基础属性请参考 [Element Autocomplete 属性](https://element-plus.gitee.io/zh-CN/component/input.html#autocomplete-%E5%B1%9E%E6%80%A77)
