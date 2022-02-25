@@ -163,6 +163,12 @@ const localSelectOptins = computed(() =>
 // ------------- 隐藏 or 显示 + 表头位置获取 + 分页位置获取 ----------------------------------------------------------------------
 // 观察器的配置（需要观察什么变动）
 const config: MutationObserverInit = { attributes: true }
+const setPosition = _.debounce((pRootDom?: HTMLElement) => {
+    setTimeout(() => {
+        infoHeaderHeight.value = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`
+        optionItemWrapperHeight.value = pRootDom.querySelector('.el-select-dropdown').clientHeight
+    }, 10)
+}, 10)
 // 当观察到变动时执行的回调函数
 const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
@@ -175,9 +181,7 @@ const callback = function (mutationsList: MutationRecord[]) {
                 popperLeft.value = pRootDom.style.left
 
                 // 高度值
-                infoHeaderHeight.value = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`
-                optionItemWrapperHeight.value =
-                    pRootDom.querySelector('.el-select-dropdown').clientHeight
+                setPosition(pRootDom)
             } else {
                 // DOM 隐藏后
                 initAtAfter()
@@ -384,6 +388,7 @@ onUnmounted(() => {
             // 下拉弹出根容器
             &.el-select__popper {
                 padding: v-bind(infoHeaderHeight) 0 $--pagination-height 0;
+                overflow: hidden;
             }
 
             .el-select-dropdown__list {

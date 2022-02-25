@@ -64,6 +64,9 @@ interface Props {
         value: string
         label: string
     }
+    /**
+     * 最大行数
+     */
     optionMaxItemNum?: number
     /**
      * 是否隐藏头
