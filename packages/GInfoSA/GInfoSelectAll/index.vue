@@ -197,17 +197,13 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-$--header-hieght: v-bind(optionItemBaseHeight);
-$--base-zi: 98;
+@import '../styles.scss';
+$--item-base-height: v-bind(optionItemBaseHeight);
 
 .g-info-select-all {
     position: relative;
     width: 100%;
     min-width: 100px;
-
-    :deep(*) {
-        box-sizing: border-box;
-    }
 
     /* 下拉框 */
     :deep(.el-select-v2) {
@@ -223,7 +219,7 @@ $--base-zi: 98;
 
             .el-select-dropdown__list {
                 overflow-x: auto !important;
-                margin-top: $--header-hieght !important;
+                margin-top: $--item-base-height !important;
                 padding-bottom: v-bind(optionWrapBaseBottom) !important;
                 margin-bottom: 0 !important;
                 box-sizing: content-box;
@@ -252,7 +248,7 @@ $--base-zi: 98;
             }
 
             .el-select-v2__empty {
-                margin-top: $--header-hieght;
+                margin-top: $--item-base-height;
             }
         }
     }

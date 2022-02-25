@@ -185,8 +185,7 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-$--base-zi: 98;
-$--header-hieght: 34px;
+@import '../styles.scss';
 
 /* 头（遮挡） */
 .info-header-wrap {

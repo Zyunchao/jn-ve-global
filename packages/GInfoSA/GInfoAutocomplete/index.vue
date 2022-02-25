@@ -137,17 +137,12 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-$--header-hieght: 34px;
-$--base-zi: 98;
+@import '../styles.scss';
 
 .g-info-autocomplete {
     position: relative;
     width: 100%;
     min-width: 100px;
-
-    :deep(*) {
-        box-sizing: border-box;
-    }
 
     /* 下拉选项 */
     :deep(.info-autocomplete-popper) {

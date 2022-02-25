@@ -370,16 +370,11 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-$--base-zi: 98;
-$--pagination-height: 32px;
+@import '../styles.scss';
 
 .g-info-select {
     position: relative;
     width: 100%;
-
-    :deep(*) {
-        box-sizing: border-box;
-    }
 
     :deep(.el-select) {
         .info-select-popper {
