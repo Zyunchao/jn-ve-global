@@ -2,11 +2,7 @@
     <div class="root">
         <div class="box">
             <span>单选：</span>
-            <g-info-select-all
-                v-model="active"
-                :options-data="userList"
-                :columns="columns"
-            />
+            <g-info-select-all v-model="active" :options-data="userList" :columns="columns" />
         </div>
 
         <div class="box">
@@ -23,7 +19,7 @@
 
 <script lang="ts">
 export default {
-    name: 'InfoSelectTest'
+    name: 'InfoSelectAllTest'
 }
 </script>
 

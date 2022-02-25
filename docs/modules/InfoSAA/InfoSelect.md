@@ -74,6 +74,18 @@ column 配置的 `prop` 将作为抛出参数的字段名称
 
 ## 表单集成
 
+<demo-block>
+
+<InfoSAA-infoSelect-formInside />
+
+<template #code>
+
+@[code](@demoroot/InfoSAA/infoSelect/formInside.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 基础属性请参考 [Element Select 属性](https://element-plus.gitee.io/zh-CN/component/select.html#select-%E5%B1%9E%E6%80%A7)
@@ -95,6 +107,7 @@ Element 提供的事件请参考 [Element Select 事件](https://element-plus.gi
 参数|说明|类型|默认值
 -----|-----|-----|-----
 @paramsChange | 参数变化事件 | (params: object) => void | --
+@closed | popper 关闭事件 | () => void | --
 
 ## interface InfoColumnProps
 

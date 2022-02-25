@@ -63,6 +63,18 @@ label: 展示在下拉框中得值
 
 ## 表单集成
 
+<demo-block>
+
+<InfoSAA-infoSelectAll-formInside />
+
+<template #code>
+
+@[code](@demoroot/InfoSAA/infoSelectAll/formInside.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 基础属性请参考 [Element Select2 属性](https://element-plus.gitee.io/zh-CN/component/select-v2.html#selectv2-%E5%B1%9E%E6%80%A7)
