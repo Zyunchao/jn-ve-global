@@ -296,6 +296,43 @@
                     />
                 </template>
 
+                <!-- 下拉框 多列展示（分页） -->
+                <template v-if="localControlType === 'infoSelect'">
+                    <LGInfoSelect
+                        v-model="localPropRef"
+                        v-bind="localControlProps"
+                        :total="columnConfig.controlConfig.total"
+                        :options-data="columnConfig.controlConfig.options"
+                        :columns="columnConfig.controlConfig.columns"
+                        :option-props="columnConfig.controlConfig.optionProps"
+                        size="mini"
+                    />
+                </template>
+
+                <!-- 下拉框 多列展示（虚拟滚动全量） -->
+                <template v-if="localControlType === 'infoSelectAll'">
+                    <LGInfoSelectAll
+                        v-model="localPropRef"
+                        v-bind="localControlProps"
+                        :options-data="columnConfig.controlConfig.options"
+                        :columns="columnConfig.controlConfig.columns"
+                        :option-props="columnConfig.controlConfig.optionProps"
+                        size="mini"
+                    />
+                </template>
+
+                <!-- 带有输入建议且以表格形式展示的 input -->
+                <template v-if="localControlType === 'infoAutocomplete'">
+                    <LGInfoAutocomplete
+                        v-model="localPropRef"
+                        v-bind="localControlProps"
+                        :columns="columnConfig.controlConfig.columns"
+                        :fetch-suggestions="columnConfig.controlConfig.fetchSuggestions"
+                        :value-key="columnConfig.controlConfig.valueKey"
+                        size="mini"
+                    />
+                </template>
+
                 <!-- 错误信息，存在 rules 即创建 -->
                 <template v-if="columnConfig.rules">
                     <el-tooltip
@@ -340,7 +377,14 @@ import { TableColumnProps, BaseTableDataItem } from '../index'
 import { onCellEditKey, tableInstanceKey } from '../constant/InjectionKeys'
 import FunctionalComponent from '../../FunctionalComponent'
 import ResizeObserver from 'resize-observer-polyfill'
-import { SelectProps, DatePickerControlConfig, SliderProps, SelectTreeProps } from '../../GForm'
+import {
+    SelectProps,
+    DatePickerControlConfig,
+    SliderProps,
+    SelectTreeProps,
+    InfoSelectProps,
+    InfoSelectAllProps
+} from '../../GForm'
 import LGSelectTree from '../../GSelectTree/index.vue'
 import Schema, { ValidateError } from 'async-validator'
 import { ElMessage } from 'element-plus'
@@ -348,6 +392,9 @@ import _ from 'lodash'
 import LGFigureInput from '../../GFigureInput/index.vue'
 import { FigureInputProps } from '../../GForm'
 import { Local } from '@/utils/storage'
+import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
+import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
+import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 
 enum CellStatus {
     /**
@@ -601,7 +648,13 @@ onMounted(() => {
         (localControlType.value === 'slider' && (localControlProps.value as SliderProps)?.marks) ||
         // 下拉树多选
         (localControlType.value === 'selectTree' &&
-            (localControlProps.value as SelectTreeProps)?.multiple)
+            (localControlProps.value as SelectTreeProps)?.multiple) ||
+        // 多信息展示下拉（分页）
+        (localControlType.value === 'infoSelect' &&
+            (localControlProps.value as InfoSelectProps)?.multiple) ||
+        // 多信息展示下拉（全量）
+        (localControlType.value === 'infoSelectAll' &&
+            (localControlProps.value as InfoSelectAllProps)?.multiple)
     ) {
         // 获取当前控件所处的表格，以判断是哪种表格
         const currentTableDom =
@@ -695,6 +748,7 @@ const text2Control = () => {
 }
 
 const parentClassFlag = (type: 'add' | 'remove') => {
+    if (!editCellContentRef.value) return
     const cell = editCellContentRef.value.parentElement
     cell.classList[type]('is-edit')
 }
@@ -818,7 +872,7 @@ const datePickerValueVerify = () => {
 
 // 双击是否开启编辑
 const handleDB = () => {
-    if(props.columnConfig.openDB) text2Control()
+    if (props.columnConfig.openDB) text2Control()
 }
 
 onBeforeUnmount(() => {

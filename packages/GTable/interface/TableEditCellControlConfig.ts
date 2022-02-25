@@ -12,7 +12,10 @@ import {
     RateControlConfig,
     SliderControlConfig,
     SelectTreeControlConfig,
-    FigureInputControlConfig
+    FigureInputControlConfig,
+    InfoSelectControlConfig,
+    InfoSelectAllControlConfig,
+    InfoAutocompleteControlConfig
 } from '../../GForm'
 
 type TableEditCellControlConfig =
@@ -30,5 +33,8 @@ type TableEditCellControlConfig =
     | SliderControlConfig
     | SelectTreeControlConfig
     | FigureInputControlConfig
+    | InfoSelectControlConfig
+    | InfoSelectAllControlConfig
+    | InfoAutocompleteControlConfig
 
 export default TableEditCellControlConfig
