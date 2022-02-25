@@ -1,7 +1,7 @@
 <template>
     <div ref="infoHeaderWrapRef" :class="['info-header-wrap', type]">
         <!-- 查询控件 -->
-        <ul v-if="isCreateQuery" class="control-wrapper">
+        <ul v-if="isCreateQuery && type === 'select'" class="control-wrapper">
             <li
                 v-for="(column, index) in columns"
                 :key="`${column.prop}-${index}`"
@@ -83,75 +83,83 @@ interface Props {
     /**
      * 类型标识
      */
-    type?: 'select' | 'autocomplete'
+    type?: 'select' | 'autocomplete' | 'select-all'
     /**
      * 参数初始化的标志位
      */
     initialized?: boolean
+    /**
+     * 组件高度（用于虚拟滚动的 select）
+     */
+    height?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     columns: () => [],
     scrollLeft: 0,
     type: 'select',
-    initialized: false
+    initialized: false,
+    height: '34px'
 })
 
 const emits = defineEmits(['paramsChange', 'preventParentPopperHide'])
 
 const infoHeaderWrapRef = ref<HTMLElement>(null)
 const infoHeaderHight = ref<number>(34)
-const localParams = reactive({})
+
+// ------------- 参数处理：select 带有分页的 ----------------------------------------------------------------------
 const isCreateQuery = ref<boolean>(false)
+const localParams = reactive({})
+if (props.type === 'select') {
+    // 默认参数获取（column.prop）
+    watch(
+        () => props.columns,
+        (columns) => {
+            columns.forEach((cloumn) => {
+                const key = cloumn.prop
+                localParams[key] = null
+            })
 
-// ------------- 参数处理 ----------------------------------------------------------------------
-// 默认参数获取（column.prop）
-watch(
-    () => props.columns,
-    (columns) => {
-        columns.forEach((cloumn) => {
-            const key = cloumn.prop
-            localParams[key] = null
-        })
-
-        isCreateQuery.value = columns.some((column) => column.isQuery)
-    },
-    {
-        immediate: true
-    }
-)
-// 抛出有效值（防抖）
-watch(
-    () => localParams,
-    _.debounce((params) => {
-        const filterParams = {}
-        for (const key in params) {
-            if (Object.prototype.hasOwnProperty.call(params, key)) {
-                const element = params[key]
-                if (element !== null) {
-                    filterParams[key] = element
+            isCreateQuery.value = columns.some((column) => column.isQuery)
+        },
+        {
+            immediate: true
+        }
+    )
+    // 抛出有效值（防抖）
+    watch(
+        () => localParams,
+        _.debounce((params) => {
+            const filterParams = {}
+            for (const key in params) {
+                if (Object.prototype.hasOwnProperty.call(params, key)) {
+                    const element = params[key]
+                    if (element !== null) {
+                        filterParams[key] = element
+                    }
                 }
             }
-        }
 
-        if (!!Object.keys(filterParams).length) {
-            emits('paramsChange', filterParams)
+            if (!!Object.keys(filterParams).length) {
+                emits('paramsChange', filterParams)
+            }
+        }, 300),
+        {
+            deep: true
         }
-    }, 300),
-    {
-        deep: true
-    }
-)
-// 初始化
-watch(
-    () => props.initialized,
-    () => {
-        props.columns.forEach((cloumn) => {
-            const key = cloumn.prop
-            localParams[key] = null
-        })
-    }
-)
+    )
+    // 初始化
+    watch(
+        () => props.initialized,
+        () => {
+            props.columns.forEach((cloumn) => {
+                const key = cloumn.prop
+                localParams[key] = null
+            })
+        }
+    )
+}
+// ------------- 参数处理：select 带有分页的 ----------------------------------------------------------------------
 
 // 位移
 watch(
@@ -191,10 +199,26 @@ $--header-hieght: 34px;
     top: v-bind(popperTop);
     left: v-bind(popperLeft);
 
-    &.select {
+    // 分页查询
+    &.select,
+    &.select-all {
         padding: 0 32px 0 20px;
     }
 
+    // 全量查询
+    &.select-all {
+        height: v-bind(height);
+
+        .info-header,
+        .control-wrapper {
+            li {
+                height: v-bind(height);
+                line-height: v-bind(height);
+            }
+        }
+    }
+
+    // 自动补全
     &.autocomplete {
         padding: 0 20px;
     }

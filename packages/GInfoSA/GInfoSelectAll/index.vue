@@ -1,11 +1,11 @@
 <template>
-    <div ref="infoSelectRef" class="g-info-select">
+    <div ref="currentRootRef" class="g-info-select-all">
         <!-- 下拉框，虚拟滚动 -->
         <el-select-v2
             filterable
             :options="localSelectOptins"
             v-bind="$attrs"
-            popper-class="info-select-popper"
+            popper-class="info-select-all-popper"
             :height="popperHeight"
             style="width: 100%"
             :popper-append-to-body="false"
@@ -19,7 +19,10 @@
         <!-- 表头（依据 columns 生成） -->
         <transition :name="dropdownShow ? 'dropdown' : ''">
             <InfoHeader
-                v-if="dropdownShow"
+                v-if="!hideHeader"
+                v-show="dropdownShow"
+                type="select-all"
+                :height="optionItemBaseHeight"
                 :popper-top="popperTop"
                 :popper-left="popperLeft"
                 :columns="columns"
@@ -37,7 +40,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, onMounted, nextTick, onUnmounted } from 'vue'
+import { watch, ref, computed, onMounted, onUnmounted } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import FunctionalComponent from '../../FunctionalComponent'
 import { SelectOptionProps } from '../../index'
@@ -61,6 +64,11 @@ interface Props {
         value: string
         label: string
     }
+    optionMaxItemNum?: number
+    /**
+     * 是否隐藏头
+     */
+    hideHeader?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -69,96 +77,24 @@ const props = withDefaults(defineProps<Props>(), {
     optionProps: () => ({
         value: 'id',
         label: 'name'
-    })
+    }),
+    optionMaxItemNum: 7,
+    hideHeader: false
 })
 
 // 高度计算
-const headerBottom = '-47px'
-const optionItemBaseHeight = '34px'
-const optionWrapBaseBottom = '14px'
-const optionMaxItemNum = 5
-const popperHeight = parseInt(optionItemBaseHeight) * optionMaxItemNum
+const optionWrapBaseBottom: string = '8px'
+const baseHeight: string = '34px'
+const optionItemBaseHeight = computed<string>(() => (!props.hideHeader ? baseHeight : '0px'))
+const popperHeight = computed(() => parseInt(baseHeight) * props.optionMaxItemNum)
 
 const dropdownShow = ref<boolean>(false)
 // 组件根
-const infoSelectRef = ref<Element>(null)
+const currentRootRef = ref<Element>(null)
 // 表格头
 const infoHeaderWrapRef = ref<Element>(null)
 // 待选项的容器
 const optionItemWrapper = ref<Element>(null)
-
-// ------------- 隐藏 or 显示 + 表头位置获取 ----------------------------------------------------------------------
-// 下拉框弹出层 dom 操作
-// 当前组件的下拉弹框的 id，多个组件时，保证下拉框唯一
-const popperRoot = ref<Element>(null)
-const popperTop = ref<string>('')
-const popperLeft = ref<string>('')
-
-// 观察器的配置（需要观察什么变动）
-const config: MutationObserverInit = { attributes: true }
-
-// 当观察到变动时执行的回调函数
-const callback = function (mutationsList: MutationRecord[], observer: MutationObserver) {
-    for (let mutation of mutationsList) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-            const pRootDom = mutation.target as HTMLElement
-            const display = pRootDom.style['display']
-            if (display !== 'none') {
-                popperTop.value = pRootDom.style.top
-                popperLeft.value = pRootDom.style.left
-            }
-        }
-    }
-}
-
-// 创建一个观察器实例并传入回调函数
-let observer = new MutationObserver(callback)
-
-onMounted(() => {
-    // 弹框根
-    const pRootDom = infoSelectRef.value.querySelector('.info-select-popper')
-    popperRoot.value = pRootDom
-    // 以上述配置开始观察目标节点
-    observer.observe(pRootDom, config)
-})
-
-onUnmounted(() => {
-    // 卸载，停止观察
-    observer.disconnect()
-    observer = null
-})
-
-// ------------- 表头横向滚动 ----------------------------------------------------------------------
-const scrollLeft = ref<number>(0)
-
-watch(
-    () => props.optionsData,
-    (data) => {
-        if (data && !!data.length) {
-            setTimeout(() => {
-                // 监听 el-select-dropdown__list 的横向滚动
-                const optionItemWrapperDom = infoSelectRef.value.querySelector(
-                    '.info-select-popper .el-select-dropdown__list'
-                )
-
-                // 保险
-                if (!optionItemWrapperDom) return
-
-                optionItemWrapper.value = optionItemWrapperDom
-
-                // 先解绑旧的，再绑定
-                optionItemWrapperDom.removeEventListener('scroll', scrollEventHandle)
-                optionItemWrapperDom.addEventListener('scroll', scrollEventHandle)
-            }, 100)
-        }
-    },
-    {
-        immediate: true
-    }
-)
-function scrollEventHandle(e: Event) {
-    scrollLeft.value = (e.target as Element).scrollLeft
-}
 
 // 数据包装
 const VALUE_K = 'value'
@@ -181,6 +117,68 @@ const localSelectOptins = computed(() =>
     })
 )
 
+// ------------- 隐藏 or 显示 + 表头位置获取 ----------------------------------------------------------------------
+// 下拉框弹出层 dom 操作
+// 当前组件的下拉弹框的 id，多个组件时，保证下拉框唯一
+const popperRoot = ref<Element>(null)
+const popperTop = ref<string>('')
+const popperLeft = ref<string>('')
+
+// 观察器的配置（需要观察什么变动）
+const config: MutationObserverInit = { attributes: true }
+const callback = function (mutationsList: MutationRecord[]) {
+    for (let mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            const pRootDom = mutation.target as HTMLElement
+            const display = pRootDom.style['display']
+            if (display !== 'none') {
+                popperTop.value = pRootDom.style.top
+                popperLeft.value = pRootDom.style.left
+            }
+        }
+    }
+}
+
+// 创建一个观察器实例并传入回调函数
+let mutationOb = new MutationObserver(callback)
+onMounted(() => {
+    const pRootDom = currentRootRef.value.querySelector('.info-select-all-popper')
+    popperRoot.value = pRootDom
+    mutationOb.observe(pRootDom, config)
+})
+
+// ------------- 表头横向滚动 ----------------------------------------------------------------------
+const scrollLeft = ref<number>(0)
+watch(
+    () => props.optionsData,
+    (data) => {
+        if (data && !!data.length) {
+            setTimeout(() => {
+                listeneSroll()
+            }, 100)
+        }
+    },
+    {
+        immediate: true
+    }
+)
+function scrollEventHandle(e: Event) {
+    scrollLeft.value = (e.target as Element).scrollLeft
+}
+// 监听包装容器的横向滚动
+function listeneSroll() {
+    const optionItemWrapperDom = currentRootRef.value.querySelector(
+        '.info-select-all-popper .el-select-dropdown__list'
+    )
+
+    if (!optionItemWrapperDom) return
+
+    optionItemWrapper.value = optionItemWrapperDom
+
+    optionItemWrapperDom.removeEventListener('scroll', scrollEventHandle)
+    optionItemWrapperDom.addEventListener('scroll', scrollEventHandle)
+}
+
 // 下拉框出现/隐藏
 const visibleChange = (flag: boolean) => {
     dropdownShow.value = flag
@@ -190,13 +188,19 @@ const visibleChange = (flag: boolean) => {
         optionItemWrapper.value.scrollLeft = 0
     }
 }
+
+// 卸载，停止观察
+onUnmounted(() => {
+    mutationOb && mutationOb.disconnect()
+    mutationOb = null
+})
 </script>
 
 <style lang="scss" scoped>
 $--header-hieght: v-bind(optionItemBaseHeight);
 $--base-zi: 98;
 
-.g-info-select {
+.g-info-select-all {
     position: relative;
     width: 100%;
     min-width: 100px;
@@ -207,8 +211,14 @@ $--base-zi: 98;
 
     /* 下拉框 */
     :deep(.el-select-v2) {
+        .el-select-v2__wrapper {
+            .el-select-v2__placeholder {
+                color: var(--el-text-color-placeholder);
+            }
+        }
+
         // 下拉框弹出和输入框是平级的
-        .info-select-popper {
+        .info-select-all-popper {
             z-index: $--base-zi !important;
 
             .el-select-dropdown__list {

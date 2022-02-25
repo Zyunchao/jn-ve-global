@@ -27,6 +27,7 @@
             <InfoHeader
                 v-show="dropdownShow"
                 ref="infoHeaderWrapRef"
+                type="select"
                 :popper-top="popperTop"
                 :popper-left="popperLeft"
                 :columns="columns"
@@ -163,7 +164,7 @@ const localSelectOptins = computed(() =>
 // 观察器的配置（需要观察什么变动）
 const config: MutationObserverInit = { attributes: true }
 // 当观察到变动时执行的回调函数
-const callback = function (mutationsList: MutationRecord[], observer: MutationObserver) {
+const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
             const pRootDom = mutation.target as HTMLElement

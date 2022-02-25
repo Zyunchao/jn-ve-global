@@ -20,7 +20,7 @@
         <!-- 表头（依据 columns 生成） -->
         <transition :name="dropdownShow ? 'dropdown' : ''">
             <InfoHeader
-                v-if="dropdownShow"
+                v-show="dropdownShow"
                 type="autocomplete"
                 :popper-top="popperTop"
                 :popper-left="popperLeft"
@@ -33,7 +33,8 @@
 
 <script lang="ts">
 export default {
-    name: 'GInfoAutocomplete'
+    name: 'GInfoAutocomplete',
+    inheritAttrs: false
 }
 </script>
 
@@ -77,9 +78,7 @@ const popperLeft = ref<string>('')
 
 // 观察器的配置（需要观察什么变动）
 const config: MutationObserverInit = { attributes: true }
-
-// 当观察到变动时执行的回调函数
-const callback = function (mutationsList: MutationRecord[], observer: MutationObserver) {
+const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
         // 探查位置
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
@@ -102,11 +101,11 @@ const callback = function (mutationsList: MutationRecord[], observer: MutationOb
 }
 
 // 创建一个观察器实例并传入回调函数
-let observer = new MutationObserver(callback)
+let mutationOb = new MutationObserver(callback)
 onMounted(() => {
     const pRootDom = currentRootRef.value.querySelector('.info-autocomplete-popper')
     popperRoot.value = pRootDom
-    observer.observe(pRootDom, config)
+    mutationOb.observe(pRootDom, config)
 })
 
 // ------------- 表头横向滚动 ----------------------------------------------------------------------
@@ -129,8 +128,8 @@ function scrollEventHandle(e: Event) {
 
 onUnmounted(() => {
     // 卸载，停止观察
-    observer.disconnect()
-    observer = null
+    mutationOb.disconnect()
+    mutationOb = null
 
     // 滚动容器事件移除
     scrollWrapRef.value.removeEventListener('scroll', scrollEventHandle)
@@ -155,6 +154,7 @@ $--base-zi: 98;
         width: 100%;
         z-index: $--base-zi !important;
         padding-top: $--header-hieght;
+        overflow: hidden;
 
         .el-autocomplete-suggestion__wrap {
             padding-top: 0;
@@ -164,6 +164,11 @@ $--base-zi: 98;
         .el-autocomplete-suggestion__list {
             > li {
                 width: fit-content;
+
+                &:not([role='option']) {
+                    width: 100%;
+                    padding: 0;
+                }
             }
         }
     }
