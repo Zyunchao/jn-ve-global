@@ -1,5 +1,59 @@
 # 更新日志
 
+<!-- ================== 1.5.2 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+1.5.2
+
+</template>
+
+<template #date>
+
+2022-2-23
+
+</template>
+
+<h3>新特性</h3>
+
+<h4>Table</h4>
+
+1. 动态配置操作列（增加 hide 列功能）
+2. 增加动态禁用功能
+3. 可编辑表格增加双击单元格编辑的开关（重要）
+
+<h4>InfoSelect</h4>
+
+1. 添加表头查询条件功能
+2. 添加分页查询功能
+3. 底层更改为 el-select（非虚拟滚动）
+
+<h4>InfoSelectAll</h4>
+
+将原先的 InfoSelect 更改成了 InfoSelectAll（虚拟滚动，全量查询，不带分页）
+
+<h4>Form</h4>
+
+1. 集成 InfoSelect
+2. 集成 InfoSelectAll
+3. 集成 InfoSelectAutocomplete
+
+<h4>Table</h4>
+
+1. 集成 InfoSelect
+2. 集成 InfoSelectAll
+3. 集成 InfoSelectAutocomplete
+
+<h3>Bug Fix</h3>
+
+<h4>Table</h4>
+
+操作列配置的 maxCount 未准确生效的问题
+
+</update-log-block>
+
 <!-- ================== 1.5.1 ======================================================================== -->
 
 <update-log-block>
