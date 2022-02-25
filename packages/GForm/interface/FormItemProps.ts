@@ -21,7 +21,8 @@ import {
     FigureInputControlConfig,
     IconPickerControlConfig,
     InfoSelectControlConfig,
-    InfoAutocompleteControlConfig
+    InfoAutocompleteControlConfig,
+    InfoSelectAllControlConfig
 } from '../index'
 
 /**
@@ -64,6 +65,7 @@ export type ControlConfig =
     | IconPickerControlConfig
     | InfoSelectControlConfig
     | InfoAutocompleteControlConfig
+    | InfoSelectAllControlConfig
 
 /**
  * 控件组的配置

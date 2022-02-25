@@ -195,9 +195,21 @@
             <LGIconPicker v-model="localPropRef" v-bind="controlConfig.props" />
         </template>
 
-        <!-- 下拉框 多列展示 -->
+        <!-- 下拉框 多列展示（分页） -->
         <template v-if="localControlType === 'infoSelect'">
             <LGInfoSelect
+                v-model="localPropRef"
+                v-bind="localControlProps"
+                :total="controlConfig.total"
+                :options-data="controlConfig.options"
+                :columns="controlConfig.columns"
+                :option-props="controlConfig.optionProps"
+            />
+        </template>
+
+        <!-- 下拉框 多列展示（虚拟滚动全量） -->
+        <template v-if="localControlType === 'infoSelectAll'">
+            <LGInfoSelectAll
                 v-model="localPropRef"
                 v-bind="localControlProps"
                 :options-data="controlConfig.options"
@@ -242,6 +254,7 @@ import LGIconPicker from '../../GIconPicker/index.vue'
 import LGUpload from '../../GUpload/index.vue'
 import UploadFile from '../../GUpload/interface/UploadFile'
 import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
+import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
 import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 
 interface Props {

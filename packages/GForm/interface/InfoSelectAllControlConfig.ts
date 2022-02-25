@@ -4,7 +4,7 @@ import { InfoColumnProps } from '../../index'
 /**
  * 下拉框参数
  */
-export interface InfoSelectProps {
+export interface InfoSelectAllProps {
     /**
      * 是否多选
      */
@@ -86,7 +86,7 @@ export interface InfoSelectProps {
 /**
  * 下拉框事件
  */
-export interface InfoSelectEvents {
+export interface InfoSelectAllEvents {
     /**
      * 选中值发生变化时触发	val，目前的选中值
      */
@@ -115,29 +115,21 @@ export interface InfoSelectEvents {
     onFocus?: (event: FocusEvent) => void
 }
 
-export interface InfoSelectCustomProps {
+export interface InfoSelectAllCustomProps {
     /**
-     * 是否在 popper 隐藏时初始化参数
-     * true
+     * 最大行数
+     * 7
      */
-    initParamsOnPopperHide?: boolean
+    optionMaxItemNum?: number
     /**
-     * 参数变化事件
+     * 是否隐藏头
+     * false
      */
-    onParamsChange?: (params: { currentPage: number; pageSize: number; [k: string]: any }) => void
-    /**
-     * popper 关闭事件
-     */
-    closed?: () => void
+    hideHeader?: boolean
 }
 
-export default interface InfoSelectControlConfig {
-    type: 'infoSelect'
-    /**
-     * 分页总数
-     * 0
-     */
-    total: number
+export default interface InfoSelectAllControlConfig {
+    type: 'infoSelectAll'
     /**
      * 下拉框数据
      */
@@ -156,5 +148,5 @@ export default interface InfoSelectControlConfig {
     /**
      * 下拉框的参数
      */
-    props?: InfoSelectProps & InfoSelectEvents & InfoSelectCustomProps
+    props?: InfoSelectAllProps & InfoSelectAllEvents & InfoSelectAllCustomProps
 }

@@ -210,11 +210,11 @@ $--item-base-height: v-bind(optionItemBaseHeight);
 
     /* 下拉框 */
     :deep(.el-select-v2) {
-        .el-select-v2__wrapper {
-            .el-select-v2__placeholder {
-                color: var(--el-text-color-placeholder);
-            }
-        }
+        // .el-select-v2__wrapper {
+        //     .el-select-v2__placeholder {
+        //         // color: var(--el-text-color-placeholder);
+        //     }
+        // }
 
         // 下拉框弹出和输入框是平级的
         .info-select-all-popper {

@@ -107,7 +107,7 @@ const props = withDefaults(defineProps<Props>(), {
     initParamsOnPopperHide: true
 })
 
-const emits = defineEmits(['paramsChange'])
+const emits = defineEmits(['paramsChange', 'closed'])
 
 const popperClass = 'info-select-popper'
 const dropdownShow = ref<boolean>(false)
@@ -185,6 +185,7 @@ const callback = function (mutationsList: MutationRecord[]) {
             } else {
                 // DOM 隐藏后
                 initAtAfter()
+                emits('closed')
             }
         }
     }

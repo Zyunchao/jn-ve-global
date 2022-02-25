@@ -23,6 +23,18 @@
                 @params-change="paramsChange"
             />
         </div>
+
+        <h1>表单集成</h1>
+        <div class="box2">
+            <g-form :config="formConfig" />
+
+            <el-button type="primary" @click="getData">
+                获取数据
+            </el-button>
+            <el-button type="primary" @click="resetForm">
+                重置
+            </el-button>
+        </div>
     </div>
 </template>
 
@@ -36,6 +48,7 @@ export default {
 import { toRaw, watch, ref, computed, reactive, toRefs, onMounted, onBeforeMount } from 'vue'
 import { columns } from '../data/columns'
 import userList from '../data/userList.json'
+import { FormProps, InfoSelectControlConfig } from '@component/index'
 
 const total = userList.length
 const active = ref<string>('')
@@ -91,6 +104,69 @@ const dataScoper = (num: number, params?: object) => {
             return true
         })
 }
+
+// 表单集成
+let formConfig = ref<FormProps>({
+    instance: null,
+    labelPosition: 'right',
+    labelWidth: '80px',
+    model: {
+        single: '',
+        multiple: []
+    },
+    formItems: [
+        {
+            prop: 'single',
+            label: '单选',
+            span: 24,
+            controlConfig: {
+                type: 'infoSelect',
+                columns,
+                options: dataScoper(1) as any,
+                total: 29,
+                props: {
+                    onParamsChange: (params) => {
+                        console.log(`%c 表单集成 参数变化 ==== `, 'color: red;', params)
+                        const { pageSize, currentPage, ...queryParams } = params
+                        ;(
+                            formConfig.value.formItems.find((item) => item.prop === 'single')
+                                .controlConfig as InfoSelectControlConfig
+                        ).options = dataScoper(params.currentPage, queryParams) as any
+                    }
+                }
+            }
+        },
+        {
+            prop: 'multiple',
+            label: '多选',
+            span: 24,
+            controlConfig: {
+                type: 'infoSelect',
+                columns,
+                options: dataScoper(1) as any,
+                total: 29,
+                props: {
+                    multiple: true,
+                    onParamsChange: (params) => {
+                        console.log(`%c 表单集成 参数变化 ==== `, 'color: red;', params)
+                        const { pageSize, currentPage, ...queryParams } = params
+                        ;(
+                            formConfig.value.formItems.find((item) => item.prop === 'single')
+                                .controlConfig as InfoSelectControlConfig
+                        ).options = dataScoper(params.currentPage, queryParams) as any
+                    }
+                }
+            }
+        }
+    ]
+})
+
+const getData = () => {
+    console.log(`%c data =========== `, 'color: #67c23a;', formConfig.value.model)
+}
+const resetForm = () => {
+    formConfig.value.instance.resetFields()
+}
 </script>
 
 <style lang="scss" scoped>
@@ -104,6 +180,12 @@ const dataScoper = (num: number, params?: object) => {
         width: 60px;
         display: block;
         font-weight: 700;
+        flex: none;
     }
+}
+
+.box2 {
+    width: 400px;
+    margin-top: 20px;
 }
 </style>
