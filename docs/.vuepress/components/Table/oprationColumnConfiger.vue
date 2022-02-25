@@ -66,11 +66,17 @@ const tableConfig = reactive<TableConfig<any>>({
         total: 2
     },
     rowBtnConfig: {
-        width: 440,
-        maxCount: 4,
+        width: 480,
+        maxCount: 5,
         btns: [
             {
-                label: '条件创建的按钮',
+                label: '禁用',
+                disabled: (row, index) => {
+                    return index % 2 === 1
+                }
+            },
+            {
+                label: '条件显示的按钮',
                 hide: (row, index) => {
                     return index % 2 === 0
                 },
@@ -82,14 +88,14 @@ const tableConfig = reactive<TableConfig<any>>({
             {
                 label: '显示',
                 onClick(row, index) {
-                    tableConfig.rowBtnConfig.btns[2].hide = false
+                    tableConfig.rowBtnConfig.btns[3].hide = false
                 }
             },
             {
                 label: '隐藏',
                 class: 'btn-danger',
                 onClick(row, index) {
-                    tableConfig.rowBtnConfig.btns[2].hide = true
+                    tableConfig.rowBtnConfig.btns[3].hide = true
                 }
             },
             {

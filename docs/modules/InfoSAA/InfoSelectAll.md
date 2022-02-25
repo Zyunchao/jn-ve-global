@@ -1,7 +1,6 @@
-# InfoSelect
+# InfoSelectAll
 
-下拉框本身只能显示有限的数据（label），一些业务情况需要展示更多的信息，就像表格那样，以多列的形式展示；
-当前组件虽然是以多列展示的，本质上还是使用的 下拉框的自定义渲染，只不过每一个 OptionItem 都使用‘表格’的配置，进行了多元素的渲染
+思想同 `InfoSelect`
 
 :::tip
 组件基于 [Element Virtualized Select 虚拟化选择器](https://element-plus.gitee.io/zh-CN/component/select-v2.html)
@@ -23,15 +22,40 @@ label: 展示在下拉框中得值
 
 :::
 
+## 与 InfoSelect 的区别
+
+* 本组件使用虚拟滚动
+* 可全量数据
+* 查询方式交给用户控制，只需要对下拉数据赋值即可
+* 无附加查询条件
+* 无分页
+* 可去除头部标题
+
 ## 基础使用
 
 <demo-block>
 
-<InfoSelect-demo1 />
+<InfoSAA-infoSelectAll-index />
 
 <template #code>
 
-@[code](@demoroot/InfoSelect/demo1.vue)
+@[code](@demoroot/InfoSAA/infoSelectAll/index.vue)
+
+</template>
+
+</demo-block>
+
+## 去除头部
+
+对于一些有明确需求的列，可以选择隐藏表头
+
+<demo-block>
+
+<InfoSAA-infoSelectAll-hideHeader />
+
+<template #code>
+
+@[code](@demoroot/InfoSAA/infoSelectAll/hideHeader.vue)
 
 </template>
 
@@ -39,21 +63,9 @@ label: 展示在下拉框中得值
 
 ## 表单集成
 
-<demo-block>
-
-<InfoSelect-formDemo />
-
-<template #code>
-
-@[code](@demoroot/InfoSelect/formDemo.vue)
-
-</template>
-
-</demo-block>
-
 ## Attributes
 
-基础属性请参考 [Element Select2](https://element-plus.gitee.io/zh-CN/component/select-v2.html#selectv2-%E5%B1%9E%E6%80%A7)
+基础属性请参考 [Element Select2 属性](https://element-plus.gitee.io/zh-CN/component/select-v2.html#selectv2-%E5%B1%9E%E6%80%A7)
 
 ### 扩展属性
 
@@ -62,3 +74,5 @@ label: 展示在下拉框中得值
 optionsData | 下拉框数据 | SelectOptionProps[] | []
 columns | option 展示的列 | InfoColumnProps[] | []
 optionProps | option item 绑定的值 | { value: string; label: string} | { value: 'id', label: 'name'}
+optionMaxItemNum | 下拉列表最多显示的行数 | number | 7
+hideHeader | 隐藏表头 | boolean | false

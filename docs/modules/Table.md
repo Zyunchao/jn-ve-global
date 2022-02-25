@@ -142,6 +142,11 @@
 * 单字段编辑（鼠标双击单元格`dblclick`）
 * 整行编辑（需要为表格行数据添加额外字段）
 
+:::danger
+自 1.5.2 版本起，单字段编辑需要手动开启，为需要单字段编辑的列，添加 `openDB: true`
+
+:::
+
 :::tip 注意
 在使用可编辑表格定义 Columns 时，如果有需要动态填充数据（如为 Select 填充待选项）的情况，Columns 一定要定义成响应式对象
 :::
@@ -309,7 +314,7 @@
 
 ### Table Attributes
 
-组件一级配置：interface **TableConfig**
+组件一级配置： `interface TableConfig`
 
 除去扩展字段，请参考 [Element Table Attributes](https://element-plus.gitee.io/#/zh-CN/component/table#table-attributes)
 
@@ -328,7 +333,7 @@ rowBtnConfig | 操作列（每一行的操作按钮）配置对象 | RowBtnConfi
 
 ### Table-column Attributes
 
-二级配置：interface **TableColumnProps**
+二级配置： `interface TableColumnProps`
 
 除去扩展字段，请参考 [Element Table-column Attributes](https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes)
 
@@ -342,10 +347,11 @@ controlConfig | 可编辑行控件配置 | TableEditCellControlConfig | --
 rules | 校验配置 | RuleItem \| RuleItem[] | --
 excelValueFormat | 粘贴数据的字段格式化规则 | (currentField: string \| number, preField?: any, index?: number) => string \| number \| boolean \| Date \| any[] \| object | --
 hide | 标识列是否隐藏 | boolean | --
+openDB | 是否开启可编辑单元格的双击转编辑 | boolean | false
 
 ### Pagination Attributes
 
-二级配置：interface **PaginationProps**
+二级配置： `interface PaginationProps`
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
@@ -355,10 +361,75 @@ currentPage | 当前页码 | number | --
 total | 数据总量 | number | --
 onChange | 分页变化 | (currentPage?: number, currentPageSize?: number) => void | --
 
-### RowBtnConfig 
+### RowBtnConfig
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
-btns | 按钮组配置 | TableRowBtnProps | []
+btns | 按钮组配置 | TableRowBtnProps\<TBD\>[] | []
 width | 操作列的宽度 | number | 200
 maxCount | 最多显示几个按钮，超出部分将于更多操作内显示 | number | --
+hide | 是否隐藏按钮列 | boolean | false
+
+```ts
+interface BtnProps {
+    /**
+     * 按钮名称
+     */
+    label: string
+    /**
+     * 授权标识
+     */
+    authCode?: string
+    /**
+     * 按钮的类型，同 Element Button
+     */
+    type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
+    /**
+     * 禁用
+     */
+    disabled?: boolean | ((row?: any, index?: number) => boolean)
+    /**
+     * 事件
+     */
+    onClick?: () => void
+    /**
+     * 按钮尺寸
+     */
+    size?: 'medium' | 'small' | 'mini'
+    /**
+     * 加载中
+     */
+    loading?: boolean
+    /**
+     * 是否为朴素按钮
+     */
+    plain?: boolean
+    /**
+     * 是否为圆角按钮
+     */
+    round?: boolean
+    /**
+     * 是否为圆形按钮
+     */
+    circle?: boolean
+    /**
+     * 是否隐藏
+     */
+    hide?: boolean | ((row?: any, index?: number) => boolean)
+    /**
+     * 类名
+     */
+    class?: string
+    /**
+     * 具体的行内样式
+     */
+    style?: { [k: string]: any } | string
+}
+
+interface TableRowBtnProps<TBD> extends BtnProps {
+    /**
+     * 按钮点击事件
+     */
+    onClick?: (row?: TBD, index?: number) => void
+}
+```

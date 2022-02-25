@@ -14,29 +14,17 @@ fetchSuggestions 属性是必传的，内部通过主动调用回调，进行装
 
 <demo-block>
 
-<InfoAutocomplete-demo1 />
+<InfoSAA-infoAutocomplete-index />
 
 <template #code>
 
-@[code](@demoroot/InfoAutocomplete/demo1.vue)
+@[code](@demoroot/InfoSAA/infoAutocomplete/index.vue)
 
 </template>
 
 </demo-block>
 
 ## 表单集成
-
-<demo-block>
-
-<InfoAutocomplete-formDemo />
-
-<template #code>
-
-@[code](@demoroot/InfoAutocomplete/formDemo.vue)
-
-</template>
-
-</demo-block>
 
 ## Attributes
 

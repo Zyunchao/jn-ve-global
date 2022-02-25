@@ -159,7 +159,7 @@ interface BtnProps {
     /**
      * 禁用
      */
-    disabled?: boolean
+    disabled?: boolean | ((row?: any, index?: number) => boolean)
     /**
      * 事件
      */
@@ -187,7 +187,7 @@ interface BtnProps {
     /**
      * 是否隐藏
      */
-    hide?: boolean
+    hide?: boolean | ((row?: any, index?: number) => boolean)
     /**
      * 类名
      */
