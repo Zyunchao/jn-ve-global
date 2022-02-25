@@ -75,7 +75,7 @@ const headerJSHieght = '34px'
 </script>
 
 <style lang="scss" scoped>
-$--header-hieght: 34px;
+@import '../styles.scss';
 
 .option-custom-content {
     display: flex;

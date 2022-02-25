@@ -1,0 +1,13 @@
+$--base-zi: 98;
+$--pagination-height: 32px;
+$--header-hieght: 34px;
+
+:deep(*) {
+    box-sizing: border-box;
+}
+
+:deep(ul) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
