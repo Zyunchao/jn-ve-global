@@ -1,6 +1,6 @@
 const rootValue = 100 // 根数值  1rem = 100px
 const baseSize = 1920 // 设计稿基础尺寸 1920 基准
-const minClientWidth = 1000 // 适配的最小 屏幕 1366
+const minClientWidth = 1366 // 适配的最小 屏幕 1366
 
 let docEl = document.documentElement
 let resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize'

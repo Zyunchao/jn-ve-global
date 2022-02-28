@@ -1,5 +1,29 @@
 # 更新日志
 
+<!-- ================== 1.5.3 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+1.5.3
+
+</template>
+
+<template #date>
+
+2022-2-28
+
+</template>
+
+<h3>Bug Fix</h3>
+
+<h4>Table</h4>
+
+优化可编辑表格的校验错误信息的展示（取消文字展示，增加 toltip 的热区）
+
+</update-log-block>
+
 <!-- ================== 1.5.2 ======================================================================== -->
 
 <update-log-block>
@@ -38,13 +62,13 @@
 
 1. 集成 InfoSelect
 2. 集成 InfoSelectAll
-3. 集成 InfoSelectAutocomplete
+3. 集成 InfoAutocomplete
 
 <h4>Table</h4>
 
 1. 集成 InfoSelect
 2. 集成 InfoSelectAll
-3. 集成 InfoSelectAutocomplete
+3. 集成 InfoAutocomplete
 
 <h3>Bug Fix</h3>
 

@@ -340,10 +340,11 @@
                         effect="dark"
                         :content="validateMsg"
                         placement="bottom"
+                        :offset="0"
                     >
                         <transition :name="`slide-${validateMsg ? 'right' : 'left'}`">
                             <span v-if="validateMsg && !validateRes" class="error-msg">
-                                {{ validateMsg }}
+                                <!-- {{ validateMsg }} -->
                             </span>
                         </transition>
                     </el-tooltip>
@@ -1025,11 +1026,13 @@ $--cell-min-height: 29px;
             height: 12px;
             text-align: left;
             position: absolute;
-            bottom: -12px;
             left: 0;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            height: 200%;
+            background-color: rgba(197, 194, 194, 0.4);
+            bottom: -50%;
         }
     }
 

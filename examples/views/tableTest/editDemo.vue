@@ -63,8 +63,9 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: '姓名-Input',
         width: 160,
         editable: true,
-        align: 'right',
-        fixed: 'left',
+        // align: 'right',
+        // fixed: 'left',
+        openDB: true,
         controlConfig: {
             type: 'input'
         },
