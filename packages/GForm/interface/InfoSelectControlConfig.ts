@@ -129,6 +129,10 @@ export interface InfoSelectCustomProps {
      * popper 关闭事件
      */
     closed?: () => void
+    /**
+     * value 值是否绑定为 data 的 item 对象
+     */
+    valueBindObj?: boolean
 }
 
 export default interface InfoSelectControlConfig {

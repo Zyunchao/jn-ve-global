@@ -15,7 +15,7 @@
             <el-option
                 v-for="(item, index) in localSelectOptins"
                 :key="`${item.value}-${index}`"
-                :value="item.value"
+                :value="valueBindObj ? item : item.value"
                 :label="item.label"
             >
                 <OptionCustomContent :columns="columns" :data="item" :index="index" />
@@ -94,6 +94,10 @@ interface Props {
      * 是否在 popper 隐藏时初始化参数
      */
     initParamsOnPopperHide?: boolean
+    /**
+     * value 值是否绑定为 data 的 item 对象
+     */
+    valueBindObj?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -104,7 +108,8 @@ const props = withDefaults(defineProps<Props>(), {
         label: 'name'
     }),
     total: 0,
-    initParamsOnPopperHide: true
+    initParamsOnPopperHide: true,
+    valueBindObj: false
 })
 
 const emits = defineEmits(['paramsChange', 'closed'])

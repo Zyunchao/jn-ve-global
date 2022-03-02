@@ -113,6 +113,7 @@ columns | option 展示的列 | InfoColumnProps[]（见下 interface 的定义�
 optionProps | option item 绑定的值 | { value: string; label: string} | { value: 'id', label: 'name'}
 total | 分页总数 | number | 0
 initParamsOnPopperHide | 是否在 popper 隐藏时初始化参数 | boolean | true
+valueBindObj | value 值是否绑定为 data 的 item 对象 | boolean | false
 
 ## Events
 
