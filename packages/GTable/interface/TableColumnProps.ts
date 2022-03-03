@@ -81,7 +81,7 @@ export default interface TableColumnProps {
      * 用来格式化内容	function(row, column, cellValue, index)	—	—
      */
     formatter?: (
-        row?: BaseTableDataItem,
+        row?: any,
         column?: TableColumnProps,
         cellValue?: any,
         index?: number
@@ -110,7 +110,7 @@ export default interface TableColumnProps {
      * 仅对 type=selection 的列有效，类型为 Function
      * Function 的返回值用来决定这一行的 CheckBox 是否可以勾选
      */
-    selectable?: (row?: BaseTableDataItem, index?: number) => boolean
+    selectable?: (row?: any, index?: number) => boolean
     /**
      * 仅对 type=selection 的列有效，类型为 Boolean
      * 为 true 则会在数据更新之后保留之前选中的数据（需指定 rowKey） —	false
@@ -143,7 +143,7 @@ export default interface TableColumnProps {
     /**
      * 数据过滤使用的方法，如果是多选的筛选项，对每一条数据会执行多次，任意一次返回 true 就会显示
      */
-    filterMethod?: (value?: string, row?: BaseTableDataItem, column?: TableColumnProps) => boolean
+    filterMethod?: (value?: string, row?: any, column?: TableColumnProps) => boolean
     /**
      * 选中的数据过滤项，如果需要自定义表头过滤的渲染方式，可能会需要此属性
      */
@@ -153,7 +153,7 @@ export default interface TableColumnProps {
     /**
      * 自定义渲染
      */
-    render?: (row?: BaseTableDataItem, index?: number) => JSX.Element | VNode | string | number
+    render?: (row?: any, index?: number) => JSX.Element | VNode | string | number
     /**
      * 多级嵌套表头
      */

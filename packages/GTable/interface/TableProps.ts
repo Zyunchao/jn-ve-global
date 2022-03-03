@@ -52,18 +52,18 @@ export default interface TableProps<TBD> extends TableEvents {
     /**
      * 行的 className 的回调方法，也可以使用字符串为所有行设置一个固定的 className
      */
-    rowClassName?: string | ((current?: { row?: BaseTableDataItem; rowIndex?: number }) => string)
+    rowClassName?: string | ((current?: { row?: TBD; rowIndex?: number }) => string)
     /**
      * 行的 style 的回调方法，也可以使用一个固定的 Object 为所有行设置一样的 Style
      */
-    rowStyle?: object | ((current?: { row?: BaseTableDataItem; rowIndex?: number }) => object)
+    rowStyle?: object | ((current?: { row?: TBD; rowIndex?: number }) => object)
     /**
      * 单元格的 className 的回调方法，也可以使用字符串为所有单元格设置一个固定的 className
      */
     cellClassName?:
         | string
         | ((current?: {
-              row?: BaseTableDataItem
+              row?: TBD
               column?: any
               rowIndex?: number
               columnIndex?: number
@@ -74,7 +74,7 @@ export default interface TableProps<TBD> extends TableEvents {
     cellStyle?:
         | object
         | ((current?: {
-              row?: BaseTableDataItem
+              row?: TBD
               column?: any
               rowIndex?: number
               columnIndex?: number
@@ -84,18 +84,18 @@ export default interface TableProps<TBD> extends TableEvents {
      */
     headerRowClassName?:
         | string
-        | ((current?: { row?: BaseTableDataItem; rowIndex?: number }) => string)
+        | ((current?: { row?: TBD; rowIndex?: number }) => string)
     /**
      * 表头行的 style 的回调方法，也可以使用一个固定的 Object 为所有表头行设置一样的 Style
      */
-    headerRowStyle?: object | ((current?: { row?: BaseTableDataItem; rowIndex?: number }) => object)
+    headerRowStyle?: object | ((current?: { row?: TBD; rowIndex?: number }) => object)
     /**
      * 表头单元格的 className 的回调方法，也可以使用字符串为所有表头单元格设置一个固定的 className
      */
     headerCellClassName?:
         | string
         | ((current?: {
-              row?: BaseTableDataItem
+              row?: TBD
               column?: any
               rowIndex?: number
               columnIndex?: number
@@ -106,7 +106,7 @@ export default interface TableProps<TBD> extends TableEvents {
     headerCellStyle?:
         | object
         | ((current?: {
-              row?: BaseTableDataItem
+              row?: TBD
               column?: any
               rowIndex?: number
               columnIndex?: number
@@ -117,7 +117,7 @@ export default interface TableProps<TBD> extends TableEvents {
      * 类型为 String 时，支持多层访问：user.info.id，但不支持 user.info[0].id，此种情况请使用 Function。
      *
      */
-    rowKey?: string | ((row: BaseTableDataItem) => string)
+    rowKey?: string | ((row: TBD) => string)
     /**
      * 空数据时显示的文本内容，也可以通过 #empty 设置 —	暂无数据
      */
@@ -155,7 +155,7 @@ export default interface TableProps<TBD> extends TableEvents {
      * 合并行或列的计算方法
      */
     spanMethod?: (current?: {
-        row?: BaseTableDataItem
+        row?: TBD
         column?: any
         rowIndex?: number
         columnIndex?: number
@@ -177,7 +177,7 @@ export default interface TableProps<TBD> extends TableEvents {
     /**
      * 加载子节点数据的函数，lazy 为 true 时生效，函数第二个参数包含了节点的层级信息	function(row, treeNode, resolve)	—	—
      */
-    load?: (row?: BaseTableDataItem, treeNode?: BaseTableDataItem, resolve?: any) => any
+    load?: (row?: TBD, treeNode?: TBD, resolve?: any) => any
     /**
      * 渲染嵌套数据的配置选项 —	{ hasChildren: 'hasChildren', children: 'children' }
      */
