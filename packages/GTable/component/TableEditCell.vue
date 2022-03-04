@@ -306,6 +306,7 @@
                         :columns="columnConfig.controlConfig.columns"
                         :option-props="columnConfig.controlConfig.optionProps"
                         size="mini"
+                        @closed="delayControlToText"
                     />
                 </template>
 
@@ -318,6 +319,7 @@
                         :columns="columnConfig.controlConfig.columns"
                         :option-props="columnConfig.controlConfig.optionProps"
                         size="mini"
+                        @closed="delayControlToText"
                     />
                 </template>
 
@@ -330,6 +332,7 @@
                         :fetch-suggestions="columnConfig.controlConfig.fetchSuggestions"
                         :value-key="columnConfig.controlConfig.valueKey"
                         size="mini"
+                        @blur="delayControlToText"
                     />
                 </template>
 

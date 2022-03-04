@@ -89,6 +89,8 @@ const props = withDefaults(defineProps<Props>(), {
     hideHeader: false
 })
 
+const emits = defineEmits(['closed'])
+
 const randomId = `random-id-${uuidv4()}`
 const popperClass = 'info-select-all-popper'
 const dropdownShow = ref<boolean>(false)
@@ -216,6 +218,7 @@ const visibleChange = (flag: boolean) => {
     // 关闭下拉框后，位移清零
     if (!flag && !!optionItemWrapper.value) {
         optionItemWrapper.value.scrollLeft = 0
+        emits('closed')
     }
 }
 

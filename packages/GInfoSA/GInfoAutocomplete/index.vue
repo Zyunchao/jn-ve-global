@@ -65,6 +65,8 @@ const props = withDefaults(defineProps<Props>(), {
     columns: () => []
 })
 
+const emits = defineEmits(['closed'])
+
 const randomId = `random-id-${uuidv4()}`
 const popperClass = 'info-autocomplete-popper'
 
@@ -119,6 +121,10 @@ const callback = function (mutationsList: MutationRecord[]) {
             const pRootDom = mutation.target as HTMLElement
             const ariaHidden = pRootDom.attributes['aria-hidden'].value
             dropdownShow.value = ariaHidden === 'false'
+
+            if(ariaHidden === 'true') {
+                emits('closed')
+            }
         }
     }
 }

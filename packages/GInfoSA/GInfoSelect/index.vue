@@ -72,7 +72,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, ref, computed, onMounted, onUnmounted, watchEffect } from 'vue'
+import { watch, ref, computed, onMounted, onUnmounted, watchEffect, nextTick } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import FunctionalComponent from '../../FunctionalComponent'
 import { SelectOptionProps } from '../../index'
@@ -212,6 +212,7 @@ const setPosition = _.debounce((pRootDom?: HTMLElement) => {
 // 当观察到变动时执行的回调函数
 const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
+        // 样式变化
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
             const pRootDom = mutation.target as HTMLElement
             const display = pRootDom.style['display']
@@ -223,11 +224,20 @@ const callback = function (mutationsList: MutationRecord[]) {
 
                 // 高度值
                 setPosition(pRootDom)
-            } else {
-                // DOM 隐藏后
-                initAtAfter()
-                emits('closed')
             }
+        }
+
+        // 在初始时，对容器样式的设置也会触发上面的配置，故将关闭用 aria-hidden 判断
+        if (mutation.type === 'attributes' && mutation.attributeName === 'aria-hidden') {
+            const pRootDom = mutation.target as HTMLElement
+            setTimeout(() => {
+                const ariaHidden = pRootDom.attributes['aria-hidden'].value
+                if (ariaHidden === 'true') {
+                    // DOM 隐藏后
+                    initAtAfter()
+                    emits('closed')
+                }
+            }, 0)
         }
     }
 }
