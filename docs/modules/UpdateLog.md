@@ -1,5 +1,36 @@
 # 更新日志
 
+<!-- ================== 1.5.6 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+1.5.6
+
+</template>
+
+<template #date>
+
+2022-3-5
+
+</template>
+
+<h3>优化</h3>
+
+1. InfoSelect popper、header、pagination 挂载到 body 上
+2. InfoSelectAll popper 挂载到 body 上
+3. InfoAutocomplete popper 挂载到 body 上
+
+此更新用来优化三者的显示方式，1.5.6 之前没有选择挂载到 body 出现了不太理想的展示效果（表格内被溢出隐藏、表格行遮挡控件等）
+1.5.6 版本之后，不再需要修改父容器的css
+
+<h3>功能补充</h3>
+
+1.5.6 追加了可编辑表格时，InfoXXXX 三者的移除编辑状态的触发
+
+</update-log-block>
+
 <!-- ================== 1.5.3 ======================================================================== -->
 
 <update-log-block>
