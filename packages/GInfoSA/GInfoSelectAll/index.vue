@@ -5,10 +5,10 @@
             filterable
             :options="localSelectOptins"
             v-bind="$attrs"
-            popper-class="info-select-all-popper"
             :height="popperHeight"
             style="width: 100%"
-            :popper-append-to-body="false"
+            :popper-append-to-body="true"
+            :popper-class="`${popperClass} ${randomId}`"
             @visible-change="visibleChange"
         >
             <template #default="{ item, $index }">
@@ -17,18 +17,20 @@
         </el-select-v2>
 
         <!-- 表头（依据 columns 生成） -->
-        <transition :name="dropdownShow ? 'dropdown' : ''">
-            <InfoHeader
-                v-if="!hideHeader"
-                v-show="dropdownShow"
-                type="select-all"
-                :height="optionItemBaseHeight"
-                :popper-top="popperTop"
-                :popper-left="popperLeft"
-                :columns="columns"
-                :scroll-left="scrollLeft"
-            />
-        </transition>
+        <InfoHeader
+            v-if="!hideHeader"
+            v-show="dropdownShow"
+            ref="infoHeaderWrapRef"
+            :class="['info-header-wrapper-to-body', randomId]"
+            type="select-all"
+            :height="optionItemBaseHeight"
+            :popper-top="popperTop"
+            :popper-left="popperLeft"
+            :columns="columns"
+            :scroll-left="scrollLeft"
+            :width="currentRootWidth"
+            :z-index="popperZIndex"
+        />
     </div>
 </template>
 
@@ -40,13 +42,15 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, ref, computed, onMounted, onUnmounted } from 'vue'
+import { watch, ref, computed, onMounted, onUnmounted, watchEffect } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import FunctionalComponent from '../../FunctionalComponent'
 import { SelectOptionProps } from '../../index'
 import InfoHeader from '../component/infoHeader.vue'
 import OptionCustomContent from '../component/optionCustomContent.vue'
 import { getWidth } from '../utils'
+import { v4 as uuidv4 } from 'uuid'
+import _ from 'lodash'
 
 interface Props {
     /**
@@ -85,19 +89,29 @@ const props = withDefaults(defineProps<Props>(), {
     hideHeader: false
 })
 
-// 高度计算
-const optionWrapBaseBottom: string = '8px'
-const baseHeight: string = '34px'
-const optionItemBaseHeight = computed<string>(() => (!props.hideHeader ? baseHeight : '0px'))
-const popperHeight = computed(() => parseInt(baseHeight) * props.optionMaxItemNum)
-
+const randomId = `random-id-${uuidv4()}`
+const popperClass = 'info-select-all-popper'
 const dropdownShow = ref<boolean>(false)
+
 // 组件根
 const currentRootRef = ref<Element>(null)
 // 表格头
-const infoHeaderWrapRef = ref<Element>(null)
+const infoHeaderWrapRef = ref<any>(null)
 // 待选项的容器
 const optionItemWrapper = ref<Element>(null)
+// popper 根
+const popperRoot = ref<HTMLElement>(null)
+
+// DOM Position
+const popperTop = ref<string>('')
+const popperLeft = ref<string>('')
+const popperZIndex = ref<string>('1')
+
+// DOM Size
+const baseHeight: string = '34px'
+const optionItemBaseHeight = computed<string>(() => (!props.hideHeader ? baseHeight : '0px'))
+const popperHeight = computed(() => parseInt(baseHeight) * props.optionMaxItemNum)
+const currentRootWidth = computed(() => `${currentRootRef.value?.clientWidth}px`)
 
 // 数据包装
 const VALUE_K = 'value'
@@ -121,23 +135,25 @@ const localSelectOptins = computed(() =>
 )
 
 // ------------- 隐藏 or 显示 + 表头位置获取 ----------------------------------------------------------------------
-// 下拉框弹出层 dom 操作
-// 当前组件的下拉弹框的 id，多个组件时，保证下拉框唯一
-const popperRoot = ref<Element>(null)
-const popperTop = ref<string>('')
-const popperLeft = ref<string>('')
-
 // 观察器的配置（需要观察什么变动）
 const config: MutationObserverInit = { attributes: true }
+
+const setPosition = _.debounce((pRootDom?: HTMLElement) => {
+    popperTop.value = pRootDom.style.top
+    popperLeft.value = pRootDom.style.left
+    popperZIndex.value = pRootDom.style.zIndex
+
+    // 表头高度 = 容器 padding-top
+    infoHeaderWrapRef.value &&
+        (pRootDom.style.paddingTop = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`)
+}, 20)
+
 const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
             const pRootDom = mutation.target as HTMLElement
             const display = pRootDom.style['display']
-            if (display !== 'none') {
-                popperTop.value = pRootDom.style.top
-                popperLeft.value = pRootDom.style.left
-            }
+            display !== 'none' && setPosition(pRootDom)
         }
     }
 }
@@ -145,8 +161,19 @@ const callback = function (mutationsList: MutationRecord[]) {
 // 创建一个观察器实例并传入回调函数
 let mutationOb = new MutationObserver(callback)
 onMounted(() => {
-    const pRootDom = currentRootRef.value.querySelector('.info-select-all-popper')
-    popperRoot.value = pRootDom
+    const pRootDom = document.querySelector(`.${popperClass}.${randomId}.el-select-v2__popper`)
+
+    /**
+     * 需要将 表头dom 挂载到 body 上
+     */
+    const headerDom = document.querySelector(`.info-header-wrapper-to-body.${randomId}`)
+
+    if (!pRootDom) return null
+
+    headerDom && document.body.appendChild(headerDom)
+
+    // 存储及监听
+    popperRoot.value = pRootDom as HTMLElement
     mutationOb.observe(pRootDom, config)
 })
 
@@ -170,8 +197,8 @@ function scrollEventHandle(e: Event) {
 }
 // 监听包装容器的横向滚动
 function listeneSroll() {
-    const optionItemWrapperDom = currentRootRef.value.querySelector(
-        '.info-select-all-popper .el-select-dropdown__list'
+    const optionItemWrapperDom = document.querySelector(
+        `.${popperClass}.${randomId} .el-select-dropdown__list`
     )
 
     if (!optionItemWrapperDom) return
@@ -200,71 +227,52 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles.scss';
-$--item-base-height: v-bind(optionItemBaseHeight);
-
 .g-info-select-all {
-    position: relative;
     width: 100%;
-    min-width: 100px;
+}
+</style>
+<style lang="scss">
+$--option-wrap-base-bottom: 8px;
 
-    /* 下拉框 */
-    :deep(.el-select-v2) {
-        // .el-select-v2__wrapper {
-        //     .el-select-v2__placeholder {
-        //         // color: var(--el-text-color-placeholder);
-        //     }
-        // }
+.info-select-all-popper {
+    * {
+        box-sizing: border-box;
+    }
 
-        // 下拉框弹出和输入框是平级的
-        .info-select-all-popper {
-            z-index: $--base-zi !important;
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
-            .el-select-dropdown__list {
-                overflow-x: auto !important;
-                margin-top: $--item-base-height !important;
-                padding-bottom: v-bind(optionWrapBaseBottom) !important;
-                margin-bottom: 0 !important;
-                box-sizing: content-box;
+    .el-select-dropdown__list {
+        overflow-x: auto !important;
+        margin-bottom: 2px !important;
+        margin-top: 0 !important;
+        padding-bottom: $--option-wrap-base-bottom !important;
+        box-sizing: content-box;
 
-                &::-webkit-scrollbar {
-                    height: v-bind(optionWrapBaseBottom);
-                }
+        &::-webkit-scrollbar {
+            height: $--option-wrap-base-bottom;
+        }
 
-                &::-webkit-scrollbar-track {
-                    background-color: transparent;
-                }
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
 
-                &::-webkit-scrollbar-thumb {
-                    background: #e8e8e8;
-                    border-radius: 4px;
+        &::-webkit-scrollbar-thumb {
+            background: #e8e8e8;
+            border-radius: 4px;
 
-                    &:hover {
-                        background: #a5a3a3;
-                    }
-                }
-
-                .el-select-dropdown__option-item {
-                    width: fit-content !important;
-                    min-width: 100%;
-                }
+            &:hover {
+                background: #a5a3a3;
             }
+        }
 
-            .el-select-v2__empty {
-                margin-top: $--item-base-height;
-            }
+        .el-select-dropdown__option-item {
+            width: fit-content !important;
+            min-width: 100%;
         }
     }
 }
-
-.dropdown-enter-active,
-.dropdown-leave-active {
-    transition: all 0.2s ease;
-}
-.dropdown-enter-from,
-.dropdown-leave-to {
-    transform: translateY(-10%);
-    opacity: 0;
-}
 </style>
-<style lang="scss"></style>

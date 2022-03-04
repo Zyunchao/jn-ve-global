@@ -92,6 +92,14 @@ interface Props {
      * 组件高度（用于虚拟滚动的 select）
      */
     height?: string
+    /**
+     * 宽度（当前组件固定定位，基于 body，需要获取到父级的宽度）
+     */
+    width: string
+    /**
+     * popper 的 z-index + 1
+     */
+    zIndex: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -106,6 +114,7 @@ const emits = defineEmits(['paramsChange', 'preventParentPopperHide'])
 
 const infoHeaderWrapRef = ref<HTMLElement>(null)
 const infoHeaderHight = ref<number>(34)
+const localZI = computed(() => parseInt(props.zIndex) + 5)
 
 // ------------- 参数处理：select 带有分页的 ----------------------------------------------------------------------
 const isCreateQuery = ref<boolean>(false)
@@ -189,14 +198,15 @@ defineExpose({
 
 /* 头（遮挡） */
 .info-header-wrap {
-    width: 100%;
-    overflow: hidden;
-    background-color: #e8e8e8;
     position: absolute;
-    z-index: $--base-zi + 1;
-    border-radius: 4px 4px 0 0;
+    width: v-bind(width);
+    z-index: v-bind(localZI);
     top: v-bind(popperTop);
     left: v-bind(popperLeft);
+    overflow: hidden;
+    background-color: #e8e8e8;
+    border-radius: 4px 4px 0 0;
+    box-sizing: border-box;
 
     // 分页查询
     &.select,

@@ -8,8 +8,8 @@
             :filterable="false"
             clearable
             :visible="true"
-            :popper-append-to-body="false"
-            :popper-class="popperClass"
+            :popper-append-to-body="true"
+            :popper-class="`${popperClass} ${randomId}`"
             @visible-change="visibleChange"
         >
             <el-option
@@ -22,26 +22,38 @@
             </el-option>
         </el-select>
 
-        <!-- 表头（依据 columns 生成） -->
-        <transition :name="dropdownShow && animationFlag ? 'dropdown' : ''">
-            <InfoHeader
-                v-show="dropdownShow"
-                ref="infoHeaderWrapRef"
-                type="select"
-                :popper-top="popperTop"
-                :popper-left="popperLeft"
-                :columns="columns"
-                :scroll-left="scrollLeft"
-                :initialized="initialized"
-                @click="preventPopperHide"
-                @params-change="headerParamsChange"
-                @prevent-parent-popper-hide="preventPopperHide"
-            />
-        </transition>
+        <!-- 表头（依据 columns 生成）to body -->
+        <InfoHeader
+            v-show="dropdownShow"
+            ref="infoHeaderWrapRef"
+            type="select"
+            :class="['info-header-wrapper-to-body', randomId]"
+            :popper-top="popperTop"
+            :popper-left="popperLeft"
+            :columns="columns"
+            :scroll-left="scrollLeft"
+            :initialized="initialized"
+            :width="currentRootWidth"
+            :z-index="popperZIndex"
+            @click="preventPopperHide"
+            @params-change="headerParamsChange"
+            @prevent-parent-popper-hide="preventPopperHide"
+        />
 
-        <!-- 分页 -->
+        <!-- 分页 to body -->
         <transition :name="dropdownShow && animationFlag ? 'opacity' : ''">
-            <div v-show="dropdownShow" class="pagination-wrapper" @click="preventPopperHide">
+            <div
+                v-show="dropdownShow"
+                ref="paginationRef"
+                :class="['info-select-pagination-wrapper', randomId]"
+                :style="{
+                    width: currentRootWidth,
+                    zIndex: parseInt(popperZIndex) + 5,
+                    left: popperLeft,
+                    top: paginationTop
+                }"
+                @click="preventPopperHide"
+            >
                 <Pagination
                     v-model:current-page="currentPage"
                     :total="total"
@@ -60,7 +72,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, onMounted, nextTick, onUnmounted, watchEffect } from 'vue'
+import { watch, ref, computed, onMounted, onUnmounted, watchEffect } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import FunctionalComponent from '../../FunctionalComponent'
 import { SelectOptionProps } from '../../index'
@@ -69,6 +81,7 @@ import OptionCustomContent from '../component/optionCustomContent.vue'
 import Pagination from '../component/pagination.vue'
 import ResizeObserver from 'resize-observer-polyfill'
 import _ from 'lodash'
+import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
     /**
@@ -114,34 +127,56 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits(['paramsChange', 'closed'])
 
+const randomId = `random-id-${uuidv4()}`
 const popperClass = 'info-select-popper'
 const dropdownShow = ref<boolean>(false)
 const animationFlag = ref<boolean>(true)
 
 // 组件根
-const currentRootRef = ref<Element>(null)
+const currentRootRef = ref<HTMLElement>(null)
 // select 实例
 const elSelectRef = ref<any>(null)
 // 弹出根容器
-const popperRoot = ref<Element>(null)
+const popperRoot = ref<HTMLElement>(null)
 // 表格头
 const infoHeaderWrapRef = ref<Element>(null)
 // 待选项的滚动容器
-const scrollWrapper = ref<Element>(null)
+const scrollWrapper = ref<HTMLElement>(null)
+// 分页
+const paginationRef = ref<HTMLElement>(null)
 
-// DOM Postion
+// DOM Position
 const popperTop = ref<string>('')
 const popperLeft = ref<string>('')
+const popperZIndex = ref<string>('1')
+
+// DOM Size
 const infoHeaderHeight = ref<string>('34px')
 const optionItemWrapperHeight = ref<number>(0)
-/**
- * 分页的顶部距离 = 容器本身top + 表头高度 + 内容高度
- */
+const currentRootWidth = computed(() => `${currentRootRef.value?.clientWidth}px`)
 const paginationTop = computed<string>(() => {
+    // 分页的顶部距离 = 容器本身top + 表头高度 + 内容高度
     const headerHeight = parseFloat(infoHeaderHeight.value)
     const contentHeight = optionItemWrapperHeight.value
     const wrapTop = popperTop.value ? parseFloat(popperTop.value) : 0
     return `${wrapTop + headerHeight + contentHeight}px`
+})
+
+/**
+ * 弹出容器的属性设置
+ */
+watchEffect(() => {
+    const pRootDom = popperRoot.value
+    const paginationDom = paginationRef.value
+    if (!pRootDom || !paginationDom) return
+    const paginationHeight = paginationDom.clientHeight
+
+    // 根容器宽度 = width
+    pRootDom.style.width = currentRootWidth.value
+    // 头的高度 = padding-top
+    pRootDom.style.paddingTop = infoHeaderHeight.value
+    // 分页的高度 = padding-bottom
+    pRootDom.style.paddingBottom = `${paginationHeight}px`
 })
 
 // 数据包装转换
@@ -181,9 +216,10 @@ const callback = function (mutationsList: MutationRecord[]) {
             const pRootDom = mutation.target as HTMLElement
             const display = pRootDom.style['display']
             if (display !== 'none') {
-                // 位移值
+                // popper 的位置 + 层级获取
                 popperTop.value = pRootDom.style.top
                 popperLeft.value = pRootDom.style.left
+                popperZIndex.value = pRootDom.style.zIndex
 
                 // 高度值
                 setPosition(pRootDom)
@@ -198,12 +234,25 @@ const callback = function (mutationsList: MutationRecord[]) {
 // 创建一个观察器实例并传入回调函数
 let mutationOb = new MutationObserver(callback)
 onMounted(() => {
-    // 弹框根
-    const pRootDom = currentRootRef.value.querySelector(`.${popperClass}.el-select__popper`)
-    if (!pRootDom) return null
-    popperRoot.value = pRootDom
-    // 以上述配置开始观察目标节点
-    mutationOb.observe(pRootDom, config)
+    // 当前组件的 popper 根
+    const currentPopperRootDom = document.querySelector(
+        `.${popperClass}.${randomId}.el-select__popper`
+    ) as HTMLElement
+
+    /**
+     * 需要将 表头dom 及 分页dom 挂载到 dom 上
+     */
+    const headerDom = document.querySelector(`.info-header-wrapper-to-body.${randomId}`)
+    const paginationDom = document.querySelector(`.info-select-pagination-wrapper.${randomId}`)
+
+    if (!currentPopperRootDom || !headerDom || !paginationDom) return null
+
+    document.body.appendChild(headerDom)
+    document.body.appendChild(paginationDom)
+
+    // 存储及监听
+    popperRoot.value = currentPopperRootDom
+    mutationOb.observe(currentPopperRootDom, config)
 })
 
 // ------------- 表头横向滚动 & 监听列表容器高度变化 ----------------------------------------------------------------------
@@ -232,13 +281,13 @@ function scrollEventHandle(e: Event) {
 }
 // 监听容器滚动
 function listeneSroll() {
-    const scrollWrapperDom = currentRootRef.value.querySelector(
-        `.${popperClass} .el-scrollbar__wrap`
+    const scrollWrapperDom = document.querySelector(
+        `.${popperClass}.${randomId} .el-scrollbar__wrap`
     )
 
     if (!scrollWrapperDom) return
 
-    scrollWrapper.value = scrollWrapperDom
+    scrollWrapper.value = scrollWrapperDom as HTMLElement
 
     scrollWrapperDom.removeEventListener('scroll', scrollEventHandle)
     scrollWrapperDom.addEventListener('scroll', scrollEventHandle)
@@ -246,8 +295,8 @@ function listeneSroll() {
 // 监听下拉列表的高度变化
 let resizeOb: ResizeObserver = null
 function listenHeight() {
-    const optionItemWrapperDom = currentRootRef.value.querySelector(
-        `.${popperClass}.el-select-dropdown`
+    const optionItemWrapperDom = document.querySelector(
+        `.${popperClass}.${randomId}.el-select-dropdown`
     )
 
     if (!optionItemWrapperDom) return
@@ -380,52 +429,8 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles.scss';
-
 .g-info-select {
-    position: relative;
     width: 100%;
-
-    :deep(.el-select) {
-        .info-select-popper {
-            z-index: $--base-zi !important;
-            width: 100%;
-
-            // 下拉弹出根容器
-            &.el-select__popper {
-                padding: v-bind(infoHeaderHeight) 0 $--pagination-height 0;
-                overflow: hidden;
-            }
-
-            .el-select-dropdown__list {
-                width: fit-content;
-                margin-top: 0 !important;
-            }
-        }
-    }
-
-    .pagination-wrapper {
-        height: $--pagination-height;
-        position: absolute;
-        width: 100%;
-        z-index: $--base-zi + 1;
-        left: v-bind(popperLeft);
-        top: v-bind(paginationTop);
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        border-top: 1px solid #e4e7ed;
-    }
-}
-
-.dropdown-enter-active,
-.dropdown-leave-active {
-    transition: all 0.3s ease;
-}
-.dropdown-enter-from,
-.dropdown-leave-to {
-    transform: translateY(-10%);
-    opacity: 0;
 }
 
 .opacity-enter-active,
@@ -437,4 +442,28 @@ onUnmounted(() => {
     opacity: 0;
 }
 </style>
-<style lang="scss"></style>
+<style lang="scss">
+$--pagination-height: 32px;
+
+// 下拉弹出容器
+.info-select-popper {
+    &.el-select__popper {
+        overflow: hidden;
+    }
+
+    .el-select-dropdown__list {
+        width: fit-content;
+        margin-top: 0 !important;
+    }
+}
+
+// 分页（to body）
+.info-select-pagination-wrapper {
+    position: absolute;
+    height: $--pagination-height;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #e4e7ed;
+}
+</style>
