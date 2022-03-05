@@ -18,6 +18,10 @@
 
 <h3>Bug Fix</h3>
 
+<h4>InfoSelectAll</h4>
+
+关闭下拉列表后，表头位置值未初始化
+
 <h4>InfoAutocomplete</h4>
 
 可编辑表格内嵌组件移除时，表头依旧存在
@@ -27,7 +31,7 @@
 <h4>InfoXXXX</h4>
 
 1. 在组件销毁后，主动移除挂载到 body 的 dom
-2. 优化代码结构，将三者重复逻辑抽取到 mixin 中
+2. 重构代码结构，将三者重复逻辑抽取到 mixin 中
 
 </update-log-block>
 
