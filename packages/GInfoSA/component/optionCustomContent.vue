@@ -79,6 +79,12 @@ const headerJSHieght = '34px'
 
 .option-custom-content {
     display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
     &.select {
         li {

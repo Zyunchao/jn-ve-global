@@ -332,7 +332,7 @@
                         :fetch-suggestions="columnConfig.controlConfig.fetchSuggestions"
                         :value-key="columnConfig.controlConfig.valueKey"
                         size="mini"
-                        @blur="delayControlToText"
+                        @closed="delayControlToText"
                     />
                 </template>
 

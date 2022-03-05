@@ -74,14 +74,14 @@ export default {
 <script lang="ts" setup>
 import { watch, ref, computed, onMounted, onUnmounted, watchEffect, nextTick } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
-import FunctionalComponent from '../../FunctionalComponent'
 import { SelectOptionProps } from '../../index'
 import InfoHeader from '../component/infoHeader.vue'
 import OptionCustomContent from '../component/optionCustomContent.vue'
 import Pagination from '../component/pagination.vue'
 import ResizeObserver from 'resize-observer-polyfill'
 import _ from 'lodash'
-import { v4 as uuidv4 } from 'uuid'
+import useMainLogic from '../hooks'
+import { packagingOptionData } from '../utils'
 
 interface Props {
     /**
@@ -127,82 +127,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits(['paramsChange', 'closed'])
 
-const randomId = `random-id-${uuidv4()}`
-const popperClass = 'info-select-popper'
-const dropdownShow = ref<boolean>(false)
-const animationFlag = ref<boolean>(true)
-
-// 组件根
-const currentRootRef = ref<HTMLElement>(null)
-// select 实例
-const elSelectRef = ref<any>(null)
-// 弹出根容器
-const popperRoot = ref<HTMLElement>(null)
-// 表格头
-const infoHeaderWrapRef = ref<Element>(null)
-// 待选项的滚动容器
-const scrollWrapper = ref<HTMLElement>(null)
-// 分页
-const paginationRef = ref<HTMLElement>(null)
-
-// DOM Position
-const popperTop = ref<string>('')
-const popperLeft = ref<string>('')
-const popperZIndex = ref<string>('1')
-
-// DOM Size
-const infoHeaderHeight = ref<string>('34px')
-const optionItemWrapperHeight = ref<number>(0)
-const currentRootWidth = computed(() => `${currentRootRef.value?.clientWidth}px`)
-const paginationTop = computed<string>(() => {
-    // 分页的顶部距离 = 容器本身top + 表头高度 + 内容高度
-    const headerHeight = parseFloat(infoHeaderHeight.value)
-    const contentHeight = optionItemWrapperHeight.value
-    const wrapTop = popperTop.value ? parseFloat(popperTop.value) : 0
-    return `${wrapTop + headerHeight + contentHeight}px`
-})
-
-/**
- * 弹出容器的属性设置
- */
-watchEffect(() => {
-    const pRootDom = popperRoot.value
-    const paginationDom = paginationRef.value
-    if (!pRootDom || !paginationDom) return
-    const paginationHeight = paginationDom.clientHeight
-
-    // 根容器宽度 = width
-    pRootDom.style.width = currentRootWidth.value
-    // 头的高度 = padding-top
-    pRootDom.style.paddingTop = infoHeaderHeight.value
-    // 分页的高度 = padding-bottom
-    pRootDom.style.paddingBottom = `${paginationHeight}px`
-})
-
 // 数据包装转换
-const VALUE_K = 'value'
-const LABEL_K = 'label'
-const localSelectOptins = computed(() =>
-    props.optionsData.map((item) => {
-        const target = { ...item }
+const localSelectOptins = computed(() => packagingOptionData(props.optionsData, props.optionProps))
 
-        // value
-        if (target[VALUE_K] === undefined || target[VALUE_K] === null) {
-            target[VALUE_K] = target[props.optionProps.value]
-        }
-
-        // key
-        if (target[LABEL_K] === undefined || target[LABEL_K] === null) {
-            target[LABEL_K] = item[props.optionProps.label]
-        }
-
-        return target
-    })
-)
-
-// ------------- 隐藏 or 显示 + 表头位置获取 + 分页位置获取 ----------------------------------------------------------------------
-// 观察器的配置（需要观察什么变动）
-const config: MutationObserverInit = { attributes: true }
+// 防抖执行
 const setPosition = _.debounce((pRootDom?: HTMLElement) => {
     setTimeout(() => {
         infoHeaderHeight.value = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`
@@ -243,65 +171,62 @@ const callback = function (mutationsList: MutationRecord[]) {
 }
 // 创建一个观察器实例并传入回调函数
 let mutationOb = new MutationObserver(callback)
-onMounted(() => {
-    // 当前组件的 popper 根
-    const currentPopperRootDom = document.querySelector(
-        `.${popperClass}.${randomId}.el-select__popper`
-    ) as HTMLElement
 
-    /**
-     * 需要将 表头dom 及 分页dom 挂载到 dom 上
-     */
-    const headerDom = document.querySelector(`.info-header-wrapper-to-body.${randomId}`)
-    const paginationDom = document.querySelector(`.info-select-pagination-wrapper.${randomId}`)
-
-    if (!currentPopperRootDom || !headerDom || !paginationDom) return null
-
-    document.body.appendChild(headerDom)
-    document.body.appendChild(paginationDom)
-
-    // 存储及监听
-    popperRoot.value = currentPopperRootDom
-    mutationOb.observe(currentPopperRootDom, config)
+// 重复逻辑抽取
+const {
+    randomId,
+    popperClass,
+    dropdownShow,
+    animationFlag,
+    currentRootRef,
+    elSelectRef,
+    popperRoot,
+    infoHeaderWrapRef,
+    scrollWrapper,
+    paginationRef,
+    popperTop,
+    popperLeft,
+    popperZIndex,
+    scrollLeft,
+    infoHeaderHeight,
+    optionItemWrapperHeight,
+    currentRootWidth
+} = useMainLogic({
+    type: 'info-select',
+    mutationOb,
+    popperClassSpecific: 'el-select__popper',
+    scrollWrapDomClass: 'el-scrollbar__wrap',
+    optionsData: props.optionsData,
+    dataChangeEffect: () => {
+        listenHeight()
+    }
 })
 
-// ------------- 表头横向滚动 & 监听列表容器高度变化 ----------------------------------------------------------------------
-const scrollLeft = ref<number>(0)
-watch(
-    () => props.optionsData,
-    (data) => {
-        /**
-         * 只有在待选项的数据不为空时，列表容器才会生成
-         * 反之生成无数据提示
-         */
-        if (data && !!data.length) {
-            setTimeout(() => {
-                listeneSroll()
-                listenHeight()
-            }, 100)
-        }
-    },
-    {
-        immediate: true
-    }
-)
-// 滚动同步到 header
-function scrollEventHandle(e: Event) {
-    scrollLeft.value = (e.target as Element).scrollLeft
-}
-// 监听容器滚动
-function listeneSroll() {
-    const scrollWrapperDom = document.querySelector(
-        `.${popperClass}.${randomId} .el-scrollbar__wrap`
-    )
+const paginationTop = computed<string>(() => {
+    // 分页的顶部距离 = 容器本身top + 表头高度 + 内容高度
+    const headerHeight = parseFloat(infoHeaderHeight.value)
+    const contentHeight = optionItemWrapperHeight.value
+    const wrapTop = popperTop.value ? parseFloat(popperTop.value) : 0
+    return `${wrapTop + headerHeight + contentHeight}px`
+})
 
-    if (!scrollWrapperDom) return
+/**
+ * 弹出容器的属性设置
+ */
+watchEffect(() => {
+    const pRootDom = popperRoot.value
+    const paginationDom = paginationRef.value
+    if (!pRootDom || !paginationDom) return
+    const paginationHeight = paginationDom.clientHeight
 
-    scrollWrapper.value = scrollWrapperDom as HTMLElement
+    // 根容器宽度 = width
+    pRootDom.style.width = currentRootWidth.value
+    // 头的高度 = padding-top
+    pRootDom.style.paddingTop = infoHeaderHeight.value
+    // 分页的高度 = padding-bottom
+    pRootDom.style.paddingBottom = `${paginationHeight}px`
+})
 
-    scrollWrapperDom.removeEventListener('scroll', scrollEventHandle)
-    scrollWrapperDom.addEventListener('scroll', scrollEventHandle)
-}
 // 监听下拉列表的高度变化
 let resizeOb: ResizeObserver = null
 function listenHeight() {
@@ -326,7 +251,6 @@ function listenHeight() {
 
 // ------------- 下拉框出现/隐藏 && 阻止默认行为 ----------------------------------------------------------------------
 const isPrevent = ref<boolean>(false)
-
 /**
  * 无论是失去焦点，还是被设置了 visible = true
  * visibleChange 都会触发
@@ -407,7 +331,7 @@ const initAtBefore = () => {
     if (scrollWrapper.value) {
         setTimeout(() => {
             scrollWrapper.value.scrollLeft = 0
-        }, 100)
+        }, 10)
     }
 }
 const initAtAfter = () => {
@@ -430,9 +354,6 @@ const initParamsHandle = _.debounce(() => {
 
 // ------------- 卸载，停止观察 ----------------------------------------------------------------------
 onUnmounted(() => {
-    mutationOb && mutationOb.disconnect()
-    mutationOb = null
-
     resizeOb && resizeOb.disconnect()
     resizeOb = null
 })
@@ -453,27 +374,5 @@ onUnmounted(() => {
 }
 </style>
 <style lang="scss">
-$--pagination-height: 32px;
-
-// 下拉弹出容器
-.info-select-popper {
-    &.el-select__popper {
-        overflow: hidden;
-    }
-
-    .el-select-dropdown__list {
-        width: fit-content;
-        margin-top: 0 !important;
-    }
-}
-
-// 分页（to body）
-.info-select-pagination-wrapper {
-    position: absolute;
-    height: $--pagination-height;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    border-top: 1px solid #e4e7ed;
-}
+@import './styles.global.scss';
 </style>

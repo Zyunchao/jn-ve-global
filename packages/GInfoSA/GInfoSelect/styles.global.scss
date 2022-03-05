@@ -1,0 +1,23 @@
+$--pagination-height: 32px;
+
+// 下拉弹出容器
+.info-select-popper {
+    &.el-select__popper {
+        overflow: hidden;
+    }
+
+    .el-select-dropdown__list {
+        width: fit-content;
+        margin-top: 0 !important;
+    }
+}
+
+// 分页（to body）
+.info-select-pagination-wrapper {
+    position: absolute;
+    height: $--pagination-height;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #e4e7ed;
+}

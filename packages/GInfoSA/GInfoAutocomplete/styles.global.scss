@@ -1,0 +1,19 @@
+.info-autocomplete-popper {
+    overflow: hidden;
+
+    .el-autocomplete-suggestion__wrap {
+        padding-top: 0;
+        max-height: 240px;
+    }
+
+    .el-autocomplete-suggestion__list {
+        >li {
+            width: fit-content;
+
+            &:not([role='option']) {
+                width: 100%;
+                padding: 0;
+            }
+        }
+    }
+}
