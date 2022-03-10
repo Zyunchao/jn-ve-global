@@ -536,7 +536,10 @@ const controlCellShow = computed<boolean>(() => {
      * 优先级2
      *  总控：row.edit = true
      */
-    if (localData.value.edit === true) return true
+    if (localData.value.edit === true) {
+        parentClassFlag('add')
+        return true
+    }
 
     /**
      * 优先级3
@@ -1017,6 +1020,7 @@ $--cell-min-height: 29px;
 
         > div {
             z-index: 2;
+            position: relative;
         }
 
         // 错误信息

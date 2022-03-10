@@ -400,6 +400,14 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: 'InfoAutocomplete',
         width: 300,
         editable: true,
+        openDB: true,
+        rules: [
+            {
+                required: true,
+                type: 'string',
+                message: '姓名是必填项'
+            }
+        ],
         controlConfig: {
             type: 'infoAutocomplete',
             columns: InfoSelectColumns,
