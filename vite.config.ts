@@ -2,13 +2,13 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 const { resolve } = require('path')
-import viteSvgIcons from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 export default defineConfig({
     plugins: [
         vue(),
         vueJsx(),
-        viteSvgIcons({
+        createSvgIconsPlugin({
             // 指定需要缓存的图标文件夹
             iconDirs: [resolve(process.cwd(), 'packages/assets/icons/svg')],
             // 指定symbolId格式

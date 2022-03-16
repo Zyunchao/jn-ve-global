@@ -1,6 +1,6 @@
 import { defineUserConfig } from 'vuepress'
 import type { DefaultThemeOptions } from 'vuepress'
-import viteSvgIcons from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import sidebar from './slidebar'
 import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -44,7 +44,7 @@ export default defineUserConfig<DefaultThemeOptions>({
         viteOptions: {
             plugins: [
                 vueJsx(),
-                viteSvgIcons({
+                createSvgIconsPlugin({
                     iconDirs: [path.resolve(__dirname, '../../packages/assets/icons/svg')],
                     symbolId: 'custom-icon-[dir]-[name]'
                 })
