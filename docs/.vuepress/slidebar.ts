@@ -2,7 +2,7 @@ export default {
     // 组件库侧边栏
     '/components/': [
         {
-            text: '组件库指引',
+            text: '指引',
             link: '/components/index.md'
         },
         {
@@ -66,7 +66,7 @@ export default {
     // 微前端框架
     '/micro/': [
         {
-            text: '微前端指引',
+            text: '概念',
             link: '/micro/index.md'
         },
         {
