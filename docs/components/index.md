@@ -1,26 +1,5 @@
 # 指引
 
-使用组件库前备知识点：<br/>
-[Typescript](https://www.tslang.cn/index.html) <br/>
-[Vue3](https://vue3js.cn/docs/zh/) <br/>
-[Element-plus](https://element-plus.gitee.io/#/zh-CN/component/installation)
-
-## 理念
-
-该组件库是在 Element-plus 的基础上进行二次封装的，组件库的核心思想包括：
-
-:::tip 去重复
-将重复的一些模块抽取出来，通过引用**定制化**的组件，更改不同的 Props 快速实现模块的开发
-:::
-
-:::tip 去模板
-即使 Element 已经为我们提供了丰富的组件，但我们依旧需要复制粘贴较多的 template，导致我们在修改一些页面时还是需要去一堆模板中寻找
-:::
-
-:::tip 数据驱动
-通过配置数据模型，传递给组件，内部制定规则生成 template，从而简化组件的模板部分，使我们只需要关注数据模型的修改即可
-:::
-
 ## 安装
 
 ```shell
@@ -48,6 +27,22 @@ app
     .use(GlobalComponents)
     .mount('#app')
 ```
+
+## 理念
+
+该组件库是在 Element-plus 的基础上进行二次封装的，组件库的核心思想包括：
+
+:::tip 去重复
+将重复的一些模块抽取出来，通过引用**定制化**的组件，更改不同的 Props 快速实现模块的开发
+:::
+
+:::tip 去模板
+即使 Element 已经为我们提供了丰富的组件，但我们依旧需要复制粘贴较多的 template，导致我们在修改一些页面时还是需要去一堆模板中寻找
+:::
+
+:::tip 数据驱动
+通过配置数据模型，传递给组件，内部制定规则生成 template，从而简化组件的模板部分，使我们只需要关注数据模型的修改即可
+:::
 
 ## 使用
 

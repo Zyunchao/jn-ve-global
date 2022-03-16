@@ -1,63 +1,77 @@
-export default [
-    {
-        text: '指引',
-        link: '/modules/guide.md'
-    },
-    {
-        text: '控制组件',
-        children: [
-            { text: 'Form', link: '/modules/Form.md' },
-            { text: 'Tabs', link: '/modules/Tabs.md' },
-            { text: 'SelectTree', link: '/modules/SelectTree.md' },
-            { text: 'OperateExcel', link: '/modules/OperateExcel.md' },
-            { text: 'FigureInput', link: '/modules/FigureInput.md' },
-            { text: 'IconPicker', link: '/modules/IconPicker.md' },
-            { text: 'Upload', link: '/modules/Upload.md' },
-            { text: 'InfoSelect', link: '/modules/InfoSAA/InfoSelect.md' },
-            { text: 'InfoSelectAll', link: '/modules/InfoSAA/InfoSelectAll.md' },
-            { text: 'InfoAutocomplete', link: '/modules/InfoSAA/InfoAutocomplete.md' }
-        ]
-    },
-    {
-        text: '布局组件',
-        children: [
-            { text: 'BaseModule', link: '/modules/BaseModule.md' },
-            { text: 'BaseDrawerContent', link: '/modules/BaseDrawerContent.md' },
-            { text: 'Modal', link: '/modules/Modal.md' },
-            { text: 'Collapse', link: '/modules/Collapse.md' }
-        ]
-    },
-    {
-        text: '展示组件',
-        children: [
-            { text: 'Icon', link: '/modules/Icon.md' },
-            { text: 'Table', link: '/modules/Table.md' },
-            { text: 'Tree', link: '/modules/Tree.md' }
-        ]
-    },
-    {
-        text: '基础组件',
-        children: [{ text: 'DebounceButton', link: '/modules/DebounceButton.md' }]
-    },
-    {
-        text: 'ECharts',
-        children: [
-            {
-                text: 'Basic',
-                link: '/modules/Chart/Basic.md'
-            },
-            {
-                text: 'Bar',
-                link: '/modules/Chart/Bar.md'
-            },
-            {
-                text: 'Line',
-                link: '/modules/Chart/Line.md'
-            },
-            {
-                text: 'Pie',
-                link: '/modules/Chart/Pie.md'
-            }
-        ]
-    }
-]
+export default {
+    // 组件库侧边栏
+    '/components/': [
+        {
+            text: '组件库指引',
+            link: '/components/index.md'
+        },
+        {
+            text: '控制组件',
+            children: [
+                { text: 'Form', link: '/components/Form.md' },
+                { text: 'Tabs', link: '/components/Tabs.md' },
+                { text: 'SelectTree', link: '/components/SelectTree.md' },
+                { text: 'OperateExcel', link: '/components/OperateExcel.md' },
+                { text: 'FigureInput', link: '/components/FigureInput.md' },
+                { text: 'IconPicker', link: '/components/IconPicker.md' },
+                { text: 'Upload', link: '/components/Upload.md' },
+                { text: 'InfoSelect', link: '/components/InfoSAA/InfoSelect.md' },
+                { text: 'InfoSelectAll', link: '/components/InfoSAA/InfoSelectAll.md' },
+                { text: 'InfoAutocomplete', link: '/components/InfoSAA/InfoAutocomplete.md' }
+            ]
+        },
+        {
+            text: '布局组件',
+            children: [
+                { text: 'BaseModule', link: '/components/BaseModule.md' },
+                { text: 'BaseDrawerContent', link: '/components/BaseDrawerContent.md' },
+                { text: 'Modal', link: '/components/Modal.md' },
+                { text: 'Collapse', link: '/components/Collapse.md' }
+            ]
+        },
+        {
+            text: '展示组件',
+            children: [
+                { text: 'Icon', link: '/components/Icon.md' },
+                { text: 'Table', link: '/components/Table.md' },
+                { text: 'Tree', link: '/components/Tree.md' }
+            ]
+        },
+        {
+            text: '基础组件',
+            children: [{ text: 'DebounceButton', link: '/components/DebounceButton.md' }]
+        },
+        {
+            text: 'ECharts',
+            children: [
+                {
+                    text: 'Basic',
+                    link: '/components/Chart/Basic.md'
+                },
+                {
+                    text: 'Bar',
+                    link: '/components/Chart/Bar.md'
+                },
+                {
+                    text: 'Line',
+                    link: '/components/Chart/Line.md'
+                },
+                {
+                    text: 'Pie',
+                    link: '/components/Chart/Pie.md'
+                }
+            ]
+        }
+    ],
+    // 微前端框架
+    '/micro/': [
+        {
+            text: '微前端指引',
+            link: '/micro/index.md'
+        },
+        {
+            text: '仓库管理',
+            link: '/micro/storeMage.md'
+        }
+    ]
+}

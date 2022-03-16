@@ -15,8 +15,8 @@ const base = process.env.NODE_ENV === 'production' && !process.argv[4] ? '/eleme
 
 export default defineUserConfig<DefaultThemeOptions>({
     lang: 'zh-CN',
-    title: 'Ve-Global',
-    description: '基于 vue3+element-plus+ts 的组件库',
+    title: 'JN Frontend Docs',
+    description: '江苏金农股份有限公司前端文档站，站内包含内部组件库、微前端框架等文档',
     base,
 
     // 主题配置
