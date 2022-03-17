@@ -70,6 +70,18 @@ export default {
             link: '/micro/index.md'
         },
         {
+            text: '微前端方案',
+            link: '/micro/scheme.md'
+        },
+        {
+            text: '优缺点对比',
+            link: '/micro/practice.md'
+        },
+        {
+            text: '落地改造',
+            link: '/micro/plan.md'
+        },
+        {
             text: '仓库管理',
             link: '/micro/storeMage.md'
         }

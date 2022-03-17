@@ -3,7 +3,7 @@ home: true
 heroText: 金农前端文档站
 tagline: 📚 站内包含内部组件库、微前端框架等文档
 actions:
-    - text: 组件文档
+    - text: 组件库文档
       link: /components/
       type: primary
 
