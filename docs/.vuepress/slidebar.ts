@@ -84,6 +84,10 @@ export default {
         {
             text: '仓库管理',
             link: '/micro/storeMage.md'
+        },
+        {
+            text: '目录结构',
+            link: '/micro/construction.md'
         }
     ]
 }
