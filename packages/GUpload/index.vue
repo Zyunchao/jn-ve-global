@@ -391,7 +391,7 @@ const beforeUpload = (file: UploadFile) => {
     }
 
     // 用户传递的
-    if (attrs.value.beforeUpload) return attrs.value['before-upload'](file)
+    if (attrs.value['before-upload']) return attrs.value['before-upload'](file)
 
     return true
 }

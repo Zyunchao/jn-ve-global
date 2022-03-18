@@ -1,6 +1,6 @@
 {
     "name": "jn-ve-global",
-    "version": "1.5.8",
+    "version": "1.5.9",
     "author": "zyc",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
@@ -37,7 +37,7 @@
         "docs:build:github": "vuepress build docs github"
     },
     "dependencies": {
-        "@element-plus/icons-vue": "^0.2.4",
+        "@element-plus/icons-vue": "0.2.4",
         "echarts": "^5.3.1",
         "element-plus": "1.2.0-beta.6",
         "lodash": "^4.17.21",

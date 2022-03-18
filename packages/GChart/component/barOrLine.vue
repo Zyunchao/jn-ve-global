@@ -18,7 +18,7 @@ import {
     EChartsOption,
     YAXisComponentOption,
     LineSeriesOption
-} from 'echarts/types/dist/echarts'
+} from 'echarts'
 import _ from 'lodash'
 import { size2Rem, isObject } from '../utils'
 import defaultColors from '../constant/colors'

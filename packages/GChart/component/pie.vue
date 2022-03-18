@@ -15,7 +15,7 @@ import PieConfig from '../interface/PieConfig'
 import _ from 'lodash'
 import { size2Rem, isObject } from '../utils'
 import defaultColors from '../constant/colors'
-import { EChartsOption, PieSeriesOption } from 'echarts/types/dist/echarts'
+import { EChartsOption, PieSeriesOption } from 'echarts'
 
 interface Props {
     config: PieConfig
