@@ -88,6 +88,43 @@ export default {
         {
             text: '目录结构',
             link: '/micro/construction.md'
+        },
+        {
+            text: '模块详解',
+            children: [
+                {
+                    text: '索引',
+                    link: '/micro/moduleDetail/indexes.md'
+                },
+                {
+                    text: '类型',
+                    link: '/micro/moduleDetail/types.md'
+                },
+                {
+                    text: '资源',
+                    link: '/micro/moduleDetail/assets.md'
+                },
+                {
+                    text: '路由',
+                    link: '/micro/moduleDetail/router.md'
+                },
+                {
+                    text: '全局状态管理',
+                    link: '/micro/moduleDetail/store.md'
+                },
+                {
+                    text: '请求',
+                    link: '/micro/moduleDetail/request.md'
+                },
+                {
+                    text: '页面',
+                    link: '/micro/moduleDetail/pages.md'
+                },
+                {
+                    text: '组件',
+                    link: '/micro/moduleDetail/component.md'
+                }
+            ]
         }
     ]
 }
