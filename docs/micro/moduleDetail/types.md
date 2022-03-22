@@ -101,7 +101,7 @@ export default interface AppFunc {
 }
 ```
 
-4. 使用：在具体的模块（任何 *.vue、*.ts、*.tsx）中，import 引入
+4. 使用：在具体的模块（任何 \*.vue/\*.ts/\*.tsx）中，import 引入
 
 ```ts
 import AppFunc from '@/@types/entity/AppFunc'

@@ -1,5 +1,8 @@
 {
     // "no-inline-html": false
     "MD033": false,
-    "MD004": false
+    "MD004": false,
+    "MD024": {
+        "siblings_only": true
+    }
 }

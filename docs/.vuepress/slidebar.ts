@@ -66,28 +66,41 @@ export default {
     // 微前端框架
     '/micro/': [
         {
-            text: '概念',
-            link: '/micro/index.md'
-        },
-        {
-            text: '微前端方案',
-            link: '/micro/scheme.md'
-        },
-        {
-            text: '优缺点对比',
-            link: '/micro/practice.md'
-        },
-        {
-            text: '落地改造',
-            link: '/micro/plan.md'
+            text: '微前端',
+            children: [
+                {
+                    text: '概念',
+                    link: '/micro/index.md'
+                },
+                {
+                    text: '可用方案',
+                    link: '/micro/scheme.md'
+                },
+                {
+                    text: '优缺点对比',
+                    link: '/micro/practice.md'
+                },
+                {
+                    text: '落地改造',
+                    link: '/micro/plan.md'
+                }
+            ]
         },
         {
             text: '仓库管理',
             link: '/micro/storeMage.md'
         },
         {
+            text: '快速开始',
+            link: '/micro/quickStart.md'
+        },
+        {
             text: '目录结构',
             link: '/micro/construction.md'
+        },
+        {
+            text: '环境变量',
+            link: '/micro/environmentVar.md'
         },
         {
             text: '模块详解',
@@ -106,7 +119,17 @@ export default {
                 },
                 {
                     text: '路由',
-                    link: '/micro/moduleDetail/router.md'
+                    collapsible: true,
+                    children: [
+                        {
+                            text: '概念',
+                            link: '/micro/moduleDetail/routerConcept.md'
+                        },
+                        {
+                            text: '实用',
+                            link: '/micro/moduleDetail/routerPractical.md'
+                        }
+                    ]
                 },
                 {
                     text: '全局状态管理',
