@@ -98,8 +98,16 @@ export default [
                         link: '/micro/moduleDetail/requestConcept.md'
                     },
                     {
+                        text: 'api',
+                        link: '/micro/moduleDetail/requestApi.md'
+                    },
+                    {
                         text: '实用',
                         link: '/micro/moduleDetail/requestPractical.md'
+                    },
+                    {
+                        text: '代理配置',
+                        link: '/micro/moduleDetail/requestProxy.md'
                     }
                 ]
             },
