@@ -267,8 +267,8 @@ microAppRoot 组件是基座应用展示微应用的根组件
 
 ## 启动
 
-* 基座应用：`yarn dev` 或 `npm run dev`
-* 微应用：`yarn dev` 或 `npm run dev`
+* 基座应用：进入基座应用目录 `yarn dev` 或 `npm run dev`
+* 微应用：进入微应用目录 `yarn dev` 或 `npm run dev`
 
 在启动之后，基座应用会自动打开浏览器及端口，微应用不会打开，但是当你在浏览器中输入微应用的端口时，依然能够访问到微应用（会报错）
 
