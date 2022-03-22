@@ -110,8 +110,18 @@ export default {
                     link: '/micro/moduleDetail/indexes.md'
                 },
                 {
-                    text: '类型',
-                    link: '/micro/moduleDetail/types.md'
+                    text: '系统类型',
+                    collapsible: true,
+                    children: [
+                        {
+                            text: '概念',
+                            link: '/micro/moduleDetail/typesConcept.md'
+                        },
+                        {
+                            text: '实体类使用',
+                            link: '/micro/moduleDetail/typesPractical.md'
+                        }
+                    ]
                 },
                 {
                     text: '资源',
