@@ -13,7 +13,7 @@ export interface BtnProps {
     /**
      * 按钮的类型，同 Element Button
      */
-    type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
+    type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'default'
     /**
      * 禁用
      */
