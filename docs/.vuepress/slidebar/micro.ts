@@ -134,5 +134,9 @@ export default [
     {
         text: '生产&发布',
         link: '/micro/production.md'
+    },
+    {
+        text: '常见问题',
+        link: '/micro/FAQ.md'
     }
 ]
