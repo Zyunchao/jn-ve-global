@@ -117,7 +117,17 @@ export default [
             },
             {
                 text: '组件',
-                link: '/micro/moduleDetail/component.md'
+                collapsible: true,
+                children: [
+                    {
+                        text: '概念',
+                        link: '/micro/moduleDetail/componentConcept.md'
+                    },
+                    {
+                        text: '实用',
+                        link: '/micro/moduleDetail/componentPractical.md'
+                    }
+                ]
             }
         ]
     },
