@@ -5,12 +5,15 @@
         </el-button>
 
         <h3>Text</h3>
-        <g-upload
-            v-model="fileIds"
-            v-model:fileList="fileList"
-            action="/api/kinso-basic-open-server/v1/document/file/upload"
-            list-type="text"
-        />
+        <div class="box">
+            <g-upload
+                v-model="fileIds"
+                v-model:fileList="fileList"
+                action="/api/kinso-basic-open-server/v1/document/file/upload"
+                list-type="text"
+                disabled
+            />
+        </div>
 
         <h3>照片墙</h3>
         <g-upload
@@ -19,6 +22,7 @@
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture-card"
             download-hide
+            disabled
         />
 
         <h3>列表</h3>
@@ -28,6 +32,7 @@
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture"
             del-hide
+            disabled
         />
 
         <h3>头像</h3>
@@ -150,6 +155,10 @@ const onRemove = (file, fileList) => {
 <style lang="scss" scoped>
 h3 {
     margin: 20px 0 10px 0;
+}
+
+.box {
+    width: 400px;
 }
 </style>
 

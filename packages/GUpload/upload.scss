@@ -254,6 +254,98 @@ $--base-animation-date: 0.2s;
                 }
             }
         }
+
+
+        /* text */
+        &.el-upload-list--text {
+            .file-list-item {
+                $--btn-wrapper-width: 60px;
+                $--btn-wrapper-right: 20px;
+                $--text-item-height: 24px;
+
+                width: 100%;
+                height: $--text-item-height;
+                overflow: hidden;
+                margin-bottom: 5px;
+                position: relative;
+                border-radius: 3px;
+                transition: background-color 0.4s;
+
+                &:hover {
+                    background-color: var(--el-fill-color-light);
+
+                    .btns {
+                        i {
+                            opacity: 1;
+                        }
+                    }
+                }
+
+                // 信息
+                .info {
+                    width: calc(100% - $--btn-wrapper-width - $--btn-wrapper-right);
+                    display: flex;
+                    align-items: center;
+                    height: $--text-item-height;
+
+                    img.preview {
+                        width: 20px;
+                        height: 20px;
+                        margin-right: 6px;
+                    }
+
+                    span.file-name {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        font-size: var(--el-font-size-base);
+                    }
+                }
+
+                // 按钮组
+                .btns {
+                    width: $--btn-wrapper-width;
+                    height: $--text-item-height;
+                    right: $--btn-wrapper-right;
+                    position: absolute;
+                    top: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    i {
+                        font-size: 18px;
+                        opacity: 0;
+                        transition: opacity $--base-animation-date, color $--base-animation-date;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: #399ffb;
+                        }
+                    }
+                }
+
+                // 状态标识
+                .status-label {
+                    position: absolute;
+                    right: -15px;
+                    top: -6px;
+                    width: 36px;
+                    height: 20px;
+                    background: #13ce66;
+                    text-align: center;
+                    transform: rotate(45deg);
+                    box-shadow: 0 0 1pc 1px rgba(0, 0, 0, 0.2);
+                    color: #fff;
+
+                    i {
+                        font-size: 12px;
+                        margin-top: 8px;
+                        transform: rotate(-45deg);
+                    }
+                }
+            }
+        }
     }
 
 
@@ -262,6 +354,17 @@ $--base-animation-date: 0.2s;
         :deep(.el-upload--picture-card) {
             cursor: no-drop;
             border: 1px dashed #c0ccda !important;
+        }
+
+        &.text,
+        &.picture-card,
+        &.picture {
+
+            :deep(.el-upload),
+            :deep(.status-label),
+            :deep(.del-btn-icon) {
+                display: none;
+            }
         }
     }
 }

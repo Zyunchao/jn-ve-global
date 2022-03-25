@@ -1,7 +1,7 @@
 <template>
     <el-upload
         ref="uploadRef"
-        :class="{ 'g-upload': true, 'is-disabled': disabled }"
+        :class="[{ 'g-upload': true, 'is-disabled': disabled }, attrs['list-type']]"
         :file-list="localFileList"
         v-bind="getUploadProps()"
         :disabled="disabled"
@@ -32,13 +32,18 @@
                 <img v-if="currentFile && currentFile.url" :src="currentFile.url" alt="">
                 <div v-if="currentFile && currentFile.url" class="operation" @click.stop="">
                     <g-icon icon="el-View" @click="modalShow = true" />
-                    <g-icon v-if="!disabled" icon="el-Delete" @click="delAvatar" />
+                    <g-icon
+                        v-if="!disabled"
+                        icon="el-Delete"
+                        class="del-btn-icon"
+                        @click="delAvatar"
+                    />
                 </div>
             </div>
         </template>
 
         <!-- picture file list -->
-        <template v-if="['picture', 'picture-card'].includes(uploadListType)" #file="{ file }">
+        <template #file="{ file }">
             <div :class="['file-list-item', uploadListType]">
                 <!-- 略缩 -->
                 <div class="info">
@@ -56,7 +61,12 @@
                         @click="filePreview(file)"
                     />
                     <g-icon v-if="!downloadHide" icon="el-Bottom" @click="fileDownload(file)" />
-                    <g-icon v-if="!delHide" icon="el-Delete" @click="delFile(file)" />
+                    <g-icon
+                        v-if="!delHide"
+                        icon="el-Delete"
+                        class="del-btn-icon"
+                        @click="delFile(file)"
+                    />
                 </div>
 
                 <!-- 进度条 -->
@@ -64,8 +74,8 @@
                     v-if="file.status === 'uploading'"
                     :percentage="+file.percentage"
                     :type="uploadListType === 'picture-card' ? 'circle' : 'line'"
-                    :stroke-width="uploadListType === 'picture-card' ? 6 : 4"
-                    :show-text="uploadListType === 'picture'"
+                    :stroke-width="strokeWidth"
+                    :show-text="['picture', 'text'].includes(uploadListType)"
                 />
 
                 <!-- 成功角标 -->
@@ -215,6 +225,26 @@ const attrs = computed<{ [k: string]: any }>(() => humpObj2PartitionObj(attrsSou
 const uploadListType = computed<'text' | 'picture' | 'picture-card' | 'avatar' | unknown>(() => {
     const type = attrs.value['list-type']
     return type === 'avatar' ? 'picture-card' : attrs.value['list-type']
+})
+
+const strokeWidth = computed(() => {
+    let width: number
+
+    switch (uploadListType.value) {
+    case 'picture-card':
+        width = 6
+        break
+    case 'picture':
+        width = 4
+        break
+    case 'text':
+        width = 2
+        break
+    default:
+        width = 6
+    }
+
+    return width
 })
 
 /**
