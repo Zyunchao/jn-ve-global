@@ -37,7 +37,7 @@
 ![packageName.png](/images/realize/packageName.png)
 
 4. 修改微应用的端口 `/vue.config.js`
-    >开发模式下，应用是以端口进行本地部署的，如果在本地跑多个微应用，每个微应用的端口应该唯一，关乎基座应用的注册及加载资源
+    > 开发模式下，应用是以端口进行本地部署的，如果在本地跑多个微应用，<strong style="color: #ff3040;">每个微应用的端口应该唯一</strong>，关乎基座应用的注册及加载资源
 
 ![portChnage](/images/realize/portChnage.png)
 
