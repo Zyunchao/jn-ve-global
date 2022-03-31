@@ -50,4 +50,9 @@ VUE_APP_KINSO_ROUTE=
 
 # 请求超时数值（秒）
 VUE_APP_REQ_TIMEOUT=3
+
+# 基座应用部署位置，用来加载静态共享资源，静态共享资源存在于基座应用中
+VUE_APP_BASE_APP_SERVER=http://172.31.33.84/basic
 ```
+
+关于静态资源，请参考[打包静态资源优化](./production.md#关于打包静态资源优化)
