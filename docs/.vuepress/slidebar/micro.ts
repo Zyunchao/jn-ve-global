@@ -26,7 +26,16 @@ export default [
     },
     {
         text: '快速开始',
-        link: '/micro/quickStart.md'
+        children: [
+            {
+                text: '基于本地基座应用开发',
+                link: '/micro/quickStart.md'
+            },
+            {
+                text: '基于部署生产的基座应用开发',
+                link: '/micro/quickStart2.md'
+            }
+        ]
     },
     {
         text: '目录结构',
