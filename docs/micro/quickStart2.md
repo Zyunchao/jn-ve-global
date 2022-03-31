@@ -95,12 +95,20 @@
 
 ![packageName.png](/images/realize/packageName.png)
 
-4. 修改微应用的端口 `/vue.config.js`
+4. 在 `/.gitignore` 中添加生产包的忽略配置
+    > 由于项目采用二级目录配置，打包出来的生产包，以 第三步 的命名，命名生产包，生产包不需要 git 管理，故需要将项目名配置到 .gitignore 中
+
+```zsh
+# .gitignore
+apollp
+```
+
+5. 修改微应用的端口 `/vue.config.js`
     > 开发模式下，应用是以端口进行本地部署的，如果在本地跑多个微应用，<strong style="color: #ff3040;">每个微应用的端口应该唯一</strong>，关乎基座应用的注册及加载资源
 
 ![portChnage](/images/realize/portChnage.png)
 
-5. 配置基座应用的部署位置
+6. 配置基座应用的部署位置
     > 请参考 [关于打包静态资源优化](./production.md#关于打包静态资源优化)
 
 ```zsh
@@ -108,7 +116,7 @@
 VUE_APP_BASE_APP_SERVER=http://172.31.33.84/basic
 ```
 
-6. 添加页面 `/src/views/`
+7. 添加页面 `/src/views/`
     > 依据[页面创建规则](./moduleDetail/pages.md#页面组件规范)，添加页面
 
 ![pages](/images/realize/pages.png)
@@ -131,7 +139,7 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 <style lang="scss" scoped></style>
 ```
 
-7. 前往 `应用管理 > 应用功能` 添加动态路由
+8. 前往 `应用管理 > 应用功能` 添加动态路由
     > 动态路由添加方式请参考 [动态路由注册](./moduleDetail/routerPractical.md#动态路由注册)
 
 ![创建动态路由.png](/images/micro/创建动态路由.png)
