@@ -11,7 +11,6 @@
                 v-model:fileList="fileList"
                 action="/api/kinso-basic-open-server/v1/document/file/upload"
                 list-type="text"
-                disabled
             />
         </div>
 
@@ -22,7 +21,6 @@
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture-card"
             download-hide
-            disabled
         />
 
         <h3>列表</h3>
@@ -32,7 +30,6 @@
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture"
             del-hide
-            disabled
         />
 
         <h3>头像</h3>
@@ -41,7 +38,6 @@
             :img-url="imgUrl"
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="avatar"
-            disabled
         />
     </div>
 </template>

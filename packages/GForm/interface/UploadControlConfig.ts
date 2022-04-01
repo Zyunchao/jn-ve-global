@@ -63,7 +63,7 @@ export interface UploadEvents {
     onMagnify?: (file: UploadFile) => void
 }
 
-export interface UploadProps extends UploadEvents {
+export interface UploadProps {
     /**
      * 必填参数，上传的地址
      */
@@ -138,8 +138,12 @@ export interface UploadProps extends UploadEvents {
      * 	覆盖默认的上传行为，可以自定义上传的实现
      */
     httpRequest?: Function
+}
 
-    // 自定义扩展 Props -----------------------------------------------------------------------
+/**
+ * 自定义扩展 Props
+ */
+export interface UploadCustomProps {
     /**
      * 单个文件上传最大大小(单位：MB)
      */
@@ -156,9 +160,13 @@ export interface UploadProps extends UploadEvents {
      * 隐藏删除按钮
      */
     delHide?: boolean
+    /**
+     * 上传成功后不显示消息
+     */
+    successNoMsg?: boolean
 }
 
 export default interface UploadControlConfig {
     type: 'upload'
-    props: UploadProps
+    props: UploadProps & UploadEvents & UploadCustomProps
 }

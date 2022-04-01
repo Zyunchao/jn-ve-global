@@ -108,8 +108,12 @@ export interface SelectProps {
      * 自定义清空图标的类名
      */
     clearIcon?: string
+}
 
-    // 事件 ---------------------------------------------------
+/**
+ * 事件
+ */
+export interface SelectEvents {
     /**
      * 	选中值发生变化时触发
      */
@@ -134,6 +138,10 @@ export interface SelectProps {
      * 当 input 获得焦点时触发
      */
     onFocus?: (event: Event) => void
+    /**
+     * 原生点击事件
+     */
+    onClick?: (event: Event) => void
 }
 
 export interface SelectOptionProps {
@@ -147,5 +155,5 @@ export default interface SelectControlConfig {
     type: 'select'
     options: SelectOptionProps[]
     optionRender?: (option: any) => JSX.Element | VNode | string | number | HTMLElement
-    props?: SelectProps
+    props?: SelectProps & SelectEvents
 }

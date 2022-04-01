@@ -181,6 +181,7 @@ size | 单个文件上传最大大小(单位：MB)，不传递则不限制 | num
 imgUrl | 上传头像回显的 img url | string \| 流 | --
 downloadHide | 隐藏下载按钮 | boolean | false
 delHide | 隐藏删除按钮 | boolean | false
+successNoMsg | 上传成功是不显示提示消息 | boolean | false
 
 ## Upload 扩展钩子
 

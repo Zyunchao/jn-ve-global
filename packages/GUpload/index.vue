@@ -202,6 +202,13 @@ const props = defineProps({
     delHide: {
         type: Boolean,
         default: false
+    },
+    /**
+     * 上传成功后不显示消息
+     */
+    successNoMsg: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -446,7 +453,7 @@ const onExceed = (files: UploadFile, fileList: UploadFile[]) => {
 const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
     // 默认赋值行为
     if (res.code === '000000') {
-        ElMessage.success(`上传成功!`)
+        !props.successNoMsg && ElMessage.success(`上传成功!`)
 
         // 添加业务上的 fileId 到文件 <===> fileList[item]
         file['fileId'] = res.data.fileId
