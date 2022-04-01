@@ -92,6 +92,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/infoAutocomplete-test',
         component: () => import('@/views/infoSAA/infoAutocompleteTest/index.vue')
+    },
+    {
+        path: '/dynamic-form-test',
+        component: () => import('@/views/formTest/dynamic.vue')
     }
 ]
 

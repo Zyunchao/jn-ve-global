@@ -19,7 +19,6 @@
 import { reactive, toRefs, ref } from 'vue'
 import { FormProps, InfoColumnProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
-import { watch } from 'fs'
 import { UploadControlConfig } from '@component/GForm'
 import FileSource from './fileList.json'
 import infoSelectData from './data/infoSelectData.json'
@@ -361,19 +360,6 @@ export default {
                         type: 'input',
                         props: {
                             placeholder: '自定义 label 需要传递 placeholder'
-                        }
-                    }
-                },
-                {
-                    prop: 'clientChannel',
-                    label: '多列数据展示下拉框',
-                    span: 12,
-                    controlConfig: {
-                        type: 'infoSelect',
-                        options: infoSelectData as any,
-                        columns: infoSelectColumns.value,
-                        props: {
-                            multiple: true
                         }
                     }
                 },
