@@ -37,7 +37,10 @@ export default [
     },
     {
         text: '基础组件',
-        children: [{ text: 'DebounceButton', link: '/components/DebounceButton.md' }]
+        children: [
+            { text: 'DebounceButton', link: '/components/DebounceButton.md' },
+            { text: 'LodingShade', link: '/components/LodingShade.md' }
+        ]
     },
     {
         text: 'ECharts',
