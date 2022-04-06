@@ -12,11 +12,13 @@ export default interface TableProps<TBD> extends TableEvents {
      */
     data: TBD[]
     /**
-     * Table 的高度，默认为自动高度。
+     * Table 的高度，默认为父容器 100%。
      * 如果 height 为 number 类型，单位 px；
      * 如果 height 为 string 类型，则这个高度会设置为 Table 的 style.height 的值，Table 的高度会受控于外部样式。
+     * 
+     * false：关闭继承父容器的高度，内容撑开
      */
-    height?: string | number
+    height?: string | number | false
     /**
      * Table 的最大高度。合法的值为数字或者单位为 px 的高度。
      */

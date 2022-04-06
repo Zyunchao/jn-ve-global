@@ -12,7 +12,7 @@
             <el-table
                 v-bind="tableProps"
                 ref="localInstance"
-                height="100%"
+                :height="tableProps.height !== undefind ? tableProps.height : '100%'"
                 @select="localSelect"
                 @select-all="localSelectAll"
             >

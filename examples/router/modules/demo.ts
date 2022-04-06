@@ -96,6 +96,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/dynamic-form-test',
         component: () => import('@/views/formTest/dynamic.vue')
+    },
+    {
+        path: '/flowHeight-test',
+        component: () => import('@/views/tableTest/flowHeight.vue')
     }
 ]
 
