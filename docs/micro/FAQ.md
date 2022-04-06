@@ -49,17 +49,122 @@ const toBurse = () => {
 </script>
 
 <style lang="scss" scoped>
-.box {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 200px;
-
-    button {
-        flex: none;
-        width: 400px;
-        margin: 0;
-    }
-}
 </style>
 ```
+
+## 内嵌 iframe 主动激活（帆软报表）
+
+框架内提供了跳转 iframe 的 api，会在标签页上新开一个页面，不同的 url 链接将会开启不同的标签
+
+常用于内嵌帆软的报表
+
+:::tip
+
+iframe 的跳转链接，内部已经处理了 `${token}` 字符串
+
+意味着跳转链接上 携带的 `${token}` 会被处理成当前登录的 `access_token`
+
+适用于 菜单 + 主动激活 iframe
+:::
+
+### 基座应用
+
+:::tip
+
+vite 老框架的使用方式同基座应用
+
+:::
+
+1. 引入 `mixin`
+
+```ts
+import NavTo from '@/mixins/navTo'
+```
+
+2. 解构获取激活方法
+
+```ts
+const { activateIframe } = NavTo()
+```
+
+3. 调用传参
+
+```ts
+// 传递的参数详解
+interface Params { 
+    /**
+     * 标签 tag 标题
+     */
+    title?: string
+    /**
+     * iframe 链接
+     *  - 普通：链接
+     *  - 报表：页面参数
+     */
+    href: string
+    /**
+     * 标识是否是报表跳转
+     */
+    isStatement?: boolean
+}
+
+activateIframe({
+    title: '某某报表',
+    href: '/xxxx?token=${token}',
+    isStatement: true
+})
+```
+
+4. 报表配置帆软的基础路径
+
+:::tip
+
+如果是需要跳转帆软的报表，需要在环境变量中配置帆软的基础部署位置
+
+:::
+
+开发模式配置：
+
+```zsh
+# 基座应用 .env || .env.local
+# 帆软报表基础 url
+VUE_APP_STATEMENT_BASE_URL=
+
+# 老系统 .env || .env.local
+# 帆软报表基础 url
+VITE_STATEMENT_BASE_URL=
+```
+
+生产模式配置（老系统同基座应用），需要在 `/public/statementBaseUrl.js` 中配置：
+
+```js
+window.__STATEMENT_BASE_URL__ = ''
+```
+
+### 微应用
+
+1. 引入方法，微应用从 `/src/microApp/navTo.ts` 中引用：
+
+```js
+import {
+    activateIframe
+} from '@/microApp/navTo'
+```
+
+2. 调用传参
+
+```ts
+activateIframe({
+    title: '某某报表',
+    href: '/xxxx?token=${token}',
+    isStatement: true
+})
+```
+
+3. 报表配置帆软的基础路径
+
+:::tip
+
+微应用的帆软基础路径请参考 [基座应用第4步](./FAQ.md#基座应用) 的配置
+
+:::
