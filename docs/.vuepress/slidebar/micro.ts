@@ -146,6 +146,15 @@ export default [
     },
     {
         text: '常见问题',
-        link: '/micro/FAQ.md'
+        children: [
+            {
+                text: '页面跳转',
+                link: '/micro/FAQ.md#页面跳转'
+            },
+            {
+                text: '内嵌 iframe',
+                link: '/micro/FAQ.md#内嵌-iframe-主动激活-帆软报表'
+            }
+        ]
     }
 ]
