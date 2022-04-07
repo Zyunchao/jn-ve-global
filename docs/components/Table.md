@@ -366,9 +366,12 @@ onChange | 分页变化 | (currentPage?: number, currentPageSize?: number) => vo
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
 btns | 按钮组配置 | TableRowBtnProps\<TBD\>[] | []
-width | 操作列的宽度 | number | 200
 maxCount | 最多显示几个按钮，超出部分将于更多操作内显示 | number | --
+width | 操作列的宽度 | number | 200
 hide | 是否隐藏按钮列 | boolean | false
+fixed | 列是否固定在左侧或者右侧。 true 表示固定在左侧 | true \| 'left' \| 'right' | 'right'
+label | 列标题 | string | '操作'
+align | 对齐方式 |  'left' \| 'center' \| 'right' | 'right'
 
 ```ts
 interface BtnProps {

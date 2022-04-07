@@ -1,6 +1,8 @@
-import { TableConfig, TableRowBtnProps, BaseTableDataItem } from '../../../index'
+import { TableConfig, TableRowBtnProps, BaseTableDataItem, TableColumnProps } from '../../../index'
 import More from './component/more.vue'
 import { getBtnProps } from './constant/util'
+import { watch, nextTick, reactive } from 'vue'
+import { assignOwnProp } from '../../../utils/utils'
 
 /**
  * 对数据进行 push 操作，会改变原始数据
@@ -30,11 +32,15 @@ export default (config: TableConfig<any>) => {
         const maxCount = rowBtnConfig.maxCount
         const showMore = !!maxCount && maxCount < rowBtnConfig.btns.length
 
-        columns.push({
+        /**
+         * 在追加到原始的 cloumns 时，并没有追踪到后续的这个追加列的变化
+         * 所以需要在这里定义为响应式对象
+         */
+        const opertionColumn = reactive<TableColumnProps>({
             prop: 'opertion',
-            label: '操作',
+            label: rowBtnConfig.label || '操作',
             width: rowBtnConfig.width || 200,
-            fixed: 'right',
+            fixed: rowBtnConfig.fixed || 'right',
             align: rowBtnConfig.align || 'left',
             hide: rowBtnConfig.hide,
             render: (row, index) => {
@@ -71,6 +77,28 @@ export default (config: TableConfig<any>) => {
                 )
             }
         })
+
+        /**
+         * 默认赋值时，赋的仅是 “值”
+         * 不会动态改变，所以需要监听变化，动态改变初始值
+         */
+        watch(
+            () => rowBtnConfig,
+            () => {
+                assignOwnProp(opertionColumn, rowBtnConfig)
+
+                // 更改之后，防止布局错乱，掉一次表格的 doLayout
+                nextTick(() => {
+                    config.instance.doLayout()
+                })
+            },
+            {
+                deep: true
+            }
+        )
+
+        // 追加
+        columns.push(opertionColumn)
     }
 }
 

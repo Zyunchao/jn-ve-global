@@ -66,6 +66,17 @@ const btns: BtnProps[] = [
         onClick: () => {
             console.log(`%c 加载中 === `, 'color: #e6a23c;')
         }
+    },
+    {
+        label: '隐藏操作列',
+        type: 'warning',
+        onClick: () => {
+            rowBtnConfig.hide = !rowBtnConfig.hide
+            rowBtnConfig.label = `${+new Date()}`
+            rowBtnConfig.fixed = 'left'
+            rowBtnConfig.align = 'right'
+            console.log(`%c rowBtnConfig.hide === `, 'color: #e6a23c;', rowBtnConfig.hide)
+        }
     }
 ]
 
@@ -100,6 +111,7 @@ watch(
 const rowBtnConfig = reactive<TableConfig<any>['rowBtnConfig']>({
     width: 400,
     maxCount: 5,
+    hide: false,
     btns: [
         {
             label: '显示',

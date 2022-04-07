@@ -59,13 +59,13 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
          */
         btns: TableRowBtnProps<TBD>[]
         /**
-         * 列的宽度
-         */
-        width?: string | number
-        /**
          * 最多显示几个按钮，超出部分将于更多操作内显示
          */
         maxCount?: number
+        /**
+         * 列的宽度
+         */
+        width?: string | number
         /**
          * 操作列的对齐方式
          */
@@ -74,5 +74,14 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
          * 标识是否追加操作按钮列
          */
         hide?: boolean
+        /**
+         * 固定位置
+         * 列是否固定在左侧或者右侧。 true 表示固定在左侧
+         */
+        fixed?: true | 'left' | 'right'
+        /**
+         * 列标题
+         */
+        label?: string
     }
 }
