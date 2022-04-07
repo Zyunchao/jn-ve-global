@@ -4,6 +4,7 @@
         :class="[{ 'g-upload': true, 'is-disabled': disabled }, attrs['list-type']]"
         :file-list="localFileList"
         v-bind="getUploadProps()"
+        :headers="localReqHeaders"
         :disabled="disabled"
         :accept="localAccept"
         :list-type="uploadListType"
@@ -138,6 +139,7 @@ import { imgSuffix, officeSuffix, officeSuffixNoPre } from './constant/fileTypeL
 import UploadFile from './interface/UploadFile'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { humpObj2PartitionObj } from '../utils/utils'
+import { Local } from '../utils/storage'
 
 const props = defineProps({
     /**
@@ -225,6 +227,30 @@ const attrsSource = useAttrs()
 const attrs = computed<{ [k: string]: any }>(() => humpObj2PartitionObj(attrsSource))
 
 /**
+ * header 携带 token
+ */
+const localReqHeaders = computed(() => {
+    const vuexCache = Local.get('vuex')
+    const transitiveHeader = attrs.value.headers
+    let Authorization = transitiveHeader ? transitiveHeader.Authorization : ''
+
+    // 缓存的优先级较高，会覆盖用户传递的
+    if (vuexCache && vuexCache.loginInfo) {
+        Authorization = vuexCache.loginInfo['access_token']
+            ? `Bearer ${vuexCache.loginInfo['access_token']}`
+            : Authorization
+    }
+
+    if(Authorization) {
+        return {
+            ...transitiveHeader,
+            Authorization
+        }
+    }
+    return transitiveHeader
+})
+
+/**
  * 控件的类型：
  *  除去原有的三种，扩展了 'avatar' 类型
  *  avatar 实际取得 'picture-card'；（内置配置，方便用户）
@@ -233,7 +259,6 @@ const uploadListType = computed<'text' | 'picture' | 'picture-card' | 'avatar' |
     const type = attrs.value['list-type']
     return type === 'avatar' ? 'picture-card' : attrs.value['list-type']
 })
-
 const strokeWidth = computed(() => {
     let width: number
 
@@ -543,7 +568,8 @@ const getUploadProps = () => {
                 'before-upload',
                 'on-exceed',
                 'on-change',
-                'on-remove'
+                'on-remove',
+                'headers'
             ].includes(key)
         ) {
             props[key] = attrs.value[key]

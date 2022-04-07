@@ -1,11 +1,14 @@
 $--dialog-base-left-p: 40px;
+$--dialog-base-top-p: 16px;
+$--tf-base-bgc: #ecf6ff;
 
 // 顶部
 @mixin titleStyle {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 24px 10px $--dialog-base-left-p;
+    padding: $--dialog-base-top-p 20px $--dialog-base-top-p $--dialog-base-left-p;
+    background-color: $--tf-base-bgc;
 
     >span,
     .el-dialog__title {
@@ -21,16 +24,26 @@ $--dialog-base-left-p: 40px;
         top: initial;
         right: initial;
         flex: none;
+        display: inline-flex;
+        align-items: center;
 
         i {
             font-size: 22px !important;
-            color: #a9a9a9;
+            color: #ababab;
         }
     }
 }
 
+// 底部
+@mixin footerStyle {
+    padding: 22px $--dialog-base-left-p;
+}
+
 // dialoag 模式
 .g-custom-dialog {
+    border-radius: 8px;
+    overflow: hidden;
+
     .el-dialog__header {
         @include titleStyle;
     }
@@ -41,7 +54,7 @@ $--dialog-base-left-p: 40px;
     }
 
     .el-dialog__footer {
-        padding: calc(48px - 14px) $--dialog-base-left-p 55px $--dialog-base-left-p;
+        @include footerStyle;
     }
 
     &.vertical-center {
@@ -79,7 +92,7 @@ $--dialog-base-left-p: 40px;
 
         .drawer-footer {
             flex: none;
-            padding: 10px $--dialog-base-left-p 35px $--dialog-base-left-p;
+            @include footerStyle;
         }
     }
 }
