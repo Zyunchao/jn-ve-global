@@ -1,7 +1,10 @@
 <template>
-    <div class="examples-base-wrapper">
+    <BusinessLayout>
+        <el-button @click="hideColumn">
+            隐藏列
+        </el-button>
         <g-table :config="tableConfig" />
-    </div>
+    </BusinessLayout>
 </template>
 
 <script lang="tsx">
@@ -14,6 +17,7 @@ export default {
 import { watch, reactive, ref } from 'vue'
 import mockData from './data.json'
 import { TableColumnProps, TableConfig } from '@component/index'
+import BusinessLayout from '@/components/businessLayout/index.vue'
 
 const tableColumns = reactive<TableColumnProps[]>([
     {
@@ -40,38 +44,6 @@ const tableColumns = reactive<TableColumnProps[]>([
     {
         prop: 'hobby',
         label: '爱好'
-    },
-    {
-        label: '操作',
-        width: 200,
-        fixed: 'right',
-        render(row) {
-            return (
-                <>
-                    {row.edit ? (
-                        <el-button
-                            type='text'
-                            onClick={() => {
-                                row.edit = false
-                            }}>
-                            保存
-                        </el-button>
-                    ) : (
-                        <el-button
-                            type='text'
-                            onClick={() => {
-                                row.edit = true
-                            }}>
-                            编辑
-                        </el-button>
-                    )}
-                    <el-button type='text'>人员设置</el-button>
-                    <el-button type='text' class='btn-danger'>
-                        删除
-                    </el-button>
-                </>
-            )
-        }
     }
 ])
 
@@ -80,18 +52,30 @@ const tableConfig = reactive<TableConfig<any>>({
     columns: tableColumns,
     rowKey: 'index',
     stripe: true,
-    pastable: true,
-    data: [],
-    onPasted(data) {
-        tableConfig.data = data.map((item, index) => {
-            item.edit = false
-            item.index = index
-            return item
-        })
-
-        console.log(`%c tableConfig.data == `, 'color: #e6a23c;', tableConfig.data)
+    data: mockData.data1,
+    rowBtnConfig: {
+        label: 'qwer',
+        hide: false,
+        btns: [
+            {
+                label: '编辑'
+            },
+            {
+                label: '人员设置'
+            },
+            {
+                label: '删除',
+                style: {
+                    color: 'red'
+                }
+            }
+        ]
     }
 })
+
+const hideColumn = () => {
+    tableConfig.rowBtnConfig.hide = !tableConfig.rowBtnConfig.hide
+}
 </script>
 
 <style lang="scss" scoped></style>
