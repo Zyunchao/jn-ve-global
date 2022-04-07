@@ -154,18 +154,24 @@ const handleMoreSearch = () => {
 </script>
 
 <style lang="scss" scoped>
-$--base-padding-lr: 28px;
-$--form-item-content-height: 38px;
-$--form-item-margin-b: 22px;
+$--base-padding-lr: 20px;
+$--form-item-margin-b: 18px;
+$--form-item-base-height: 38px;
+
+@mixin formItemBaseHeight {
+    height: $--form-item-base-height;
+    line-height: $--form-item-base-height;
+}
 
 // 查询表单
 .search-wrapper {
-    padding: 10px 24px 0;
+    padding: 10px 20px 0;
 
+    // 顶部
     .top {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         align-items: center;
 
         .title {
@@ -214,7 +220,7 @@ $--form-item-margin-b: 22px;
             // 弹框
             &.pull-down,
             &.popup {
-                height: $--form-item-content-height + $--form-item-margin-b;
+                height: $--form-item-base-height + $--form-item-margin-b;
                 overflow: hidden;
             }
 
@@ -223,6 +229,45 @@ $--form-item-margin-b: 22px;
                 transition: height 0.2s;
                 &.active {
                     height: v-bind(searchFieldFormHeight);
+                }
+            }
+        }
+
+        // GBaseModule 表单特有的控件高度调整
+        :deep(.g-form) {
+            .el-form-item {
+                margin-bottom: $--form-item-margin-b !important;
+
+                // label
+                .el-form-item__label {
+                    line-height: $--form-item-base-height;
+                    padding: 0;
+                }
+
+                // 输入框类
+                .el-input {
+                    .el-input__inner {
+                        @include formItemBaseHeight;
+                    }
+                }
+
+                // 单选框
+                .el-radio {
+                    @include formItemBaseHeight;
+                }
+
+                // 控件组上下边框 = 2px
+                .form-item-control-group-wrapper {
+                    .el-input__inner {
+                        height: $--form-item-base-height - 2px;
+                        line-height: $--form-item-base-height -2px;
+                    }
+                }
+
+                // 按钮
+                .el-button {
+                    @include formItemBaseHeight;
+                    min-height: $--form-item-base-height;
                 }
             }
         }

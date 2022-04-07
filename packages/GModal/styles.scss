@@ -41,7 +41,7 @@ $--tf-base-bgc: #ecf6ff;
 
 // dialoag 模式
 .g-custom-dialog {
-    border-radius: 8px;
+    border-radius: 8px !important;
     overflow: hidden;
 
     .el-dialog__header {

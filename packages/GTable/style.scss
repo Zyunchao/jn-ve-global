@@ -140,6 +140,16 @@ $--base-border-color: #e8e8e8;
             .el-checkbox {
                 height: auto;
             }
+
+            // 行高
+            .el-table__cell {
+                padding: 6px 0 !important;
+            }
+            
+            // 表头行高较高一点
+            th.el-table__cell {
+                padding: 10px 0 !important;
+            }
         }
 
         :deep(.el-table--group) {

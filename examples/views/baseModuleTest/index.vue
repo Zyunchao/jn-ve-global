@@ -1,9 +1,10 @@
 <template>
-    <div class="examples-base-wrapper">
+    <BusinessLayout>
+        <!-- :tabs="moduleTabs" -->
         <GBaseModule
-            v-model:activeTab="activeTab"
+            no-search-label
             more-search-mode="pull-down"
-            highlight-current-row
+            search-btn-horizontal
             :search-form-props="searchFormConfig"
             :btns="btns"
             :load-table-methods="loadTable"
@@ -12,11 +13,8 @@
             :table-pagination="tablePagination"
             :table-loading="false"
             :row-btn-config="rowBtnConfig"
-            :tabs="moduleTabs"
-            @reset="onReset"
-            @search="onSearch"
         />
-    </div>
+    </BusinessLayout>
 </template>
 
 <script lang="tsx" setup>
@@ -25,6 +23,7 @@ import { BtnProps, PaginationProps, TableConfig } from '@component/index'
 import mockData from './mock.json'
 import SearchFormConfig from './component/SearchFormConfig'
 import TableColumns from './component/TableColumns'
+import BusinessLayout from '@/components/businessLayout/index.vue'
 
 const searchFormConfig = SearchFormConfig()
 const tableColumns = TableColumns()
@@ -173,14 +172,6 @@ const loadTable = (page: number) => {
     }
 
     console.log(`%c params == `, 'color: #e6a23c;', params)
-}
-
-const onReset = () => {
-    console.log(`%c onReset run.......................`, 'color: #67c23a;')
-}
-
-const onSearch = () => {
-    console.log(`%c onSearch run..........................`, 'color: #f56c6c;')
 }
 </script>
 

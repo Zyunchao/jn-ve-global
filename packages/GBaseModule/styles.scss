@@ -1,4 +1,4 @@
-$--base-padding-lr: 24px;
+$--base-padding-lr: 20px;
 $--base-borer-color: #e8e8e8;
 $--tabs-height: 40px;
 
@@ -23,6 +23,11 @@ $--tabs-height: 40px;
 
         .core-wrapper {
             margin: 0 !important;
+        }
+
+        :deep(.search-wrapper) {
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 
@@ -56,7 +61,7 @@ $--tabs-height: 40px;
     .core-wrapper {
         flex: 1;
         overflow: hidden;
-        padding: 0 $--base-padding-lr 20px;
+        padding: 0 $--base-padding-lr 14px;
 
         .core-table-wrapper {
             height: 100%;

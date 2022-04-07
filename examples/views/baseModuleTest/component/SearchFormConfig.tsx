@@ -24,6 +24,12 @@ export default () =>
                 prop: 'name',
                 label: '姓名23',
                 span: 8,
+                rules: [
+                    {
+                        required: true,
+                        message: '姓名是必填项'
+                    }
+                ],
                 controlConfig: {
                     type: 'input'
                 }
@@ -33,7 +39,8 @@ export default () =>
                 label: '日期',
                 span: 8,
                 controlConfig: {
-                    type: 'input'
+                    type: 'select',
+                    options: []
                 }
             },
             {
@@ -41,7 +48,17 @@ export default () =>
                 label: '地址',
                 span: 8,
                 controlConfig: {
-                    type: 'input'
+                    type: 'radio',
+                    options: [
+                        {
+                            label: 'a',
+                            value: 'a'
+                        },
+                        {
+                            label: 'b',
+                            value: 'b'
+                        }
+                    ]
                 }
             },
             {
@@ -49,16 +66,25 @@ export default () =>
                 label: '性别',
                 span: 8,
                 controlConfig: {
-                    type: 'input'
+                    type: 'selectTree',
+                    treeData: []
                 }
             },
             {
                 prop: 'name5',
                 label: '年龄',
                 span: 8,
-                controlConfig: {
-                    type: 'input'
-                }
+                controlConfigs: [
+                    {
+                        type: 'input',
+                        after: '-'
+                    },
+                    {
+                        type: 'select',
+                        options: [],
+                        after: '-'
+                    }
+                ]
             },
             {
                 prop: 'name6',
@@ -87,22 +113,6 @@ export default () =>
             {
                 prop: 'name9',
                 label: '身份证号',
-                span: 8,
-                controlConfig: {
-                    type: 'input'
-                }
-            },
-            {
-                prop: 'name10',
-                label: '学校',
-                span: 8,
-                controlConfig: {
-                    type: 'input'
-                }
-            },
-            {
-                prop: 'name11',
-                label: '成绩',
                 span: 8,
                 controlConfig: {
                     type: 'input'
