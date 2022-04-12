@@ -23,7 +23,12 @@
                 @select-all="localSelectAll"
             >
                 <!-- 一键开启多选 -->
-                <el-table-column v-if="localConfig.showSelection" type="selection" width="55" />
+                <el-table-column
+                    v-if="localConfig.showSelection"
+                    width="55"
+                    v-bind="localConfig.selectionColumns"
+                    type="selection"
+                />
 
                 <template
                     v-for="(columnConfig, index) in localConfig.columns"

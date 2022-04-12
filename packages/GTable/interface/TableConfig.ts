@@ -34,6 +34,11 @@ export default interface TableConfig<TBD> extends TableProps<TBD> {
      */
     selectedRows?: TBD[]
     /**
+     * 多选列 Selection 的配置
+     * 常使用：class、selectable 等
+     */
+    selectionColumns?: TableColumnProps
+    /**
      * 可编辑行编辑完成事件
      */
     onCellEdited?: (row: TBD, index?: number | string, field?: string) => void
