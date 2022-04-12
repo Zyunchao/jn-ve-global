@@ -35,7 +35,8 @@ export default defineUserConfig<DefaultThemeOptions>({
         '@component': path.resolve(__dirname, '../../packages'),
         '@examples': path.resolve(__dirname, '../../examples'),
         '@assets': path.resolve(__dirname, '../../examples/assets'),
-        '@mdroot': path.resolve(__dirname, '../modules')
+        '@mdroot': path.resolve(__dirname, '../modules'),
+        '@imgs': path.resolve(__dirname, './public/images')
     },
 
     // 打包工具：网站的开发和构建

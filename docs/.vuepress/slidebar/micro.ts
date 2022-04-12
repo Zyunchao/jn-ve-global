@@ -141,6 +141,10 @@ export default [
         ]
     },
     {
+        text: '主题',
+        link: '/micro/theme.md'
+    },
+    {
         text: '生产&发布',
         link: '/micro/production.md'
     },
