@@ -99,7 +99,7 @@ export interface SelectProps {
     /**
      * 是否将弹出框插入至 body 元素。在弹出框的定位出现问题时，可将该属性设置为 false
      */
-    popperAppendToBody?: string
+    teleported?: boolean
     /**
      * 对于不可搜索的 Select，是否在输入框获得焦点后自动弹出选项菜单
      */
