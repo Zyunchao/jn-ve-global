@@ -257,8 +257,8 @@ defineExpose({
             align-items: center;
 
             :deep(.el-input) {
-                input {
-                    height: 26px;
+                .el-input__inner {
+                    height: 26px !important;
                     padding: 0 10px;
                 }
             }

@@ -1,3 +1,6 @@
+// 样式资源
+import './assets/styles/index.scss'
+
 // 图标
 import '@component/assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'

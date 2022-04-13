@@ -17,6 +17,17 @@ export default () =>
         {
             prop: 'address',
             label: '地址'
+        },
+        {
+            prop: 'tag',
+            label: '标签',
+            render() {
+                return (
+                    <el-tag class='ml-2' type='danger'>
+                        Tag 5
+                    </el-tag>
+                )
+            }
         }
         // {
         //     prop: 'opertion',

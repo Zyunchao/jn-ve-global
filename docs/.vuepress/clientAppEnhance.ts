@@ -5,7 +5,7 @@
 
 // 注册 Ele
 import ElementPlus from 'element-plus'
-import locale from 'element-plus/es/locale/lang/zh-cn.mjs'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'
 
 // 全局组件
@@ -14,6 +14,6 @@ import GlobalComponent from '@component/register'
 
 export default ({ app, router, siteData }) => {
     app.directive('auth', {})
-    app.use(ElementPlus, { locale })
+    app.use(ElementPlus, { locale: zhCn })
     app.use(GlobalComponent)
 }

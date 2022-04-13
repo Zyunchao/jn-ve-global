@@ -36,7 +36,7 @@
                     <el-input
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        size="mini"
+                        size="small"
                         @blur="control2Text"
                     />
                 </template>
@@ -46,10 +46,10 @@
                     <div class="inputnumber-control-wrapper">
                         <el-input-number
                             v-model="localPropRef"
-                            size="mini"
+                            size="small"
                             v-bind="localControlProps"
                         />
-                        <el-button type="text" size="mini" @click="control2Text">
+                        <el-button type="text" size="small" @click="control2Text">
                             确定
                         </el-button>
                     </div>
@@ -66,7 +66,7 @@
                         "
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        size="mini"
+                        size="small"
                         style="width: 100%"
                         @visible-change="
                             (show) => {
@@ -108,7 +108,7 @@
                             :key="radioOption.value"
                             :label="radioOption.value"
                             :disabled="radioOption.disabled"
-                            size="mini"
+                            size="small"
                         >
                             {{ radioOption.label }}
                         </el-radio>
@@ -122,7 +122,7 @@
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         style="width: 100%"
-                        size="mini"
+                        size="small"
                         :clearable="false"
                         @change="delayControlToText"
                     />
@@ -139,7 +139,7 @@
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         style="width: 100%"
-                        size="mini"
+                        size="small"
                         :clearable="false"
                         @change="delayControlToText"
                     />
@@ -156,7 +156,7 @@
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         style="width: 100%"
-                        size="mini"
+                        size="small"
                         :clearable="false"
                         @change="delayControlToText"
                     />
@@ -174,7 +174,7 @@
                         v-bind="localControlProps"
                         type="datetime"
                         style="width: 100%"
-                        size="mini"
+                        size="small"
                         :clearable="false"
                         @change="delayControlToText"
                     />
@@ -194,13 +194,13 @@
                                 :key="checkBoxOption.value"
                                 :label="checkBoxOption.value"
                                 :disabled="checkBoxOption.disabled"
-                                size="mini"
+                                size="small"
                             >
                                 {{ checkBoxOption.label }}
                             </el-checkbox>
                         </el-checkbox-group>
                         <div class="checkbox-confirm-btn-wrapper">
-                            <el-button size="mini" type="primary" @click="control2Text">
+                            <el-button size="small" type="primary" @click="control2Text">
                                 确定
                             </el-button>
                         </div>
@@ -217,7 +217,7 @@
                     <el-color-picker
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        size="mini"
+                        size="small"
                         @change="control2Text"
                     />
                 </template>
@@ -228,7 +228,7 @@
                         v-if="typeof localPropRef === 'number'"
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        size="mini"
+                        size="small"
                         @change="control2Text"
                     />
                     <div v-else>
@@ -244,7 +244,7 @@
                         v-if="typeof localPropRef === 'number'"
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        size="mini"
+                        size="small"
                         :show-tooltip="false"
                         :class="{
                             'has-marks':
@@ -272,7 +272,7 @@
                         v-model="localPropRef"
                         :tree-data="columnConfig.controlConfig.treeData"
                         v-bind="localControlProps"
-                        size="mini"
+                        size="small"
                         @visible-change="
                             (show) => {
                                 if (!show) delayControlToText()
@@ -291,7 +291,7 @@
                     <LGFigureInput
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        size="mini"
+                        size="small"
                         @table-edit-hide="control2Text"
                     />
                 </template>
@@ -305,7 +305,7 @@
                         :options-data="columnConfig.controlConfig.options"
                         :columns="columnConfig.controlConfig.columns"
                         :option-props="columnConfig.controlConfig.optionProps"
-                        size="mini"
+                        size="small"
                         @closed="delayControlToText"
                     />
                 </template>
@@ -318,7 +318,7 @@
                         :options-data="columnConfig.controlConfig.options"
                         :columns="columnConfig.controlConfig.columns"
                         :option-props="columnConfig.controlConfig.optionProps"
-                        size="mini"
+                        size="small"
                         @closed="delayControlToText"
                     />
                 </template>
@@ -331,7 +331,7 @@
                         :columns="columnConfig.controlConfig.columns"
                         :fetch-suggestions="columnConfig.controlConfig.fetchSuggestions"
                         :value-key="columnConfig.controlConfig.valueKey"
-                        size="mini"
+                        size="small"
                         @closed="delayControlToText"
                     />
                 </template>

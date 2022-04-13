@@ -34,7 +34,7 @@ export default interface TableProps<TBD> extends TableEvents {
     /**
      * Table 的尺寸
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 列的宽度是否自撑开 —	true
      */

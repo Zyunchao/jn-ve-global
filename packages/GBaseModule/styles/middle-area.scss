@@ -1,0 +1,25 @@
+@mixin middle-area {
+    padding: 0 var(--jn-ve-g-base-module-padding-lr);
+    margin-bottom: 10px;
+    flex: none;
+    display: flex;
+    justify-content: space-between;
+
+    /* 左 */
+    .middle-left-wrapper {
+        width: 60%;
+
+        .btns-wrapper {
+            .el-button {
+                padding: 0 22px;
+                font-size: 14px;
+                height: var(--jn-ve-g-btn-s-height) !important;
+            }
+        }
+    }
+
+    /* 右 */
+    .middle-right-wrapper {
+        width: 38%;
+    }
+}

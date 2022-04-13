@@ -15,6 +15,11 @@ $--base-padding-lr: 14px;
 
         .btns {
             flex: 1;
+
+            .el-button {
+                height: var(--jn-ve-g-btn-ss-height);
+                padding: 0 15px;
+            }
         }
 
         :deep(.tree-icons) {

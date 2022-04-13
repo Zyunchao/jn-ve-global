@@ -9,6 +9,7 @@ $--tf-base-bgc: #ecf6ff;
     justify-content: space-between;
     padding: $--dialog-base-top-p 20px $--dialog-base-top-p $--dialog-base-left-p;
     background-color: $--tf-base-bgc;
+    margin-right: 0;
 
     >span,
     .el-dialog__title {
@@ -34,9 +35,19 @@ $--tf-base-bgc: #ecf6ff;
     }
 }
 
+@mixin btnStyle {
+    height: var(--jn-ve-g-btn-b-height) !important;
+    font-size: var(--jn-ve-g-base-font-size-s);
+    padding: 0 20px;
+}
+
 // 底部
 @mixin footerStyle {
     padding: 22px $--dialog-base-left-p;
+
+    .el-button {
+        @include btnStyle;
+    }
 }
 
 // dialoag 模式

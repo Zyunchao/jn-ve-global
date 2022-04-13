@@ -75,7 +75,7 @@ export default interface FormProps {
     /**
      * 	用于控制该表单内组件的尺寸
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 是否禁用该表单内的所有组件。若设置为 true，则表单内组件上的 disabled 属性不再生效
      * default?: false

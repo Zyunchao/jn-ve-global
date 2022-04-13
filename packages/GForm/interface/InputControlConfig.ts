@@ -74,7 +74,7 @@ export interface InputProps extends InputEvents {
     /**
      * 输入框尺寸，只在 type!="textarea" 时有效
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 输入框头部图标
      */

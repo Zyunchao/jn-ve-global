@@ -8,7 +8,7 @@
             :filterable="false"
             clearable
             :visible="true"
-            :popper-append-to-body="true"
+            :teleported="true"
             :popper-class="`${popperClass} ${randomId}`"
             @visible-change="visibleChange"
         >

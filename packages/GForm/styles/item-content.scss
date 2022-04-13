@@ -1,0 +1,127 @@
+@mixin item-content {
+    font-size: var(--jn-ve-g-form-font-size);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+
+    >div {
+        width: 100%;
+    }
+
+    @include control-style;
+}
+
+@mixin control-style {
+    @include control-height;
+
+    .el-textarea,
+    .el-input,
+    .el-checkbox,
+    .el-checkbox__label,
+    .el-switch,
+    .el-switch__label,
+    .el-switch__label span,
+    .el-checkbox-button__inner,
+    .el-radio .el-radio__label,
+    .el-radio-button__inner,
+    .el-select-v2__wrapper,
+    .el-select-v2__combobox-input {
+        font-size: var(--jn-ve-g-form-font-size);
+    }
+
+    // 多选框
+    .el-checkbox__inner {
+        width: var(--jn-ve-g-form-font-size);
+        height: var(--jn-ve-g-form-font-size);
+
+        &::after {
+            height: calc(var(--jn-ve-g-form-font-size) / 2);
+            width: calc(var(--jn-ve-g-form-font-size) / 4);
+        }
+    }
+
+    // 时间选择框
+    .el-date-editor {
+        &.el-range-editor {
+            .el-range-separator {
+                width: auto;
+            }
+        }
+    }
+}
+
+@mixin control-height {
+
+    // 覆盖表单控件
+    .el-input__inner,
+    .el-checkbox,
+    .el-switch,
+    .el-switch__label,
+    .el-radio {
+        min-height: var(--jn-ve-g-form-item-height) !important;
+        line-height: var(--jn-ve-g-form-item-height) !important;
+    }
+
+    // 按钮
+    .el-button {
+        height: var(--jn-ve-g-form-item-height) !important;
+        line-height: var(--jn-ve-g-form-item-height) !important;
+        font-size: var(--jn-ve-g-base-font-size-s) !important;
+        padding: 0 20px;
+    }
+
+    // 多选框组容器
+    .el-checkbox-group {
+        width: fit-content !important;
+    }
+
+    // 单选框 & 多选框 按钮模式
+    .el-checkbox-button__inner,
+    .el-radio-button__inner {
+        height: var(--jn-ve-g-form-item-height) !important;
+        line-height: var(--jn-ve-g-form-item-height) !important;
+        padding: 0 15px;
+    }
+
+    // 颜色选择器
+    .el-color-picker {
+        width: fit-content !important;
+
+        .el-color-picker__trigger {
+            height: var(--jn-ve-g-form-item-height) !important;
+            width: var(--jn-ve-g-form-item-height) !important;
+        }
+    }
+
+    // 进度条
+    .el-slider {
+        height: var(--jn-ve-g-form-item-height) !important;
+    }
+
+    // 评级
+    .el-rate {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    // 虚拟下拉框
+    .g-info-select-all {
+        .el-select-v2__wrapper {
+            line-height: var(--jn-ve-g-form-item-height) !important;
+        }
+
+        .el-select-v2__combobox-input {
+            line-height: var(--jn-ve-g-form-item-height) !important;
+            height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
+        }
+    }
+
+    // 控件组
+    .form-item-control-group-wrapper {
+        .el-input__inner {
+            min-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
+            line-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
+        }
+    }
+}

@@ -146,7 +146,8 @@ let formConfig = ref<FormProps>({
         icon: '',
         customLabel: '',
         avatar: '',
-        clientChannel: ''
+        clientChannel: '',
+        arr: []
     },
     formItems: [
         {
@@ -175,6 +176,19 @@ let formConfig = ref<FormProps>({
                         console.log(`%c value === `, 'color: #e6a23c;', value)
                     }
                 }
+            }
+        },
+        {
+            prop: 'radio',
+            label: 'Radio',
+            span: 12,
+            controlConfig: {
+                type: 'radio',
+                options: [
+                    { label: '男', value: 'm' },
+                    { label: '女', value: 'f' },
+                    { label: '中', value: 'z' }
+                ]
             }
         },
         {
@@ -362,6 +376,66 @@ let formConfig = ref<FormProps>({
                     placeholder: '自定义 label 需要传递 placeholder'
                 }
             }
+        },
+        {
+            prop: 'customLabel',
+            label: () => {
+                return (
+                    <span class='form-test-custom-label'>
+                        <span>自</span>
+                        <span>定</span>
+                        <span>义</span>
+                        <span>标</span>
+                        <span>签</span>
+                    </span>
+                )
+            },
+            span: 12,
+            render() {
+                return (
+                    <div style='display: flex;'>
+                        <el-input />
+                        <el-button>按钮</el-button>
+                    </div>
+                )
+            }
+        },
+        {
+            prop: 'arr',
+            label: () => {
+                return (
+                    <span class='form-test-custom-label'>
+                        <span>控</span>
+                        <span>件</span>
+                        <span>组</span>
+                    </span>
+                )
+            },
+            span: 12,
+            controlConfigs: [
+                {
+                    type: 'input',
+                    after: '-',
+                    props: {
+                        placeholder: '自定义 label 需要传递 placeholder'
+                    }
+                },
+                {
+                    type: 'select',
+                    options: [
+                        { label: '男', value: 'm' },
+                        { label: '女', value: 'f' },
+                        { label: '中', value: 'z' }
+                    ],
+                    props: {
+                        multiple: true,
+                        onChange: (value) => {
+                            console.log(`%c value === `, 'color: #e6a23c;', value)
+                        }
+                    },
+                    after: ''
+                }
+            ]
         },
         {
             prop: 'avatar',

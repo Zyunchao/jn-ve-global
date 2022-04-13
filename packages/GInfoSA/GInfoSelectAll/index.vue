@@ -7,7 +7,7 @@
             v-bind="$attrs"
             :height="popperHeight"
             style="width: 100%"
-            :popper-append-to-body="true"
+            :teleported="true"
             :popper-class="`${popperClass} ${randomId}`"
             @visible-change="visibleChange"
         >

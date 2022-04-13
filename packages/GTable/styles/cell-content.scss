@@ -1,0 +1,33 @@
+@mixin cell-content {
+    // 按钮
+    .el-button {
+        &.el-button--text {
+            padding: 0;
+            height: auto !important;
+            font-size: var(--jn-ve-g-table-font-size);
+        }
+
+        &.is-disabled,
+        &.is-loading::before {
+            background-color: transparent;
+        }
+
+        &.is-loading {
+            opacity: 0.7;
+        }
+    }
+
+    // 更多按钮 dropdown
+    .el-dropdown {
+        min-height: var(--jn-ve-g-table-cell-line-height);
+        display: inline-flex;
+        align-items: center;
+    }
+
+    // el-tag
+    .el-tag {
+        height: 24px !important;
+        padding: 0 9px;
+        font-size: 12px;
+    }
+}

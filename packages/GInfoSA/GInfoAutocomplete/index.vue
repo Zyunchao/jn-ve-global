@@ -4,7 +4,7 @@
             style="width: 100%"
             v-bind="$attrs"
             :fetch-suggestions="fetchSuggestions"
-            :popper-append-to-body="true"
+            :teleported="true"
             :popper-class="`${popperClass} ${randomId}`"
         >
             <template #default="{ item, $index }">

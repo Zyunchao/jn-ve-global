@@ -133,5 +133,5 @@ const getFormItemConfigs = (item: FormItemProps) => {
 </script>
 
 <style lang="scss" scoped>
-@import './styles.scss';
+@import './styles';
 </style>

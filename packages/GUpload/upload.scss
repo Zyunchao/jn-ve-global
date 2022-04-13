@@ -34,6 +34,13 @@ $--base-animation-date: 0.2s;
 }
 
 .g-upload {
+    // 按钮
+    :deep(.upload-btn) {
+        .el-button {
+            height: var(--jn-ve-g-btn-s-height);
+            padding: 0 15px;
+        }
+    }
 
     // 触发上传
     :deep(.el-upload) {

@@ -1,0 +1,107 @@
+@mixin pagination {
+    height: var(--jn-ve-g-table-pagination-height);
+    padding-left: 20px;
+    padding-right: 20px;
+
+    :deep(.el-pagination) {
+        padding: 0;
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+
+        /* 按钮 */
+        .btn-prev,
+        .btn-next {
+            padding: 0 14px !important;
+            height: var(--jn-ve-g-table-pagination-item-height);
+            background-color: transparent;
+            border: 1px solid var(--jn-ve-g-base-border-color);
+            border-radius: 4px;
+            transition: transform 0.3s;
+
+            span {
+                height: calc(var(--jn-ve-g-table-pagination-item-height) - 2px);
+                line-height: calc(var(--jn-ve-g-table-pagination-item-height) - 2px);
+            }
+
+            &:active {
+                transform: scale(0.94);
+            }
+        }
+
+        /* 页码 */
+        .el-pager {
+            margin: 0 10px;
+
+            li {
+                background-color: transparent;
+                font-size: 12px;
+                margin: 0;
+                height: var(--jn-ve-g-table-pagination-item-height);
+                line-height: calc(var(--jn-ve-g-table-pagination-item-height) - 2px);
+                border-radius: 0;
+
+                &.is-active {
+                    background-color: var(--el-color-primary);
+                    border-color: var(--el-color-primary) !important;
+
+                    &:hover {
+                        color: #fff;
+                    }
+                }
+
+                &:not(.more) {
+                    border: 1px solid var(--jn-ve-g-base-border-color);
+                }
+
+                &:nth-of-type(n + 2) {
+                    border-left: none;
+                }
+
+                &.more+.number {
+                    border-left: 1px solid var(--jn-ve-g-base-border-color);
+                }
+
+                &:hover {
+                    color: var(--el-color-primary);
+                }
+            }
+        }
+
+        // 跳转页码器
+        .el-pagination__jump {
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            height: var(--jn-ve-g-table-pagination-item-height);
+
+            .el-input,
+            .el-input__inner {
+                height: var(--jn-ve-g-table-pagination-item-height);
+                padding-left: 0 !important;
+            }
+        }
+
+        // 总数
+        .el-pagination__total {
+            margin-left: 10px;
+            height: var(--jn-ve-g-table-pagination-item-height);
+        }
+
+        // 条数调整器
+        .el-pagination__sizes {
+
+            &,
+            .el-select,
+            .el-input .el-input__inner {
+                height: var(--jn-ve-g-table-pagination-item-height);
+                line-height: var(--jn-ve-g-table-pagination-item-height);
+            }
+
+            .el-input {
+                width: 100px;
+            }
+        }
+    }
+}

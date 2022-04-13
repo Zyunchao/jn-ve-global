@@ -98,9 +98,11 @@ const wrapperClass = (type: 'add' | 'remove') => {
     width: 100%;
     display: flex;
     align-items: center;
-    border: var(--el-input-border, var(--el-border-base));
+    border: 1px solid var(--el-border-color);
     border-radius: var(--el-input-border-radius, var(--el-border-radius-base));
     transition: var(--el-transition-border);
+    box-sizing: border-box;
+    min-height: var(--jn-ve-g-form-item-height) !important;
 
     &:hover {
         border-color: var(--el-input-hover-border, var(--el-border-color-hover));
@@ -113,13 +115,15 @@ const wrapperClass = (type: 'add' | 'remove') => {
     .control-separator {
         padding: 0 6px;
         color: var(--el-text-color-regular);
+        min-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
+        line-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
+        display: block;
     }
 
-    /* input */
-    :deep(.el-input) {
-        input {
-            border: none;
-        }
+    // 控件原始边框
+    :deep(.el-input__inner),
+    :deep(.el-select .el-input.is-focus .el-input__inner) {
+        box-shadow: none !important;
     }
 
     /* el-input-number */
@@ -134,7 +138,7 @@ const wrapperClass = (type: 'add' | 'remove') => {
 
     /* 禁用 */
     :deep(.is-disabled + .control-separator) {
-        background-color: var(--el-disabled-fill-base);
+        background-color: var(--el-disabled-bg-color);
     }
 
     /* 组件容器 */

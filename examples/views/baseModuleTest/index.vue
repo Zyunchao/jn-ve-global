@@ -3,7 +3,7 @@
         <!-- :tabs="moduleTabs" -->
         <GBaseModule
             no-search-label
-            more-search-mode="pull-down"
+            more-search-mode="popup"
             search-btn-horizontal
             :search-form-props="searchFormConfig"
             :btns="btns"
@@ -13,6 +13,7 @@
             :table-pagination="tablePagination"
             :table-loading="false"
             :row-btn-config="rowBtnConfig"
+            :tabs="moduleTabs" 
         />
     </BusinessLayout>
 </template>
@@ -24,6 +25,7 @@ import mockData from './mock.json'
 import SearchFormConfig from './component/SearchFormConfig'
 import TableColumns from './component/TableColumns'
 import BusinessLayout from '@/components/businessLayout/index.vue'
+import _ from 'lodash'
 
 const searchFormConfig = SearchFormConfig()
 const tableColumns = TableColumns()
@@ -76,6 +78,20 @@ const btns: BtnProps[] = [
             rowBtnConfig.fixed = 'left'
             rowBtnConfig.align = 'right'
             console.log(`%c rowBtnConfig.hide === `, 'color: #e6a23c;', rowBtnConfig.hide)
+        }
+    },
+    {
+        label: '切换数据',
+        type: 'success',
+        onClick: () => {
+            const datas = _.cloneDeep(mockData['data1'])
+
+            datas[0].date = '1234'
+            datas[0].id = '123491823qwe'
+            // console.log(`%c mockData['data1'] == `, 'color: #67c23a;', mockData['data1'])
+
+
+            tableData.value = datas
         }
     }
 ]

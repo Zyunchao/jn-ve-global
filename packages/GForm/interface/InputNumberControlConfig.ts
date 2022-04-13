@@ -26,7 +26,7 @@ export interface InputNumberProps {
      * 计数器尺寸尺寸
      * default: large
      */
-    size?: 'large' | 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 是否禁用
      * default: false

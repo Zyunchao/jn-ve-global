@@ -383,5 +383,5 @@ const tablePaste = async (e: ClipboardEvent) => {
 </script>
 
 <style lang="scss" scoped>
-@import './style.scss';
+@import './styles';
 </style>

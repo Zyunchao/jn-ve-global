@@ -17,7 +17,7 @@ export interface SelectProps {
     /**
      * 	输入框尺寸
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 是否可以清空选项
      */

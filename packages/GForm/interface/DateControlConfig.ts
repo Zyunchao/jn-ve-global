@@ -26,7 +26,7 @@ interface BaseProps {
      * 输入框尺寸
      * default: large
      */
-    size?: 'large' | 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 非范围选择时的占位内容
      */
@@ -174,7 +174,7 @@ export interface TimeSelectProps {
     /**
      * 输入框尺寸
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 非范围选择时的占位内容
      */

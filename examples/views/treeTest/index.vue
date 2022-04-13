@@ -36,12 +36,12 @@ import orgTreeData from './data/orgTreeData.json'
 import { BtnProps } from '@component/index'
 
 const btns: BtnProps[] = [
-    // {
-    //     label: '新增机构',
-    //     onClick() {
-    //         console.log(`%c ??????`, 'color: #67c23a;')
-    //     }
-    // }
+    {
+        label: '新增机构',
+        onClick() {
+            console.log(`%c ??????`, 'color: #67c23a;')
+        }
+    }
 ]
 
 const defaultCheckedKeys = ref<string[]>(['1424688522159378434'])

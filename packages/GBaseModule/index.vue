@@ -38,7 +38,6 @@
                             v-auth="btn.authCode"
                             :type="btn.type || 'primary'"
                             v-bind="btn"
-                            size="small"
                             @click="btn.onClick"
                         >
                             {{ btn.label }}
@@ -50,7 +49,6 @@
                             v-show="!btn.hide"
                             :type="btn.type || 'primary'"
                             v-bind="btn"
-                            size="small"
                             @click="btn.onClick"
                         >
                             {{ btn.label }}
@@ -384,5 +382,5 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-@import './styles.scss';
+@import './styles';
 </style>

@@ -1,0 +1,53 @@
+@import './tabs-layout.scss';
+@import './middle-area.scss';
+
+.base-module-root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+
+    &.no-padding {
+        border-radius: 0;
+        box-shadow: none;
+
+        .middle-opertion-wrapper,
+        .core-wrapper {
+            padding: 0 !important;
+        }
+
+        .core-wrapper {
+            margin: 0 !important;
+        }
+
+        :deep(.search-wrapper) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    /* 中间 */
+    .middle-opertion-wrapper {
+        @include middle-area;
+    }
+
+    /* 核心 */
+    .core-wrapper {
+        flex: 1;
+        overflow: hidden;
+        padding: 0 var(--jn-ve-g-base-module-padding-lr) var(--jn-ve-g-base-module-table-padding-b);
+
+        .core-table-wrapper {
+            height: 100%;
+        }
+    }
+
+    /* 带有 tab 页的表格 */
+    &.tabs-layout {
+        @include tabs-layout;
+    }
+}

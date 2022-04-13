@@ -1,10 +1,14 @@
-$--base-font-size-m: 16px;
+@import './item-label.scss';
+@import './item-content.scss';
+
 $--base-font-color: #595959;
 
 .g-form {
-    font-size: $--base-font-size-m;
+    font-size: var(--jn-ve-g-form-font-size);
 
     :deep(.el-form-item) {
+        margin-bottom: var(--jn-ve-g-form-item-margin-b) !important;
+
         &.no-colon {
             .el-form-item__label {
                 &::after {
@@ -13,43 +17,16 @@ $--base-font-color: #595959;
             }
         }
 
-        .el-form-item__label {
-            font-size: $--base-font-size-m;
+        .el-form-item__error {
+            font-size: 12px;
+        }
 
-            &::after {
-                content: '：';
-            }
+        .el-form-item__label {
+            @include item-label;
         }
 
         .el-form-item__content {
-            font-size: $--base-font-size-m;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-
-            >div {
-                width: 100%;
-            }
-
-            .el-textarea,
-            .el-input {
-                font-size: inherit;
-            }
-
-            .el-rate {
-                height: 100%;
-                display: flex;
-                align-items: center;
-            }
-
-            // 时间选择框
-            .el-date-editor {
-                &.el-range-editor {
-                    .el-range-separator {
-                        width: auto;
-                    }
-                }
-            }
+            @include item-content;
         }
 
         // 自定义类名
@@ -61,7 +38,7 @@ $--base-font-color: #595959;
 
         &.content-right {
             .el-form-item__content {
-                justify-content: end; 
+                justify-content: end;
             }
         }
 
@@ -79,8 +56,6 @@ $--base-font-color: #595959;
             .el-form-item__content {
                 .el-button {
                     padding: 0 22px;
-                    // display: inline-flex;
-                    // align-items: center;
 
                     span {
                         font-size: 16px;
@@ -97,7 +72,6 @@ $--base-font-color: #595959;
         // 禁用
         .is-disabled {
 
-            // color: red;
             input,
             .el-textarea__inner {
                 color: $--base-font-color;

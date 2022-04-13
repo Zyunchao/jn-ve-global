@@ -10,7 +10,7 @@
                             v-auth="btn.authCode"
                             :type="btn.type || 'primary'"
                             v-bind="btn"
-                            size="mini"
+                            size="small"
                             @click="btn.onClick"
                         >
                             {{ btn.label }}
@@ -21,7 +21,7 @@
                             v-show="!btn.hide"
                             :type="btn.type || 'primary'"
                             v-bind="btn"
-                            size="mini"
+                            size="small"
                             @click="btn.onClick"
                         >
                             {{ btn.label }}

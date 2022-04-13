@@ -30,10 +30,14 @@ export interface SliderProps {
      */
     showInputControls?: boolean
     /**
+     * 滑块的大小
+     */
+    size?: 'large' | 'default' | 'small'
+    /**
      * 输入框的尺寸
      * default: small
      */
-    inputSize?: 'large' | 'medium' | 'small' | 'mini'
+    inputSize?: 'large' | 'default' | 'small'
     /**
      * 是否显示间断点
      * default: false

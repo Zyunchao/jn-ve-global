@@ -1,12 +1,13 @@
 <template>
     <div ref="gIconPickerRootRef" class="g-icon-picker-wrapper">
         <el-popover
-            trigger="focus"
+            trigger="click"
             placement="bottom"
             :show-arrow="false"
             :width="popperWidth"
             :offset="6"
             popper-class="g-icon-picker-popper"
+            :disabled="disabled"
         >
             <template #reference>
                 <el-input

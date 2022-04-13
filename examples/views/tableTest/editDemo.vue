@@ -1,9 +1,9 @@
 <template>
-    <el-button type="success" size="mini" @click="doLayout">
+    <el-button type="success" @click="doLayout">
         重新布局
     </el-button>
     <div class="examples-base-wrapper">
-        <g-table :config="tableConfig" />
+        <g-table v-if="refresh" :config="tableConfig" />
     </div>
 </template>
 
@@ -48,6 +48,8 @@ const sexMapping = {
     m: '男',
     f: '女'
 }
+
+const refresh = ref<boolean>(true)
 
 const hobbyMapping = {
     '1': '工作',
@@ -472,7 +474,7 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
 function mapData(source): BaseTableDataItem[] {
     return source.map((item: BaseTableDataItem) => {
         const obj: BaseTableDataItem = {
-            edit: false,
+            edit: true,
             ...item,
             selectMultiple: item.selectMultiple?.split(','),
             checkbox: item.checkbox?.split(','),
@@ -485,7 +487,21 @@ function mapData(source): BaseTableDataItem[] {
 const doLayout = () => {
     // doLayout
     // console.log(`%c instance == `, 'color: #e6a23c;', tableConfig.instance)
-    tableConfig.instance.doLayout()
+    // tableConfig.instance.doLayout()
+    tableConfig.data[0].select = 'milk'
+
+    const data = mapData(mockData).filter((item, index) => index === 0)
+    data[0].select = 'milk'
+
+    refresh.value = false
+    tableConfig.data = data
+
+    nextTick(() => {
+        refresh.value = true
+    })
+
+    // console.log(`%c data === `, 'color: #67c23a;', data)
+
 }
 </script>
 

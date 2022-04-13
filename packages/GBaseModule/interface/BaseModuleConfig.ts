@@ -25,7 +25,7 @@ export interface BtnProps {
     /**
      * 按钮尺寸
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 加载中
      */

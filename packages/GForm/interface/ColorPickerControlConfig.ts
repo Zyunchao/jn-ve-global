@@ -7,7 +7,7 @@ export interface ColorPickerProps {
     /**
      * 尺寸
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 是否支持透明度选择
      * default: false

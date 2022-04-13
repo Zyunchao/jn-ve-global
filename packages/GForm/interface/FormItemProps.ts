@@ -111,7 +111,7 @@ interface FormItemBaseProps {
     /**
      * 用于控制该表单域下组件的尺寸
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
 
     // 自定义扩展 Props -----------------------------------------------------------------------
 

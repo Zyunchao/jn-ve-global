@@ -5,7 +5,7 @@ export interface CheckboxGroupProps {
     /**
      * 多选框组尺寸，仅对按钮形式的 Checkbox 或带有边框的 Checkbox 有效
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 是否禁用
      */
@@ -76,7 +76,7 @@ export interface CheckboxBoxOptionProps extends CheckboxOptionBasePeops {
     /**
      * Checkbox 的尺寸，仅在 border 为真时有效
      */
-    size?: 'medium' | 'small' | 'mini'
+    size?: 'large' | 'default' | 'small'
     /**
      * 设置 indeterminate 状态，只负责样式控制
      */

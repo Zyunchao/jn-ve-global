@@ -1,0 +1,166 @@
+@import './cell-content.scss';
+@import './pagination.scss';
+
+.g-table-root {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid var(--jn-ve-g-base-border-color);
+    border-radius: 4px 4px 0 0;
+
+    // 无分页
+    &.hide-pagination {
+        .g-table-main {
+            height: 100%;
+
+            :deep(.el-table) {
+                &::before {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // 表格
+    .g-table-main {
+        height: calc(100% - var(--jn-ve-g-table-pagination-height));
+
+        :deep(.el-table) {
+            color: var(--jn-ve-g-table-color);
+            font-size: var(--jn-ve-g-table-font-size);
+
+            &::before,
+            .el-table__fixed::before,
+            .el-table__fixed-right::before {
+                background-color: var(--jn-ve-g-base-border-color);
+            }
+
+            /* 表头 */
+            thead {
+                tr th {
+                    padding: var(--jn-ve-g-table-th-padding-tb) 0 !important;
+                    background-color: var(--jn-ve-g-table-striped-tr-bg);
+                    color: #000000;
+                    border-bottom: 1px solid var(--jn-ve-g-base-border-color);
+
+                    .cell {
+                        line-height: var(--jn-ve-g-table-cell-line-height);
+                    }
+                }
+            }
+
+            /* 表体 */
+            tbody {
+                tr {
+                    td {
+                        border-bottom: 1px solid var(--jn-ve-g-base-border-color);
+                        padding: var(--jn-ve-g-table-td-padding-tb) 0 !important;
+
+                        .cell {
+                            line-height: var(--jn-ve-g-table-cell-line-height);
+
+                            // 可编辑行
+                            &.is-edit {
+                                overflow: visible;
+                            }
+
+                            @include cell-content;
+                        }
+                    }
+
+                    &.el-table__row--striped {
+                        td {
+                            background-color: var(--jn-ve-g-table-striped-tr-bg);
+                        }
+                    }
+
+                    &.hover-row {
+                        td {
+                            background-color: #e8e8e8;
+                        }
+                    }
+                }
+            }
+
+            .el-table__header-wrapper {
+                position: relative;
+                z-index: 2;
+            }
+
+            .el-table__fixed-right-patch {
+                background-color: var(--jn-ve-g-table-striped-tr-bg);
+                top: -1px;
+                border-bottom: 1px solid var(--jn-ve-g-base-border-color);
+            }
+
+            /* 一些自定义的类 */
+            .btn-danger {
+                color: var(--el-color-danger);
+
+                &:hover {
+                    color: var(--el-color-danger-light-3);
+                }
+            }
+
+            .el-table__body-wrapper {
+                position: initial;
+            }
+
+            // 无数据提示
+            .el-table__empty-block {
+                min-height: 260px !important;
+
+                .el-table__empty-text {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: fit-content;
+                    opacity: 0.5;
+
+                    i {
+                        font-size: 120px;
+                    }
+
+                    p {
+                        line-height: 20px;
+                        font-size: 18px;
+                    }
+                }
+            }
+
+            /* 选中行 */
+            tr.current-row {
+                td {
+                    background-color: var(--el-color-primary-light-8) !important;
+                    font-weight: 600;
+                }
+            }
+
+
+            // 复选框
+            .el-checkbox {
+                height: auto;
+            }
+        }
+
+        :deep(.el-table--group) {
+            border: none !important;
+
+            &::after {
+                display: none;
+            }
+        }
+
+        :deep(.el-table__header) {
+            background-color: var(--jn-ve-g-table-striped-tr-bg);
+        }
+    }
+
+    // 分页
+    .g-table-pagination {
+        @include pagination;
+    }
+}
