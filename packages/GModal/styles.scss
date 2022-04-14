@@ -8,7 +8,7 @@ $--tf-base-bgc: #ecf6ff;
     align-items: center;
     justify-content: space-between;
     padding: $--dialog-base-top-p 20px $--dialog-base-top-p $--dialog-base-left-p;
-    background-color: $--tf-base-bgc;
+    background-color: var(--jn-ve-g-popup-header-bg);
     margin-right: 0;
 
     >span,

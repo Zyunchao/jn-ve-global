@@ -3,3 +3,13 @@
     padding: 0 var(--jn-ve-g-btn-padding-lr);
     font-size: var(--jn-ve-g-base-font-size-s);
 }
+
+
+// 覆盖 el-message-box 样式
+.el-message-box {
+    --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+
+    .el-message-box__header {
+        background-color: var(--jn-ve-g-popup-header-bg);
+    }
+}

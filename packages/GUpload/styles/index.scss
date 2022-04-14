@@ -1,0 +1,33 @@
+@import './common';
+@import './trigger/avatar.scss';
+@import './trigger/picture-card.scss';
+@import './file-list/picture-card.scss';
+@import './file-list/picture.scss';
+@import './file-list/text.scss';
+
+.g-upload {
+
+    // 按钮
+    :deep(.upload-btn) {
+        .el-button {
+            --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+            --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr3);
+        }
+    }
+
+    // 禁用
+    @include disabled;
+    
+    // 触发
+    @include trigger-avatar;
+    :deep(.el-upload) {
+        @include trigger-picture-card;
+    }
+
+    // 文件列表
+    :deep(.el-upload-list) {
+        @include file-list-picture;
+        @include file-list-picture-card;
+        @include file-list-text;
+    }
+}

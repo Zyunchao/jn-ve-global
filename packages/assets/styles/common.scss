@@ -1,10 +1,11 @@
 :root {
     --jn-ve-g-base-border-color: #e8e8e8;
+    --jn-ve-g-base-animation-date: 0.2s;
 
     --jn-ve-g-base-font-size: 18px;
     --jn-ve-g-base-font-size-m: 16px;
     --jn-ve-g-base-font-size-s: 14px;
-    
+
     // 按钮：高度
     --jn-ve-g-btn-b-height: 40px;
     --jn-ve-g-btn-m-height: 38px;
@@ -15,4 +16,11 @@
     --jn-ve-g-btn-padding-lr: 20px;
     --jn-ve-g-btn-padding-lr2: 22px;
     --jn-ve-g-btn-padding-lr3: 15px;
+
+    // 上传控件
+    --jn-ve-g-upload-size: 148px;
+    --jn-ve-g-upload-radius: 6px;
+
+    // 弹框
+    --jn-ve-g-popup-header-bg: #ecf6ff;
 }

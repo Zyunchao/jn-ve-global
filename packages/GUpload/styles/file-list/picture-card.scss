@@ -1,0 +1,77 @@
+@mixin file-list-picture-card {
+    &.el-upload-list--picture-card {
+        .el-upload-list__item {
+            .file-list-item {
+                width: 100%;
+                height: 100%;
+                padding: 1px;
+                border-radius: 8px;
+                overflow: hidden;
+
+                .info {
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+
+                    .preview {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .file-name {
+                        position: absolute;
+                        color: #fff;
+                        width: 100%;
+                        left: 0;
+                        bottom: 5px;
+                        text-align: center;
+                        background-color: rgba(0, 0, 0, 0.3);
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        padding: 0 6px;
+                    }
+                }
+
+                .btns {
+                    @include shade;
+                }
+
+                .status-label {
+                    position: absolute;
+                    right: -15px;
+                    top: -6px;
+                    width: 40px;
+                    height: 24px;
+                    background: #13ce66;
+                    text-align: center;
+                    transform: rotate(45deg);
+                    box-shadow: 0 0 1pc 1px rgba(0, 0, 0, 0.2);
+                    color: #fff;
+
+                    i {
+                        font-size: 12px;
+                        margin-top: 11px;
+                        transform: rotate(-45deg);
+                    }
+                }
+
+                .el-progress.el-progress--circle {
+                    .el-progress-circle {
+                        color: transparent;
+                    }
+                }
+            }
+
+
+
+            &:hover {
+                .file-list-item {
+                    .btns {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}

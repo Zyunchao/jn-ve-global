@@ -1,0 +1,14 @@
+@mixin trigger-picture-card {
+    // picture-card 模式特有类名
+    &.el-upload--picture-card {
+        @include trigger-card-style;
+    }
+
+    .upload-btn {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

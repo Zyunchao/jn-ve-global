@@ -1,0 +1,33 @@
+@mixin trigger-avatar {
+    &.avatar {
+        :deep(.el-upload) {
+            
+            // 自定义触发器
+            .avatar-upload {
+                position: relative;
+
+                @include trigger-card-style;
+
+                img {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: calc(100% - 2px);
+                    height: calc(100% - 2px);
+                    border-radius: var(--jn-ve-g-upload-radius);
+                    transform: translate(-50%, -50%);
+                }
+
+                .operation {
+                    @include shade;
+                }
+
+                &:hover {
+                    .operation {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}

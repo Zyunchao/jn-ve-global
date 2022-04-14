@@ -1,0 +1,38 @@
+@mixin disabled {
+    &.is-disabled {
+        :deep(.el-upload--picture-card) {
+            cursor: no-drop;
+            border: 1px dashed #c0ccda !important;
+        }
+
+        // 三者移除上传触发器
+        &.text,
+        &.picture-card,
+        &.picture {
+
+            :deep(.el-upload),
+            :deep(.status-label),
+            :deep(.del-btn-icon) {
+                display: none;
+            }
+        }
+        
+        // 头像触发器禁用，不能移除
+        :deep(.avatar-upload) {
+            cursor: not-allowed !important;
+
+            &:hover {
+                border-color: var(--el-border-color-darker) !important;
+                i {
+                    color: var(--el-text-color-secondary) !important;
+                }   
+            }
+
+            .operation {
+                i {
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+@mixin trigger-card-style {
+    width: var(--jn-ve-g-upload-size);
+    height: var(--jn-ve-g-upload-size);
+    background-color: var(--el-fill-color-lighter);
+    border: 1px dashed var(--el-border-color-darker);
+    border-radius: var(--jn-ve-g-upload-radius);
+    cursor: pointer;
+    box-sizing: border-box;
+    vertical-align: top;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: border var(--jn-ve-g-base-animation-date);
+
+    i {
+        font-size: 28px;
+        color: var(--el-text-color-secondary);
+        transition: color var(--jn-ve-g-base-animation-date);
+    }
+
+    &:hover {
+        border-color: var(--el-color-primary);
+
+        i {
+            color: var(--el-color-primary);
+        }
+    }
+}

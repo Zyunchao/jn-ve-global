@@ -125,7 +125,7 @@ let formConfig = ref<FormProps>({
     instance: null,
     labelPosition: 'right',
     labelWidth: '180px',
-    disabled: true,
+    // disabled: true,
     model: {
         name: '12345',
         region: '',
