@@ -84,6 +84,7 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: '年龄-InputNumer',
         width: 160,
         editable: true,
+        openDB: true,
         controlConfig: {
             type: 'inputNumber',
             props: {
@@ -105,6 +106,7 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: '食物-Select',
         width: 200,
         editable: true,
+        openDB: true,
         controlConfig: {
             type: 'select',
             options: Object.keys(foodsMapping).map((key) => ({
@@ -474,7 +476,7 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
 function mapData(source): BaseTableDataItem[] {
     return source.map((item: BaseTableDataItem) => {
         const obj: BaseTableDataItem = {
-            edit: true,
+            edit: false,
             ...item,
             selectMultiple: item.selectMultiple?.split(','),
             checkbox: item.checkbox?.split(','),

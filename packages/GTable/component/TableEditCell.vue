@@ -34,6 +34,7 @@
                 <!-- input 输入框 -->
                 <template v-if="localControlType === 'input'">
                     <el-input
+                        ref="controlRef"
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         size="small"
@@ -45,6 +46,7 @@
                 <template v-if="localControlType === 'inputNumber'">
                     <div class="inputnumber-control-wrapper">
                         <el-input-number
+                            ref="controlRef"
                             v-model="localPropRef"
                             size="small"
                             v-bind="localControlProps"
@@ -443,6 +445,8 @@ const localCellPropInitValue = Symbol('localCellPropInitValue')
 
 // 组件 ref 引用
 const editCellContentRef = ref<HTMLElement>(null)
+const controlRef = ref(null)
+
 // 动画时间
 const animationTime = ref('200ms')
 // 获取用户传递的 cell 改变函数
@@ -879,7 +883,16 @@ const datePickerValueVerify = () => {
 
 // 双击是否开启编辑
 const handleDB = () => {
-    if (props.columnConfig.openDB) text2Control()
+    if (props.columnConfig.openDB) {
+        text2Control()
+
+        // 双击开启，控件获取焦点
+        setTimeout(() => {
+            if (controlRef.value) {
+                controlRef.value.focus()
+            }
+        }, parseInt(animationTime.value) + 50)
+    }
 }
 
 onBeforeUnmount(() => {
@@ -890,17 +903,15 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-$--cell-min-height: 29px;
-
 .edit-cell-content {
     cursor: pointer;
-    min-height: $--cell-min-height;
+    min-height: var(--jn-ve-g-table-cell-line-height);
     display: flex;
     align-items: center;
 
     .text {
         flex: 1;
-        min-height: $--cell-min-height;
+        min-height: var(--jn-ve-g-table-cell-line-height);
         display: flex;
         align-items: center;
         width: 100%;
@@ -915,7 +926,6 @@ $--cell-min-height: 29px;
 
     :deep(.el-slider) {
         width: 100%;
-        // padding: 0 20px;
 
         .el-slider__runway {
             margin: 10px 0;

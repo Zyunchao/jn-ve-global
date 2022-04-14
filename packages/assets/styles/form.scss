@@ -27,3 +27,9 @@
         height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
     }
 }
+
+.el-input-number {
+    .el-input__inner {
+        padding-left: 0 !important;
+    }
+}

@@ -1,4 +1,6 @@
 @mixin pagination {
+    --jn-ve-g-form-item-height: var(--jn-ve-g-table-pagination-item-height);
+
     height: var(--jn-ve-g-table-pagination-height);
     padding-left: 20px;
     padding-right: 20px;

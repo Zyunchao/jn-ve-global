@@ -55,6 +55,7 @@
             tbody {
                 tr {
                     td {
+                        overflow: hidden;
                         border-bottom: 1px solid var(--jn-ve-g-base-border-color);
                         padding: var(--jn-ve-g-table-td-padding-tb) 0 !important;
 
