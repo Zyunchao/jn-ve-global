@@ -34,6 +34,12 @@ export interface InfoSelectProps {
      */
     collapseTags?: boolean
     /**
+     * 当鼠标悬停于折叠标签的文本时，是否显示所有选中的标签。 
+     * 要使用此属性，collapse-tags属性必须设定为 true
+     * default: false
+     */
+     collapseTagsTooltip?: boolean
+    /**
      * 多选时用户最多可以选择的项目数， 为 0 则不限制
      * 0
      */

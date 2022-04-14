@@ -11,9 +11,8 @@
 
         .btns-wrapper {
             .el-button {
-                padding: 0 22px;
-                font-size: 14px;
-                height: var(--jn-ve-g-btn-s-height) !important;
+                --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+                --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
             }
         }
     }

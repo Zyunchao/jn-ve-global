@@ -52,26 +52,10 @@
 
 @mixin control-height {
 
-    // 覆盖表单控件
-    .el-input__inner,
-    .el-checkbox,
-    .el-switch,
-    .el-switch__label,
-    .el-radio {
-        min-height: var(--jn-ve-g-form-item-height) !important;
-        line-height: var(--jn-ve-g-form-item-height) !important;
-    }
-
-    // 按钮
-    .el-button {
-        height: var(--jn-ve-g-form-item-height) !important;
-        line-height: var(--jn-ve-g-form-item-height) !important;
-        font-size: var(--jn-ve-g-base-font-size-s) !important;
-        padding: 0 20px;
-    }
-
     // 多选框组容器
-    .el-checkbox-group {
+    .el-checkbox-group,
+    .el-switch,
+    .el-color-picker {
         width: fit-content !important;
     }
 
@@ -85,8 +69,6 @@
 
     // 颜色选择器
     .el-color-picker {
-        width: fit-content !important;
-
         .el-color-picker__trigger {
             height: var(--jn-ve-g-form-item-height) !important;
             width: var(--jn-ve-g-form-item-height) !important;
@@ -103,18 +85,6 @@
         height: 100%;
         display: flex;
         align-items: center;
-    }
-
-    // 虚拟下拉框
-    .g-info-select-all {
-        .el-select-v2__wrapper {
-            line-height: var(--jn-ve-g-form-item-height) !important;
-        }
-
-        .el-select-v2__combobox-input {
-            line-height: var(--jn-ve-g-form-item-height) !important;
-            height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
-        }
     }
 
     // 控件组

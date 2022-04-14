@@ -990,8 +990,8 @@ $--cell-min-height: 29px;
                 text-align: center;
 
                 .el-button {
-                    min-height: 20px;
-                    height: 20px;
+                    min-height: 20px !important;
+                    height: 20px !important;
                     padding: 4px 16px;
                 }
             }

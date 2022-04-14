@@ -223,6 +223,24 @@ const handleMoreSearch = () => {
                 }
             }
         }
+
+        // 按钮
+        :deep(.search-btn-item) {
+            .el-form-item__content {
+                .el-button {
+                    --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
+                    --jn-ve-g-base-font-size-s: 16px;
+
+                    span {
+                        margin-left: 10px;
+                    }
+
+                    i {
+                        font-size: calc(var(--jn-ve-g-base-font-size-s) + 2px);
+                    }
+                }
+            }
+        }
     }
 }
 </style>

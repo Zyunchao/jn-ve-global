@@ -5,9 +5,14 @@
     --jn-ve-g-base-font-size-m: 16px;
     --jn-ve-g-base-font-size-s: 14px;
     
-    // 按钮
+    // 按钮：高度
     --jn-ve-g-btn-b-height: 40px;
     --jn-ve-g-btn-m-height: 38px;
     --jn-ve-g-btn-s-height: 32px;
     --jn-ve-g-btn-ss-height: 28px;
+    --jn-ve-g-btn-height: var(--jn-ve-g-btn-m-height);
+    // 按钮：内左右间距
+    --jn-ve-g-btn-padding-lr: 20px;
+    --jn-ve-g-btn-padding-lr2: 22px;
+    --jn-ve-g-btn-padding-lr3: 15px;
 }

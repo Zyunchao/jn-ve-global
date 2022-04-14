@@ -2,4 +2,28 @@
     --jn-ve-g-form-font-size: var(--jn-ve-g-base-font-size-m);
     --jn-ve-g-form-item-height: 38px;
     --jn-ve-g-form-item-margin-b: 18px;
+    --jn-ve-g-form-disabled-color: #595959;
+}
+
+
+// 表单控件最小高度，取变量，部分场景下会本地覆盖
+.el-input__inner,
+.el-checkbox,
+.el-switch,
+.el-switch__label,
+.el-radio {
+    min-height: var(--jn-ve-g-form-item-height) !important;
+    line-height: var(--jn-ve-g-form-item-height) !important;
+}
+
+// 虚拟下拉框
+.g-info-select-all {
+    .el-select-v2__wrapper {
+        line-height: var(--jn-ve-g-form-item-height) !important;
+    }
+
+    .el-select-v2__combobox-input {
+        line-height: var(--jn-ve-g-form-item-height) !important;
+        height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
+    }
 }

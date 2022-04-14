@@ -17,8 +17,8 @@ $--base-padding-lr: 14px;
             flex: 1;
 
             .el-button {
-                height: var(--jn-ve-g-btn-ss-height);
-                padding: 0 15px;
+                --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
+                --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr3);
             }
         }
 

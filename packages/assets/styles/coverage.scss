@@ -1,5 +1,5 @@
 .el-button {
-    height: var(--jn-ve-g-btn-m-height);
-    padding: 0 20px;
+    height: var(--jn-ve-g-btn-height);
+    padding: 0 var(--jn-ve-g-btn-padding-lr);
     font-size: var(--jn-ve-g-base-font-size-s);
 }
