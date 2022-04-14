@@ -1057,8 +1057,8 @@ onBeforeUnmount(() => {
             background-color: rgba(197, 194, 194, 0.5);
             position: absolute;
             height: 200%;
-            width: 120%;
-            left: -10%;
+            width: calc(100% + 12px * 2);
+            left: -12px;
             bottom: -50%;
         }
     }
