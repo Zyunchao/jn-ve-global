@@ -944,6 +944,7 @@ onBeforeUnmount(() => {
     }
 
     :deep(.control) {
+        height: var(--jn-ve-g-table-cell-line-height);
         width: 100%;
         position: relative;
 
@@ -955,6 +956,7 @@ onBeforeUnmount(() => {
                 left: -10px;
                 font-size: 20px;
                 top: 0;
+                z-index: 2;
             }
         }
 
@@ -962,10 +964,18 @@ onBeforeUnmount(() => {
             transition: border, box-shadow v-bind(animationTime);
         }
 
+        // 校验出错
         &.is-error {
             .el-input__inner,
-            .checkbox-wrapper .el-checkbox-group {
+            .checkbox-wrapper .el-checkbox-group,
+            i {
                 border-color: #f56c6c;
+                color: #f56c6c;
+            }
+
+            .el-input__inner,
+            .checkbox-wrapper .el-checkbox-group {
+                box-shadow: 0 0 0 1px #f56c6c inset !important;
             }
         }
 
@@ -1035,20 +1045,20 @@ onBeforeUnmount(() => {
 
         // 错误信息
         .error-msg {
-            width: 100%;
             display: block;
             color: #f56c6c;
             font-size: 10px;
             line-height: 12px;
             height: 12px;
             text-align: left;
-            position: absolute;
-            left: 0;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            background-color: rgba(197, 194, 194, 0.5);
+            position: absolute;
             height: 200%;
-            background-color: rgba(197, 194, 194, 0.4);
+            width: 120%;
+            left: -10%;
             bottom: -50%;
         }
     }
