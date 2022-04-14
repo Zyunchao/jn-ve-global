@@ -1,5 +1,3 @@
-$--base-padding-lr: 14px;
-
 .aside-tree {
     width: 100%;
     height: 100%;
@@ -9,7 +7,7 @@ $--base-padding-lr: 14px;
     // 按钮区域
     .btns-wrapper {
         display: flex;
-        padding: 12px $--base-padding-lr 0;
+        padding: 12px var(--jn-ve-g-tree-padding-lr) 0;
         justify-content: space-between;
         flex: none;
 
@@ -45,23 +43,17 @@ $--base-padding-lr: 14px;
 
     // 搜索框
     .input-wrapper {
-        padding: 12px $--base-padding-lr 12px;
+        padding: 12px var(--jn-ve-g-tree-padding-lr) 12px;
     }
 
     // 树容器
     .tree-wrapper {
         flex: 1;
         overflow: hidden;
-        padding-left: $--base-padding-lr;
+        padding-left: var(--jn-ve-g-tree-padding-lr);
 
         :deep(.tree-scrollbar) {
-            .el-scrollbar__view {
-                padding-bottom: 20px;
-            }
-
-            .el-scrollbar__bar.is-horizontal {
-                // height: 20px !important;
-            }
+            padding-right: var(--jn-ve-g-tree-padding-lr);
         }
 
         :deep(.el-tree) {
@@ -110,6 +102,6 @@ $--base-padding-lr: 14px;
     }
 
     .white {
-        height: 10px;
+        height: 6px;
     }
 }
