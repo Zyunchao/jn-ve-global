@@ -52,7 +52,7 @@ import { PropType, ref, computed, isProxy, onBeforeMount } from 'vue'
 import { TableColumnProps } from '../index'
 import { getColumnProps } from '../utils'
 import FunctionalComponent from '../../FunctionalComponent'
-import TableEditCell from '../component/TableEditCell.vue'
+import TableEditCell from '../component/TableEditCell/index.vue'
 
 const props = defineProps({
     columnConfig: {

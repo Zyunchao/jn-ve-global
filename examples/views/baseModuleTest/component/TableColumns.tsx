@@ -6,25 +6,28 @@ export default () =>
         {
             prop: 'date',
             label: '日期',
-            width: 180
+            width: 480,
+            fixed: 'left'
         },
         {
             prop: 'name',
             label: '姓名',
-            width: 180,
+            width: 480,
             showOverflowTooltip: true
         },
         {
             prop: 'address',
+            width: 480,
             label: '地址'
         },
         {
             prop: 'tag',
             label: '标签',
+            width: 480,
             render() {
                 return (
                     <el-tag class='ml-2' type='danger'>
-                        Tag 5
+                        Tag 52222
                     </el-tag>
                 )
             }

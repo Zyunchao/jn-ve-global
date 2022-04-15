@@ -1,0 +1,22 @@
+@mixin error-msg {
+
+    // 错误信息
+    .error-msg {
+        display: block;
+        color: #f56c6c;
+        font-size: 10px;
+        line-height: 12px;
+        height: 12px;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background-color: rgba(197, 194, 194, 0.5);
+        position: absolute;
+        height: calc(100% + var(--jn-ve-g-table-td-padding-tb) * 2);
+        width: calc(100% + var(--jn-ve-g-table-cell-padding-lr) * 2);
+        left: calc(-1 * var(--jn-ve-g-table-cell-padding-lr));
+        top: calc(-1 * var(--jn-ve-g-table-td-padding-tb));
+        z-index: 1;
+    }
+}

@@ -1,0 +1,31 @@
+@import './control.scss';
+@import './error-msg.scss';
+
+.edit-cell-content {
+    cursor: pointer;
+    min-height: var(--jn-ve-g-table-cell-line-height);
+    display: flex;
+    align-items: center;
+
+    .text {
+        flex: 1;
+        min-height: var(--jn-ve-g-table-cell-line-height);
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        >span {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    // 单元格内的控件盒子
+    :deep(.control) {
+        @include control-style;
+        @include error-msg;
+    }
+}
+

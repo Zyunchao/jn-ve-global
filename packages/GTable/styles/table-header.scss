@@ -1,0 +1,26 @@
+@mixin table-header {
+    .el-table__header-wrapper {
+        position: relative;
+        z-index: 2;
+
+        .el-table__header {
+            thead {
+                tr th {
+                    padding: var(--jn-ve-g-table-th-padding-tb) 0 !important;
+                    background-color: var(--jn-ve-g-table-striped-tr-bg);
+                    color: #000000;
+                    border-bottom: 1px solid var(--jn-ve-g-base-border-color);
+
+                    .cell {
+                        line-height: var(--jn-ve-g-table-cell-line-height);
+                    }
+
+
+                    /* 左右固定的列 2.0+ 版本使用的是  position:sticky 来进行固定列的 👍🏻 🐂 */
+                    // &.el-table-fixed-column--left {}
+                    // &.el-table-fixed-column--right {}
+                }
+            }
+        }
+    }
+}

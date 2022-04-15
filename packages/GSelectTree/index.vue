@@ -87,6 +87,10 @@ interface SelectTreeProps {
      * tree 的原生配置，需要以对象的形式传递给当前组件
      */
     treeConfig?: TreeConfig
+    /**
+     * onchange 事件
+     */
+    onChange?: (data: TreeData) => void
 }
 
 const props = withDefaults(defineProps<SelectTreeProps>(), {
@@ -101,7 +105,8 @@ const props = withDefaults(defineProps<SelectTreeProps>(), {
     everyChoose: false,
     disabled: false,
     nonselectable: () => ['QH', 'QW', 'QZ'],
-    treeConfig: null
+    treeConfig: null,
+    onChange: null
 })
 
 const emits = defineEmits(['update:modelValue'])
@@ -175,10 +180,14 @@ const handleCurrentChange = (data) => {
     if (props.everyChoose) {
         emits('update:modelValue', data.id)
         elSelectRef.value.blur()
+
+        props.onChange?.(data)
     } else {
         if (!props.nonselectable.includes(data.type)) {
             emits('update:modelValue', data.id)
             elSelectRef.value.blur()
+
+            props.onChange?.(data)
         }
     }
 
@@ -192,6 +201,7 @@ const handleCurrentChange = (data) => {
  */
 const handleCheck = (data, { checkedNodes, checkedKeys }) => {
     if (!props.multiple) return
+    props.onChange?.(checkedKeys)
     emits('update:modelValue', checkedKeys)
 }
 

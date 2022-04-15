@@ -12,4 +12,8 @@
     .el-message-box__header {
         background-color: var(--jn-ve-g-popup-header-bg);
     }
+
+    .el-message-box__btns {
+        justify-content: center;
+    }
 }

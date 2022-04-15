@@ -3,7 +3,7 @@
         <!-- :tabs="moduleTabs" -->
         <GBaseModule
             no-search-label
-            more-search-mode="popup"
+            more-search-mode="pull-down"
             search-btn-horizontal
             :search-form-props="searchFormConfig"
             :btns="btns"
@@ -13,7 +13,6 @@
             :table-pagination="tablePagination"
             :table-loading="false"
             :row-btn-config="rowBtnConfig"
-            :tabs="moduleTabs" 
         />
     </BusinessLayout>
 </template>

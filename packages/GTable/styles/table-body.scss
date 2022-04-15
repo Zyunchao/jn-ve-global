@@ -1,0 +1,93 @@
+@mixin table-td {
+    border-bottom: 1px solid var(--jn-ve-g-base-border-color);
+    padding: var(--jn-ve-g-table-td-padding-tb) 0 !important;
+
+    .cell {
+        line-height: var(--jn-ve-g-table-cell-line-height);
+        padding: 0 var(--jn-ve-g-table-cell-padding-lr);
+
+        // 可编辑行
+        &.is-edit {
+            overflow: visible;
+        }
+
+        @include cell-content;
+    }
+
+    /* 左右固定的列 2.0+ 版本使用的是  position:sticky 来进行固定列的 👍🏻 🐂 */
+    // &.el-table-fixed-column--left {}
+    // &.el-table-fixed-column--right {}
+}
+
+@mixin table-body {
+    .el-table__body-wrapper {
+        position: initial;
+
+        // 表体
+        .el-table__body {
+            tbody {
+                tr {
+                    td {
+                        @include table-td;
+                    }
+
+                    // 斑马纹
+                    &.el-table__row--striped {
+                        td {
+                            background-color: var(--jn-ve-g-table-striped-tr-bg);
+                        }
+                    }
+
+                    // 行 hover
+                    &.hover-row {
+                        td {
+                            background-color: #e8e8e8;
+                        }
+                    }
+
+                    // 选中行
+                    &.current-row {
+                        td {
+                            background-color: var(--el-color-primary-light-8) !important;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+
+
+            /* 表体内一些自定义的类 */
+            .btn-danger {
+                color: var(--el-color-danger);
+
+                &:hover {
+                    color: var(--el-color-danger-light-3);
+                }
+            }
+        }
+
+        // 无数据提示
+        .el-table__empty-block {
+            min-height: 260px !important;
+            height: 100% !important;
+
+            .el-table__empty-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: fit-content;
+                opacity: 0.3;
+
+                i {
+                    font-size: 120px;
+                }
+
+                p {
+                    line-height: 20px;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

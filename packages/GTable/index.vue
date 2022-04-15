@@ -3,7 +3,8 @@
         v-if="localConfig && refreshLoad"
         class="g-table-root"
         :class="{
-            'hide-pagination': !localConfig.pagination || localConfig.pagination.show === false
+            'hide-pagination': !localConfig.pagination || localConfig.pagination.show === false,
+            'data-empty': localConfig.data && localConfig.data.length === 0
         }"
         @paste.stop="tablePaste"
     >

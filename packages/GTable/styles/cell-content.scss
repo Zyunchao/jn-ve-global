@@ -26,4 +26,12 @@
         display: inline-flex;
         align-items: center;
     }
+
+    // elTag
+    .el-tag {
+        height: calc(var(--jn-ve-g-table-cell-line-height) - 2px) !important;
+        box-sizing: border-box;
+        padding: 0 9px;
+        font-size: 12px;
+    }
 }
