@@ -129,6 +129,7 @@ let formConfig = ref<FormProps>({
     model: {
         name: '12345',
         region: '',
+        sex1: 'm',
         sex: ['m', 'f'],
         radio: 'f',
         switch: '2',
@@ -143,10 +144,10 @@ let formConfig = ref<FormProps>({
         slider: 50,
         selectTreeActive: '1425374958969872386',
         selectTreeActiveM: ['1425374667260223489'],
-        icon: '',
-        customLabel: '',
-        avatar: '',
-        clientChannel: '',
+        icon: '111',
+        customLabel: `测试文本-${+new Date()}`,
+        avatar: `测试文本-${+new Date()}`,
+        clientChannel: `测试文本-${+new Date()}`,
         arr: []
     },
     formItems: [
@@ -157,6 +158,19 @@ let formConfig = ref<FormProps>({
             required: true,
             controlConfig: {
                 type: 'input'
+            }
+        },
+        {
+            prop: 'sex1',
+            label: 'Select',
+            span: 12,
+            controlConfig: {
+                type: 'select',
+                options: [
+                    { label: '男', value: 'm' },
+                    { label: '女', value: 'f' },
+                    { label: '中', value: 'z' }
+                ]
             }
         },
         {

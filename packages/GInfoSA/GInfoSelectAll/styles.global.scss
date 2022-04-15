@@ -11,6 +11,10 @@ $--option-wrap-base-bottom: 8px;
         margin: 0;
     }
 
+    .el-virtual-scrollbar {
+        display: none;
+    }
+
     .el-select-dropdown__list {
         overflow-x: auto !important;
         margin-bottom: 2px !important;
@@ -19,7 +23,7 @@ $--option-wrap-base-bottom: 8px;
         box-sizing: content-box;
 
         &::-webkit-scrollbar {
-            height: $--option-wrap-base-bottom;
+            display: block !important;
         }
 
         &::-webkit-scrollbar-track {

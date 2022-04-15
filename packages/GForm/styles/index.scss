@@ -55,7 +55,7 @@
 
             input,
             .el-textarea__inner {
-                color: var(--jn-ve-g-form-disabled-color);
+                color: var(--jn-ve-g-form-disabled-color) !important;
             }
 
             .el-radio__inner {

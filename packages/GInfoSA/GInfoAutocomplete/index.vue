@@ -66,7 +66,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits(['closed'])
 
 // ------------- 隐藏 or 显示 + 表头位置获取 ----------------------------------------------------------------------
-const setPosition = _.debounce((pRootDom?: HTMLElement) => {
+const setPosition = (pRootDom?: HTMLElement) => {
     popperTop.value = pRootDom.style.top
     popperLeft.value = pRootDom.style.left
     popperZIndex.value = pRootDom.style.zIndex
@@ -77,7 +77,7 @@ const setPosition = _.debounce((pRootDom?: HTMLElement) => {
 
     // 容器宽度 = 根容器宽度
     pRootDom.style.width = currentRootWidth.value
-}, 20)
+}
 const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
         // 探查位置
