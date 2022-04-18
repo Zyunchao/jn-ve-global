@@ -13,17 +13,20 @@
 .el-switch__label,
 .el-radio {
     min-height: var(--jn-ve-g-form-item-height) !important;
+    line-height: 1 !important;
+}
+
+.el-switch__label,
+.el-checkbox__label,
+.el-radio__label {
     line-height: var(--jn-ve-g-form-item-height) !important;
 }
 
+
 // 虚拟下拉框
 .g-info-select-all {
-    .el-select-v2__wrapper {
-        line-height: var(--jn-ve-g-form-item-height) !important;
-    }
-
     .el-select-v2__combobox-input {
-        line-height: var(--jn-ve-g-form-item-height) !important;
+        line-height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
         height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
     }
 }

@@ -63,7 +63,7 @@
     .el-checkbox-button__inner,
     .el-radio-button__inner {
         height: var(--jn-ve-g-form-item-height) !important;
-        line-height: var(--jn-ve-g-form-item-height) !important;
+        line-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
         padding: 0 15px;
     }
 
