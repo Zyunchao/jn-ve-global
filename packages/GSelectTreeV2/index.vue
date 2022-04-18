@@ -23,7 +23,7 @@ import TreeProps from '../GSelectTree/interface/TreeProps'
 import _ from 'lodash'
 import { humpObj2PartitionObj } from '../utils/utils'
 
-export interface SelectTreeV2TreeProps extends TreeProps {
+interface SelectTreeV2TreeProps extends TreeProps {
     /**
      * 指定节点 value 为节点对象的某个属性值
      */
@@ -34,7 +34,7 @@ export interface SelectTreeV2TreeProps extends TreeProps {
     label?: string
 }
 
-export interface CustomProps {
+interface CustomProps {
     /**
      * 树的数据
      */

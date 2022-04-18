@@ -5,7 +5,7 @@
     font-size: var(--jn-ve-g-form-font-size);
 
     :deep(.el-form-item) {
-        margin-bottom: var(--jn-ve-g-form-item-margin-b) !important;
+        margin-bottom: var(--jn-ve-g-form-item-margin-b);
 
         &.no-colon {
             .el-form-item__label {

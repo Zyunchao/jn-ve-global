@@ -1,5 +1,5 @@
 .el-button {
-    height: var(--jn-ve-g-btn-height);
+    height: var(--jn-ve-g-btn-height) !important;
     padding: 0 var(--jn-ve-g-btn-padding-lr);
     font-size: var(--jn-ve-g-base-font-size-s);
 }
@@ -10,7 +10,7 @@
     --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
 
     .el-message-box__header {
-        background-color: var(--jn-ve-g-popup-header-bg);
+        background-color: var(--jn-ve-g-popup-header-bg) !important;
     }
 
     .el-message-box__btns {
