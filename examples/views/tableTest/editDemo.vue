@@ -343,8 +343,9 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: '组织-SelectTree',
         width: 260,
         editable: true,
+        openDB: true,
         controlConfig: {
-            type: 'selectTree',
+            type: 'selectTreeV2',
             treeData: treeData
         },
         render(row) {
@@ -356,8 +357,9 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: '组织-SelectTreeMultiple',
         width: 300,
         editable: true,
+        openDB: true,
         controlConfig: {
-            type: 'selectTree',
+            type: 'selectTreeV2',
             treeData: treeData,
             props: {
                 multiple: true
@@ -504,7 +506,6 @@ const doLayout = () => {
     })
 
     // console.log(`%c data === `, 'color: #67c23a;', data)
-
 }
 </script>
 

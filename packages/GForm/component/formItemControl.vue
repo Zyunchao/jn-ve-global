@@ -171,6 +171,15 @@
             />
         </template>
 
+        <!-- 下拉树版本2 -->
+        <template v-if="localControlType === 'selectTreeV2'">
+            <LGSelectTreeV2
+                v-model="localPropRef"
+                :tree-data="controlConfig.treeData"
+                v-bind="controlConfig.props"
+            />
+        </template>
+
         <!-- 上传文件 -->
         <template v-if="localControlType === 'upload'">
             <LGUpload
@@ -256,6 +265,7 @@ import UploadFile from '../../GUpload/interface/UploadFile'
 import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
 import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
 import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
+import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
 
 interface Props {
     /**

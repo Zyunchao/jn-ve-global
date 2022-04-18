@@ -8,14 +8,15 @@ export default [
         children: [
             { text: 'Form', link: '/components/Form.md' },
             { text: 'Tabs', link: '/components/Tabs.md' },
-            { text: 'SelectTree', link: '/components/SelectTree.md' },
             { text: 'OperateExcel', link: '/components/OperateExcel.md' },
             { text: 'FigureInput', link: '/components/FigureInput.md' },
             { text: 'IconPicker', link: '/components/IconPicker.md' },
             { text: 'Upload', link: '/components/Upload.md' },
             { text: 'InfoSelect', link: '/components/InfoSAA/InfoSelect.md' },
             { text: 'InfoSelectAll', link: '/components/InfoSAA/InfoSelectAll.md' },
-            { text: 'InfoAutocomplete', link: '/components/InfoSAA/InfoAutocomplete.md' }
+            { text: 'InfoAutocomplete', link: '/components/InfoSAA/InfoAutocomplete.md' },
+            { text: 'SelectTree', link: '/components/SelectTree.md' },
+            { text: 'SelectTreeV2', link: '/components/SelectTreeV2.md' }
         ]
     },
     {

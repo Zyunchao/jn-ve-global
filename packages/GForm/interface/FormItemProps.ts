@@ -22,7 +22,8 @@ import {
     IconPickerControlConfig,
     InfoSelectControlConfig,
     InfoAutocompleteControlConfig,
-    InfoSelectAllControlConfig
+    InfoSelectAllControlConfig,
+    SelectTreeV2ControlConfig
 } from '../index'
 
 /**
@@ -42,6 +43,7 @@ import {
  * - Upload 上传文件
  * - InfoSelect 以表格样式展示的下拉框（虚拟滚动）
  * - InfoAutocompleteControlConfig 以表格样式展示的输入建议框
+ * - SelectTreeV2ControlConfig 下拉树组件版本2（基于 element-plus 提供的下拉树组件）
  */
 export type ControlConfig =
     | InputControlConfig
@@ -66,6 +68,7 @@ export type ControlConfig =
     | InfoSelectControlConfig
     | InfoAutocompleteControlConfig
     | InfoSelectAllControlConfig
+    | SelectTreeV2ControlConfig
 
 /**
  * 控件组的配置

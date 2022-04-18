@@ -10,11 +10,11 @@ export default interface TreeProps {
     /**
      * 指定节点选择框是否禁用为节点对象的某个属性值
      */
-    disabled?: boolean | ((data, node) => boolean)
+    disabled?: string | ((data, node) => string)
     /**
      * 指定节点是否为叶子节点，仅在指定了 lazy 属性的情况下生效
      */
-    isLeaf?: boolean | ((data, node) => boolean)
+    isLeaf?: string | ((data, node) => string)
     /**
      * 自定义节点类名
      */

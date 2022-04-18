@@ -288,6 +288,33 @@
                     </div>
                 </template>
 
+                <!-- 下拉树 V2 -->
+                <template v-if="localControlType === 'selectTreeV2'">
+                    <LGSelectTreeV2
+                        v-if="
+                            !localControlProps ||
+                                localControlProps.multiple === undefined ||
+                                localControlProps.multiple === false ||
+                                (localControlProps.multiple && Array.isArray(localPropRef))
+                        "
+                        v-model="localPropRef"
+                        :tree-data="columnConfig.controlConfig.treeData"
+                        v-bind="localControlProps"
+                        size="small"
+                        style="width: 100%"
+                        @visible-change="
+                            (show) => {
+                                if (!show) delayControlToText()
+                            }
+                        "
+                    />
+                    <div v-else>
+                        <el-tag type="danger" size="small">
+                            error: '{{ columnConfig.prop }}' is multiple but prop is not array;
+                        </el-tag>
+                    </div>
+                </template>
+
                 <!-- 数字格式化 -->
                 <template v-if="localControlType === 'figureInput'">
                     <LGFigureInput
@@ -373,6 +400,7 @@ import LGFigureInput from '../../../GFigureInput/index.vue'
 import LGInfoSelect from '../../../GInfoSA/GInfoSelect/index.vue'
 import LGInfoSelectAll from '../../../GInfoSA/GInfoSelectAll/index.vue'
 import LGInfoAutocomplete from '../../../GInfoSA/GInfoAutocomplete/index.vue'
+import LGSelectTreeV2 from '../../../GSelectTreeV2/index.vue'
 import {
     getConstant,
     addEscEvent,

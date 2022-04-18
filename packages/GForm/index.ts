@@ -17,6 +17,7 @@ export * from './interface/IconPickerControlConfig'
 export * from './interface/InfoSelectControlConfig'
 export * from './interface/InfoSelectAllControlConfig'
 export * from './interface/InfoAutocompleteControlConfig'
+export * from './interface/SelectTreeV2ControlConfig'
 
 export { default as FormProps } from './interface/FormProps'
 export { default as FormItemProps } from './interface/FormItemProps'
@@ -34,3 +35,4 @@ export { default as IconPickerControlConfig } from './interface/IconPickerContro
 export { default as InfoSelectControlConfig } from './interface/InfoSelectControlConfig'
 export { default as InfoSelectAllControlConfig } from './interface/InfoSelectAllControlConfig'
 export { default as InfoAutocompleteControlConfig } from './interface/InfoAutocompleteControlConfig'
+export { default as SelectTreeV2ControlConfig } from './interface/SelectTreeV2ControlConfig'

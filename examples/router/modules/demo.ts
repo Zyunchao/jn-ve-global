@@ -34,6 +34,10 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/selectTreeTest/index.vue')
     },
     {
+        path: '/elSelectTree-test',
+        component: () => import('@/views/selectTreeTest/elSelectTree.vue')
+    },
+    {
         path: '/icon-test',
         component: () => import('@/views/iconTest/index.vue')
     },
