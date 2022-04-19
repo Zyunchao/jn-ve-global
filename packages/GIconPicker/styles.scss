@@ -2,21 +2,26 @@ $--select-input-height: 40px;
 $--base-icon-font-size: 30px;
 $--base-icon-font-color: #818080;
 $--base-active-color: #399ffb;
+$--picker-prepend-icon-size: 24px;
+$--picker-prepend-icon-padding: 20px;
 
 // 组件本身
 .g-icon-picker-wrapper {
 
     // 输入框
     .el-input {
+        // 图标预览
         .el-input-group__prepend {
+            min-width: calc($--picker-prepend-icon-size + $--picker-prepend-icon-padding * 2);
 
             i,
             svg {
-                font-size: 24px !important;
+                font-size: $--picker-prepend-icon-size !important;
                 color: $--base-icon-font-color !important;
             }
         }
 
+        // 清除图标
         .el-input__suffix {
             .el-input__suffix-inner {
                 height: calc(100% - 1px);

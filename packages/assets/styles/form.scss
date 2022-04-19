@@ -11,7 +11,9 @@
 .el-checkbox,
 .el-switch,
 .el-switch__label,
-.el-radio {
+.el-radio,
+.el-input-group__prepend,
+.el-input-group__append {
     min-height: var(--jn-ve-g-form-item-height) !important;
     line-height: 1 !important;
 }

@@ -121,8 +121,10 @@ const wrapperClass = (type: 'add' | 'remove') => {
     }
 
     // 控件原始边框
+    :deep(.el-input__wrapper),
     :deep(.el-input__inner),
-    :deep(.el-select .el-input.is-focus .el-input__inner) {
+    :deep(.el-select .el-input.is-focus .el-input__inner),
+    :deep(.el-select .el-input.is-focus .el-input__wrapper) {
         box-shadow: none !important;
     }
 

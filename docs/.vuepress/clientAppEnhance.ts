@@ -5,7 +5,7 @@
 
 // 注册 Ele
 import ElementPlus from 'element-plus'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import zhCn from './zh-cn'
 import 'element-plus/dist/index.css'
 
 // 全局组件
