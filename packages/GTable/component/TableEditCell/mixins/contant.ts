@@ -34,7 +34,13 @@ export default ({ props, editCellContentRef }) => {
     // 行数据的本地引用
     const localData = computed<BaseTableDataItem>(() => props.data)
     // 行字段的同步引用
-    const localPropRef = toRef(localData.value, props.columnConfig.prop)
+    // const localPropRef = toRef(props.data, props.columnConfig.prop)
+    const localPropRef = computed({
+        get: () => props.data[props.columnConfig.prop],
+        set: (val) => {
+            localData.value[props.columnConfig.prop] = val
+        }
+    })
     // 当前单元格数据备份
     const localPropCopy = ref<any>(localCellPropInitValue)
     // 控件类型
