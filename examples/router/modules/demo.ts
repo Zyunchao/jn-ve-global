@@ -66,6 +66,10 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/modalTest/index.vue')
     },
     {
+        path: '/modal2-test',
+        component: () => import('@/views/modalTest/index2.vue')
+    },
+    {
         path: '/figureInput-test',
         component: () => import('@/views/formTest/figureInput.vue')
     },
