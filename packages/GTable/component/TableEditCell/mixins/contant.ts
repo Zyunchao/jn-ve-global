@@ -52,13 +52,17 @@ export default ({ props, editCellContentRef }) => {
     // 控件配置 props
     // const localControlProps = ref(props.columnConfig.controlConfig?.props)
     const localControlProps = computed(() => {
-        if (!props.columnConfig.controlConfig) return undefined
+        if (!props.columnConfig.controlConfig || !props.columnConfig.controlConfig.props) {
+            return undefined
+        }
 
         // 筛选事件
         const eventKeys = Object.keys(props.columnConfig.controlConfig.props).filter(
             (key) =>
                 key.startsWith('on') && _.isFunction(props.columnConfig.controlConfig.props[key])
         )
+
+        if (!eventKeys.length) return props.columnConfig.controlConfig.props
 
         // 保留当前单元格所在行的数据
         const data = { row: props.data, index: props.index }
@@ -68,7 +72,7 @@ export default ({ props, editCellContentRef }) => {
          * 每个可编辑单元格的控件都是独立存在，而 column 传递的控件配置中的事件处理函数只是一个模板
          * 所以，可以在这个模板的基础上，为每个控件包装增强事件处理函数
          * 每个控件的 ControlProps 都是独立的
-         * 
+         *
          * 注意：columnConfig.controlConfig.props !== localControlProps
          */
         const currentCellControlEvents = eventKeys.reduce((obj, key) => {
@@ -81,7 +85,7 @@ export default ({ props, editCellContentRef }) => {
 
         return { ...props.columnConfig.controlConfig.props, ...currentCellControlEvents }
     })
-    
+
     // esc 是否触发
     const escTrigger = ref<boolean>(false)
 
