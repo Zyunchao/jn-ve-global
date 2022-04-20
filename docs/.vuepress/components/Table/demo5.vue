@@ -58,6 +58,7 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: 'Input',
         width: 160,
         editable: true,
+        openDB: true,
         controlConfig: {
             type: 'input'
         }
@@ -67,6 +68,7 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: 'InputNumer',
         width: 160,
         editable: true,
+        openDB: true,
         controlConfig: {
             type: 'inputNumber',
             props: {
@@ -79,6 +81,7 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: 'Select',
         width: 200,
         editable: true,
+        openDB: true,
         controlConfig: {
             type: 'select',
             options: Object.keys(foodsMapping).map((key) => ({
@@ -95,6 +98,7 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: 'SelectMultiple',
         width: 200,
         editable: true,
+        openDB: true,
         controlConfig: {
             type: 'select',
             props: {
@@ -118,6 +122,7 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: '工资-FigureInput',
         width: 180,
         editable: true,
+        openDB: true,
         controlConfig: {
             type: 'figureInput',
             props: {
@@ -130,6 +135,7 @@ const tableColumns = reactive<TableColumnProps[]>([
         label: 'Radio',
         width: 160,
         editable: true,
+        openDB: true,
         controlConfig: {
             type: 'radio',
             options: Object.keys(sexMapping).map((key) => ({

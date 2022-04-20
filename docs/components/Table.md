@@ -133,7 +133,10 @@
 * [ColorPicker](https://element-plus.gitee.io/#/zh-CN/component/color-picker)
 * [Rate](https://element-plus.gitee.io/#/zh-CN/component/rate)
 * [Slider](https://element-plus.gitee.io/#/zh-CN/component/slider)
-* [SelectTree](/element-component/modules/SelectTree.html)
+* [InfoSelect](./InfoSAA/InfoSelect.md)
+* [InfoSelect](./InfoSAA/InfoSelectAll.md)
+* [InfoAutocomplete](./InfoSAA/InfoAutocomplete.md)
+* [SelectTreeV2](./SelectTreeV2.md)
 
 #### 单字段编辑
 
@@ -251,6 +254,44 @@
 <template #code>
 
 @[code vue{157-161}](@demoroot/Table/demo7.vue)
+
+</template>
+
+</demo-block>
+
+#### 控件事件获取整行数据
+
+:::tip 2.0.5+ 版本
+
+需求：原本可编辑单元格的每个控件的事件（onChange/onInput...），都是独立的（未与行数据产生关联关系），要在事件中获取当前行的数据，较为复杂，可不可以在事件中直接抛出这一行数据
+
+实现方案：通过 apply 包装增强每个控件的事件处理函数，抛出当前行数据（Proxy{data}、index）
+
+获取行数据：需要获取到事件处理函数的 arguments 的最后一个下标位置的数据，即抛出的行数据
+
+注意点：抛出的行数据并非显性抛出
+
+:::
+
+:::danger 特别提示：
+
+在使用时，需要对函数的 arguments 有一定了解，箭头函数的 arguments 是词法作用域的父级的 arguments，也就是说，要获取当前行数据，事件处理函数不能使用箭头函数
+
+:::
+
+:::tip
+
+事件抛出的 row 是一个 Proxy，意味着你可以直接操作这个对象，用来改变其他列的数据
+
+:::
+
+<demo-block>
+
+<Table-demo8 />
+
+<template #code>
+
+@[code vue{41-47}](@demoroot/Table/demo8.vue)
 
 </template>
 

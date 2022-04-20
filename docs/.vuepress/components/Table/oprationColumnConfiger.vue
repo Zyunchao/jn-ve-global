@@ -19,13 +19,11 @@ import { TableConfig, TableColumnProps, BaseTableDataItem } from '@component/GTa
 const columns = reactive<TableColumnProps[]>([
     {
         prop: 'date',
-        label: '日期',
-        width: 180
+        label: '日期'
     },
     {
         prop: 'name',
-        label: '姓名',
-        width: 180
+        label: '姓名'
     }
 ])
 
