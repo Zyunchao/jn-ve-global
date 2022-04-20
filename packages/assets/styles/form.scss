@@ -1,6 +1,7 @@
 :root {
     --jn-ve-g-form-font-size: var(--jn-ve-g-base-font-size-m);
     --jn-ve-g-form-item-height: 38px;
+    --jn-ve-g-form-item-line-height: 1;
     --jn-ve-g-form-item-margin-b: 18px;
     --jn-ve-g-form-disabled-color: #595959;
 }
@@ -15,9 +16,10 @@
 .el-input-group__prepend,
 .el-input-group__append {
     min-height: var(--jn-ve-g-form-item-height) !important;
-    line-height: 1 !important;
+    line-height: var(--jn-ve-g-form-item-line-height) !important;
 }
 
+// switch & checkbo & radio 的 label
 .el-switch__label,
 .el-checkbox__label,
 .el-radio__label {
@@ -30,12 +32,5 @@
     .el-select-v2__combobox-input {
         line-height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
         height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
-    }
-}
-
-// 数字框
-.el-input-number {
-    .el-input__inner {
-        padding-left: 0 !important;
     }
 }

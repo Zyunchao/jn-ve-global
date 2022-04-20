@@ -1,12 +1,13 @@
 @mixin cell-content {
     // 覆盖表单控件的高度变量
-    --jn-ve-g-form-item-height: var(--jn-ve-g-table-cell-line-height);
+    --jn-ve-g-form-item-height: calc(var(--jn-ve-g-table-cell-line-height) - 2px);
+    --jn-ve-g-form-item-line-height: calc(var(--jn-ve-g-table-cell-line-height) - 2px);
 
     // 按钮
     .el-button {
         &.el-button--text {
             height: auto !important;
-            font-size: var(--jn-ve-g-table-font-size);
+            font-size: var(--jn-ve-g-table-font-size) !important;
             padding: 0 !important;
         }
 
