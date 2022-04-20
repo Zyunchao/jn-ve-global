@@ -87,9 +87,7 @@ const btns: BtnProps[] = [
 
             datas[0].date = '1234'
             datas[0].id = '123491823qwe'
-            // console.log(`%c mockData['data1'] == `, 'color: #67c23a;', mockData['data1'])
-
-
+            
             tableData.value = datas
         }
     }

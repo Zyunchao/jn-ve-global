@@ -30,7 +30,7 @@
 
     // elTag
     .el-tag {
-        height: calc(var(--jn-ve-g-table-cell-line-height) - 2px) !important;
+        height: var(--jn-ve-g-form-item-height) !important;
         box-sizing: border-box;
         padding: 0 9px;
         font-size: 12px;
@@ -38,6 +38,7 @@
 
     // switch
     .el-switch {
-        height: var(--jn-ve-g-table-cell-line-height) !important;
+        height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
+        min-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
     }
 }

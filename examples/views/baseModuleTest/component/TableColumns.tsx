@@ -31,6 +31,23 @@ export default () =>
                     </el-tag>
                 )
             }
+        },
+        {
+            prop: 'tag',
+            label: '标签',
+            width: 480,
+            render(row) {
+                return (
+                    <el-switch
+                        v-model={row.tag}
+                        class='ml-2'
+                        active-color='#13ce66'
+                        inactive-color='#ff4949'
+                        active-text='Open'
+                        inactive-text='Close'
+                    />
+                )
+            }
         }
         // {
         //     prop: 'opertion',
