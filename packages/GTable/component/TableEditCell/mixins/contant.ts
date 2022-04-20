@@ -2,6 +2,7 @@ import { computed, ref, inject, toRef } from 'vue'
 import { FigureInputProps } from '../../../../GForm'
 import { onCellEditKey, tableInstanceKey } from '../../../constant/InjectionKeys'
 import { BaseTableDataItem } from '../../../index'
+import _ from 'lodash'
 
 enum CellStatus {
     /**
@@ -33,6 +34,7 @@ export default ({ props, editCellContentRef }) => {
     const cellStatus = ref<CellStatus>(!props.data.edit ? CellStatus.TEXT : CellStatus.CONTROL)
     // 行数据的本地引用
     const localData = computed<BaseTableDataItem>(() => props.data)
+
     // 行字段的同步引用
     // const localPropRef = toRef(props.data, props.columnConfig.prop)
     const localPropRef = computed({
@@ -41,12 +43,45 @@ export default ({ props, editCellContentRef }) => {
             localData.value[props.columnConfig.prop] = val
         }
     })
+
     // 当前单元格数据备份
     const localPropCopy = ref<any>(localCellPropInitValue)
     // 控件类型
     const localControlType = ref(props.columnConfig.controlConfig?.type)
+
     // 控件配置 props
-    const localControlProps = ref(props.columnConfig.controlConfig?.props)
+    // const localControlProps = ref(props.columnConfig.controlConfig?.props)
+    const localControlProps = computed(() => {
+        if (!props.columnConfig.controlConfig) return undefined
+
+        // 筛选事件
+        const eventKeys = Object.keys(props.columnConfig.controlConfig.props).filter(
+            (key) =>
+                key.startsWith('on') && _.isFunction(props.columnConfig.controlConfig.props[key])
+        )
+
+        // 保留当前单元格所在行的数据
+        const data = { row: props.data, index: props.index }
+
+        /**
+         * 当前控件的事件处理函数增强
+         * 每个可编辑单元格的控件都是独立存在，而 column 传递的控件配置中的事件处理函数只是一个模板
+         * 所以，可以在这个模板的基础上，为每个控件包装增强事件处理函数
+         * 每个控件的 ControlProps 都是独立的
+         * 
+         * 注意：columnConfig.controlConfig.props !== localControlProps
+         */
+        const currentCellControlEvents = eventKeys.reduce((obj, key) => {
+            const _eventHandle: Function = props.columnConfig.controlConfig.props[key]
+            obj[key] = function () {
+                _eventHandle.apply(this, [...arguments, data])
+            }
+            return obj
+        }, {})
+
+        return { ...props.columnConfig.controlConfig.props, ...currentCellControlEvents }
+    })
+    
     // esc 是否触发
     const escTrigger = ref<boolean>(false)
 
