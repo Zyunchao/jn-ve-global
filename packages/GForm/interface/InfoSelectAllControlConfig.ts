@@ -1,5 +1,6 @@
 import { SelectOptionProps } from './SelectControlConfig'
 import { InfoColumnProps } from '../../index'
+import { VNode } from 'vue'
 
 /**
  * 下拉框参数
@@ -29,6 +30,10 @@ export interface InfoSelectAllProps {
      */
     clearable?: boolean
     /**
+     * 自定义清除图标
+     */
+    clearIcon?: string | VNode
+    /**
      * 多选时是否将选中值按文字的形式展示
      * false
      */
@@ -49,6 +54,10 @@ export interface InfoSelectAllProps {
      */
     name?: string
     /**
+     * 文字提示（Tooltip）的主题，内置dark和light两种。
+     */
+    effect?: string
+    /**
      * 选择器的输入框的原生 autocomplete 属性
      * off
      */
@@ -68,11 +77,24 @@ export interface InfoSelectAllProps {
      */
     allowCreate?: boolean
     /**
-     * 选项为空时显示的文字，也可以使用 empty 插槽自定义该内容
+     * 筛选时，是否在选择选项后保留关键字
+     * true
+     */
+    reserveKeyword?: boolean
+    /**
+     * 当在没有数据时显示的文字，你同时可以使用#empty插槽进行设置。
      */
     noDataText?: string
     /**
-     * popper.js 的参数
+     * 选择器下拉菜单的自定义类名
+     */
+    popperClass?: string
+    /**
+     * 当下拉选择器未被激活并且persistent设置为false，选择器会被删除
+     */
+    persistent?: boolean
+    /**
+     * 自定义popper.js参数
      */
     popperOptions?: object
     /**
@@ -80,13 +102,19 @@ export interface InfoSelectAllProps {
      */
     automaticDropdown?: boolean
     /**
-     * 自定义清除图标
-     */
-    clearIcon?: string
-    /**
      * 控制是否总是展示滚动条
      */
     scrollbarAlwaysOn?: boolean
+    /**
+     * 是否从服务器搜索数据
+     */
+    remote?: boolean
+    /**
+     * 当输入值发生变化时被调用的函数。
+     * 其参数是当前输入值。
+     * 只有当 filterable 设置为 true 时才会生效。
+     */
+    remoteMethod?: (keyword: string) => void
 }
 
 /**

@@ -261,7 +261,6 @@ defineExpose({
 
                 .el-input__inner {
                     height: 26px !important;
-                    padding: 0 10px;
                 }
             }
         }
