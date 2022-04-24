@@ -6,6 +6,9 @@
         <el-button type="primary" @click="dialogShow = true">
             显示 Dialog
         </el-button>
+        <el-button @click="showMessageBox">
+            Show MessageBox
+        </el-button>
     </div>
 
     <g-modal
@@ -42,6 +45,7 @@ export default {
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { BtnProps } from '@component/index'
 import FormTest from '../formTest/index.vue'
+import { ElMessageBox } from 'element-plus'
 
 const dialogShow = ref<boolean>(false)
 const drawerShow = ref<boolean>(false)
@@ -71,6 +75,16 @@ watch(
         console.log(`%c dialogShow === `, 'color: #67c23a;', flag)
     }
 )
+
+const showMessageBox = () => {
+    ElMessageBox.confirm('proxy will permanently delete the file. Continue?', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+    })
+        .then(() => {})
+        .catch(() => {})
+}
 </script>
 
 <style lang="scss" scoped></style>

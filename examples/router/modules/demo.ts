@@ -108,6 +108,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/flowHeight-test',
         component: () => import('@/views/tableTest/flowHeight.vue')
+    },
+    {
+        path: '/button-test',
+        component: () => import('@/views/buttonTest/index.vue')
     }
 ]
 

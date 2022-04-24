@@ -229,14 +229,17 @@ const handleMoreSearch = () => {
             .el-form-item__content {
                 .el-button {
                     --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
-                    --jn-ve-g-base-font-size-s: 16px;
+                    --jn-ve-g-base-font-size-s: 17px;
 
                     span {
                         margin-left: 10px;
+                        line-height: 1;
+                        height: 100%;
                     }
 
                     i {
                         font-size: calc(var(--jn-ve-g-base-font-size-s) + 2px);
+                        height: 100%;
                     }
                 }
             }

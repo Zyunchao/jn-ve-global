@@ -2,6 +2,23 @@
     height: var(--jn-ve-g-btn-height) !important;
     padding: 0 var(--jn-ve-g-btn-padding-lr) !important;
     font-size: var(--jn-ve-g-base-font-size-s) !important;
+
+    &:not(.el-button--text, .is-disabled) {
+        &:focus {
+            background-color: var(--el-button-bg-color);
+            border: var(--el-border);
+            border-color: var(--el-button-border-color);
+            color: var(--el-button-text-color);
+        }
+
+        &:active {
+            background-color: var(--el-button-bg-color);
+            border: var(--el-border);
+            border-color: var(--el-button-border-color);
+            color: var(--el-button-text-color);
+            transform: scale(0.96);
+        }
+    }
 }
 
 
@@ -10,7 +27,9 @@
     --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
 
     .el-message-box__header {
-        background-color: var(--jn-ve-g-popup-header-bg) !important;
+        background-image: var(--jn-ve-g-popup-header-bg) !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
     .el-message-box__btns {

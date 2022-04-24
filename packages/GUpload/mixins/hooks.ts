@@ -57,12 +57,14 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
             // 添加业务上的 fileId 到文件 <===> fileList[item]
             file['fileId'] = _.isArray(res.data) ? res.data[0].fileId : res.data.fileId
 
+            // 本地上传，可以直接操作原 file，添加 url 的内存地址
+            file['url'] = URL.createObjectURL(file.raw!)
+
             /**
              * avatar 可以理解为单选模式，每次上传成功后的 file
              * 也就变成了当前活跃的 file
              */
             if (attrs.value['list-type'] === 'avatar') {
-                file['url'] = URL.createObjectURL(file.raw!)
                 currentFile.value = file
             }
         } else {

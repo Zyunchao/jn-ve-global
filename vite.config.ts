@@ -73,6 +73,7 @@ export default defineConfig({
     server: {
         // open: '/index.html',
         port: 3066,
+        host: '0.0.0.0',
         proxy: {
             '/api': {
                 target: 'http://172.31.33.25:20000',
