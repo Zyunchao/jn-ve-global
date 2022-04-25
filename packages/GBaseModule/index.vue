@@ -26,35 +26,9 @@
 
         <!-- 中间操作区域 -->
         <div v-if="(btns && btns.length) || $slots['middle-right']" class="middle-opertion-wrapper">
-            <!-- 左 -->
+            <!-- 左 按钮组-->
             <div class="middle-left-wrapper">
-                <!-- 按钮组 -->
-                <div v-if="btns && btns.length > 0" class="btns-wrapper">
-                    <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
-                        <!-- 按钮权限 Code -->
-                        <el-button
-                            v-if="btn.authCode"
-                            v-show="!btn.hide"
-                            v-auth="btn.authCode"
-                            :type="btn.type || 'primary'"
-                            v-bind="btn"
-                            @click="btn.onClick"
-                        >
-                            {{ btn.label }}
-                        </el-button>
-
-                        <!-- 无权限校验的 -->
-                        <el-button
-                            v-else
-                            v-show="!btn.hide"
-                            :type="btn.type || 'primary'"
-                            v-bind="btn"
-                            @click="btn.onClick"
-                        >
-                            {{ btn.label }}
-                        </el-button>
-                    </template>
-                </div>
+                <LGButtonGroup v-if="btns && btns.length > 0" class="btns-wrapper" :btns="btns" />
             </div>
 
             <!-- 右 -->
@@ -96,11 +70,12 @@ import { useAttrs, PropType, reactive, watch, ref, computed, nextTick, toRef, ma
 import { BtnProps } from './index'
 import { FormProps, FormItemProps } from '../GForm'
 import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } from '../GTable'
-import LGForm from '../GForm/index.vue'
-import LGTable from '../GTable/index.vue'
 import TableSearch from './component/TableSearch.vue'
 import { RefreshLeft, Search } from '@element-plus/icons-vue'
 import { partitionObj2HumpObj, assignOwnProp } from '../utils/utils'
+import LGForm from '../GForm/index.vue'
+import LGTable from '../GTable/index.vue'
+import LGButtonGroup from '../GButtonGroup/index.vue'
 
 const props = defineProps({
     /**

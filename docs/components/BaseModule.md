@@ -130,7 +130,7 @@ searchFormProps | 搜索条件表单配置对象 | [FormProps](/element-componen
 tableColumns | 表格列配置 | [TableColumnProps](/element-component/modules/Table.html#table-column-attributes) | []
 tableData | 表格数据 | BaseTableDataItem[] | []
 tablePagination | 分页配置 | [PaginationProps](/element-component/modules/Table.html#pagination-attributes) | null
-btns | 按钮组 | BtnProps[] | []
+btns | 按钮组 | [BtnProps](./ButtonGroup.md)[] | []
 searchBtnHorizontal | 搜索按钮是否独占一行 | boolean | false
 loadTableMethods | 核心加载 table 数据的方法 | Function | --
 tableLoading | 表格 loading flag | boolean | false
@@ -141,63 +141,6 @@ rowBtnConfig | 表格操作列配置对象 | TableConfig['rowBtnConfig'] | null
 tabs | 标签页配置数组 | Array<{ lable: string; value: string }> | []
 v-model:activeTab \| :activeTab | 双向绑定的激活的 tab 页的 value 值 | string | 默认第一个 tab 的 value
 v-model:selectedRows | 多选绑定的数组，不传递表示不维护选中列表 | array | null 
-
-```ts
-interface BtnProps {
-    /**
-     * 按钮名称
-     */
-    label: string
-    /**
-     * 授权标识
-     */
-    authCode?: string
-    /**
-     * 按钮的类型，同 Element Button
-     */
-    type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
-    /**
-     * 禁用
-     */
-    disabled?: boolean | ((row?: any, index?: number) => boolean)
-    /**
-     * 事件
-     */
-    onClick?: () => void
-    /**
-     * 按钮尺寸
-     */
-    size?: 'large' | 'default' | 'small'
-    /**
-     * 加载中
-     */
-    loading?: boolean
-    /**
-     * 是否为朴素按钮
-     */
-    plain?: boolean
-    /**
-     * 是否为圆角按钮
-     */
-    round?: boolean
-    /**
-     * 是否为圆形按钮
-     */
-    circle?: boolean
-    /**
-     * 是否隐藏
-     */
-    hide?: boolean | ((row?: any, index?: number) => boolean)
-    /**
-     * 类名
-     */
-    class?: string
-    /**
-     * 具体的行内样式
-     */
-    style?: { [k: string]: any } | string
-}
-```
 
 ## Event
 

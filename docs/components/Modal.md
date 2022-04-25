@@ -98,7 +98,7 @@ dialog-body 最小高度统一设置为 '150px'；<br/>
 参数|说明|类型|默认值
 -----|-----|-----|-----
 type | 弹框模式 | 'dialog' \| 'drawer' | 'dialog'
-btns | 弹框按钮配置依赖 | BtnProps[] | --
+btns | 弹框按钮配置依赖 | [BtnProps](./ButtonGroup.md)[] | --
 hideFooter | 隐藏底部 | boolean | false
 width | 组件的宽度 | string \| number | dialog: '70%' \| drawer: '50%'
 verticalCenter | dialog 垂直居中 | boolean | false

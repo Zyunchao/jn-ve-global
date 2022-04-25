@@ -112,6 +112,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/button-test',
         component: () => import('@/views/buttonTest/index.vue')
+    },
+    {
+        path: '/button-group-test',
+        component: () => import('@/views/buttonTest/btnGroupTest.vue')
     }
 ]
 

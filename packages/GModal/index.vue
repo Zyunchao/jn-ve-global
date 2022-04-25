@@ -25,14 +25,11 @@
         <!-- 底部按钮 -->
         <template v-if="!hideFooter && ($slots.footer || (btns && !!btns.length))" #footer>
             <slot name="footer">
-                <!-- 按钮组 -->
-                <div v-if="btns && !!btns.length" class="modal-btn-wrapper">
-                    <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
-                        <el-button v-show="!btn.hide" v-bind="btn">
-                            {{ btn.label }}
-                        </el-button>
-                    </template>
-                </div>
+                <LGButtonGroup
+                    v-if="btns && !!btns.length"
+                    class="modal-btn-wrapper"
+                    :btns="btns"
+                />
             </slot>
         </template>
     </el-dialog>
@@ -62,14 +59,11 @@
         <!-- 底 -->
         <div v-if="!hideFooter && ($slots.footer || (btns && !!btns.length))" class="drawer-footer">
             <slot name="footer">
-                <!-- 按钮组 -->
-                <div v-if="btns && !!btns.length" class="modal-btn-wrapper">
-                    <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
-                        <el-button v-show="!btn.hide" v-bind="btn">
-                            {{ btn.label }}
-                        </el-button>
-                    </template>
-                </div>
+                <LGButtonGroup
+                    v-if="btns && !!btns.length"
+                    class="modal-btn-wrapper"
+                    :btns="btns"
+                />
             </slot>
         </div>
     </el-drawer>
@@ -84,7 +78,8 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs, PropType, useAttrs } from 'vue'
-import { BtnProps } from '../GBaseModule/interface/BaseModuleConfig'
+import BtnProps from '../GButtonGroup/interface/BtnProps'
+import LGButtonGroup from '../GButtonGroup/index.vue'
 
 interface Props {
     /**
