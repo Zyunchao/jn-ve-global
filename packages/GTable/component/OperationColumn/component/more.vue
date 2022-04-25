@@ -13,8 +13,8 @@
             ]"
             type="text"
         >
-            <span>更多操作</span>
-            <LGIcon icon="el-ArrowDown" />
+            <span>更多操作...</span>
+            <!-- <LGIcon icon="el-More" /> -->
         </el-button>
 
         <!-- 下拉 -->
@@ -102,11 +102,11 @@ const handleBtnClick = (btn: TableRowBtnProps<any>) => {
         transition: transform 0.3s;
     }
 
-    &.is-visible {
-        :deep(i.g-icon) {
-            transform: rotateX(180deg);
-        }
-    }
+    // &.is-visible {
+    //     :deep(i.g-icon) {
+    //         transform: rotateX(180deg);
+    //     }
+    // }
 }
 </style>
 <style lang="scss">

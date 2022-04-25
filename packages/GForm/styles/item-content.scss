@@ -47,6 +47,10 @@
                 width: auto;
             }
         }
+
+        .el-icon.el-input__icon {
+            font-size: var(--jn-ve-g-form-font-size);
+        }
     }
 }
 

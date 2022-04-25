@@ -1,5 +1,6 @@
 @import './item-label.scss';
 @import './item-content.scss';
+@import './item-disabled.scss';
 
 .g-form {
     font-size: var(--jn-ve-g-form-font-size);
@@ -50,28 +51,6 @@
             margin-bottom: 0;
         }
 
-        // 禁用
-        .is-disabled {
-
-            input,
-            .el-textarea__inner {
-                color: var(--jn-ve-g-form-disabled-color) !important;
-            }
-
-            .el-radio__inner {
-                border: 1px solid var(--jn-ve-g-form-disabled-color);
-
-                &:after {
-                    background-color: var(--jn-ve-g-form-disabled-color);
-                    border-color: var(--jn-ve-g-form-disabled-color);
-                }
-            }
-        }
-
-        .el-select {
-            .el-tag.el-tag--info {
-                color: #606266;
-            }
-        }
+        @include item-disabled;
     }
 }

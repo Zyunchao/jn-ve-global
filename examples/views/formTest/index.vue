@@ -263,6 +263,14 @@ let formConfig = ref<FormProps>({
             }
         },
         {
+            prop: 'date1',
+            label: 'DatePicker',
+            span: 12,
+            controlConfig: {
+                type: 'datePicker'
+            }
+        },
+        {
             prop: 'date2',
             label: 'Daterange',
             span: 12,
