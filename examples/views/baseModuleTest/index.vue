@@ -2,6 +2,7 @@
     <BusinessLayout>
         <!-- :tabs="moduleTabs" -->
         <GBaseModule
+            highlight-current-row
             no-search-label
             more-search-mode="pull-down"
             search-btn-horizontal
@@ -13,6 +14,8 @@
             :table-pagination="tablePagination"
             :table-loading="false"
             :row-btn-config="rowBtnConfig"
+            :row-key="undefined"
+            @current-change="currentChangeHandle"
         />
     </BusinessLayout>
 </template>
@@ -197,6 +200,10 @@ const loadTable = (page: number) => {
     }
 
     console.log(`%c params == `, 'color: #e6a23c;', params)
+}
+
+const currentChangeHandle = (currentRow, oldCurrentRow) => {
+    console.log(`%c currentRow ??????`, 'color: #67c23a;', currentRow)
 }
 </script>
 
