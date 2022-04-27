@@ -131,7 +131,8 @@ const figureInputFormat = (val) => {
 }
 
 const figureInputValueFormat = (val) => {
-    return restrictDecimals(val as string, 4)
+    // return restrictDecimals(val as string, 4)
+    return val
 }
 
 watch(

@@ -4,11 +4,12 @@
  * @returns 千分位分割字符串
  */
 export function toThousands(str: string | number) {
+    const pre = `${str}`.match(/^\-/g)
     const reg = /\d{1,3}(?=(\d{3})+$)/g
-
-    return `${str}`.replace(/^(\d+)((\.\d+)?)$/, function (s, s1, s2) {
+    const thousands = `${str}`.replace(/^-/, '').replace(/^(\d+)((\.\d+)?)$/, function (s, s1, s2) {
         return s1.replace(reg, '$&,') + s2
     })
+    return pre !== null ? `-${thousands}` : thousands
 }
 
 /**
@@ -30,10 +31,15 @@ export function restrictDecimals(str: string, s: number = 2) {
  */
 export function clearNoNum(str: string | number) {
     return `${str}`
-        .replace(/[^\d.]/g, '')
-        .replace(/^\./g, '')
-        .replace(/\.{2,}/g, '.')
-        .replace('.', '$#$')
-        .replace(/\./g, '')
-        .replace('$#$', '.')
+        .replace(/[^\d.\.\-]/g, '') // 非 [0-9] . - 的都过滤掉
+        .replace(/-{2,}/g, '-') // 连续的 -- 替换成单个 -
+        .replace(/^-/, '$@$') // 如果（只能）是开头的 - ，替换成特殊存储字符
+        .replace('$@$.', '$@$') // 保证  - 和 . 不能连续存在
+        .replace(/-/g, '') // 开头的 - 已被转换特殊字符保留，将其他的 - 都替换掉
+        .replace('$@$', '-') // 将 特殊字符转换成 -
+        .replace(/^\./g, '') // 开头的 . 替换掉
+        .replace(/\.{2,}/g, '.') // 连续的 .. 替换成 .
+        .replace('.', '$#$') // . 转换特殊字符保留
+        .replace(/\./g, '') // 除特殊字符的 . 其余替换掉
+        .replace('$#$', '.') // 将保留的特殊字符转换成 .
 }
