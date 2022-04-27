@@ -103,6 +103,20 @@ const gatherFigureInputControlBlur = () => {
     emits('tableEditHide')
     showInputShow.value = true
 }
+
+/**
+ * 抛出
+ * focus：消除差异
+ */
+defineExpose({
+    focus: () => {
+        if (showInputShow.value) {
+            showFigureInputRef.value.focus()
+        } else {
+            gatherFigureInputRef.value.focus()
+        }
+    }
+})
 </script>
 
 <style lang="scss" scoped></style>

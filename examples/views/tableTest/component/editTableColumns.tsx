@@ -41,7 +41,8 @@ export default () => {
             label: '姓名-Input',
             // width: 160,
             editable: true,
-            openDB: true,
+            // openDB: true,
+            openSC: true,
             controlConfig: {
                 type: 'input',
                 props: {
@@ -111,7 +112,7 @@ export default () => {
                 },
                 message: '食物必选，且不能选择 “龙须面” 和 “椰子”'
             }
-        }
+        },
         // {
         //     prop: 'selectMultiple',
         //     label: '食物多选-Select',
@@ -136,21 +137,23 @@ export default () => {
         //             : ''
         //     }
         // },
-        // {
-        //     prop: 'money',
-        //     label: '工资-FigureInput',
-        //     width: 180,
-        //     editable: true,
-        //     controlConfig: {
-        //         type: 'figureInput',
-        //         props: {
-        //             format: (val) => toThousands(val)
-        //         }
-        //     },
-        //     render(row) {
-        //         return toThousands(row.money)
-        //     }
-        // },
+        {
+            prop: 'money',
+            label: '工资-FigureInput',
+            // width: 180,
+            editable: true,
+            // openDB: true,
+            openSC: true,
+            controlConfig: {
+                type: 'figureInput',
+                props: {
+                    format: (val) => toThousands(val)
+                }
+            },
+            render(row) {
+                return toThousands(row.money)
+            }
+        }
         // {
         //     prop: 'radio',
         //     label: '性别-Radio',

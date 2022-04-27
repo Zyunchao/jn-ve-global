@@ -83,26 +83,39 @@ export default ({
         return localPropRef.value instanceof Date
     }
 
-    // 双击是否开启编辑
-    const handleDB = () => {
-        if (props.columnConfig.openDB) {
-            text2Control()
+    // 转换到编辑状态
+    const toEditStatusMethod = () => {
+        text2Control()
 
-            // 双击开启，控件获取焦点
-            setTimeout(() => {
-                if (controlRef.value) {
-                    controlRef.value.focus()
-                }
-            }, parseInt(animationTime.value) + 50)
-        }
+        /**
+         * 转换编辑状态，个别控件（输入框）获取焦点
+         *  - Input
+         *  - InputNumber
+         *  - FigureInput
+         */
+        setTimeout(() => {
+            controlRef.value && controlRef.value.focus()
+        }, parseInt(animationTime.value) + 50)
     }
 
+    // 双击开启编辑
+    const handleDB = () => {
+        if (!props.columnConfig.openDB || props.columnConfig.openSC) return
+        toEditStatusMethod()
+    }
+
+    // 单击开启编辑
+    const handleSC = () => {
+        if (!props.columnConfig.openSC || props.columnConfig.openDB) return
+        toEditStatusMethod()
+    }
 
     return {
         text2Control,
         control2Text,
         delayControlToText,
         datePickerValueVerify,
-        handleDB
+        handleDB,
+        handleSC
     }
 }

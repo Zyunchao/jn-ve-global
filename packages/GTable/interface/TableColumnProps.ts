@@ -3,7 +3,7 @@ import TableEditCellControlConfig from './TableEditCellControlConfig'
 import { BaseTableDataItem } from '../../index'
 import { Rule } from 'async-validator'
 
-export default interface TableColumnProps {
+interface EleTableColumnProps {
     /**
      * 显示的标题
      */
@@ -148,8 +148,10 @@ export default interface TableColumnProps {
      * 选中的数据过滤项，如果需要自定义表头过滤的渲染方式，可能会需要此属性
      */
     filteredValue?: any[]
+}
 
-    // 扩展属性 -----------------------------------------------------------------------
+// 扩展属性 -----------------------------------------------------------------------
+export default interface TableColumnProps extends EleTableColumnProps {
     /**
      * 自定义渲染
      */
@@ -180,13 +182,20 @@ export default interface TableColumnProps {
         currentField: string | number,
         preField?: any,
         index?: number
-    ) => string | number | boolean | Date | any[] | object,
+    ) => string | number | boolean | Date | any[] | object
     /**
      * 隐藏列
      */
     hide?: boolean
     /**
      * 是否开启双击编辑
+     * dblclick
      */
     openDB?: boolean
+    /**
+     * 是否开启单击编辑 和 双击编辑互斥
+     * 二选一
+     * single click
+     */
+    openSC?: boolean
 }

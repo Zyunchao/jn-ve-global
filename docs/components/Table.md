@@ -148,6 +148,10 @@
 :::danger
 自 1.5.2 版本起，单字段编辑需要手动开启，为需要单字段编辑的列，添加 `openDB: true`
 
+自 2.0.8 版本器，单字段增加单击开启编辑的 api，api 为： `openSC: true`
+
+注意：单击和双击是互斥的，二者不能同时存在，如果同时存在，二者将都不生效
+
 :::
 
 :::tip 注意
@@ -389,6 +393,7 @@ rules | 校验配置 | RuleItem \| RuleItem[] | --
 excelValueFormat | 粘贴数据的字段格式化规则 | (currentField: string \| number, preField?: any, index?: number) => string \| number \| boolean \| Date \| any[] \| object | --
 hide | 标识列是否隐藏 | boolean | --
 openDB | 是否开启可编辑单元格的双击转编辑 | boolean | false
+openSC | 是否开启可编辑单元格的单击转编辑 | boolean | false
 
 ### Pagination Attributes
 

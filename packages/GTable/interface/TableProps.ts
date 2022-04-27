@@ -15,7 +15,7 @@ export default interface TableProps<TBD> extends TableEvents {
      * Table 的高度，默认为父容器 100%。
      * 如果 height 为 number 类型，单位 px；
      * 如果 height 为 string 类型，则这个高度会设置为 Table 的 style.height 的值，Table 的高度会受控于外部样式。
-     * 
+     *
      * false：关闭继承父容器的高度，内容撑开
      */
     height?: string | number | false
@@ -84,9 +84,7 @@ export default interface TableProps<TBD> extends TableEvents {
     /**
      * 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className
      */
-    headerRowClassName?:
-        | string
-        | ((current?: { row?: TBD; rowIndex?: number }) => string)
+    headerRowClassName?: string | ((current?: { row?: TBD; rowIndex?: number }) => string)
     /**
      * 表头行的 style 的回调方法，也可以使用一个固定的 Object 为所有表头行设置一样的 Style
      */
@@ -184,4 +182,14 @@ export default interface TableProps<TBD> extends TableEvents {
      * 渲染嵌套数据的配置选项 —	{ hasChildren: 'hasChildren', children: 'children' }
      */
     treeProps?: { hasChildren?: string; children?: string; [k: string]: string }
+    /**
+     * 设置表格单元、行和列的布局方式
+     * fixed
+     */
+    tableLayout?: 'fixed' | 'auto'
+    /**
+     * 总是显示滚动条
+     * false
+     */
+    scrollbarAlwaysOn?: boolean
 }

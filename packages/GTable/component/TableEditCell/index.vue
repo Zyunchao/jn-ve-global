@@ -4,6 +4,7 @@
         ref="editCellContentRef"
         class="edit-cell-content"
         @dblclick="handleDB"
+        @click="handleSC"
     >
         <transition
             :name="`slide-${cellStatus === CellStatus.CONTROL ? 'right' : 'left'}`"
@@ -318,6 +319,7 @@
                 <!-- 数字格式化 -->
                 <template v-if="localControlType === 'figureInput'">
                     <LGFigureInput
+                        ref="controlRef"
                         v-model="localPropRef"
                         v-bind="localControlProps"
                         size="small"
@@ -484,24 +486,30 @@ addEscEvent({
 })
 
 // 执行上下文必须的方法
-const { text2Control, control2Text, delayControlToText, datePickerValueVerify, handleDB } =
-    getMethods({
-        cellStatus,
-        CellStatus,
-        tableInstance,
-        animationTime,
-        editCellContentRef,
-        validateRes,
-        localData,
-        escTrigger,
-        localPropCopy,
-        localPropRef,
-        onCellEdited,
-        props,
-        localControlProps,
-        controlRef,
-        parentClassFlag
-    })
+const {
+    text2Control,
+    control2Text,
+    delayControlToText,
+    datePickerValueVerify,
+    handleDB,
+    handleSC
+} = getMethods({
+    cellStatus,
+    CellStatus,
+    tableInstance,
+    animationTime,
+    editCellContentRef,
+    validateRes,
+    localData,
+    escTrigger,
+    localPropCopy,
+    localPropRef,
+    onCellEdited,
+    props,
+    localControlProps,
+    controlRef,
+    parentClassFlag
+})
 
 // 行编辑总控
 setMonitorRowEdit({
