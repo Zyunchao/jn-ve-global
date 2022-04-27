@@ -140,6 +140,7 @@ defaultProps | 配置树的 props | object | {children: 'children', label: 'name
 btns | 扩展按钮配置数组 | BtnProps[] | []
 showBtnArea | 是否显示上方按钮区域 | boolean | true
 filterParentCheckedKeysFlag | 过滤传递的默认勾选的 key 的数组中的父节点 | boolean | false
+hideSearch | 隐藏搜索框 | boolean | false
 
 ## GTree 自定义事件
 

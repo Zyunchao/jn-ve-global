@@ -3,31 +3,7 @@
         <!-- 顶部操作区域 -->
         <div v-if="showBtnArea" class="btns-wrapper">
             <div class="btns">
-                <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
-                    <template v-if="btn.authCode">
-                        <el-button
-                            v-show="!btn.hide"
-                            v-auth="btn.authCode"
-                            :type="btn.type || 'primary'"
-                            v-bind="btn"
-                            size="small"
-                            @click="btn.onClick"
-                        >
-                            {{ btn.label }}
-                        </el-button>
-                    </template>
-                    <template v-else>
-                        <el-button
-                            v-show="!btn.hide"
-                            :type="btn.type || 'primary'"
-                            v-bind="btn"
-                            size="small"
-                            @click="btn.onClick"
-                        >
-                            {{ btn.label }}
-                        </el-button>
-                    </template>
-                </template>
+                <LGButtonGroup :btns="btns" />
             </div>
             <div class="tree-icons">
                 <g-icon icon="tree-list-unfold" @click="unfold" />
@@ -36,7 +12,7 @@
         </div>
 
         <!-- 搜索框 -->
-        <div class="input-wrapper">
+        <div v-if="!hideSearch" class="input-wrapper">
             <el-input v-model="filterText" placeholder="请输入关键字" />
         </div>
 
@@ -114,66 +90,60 @@ import { BtnProps } from '../index'
 import { TreeData } from '../GSelectTree/index'
 import { nodeHasChildren } from './utils'
 import LGIcon from '../GIcon/index.vue'
+import LGButtonGroup from '../GButtonGroup/index.vue'
+import TreeProps from '../GSelectTree/interface/TreeProps'
 import _ from 'lodash'
 
-const props = defineProps({
+interface Props {
     /**
      * 树数据
      */
-    data: {
-        type: Array as PropType<TreeData[]>,
-        default: () => []
-    },
+    data: TreeData[]
     /**
      * 类别 'default' | 'other'
      */
-    mode: {
-        type: String,
-        default: 'default'
-    },
+    mode?: 'default' | 'other'
     /**
      * 默认配置选项
      */
-    defaultProps: {
-        type: Object,
-        default: () => {
-            return {
-                children: 'children',
-                label: 'name'
-            }
-        }
-    },
+    defaultProps?: TreeProps
     /**
      * 配置按钮组
      */
-    btns: {
-        type: Array as PropType<BtnProps[]>,
-        default: () => []
-    },
+    btns?: BtnProps[]
     /**
      * 是否展示顶部按钮区域
      */
-    showBtnArea: {
-        type: Boolean,
-        default: true
-    },
+    showBtnArea?: boolean
     /**
      * 默认勾选的节点的 key 的数组
      * 需要传递 node-key='id'
      */
-    defaultCheckedKeys: {
-        type: Array as PropType<string[] | number[]>,
-        default: () => []
-    },
+    defaultCheckedKeys?: string[] | number[]
     /**
      * 过滤传递的默认勾选的 key 的数组中的父节点
      * 如果传递的选中节点中包含父节点，那么就会到值其下的子节点全部选中
      * 有些情况下，可能希望由子控制父，而不是由父控制子
      */
-    filterParentCheckedKeysFlag: {
-        type: Boolean,
-        default: false
-    }
+    filterParentCheckedKeysFlag?: boolean
+    /**
+     * 隐藏搜索框
+     */
+    hideSearch?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    data: () => [],
+    mode: 'default',
+    defaultProps: () => ({
+        children: 'children',
+        label: 'name'
+    }),
+    btns: () => [],
+    showBtnArea: true,
+    defaultCheckedKeys: () => [],
+    filterParentCheckedKeysFlag: false,
+    hideSearch: false
 })
 
 const emits = defineEmits(['getTreeRef'])
@@ -220,7 +190,7 @@ watch(
 
 const filterNode = (value, data) => {
     if (!value) return true
-    return data[props.defaultProps.label || 'name'].indexOf(value) !== -1
+    return data[(props.defaultProps.label as string) || 'name'].indexOf(value) !== -1
 }
 
 const unfold = () => {
