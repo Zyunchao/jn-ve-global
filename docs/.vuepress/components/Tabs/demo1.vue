@@ -1,7 +1,5 @@
 <template>
-    <g-tabs v-model="activeName" :list="tabList" />
-
-    <div class="content-wrapper">
+    <g-tabs v-model="activeName" :list="tabList">
         <div v-if="[TabVal.BASE_INFO].includes(activeName)" class="item">
             基本信息内容
         </div>
@@ -11,7 +9,7 @@
         <div v-if="[TabVal.ROLE_INFO].includes(activeName)" class="item">
             角色信息内容
         </div>
-    </div>
+    </g-tabs>
 </template>
 
 <script lang="ts">

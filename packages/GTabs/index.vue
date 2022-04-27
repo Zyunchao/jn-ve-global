@@ -1,56 +1,60 @@
 <template>
-    <el-tabs v-bind="$attrs" class="g-tab" @tab-click="tabChange">
+    <el-tabs v-bind="$attrs" class="g-tabs" @tab-click="tabChange">
         <el-tab-pane v-for="item in list" :key="item.value" :name="item.value">
             <template #label>
                 <span class="tabs-item-label">{{ item.label }}</span>
             </template>
         </el-tab-pane>
     </el-tabs>
+    <div v-if="slots.default" class="g-tabs-content">
+        <slot />
+    </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+export default {
+    name: 'GTabs'
+}
+</script>
+
+<script lang="ts" setup>
+import { useSlots } from 'vue'
 import { TabPaneProps } from './index'
 
-export default defineComponent({
-    name: 'GTabs',
-    props: {
-        list: {
-            type: Array as PropType<TabPaneProps[]>,
-            default: () => []
-        }
-    },
-    emits: ['tabChange'],
-    setup(props, context) {
-        const tabChange = (index) => {
-            context.emit('tabChange', index)
-        }
-        return {
-            tabChange
-        }
+const props = withDefaults(
+    defineProps<{
+        list: TabPaneProps[]
+    }>(),
+    {
+        list: () => []
     }
-})
+)
+
+const emits = defineEmits(['tabChange'])
+const slots = useSlots()
+
+const tabChange = (index) => {
+    emits('tabChange', index)
+}
 </script>
 
 <style lang="scss" scoped>
-$--base-tab-item-height: 55px;
-
-.g-tab {
+.g-tabs {
     :deep(.el-tabs__header) {
         margin: 0;
 
         .el-tabs__item {
             font-size: 20px;
             color: #333333;
-            height: $--base-tab-item-height;
-            line-height: $--base-tab-item-height;
+            height: var(--jn-ve-g-tabs-item-base-height);
+            line-height: var(--jn-ve-g-tabs-item-base-height);
             padding: 0 8px !important;
             font-weight: 400;
 
             .tabs-item-label {
                 display: block;
-                height: $--base-tab-item-height;
-                line-height: $--base-tab-item-height;
+                height: var(--jn-ve-g-tabs-item-base-height);
+                line-height: var(--jn-ve-g-tabs-item-base-height);
                 padding: 0 16px !important;
             }
 
@@ -69,5 +73,9 @@ $--base-tab-item-height: 55px;
     :deep(.el-tabs__content) {
         display: none;
     }
+}
+
+.g-tabs-content {
+    padding: 8px;
 }
 </style>
