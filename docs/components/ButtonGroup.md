@@ -6,6 +6,7 @@
 
 * [BaseModule](./BaseModule.md)
 * [Modal](./Modal.md)
+* [Tree](./Tree.md)
 
 ```ts
 /**

@@ -51,6 +51,10 @@ const tabChange = (index) => {
             padding: 0 8px !important;
             font-weight: 400;
 
+            &:nth-of-type(2) {
+                padding-left: 0 !important;
+            }
+
             .tabs-item-label {
                 display: block;
                 height: var(--jn-ve-g-tabs-item-base-height);
@@ -76,6 +80,6 @@ const tabChange = (index) => {
 }
 
 .g-tabs-content {
-    padding: 8px;
+    padding: 20px 0 8px;
 }
 </style>
