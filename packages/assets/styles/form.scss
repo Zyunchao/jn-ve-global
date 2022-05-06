@@ -35,3 +35,9 @@
         height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
     }
 }
+
+// 时间选择框内部 input
+.el-picker-panel {
+    --jn-ve-g-form-item-height: 32px;
+    --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
+}
