@@ -3,7 +3,7 @@
         v-if="config && refreshLoad"
         ref="localInstance"
         class="g-form"
-        v-bind="getFormRootConfigs()"
+        v-bind="formRootConfigs"
     >
         <!-- 栅格 row -->
         <el-row :gutter="localConfig.gutter ?? 20">
@@ -73,7 +73,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, PropType, ref, toRef, nextTick } from 'vue'
+import { watch, PropType, ref, toRef, nextTick, computed } from 'vue'
 import { FormProps, FormItemProps, FormInstance } from './index'
 import FunctionalComponent from '../FunctionalComponent'
 import FormItemControl from './component/formItemControl.vue'
@@ -91,7 +91,8 @@ const refreshLoad = ref(true)
 const localConfig = ref<FormProps>(props.config)
 
 /**
- * 监听 props config 与本地建立关联
+ * 惰性监听（只在后续改变时执行）
+ * props config 与本地建立关联
  * 总的来说，props.config 必须是一个 Proxy
  */
 watch(
@@ -119,10 +120,10 @@ watch(
  * 获取 form 配置（一级配置）
  * 抛出自定义配置，剩余的即为 elemen-plus 原生配置
  */
-const getFormRootConfigs = () => {
-    const { instance, formItems, gutter, colon, ...formConfigs } = localConfig.value
+const formRootConfigs = computed(() => {
+    const { instance, formItems, gutter, colon, ...formConfigs } = props.config
     return formConfigs
-}
+})
 
 // 获取 formItem 的配置（二级配置）
 const getFormItemConfigs = (item: FormItemProps) => {
