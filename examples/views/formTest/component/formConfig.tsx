@@ -22,9 +22,9 @@ export default () => {
             selectMValue: [],
             radio: 'f',
             switch: '2',
-            time1: new Date(),
-            time2: '09:00',
-            date1: new Date(),
+            time1: '',
+            time2: '',
+            date1: '',
             date2: [],
             color: '#ff3040',
             food: ['0', '2'],
@@ -168,7 +168,9 @@ export default () => {
                     type: 'datePicker',
                     props: {
                         type: 'daterange',
-                        unlinkPanels: true
+                        unlinkPanels: true,
+                        startPlaceholder: '请选择开始日期',
+                        endPlaceholder: '请选择结束日期'
                     }
                 }
             },

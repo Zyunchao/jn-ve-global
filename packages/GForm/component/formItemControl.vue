@@ -88,34 +88,22 @@
 
         <!-- 选择 时间&日期 类 -->
         <template v-if="localControlType === 'timePicker'">
-            <el-time-picker
-                v-model="localPropRef"
-                v-bind="controlConfig.props"
-                style="width: 100%"
-            />
+            <el-time-picker v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
         </template>
 
         <template v-if="localControlType === 'timeSelect'">
-            <el-time-select
-                v-model="localPropRef"
-                v-bind="controlConfig.props"
-                style="width: 100%"
-            />
+            <el-time-select v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
         </template>
 
         <template v-if="localControlType === 'datePicker'">
-            <el-date-picker
-                v-model="localPropRef"
-                v-bind="controlConfig.props"
-                style="width: 100%"
-            />
+            <el-date-picker v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
         </template>
 
         <template v-if="localControlType === 'dateTimePicker'">
             <el-date-picker
                 v-model="localPropRef"
                 type="datetime"
-                v-bind="controlConfig.props"
+                v-bind="localControlProps"
                 style="width: 100%"
             />
         </template>
@@ -394,6 +382,10 @@ const localControlProps = computed(() => {
         break
     case 'select':
     case 'infoSelect':
+    case 'datePicker':
+    case 'timeSelect':
+    case 'timePicker':
+    case 'dateTimePicker':
         controlProps['placeholder'] = controlProps['placeholder']
             ? controlProps['placeholder']
             : // : `请选择${props.formItemConfig.label}`
