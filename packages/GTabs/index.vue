@@ -44,7 +44,7 @@ const tabChange = (index) => {
         margin: 0;
 
         .el-tabs__item {
-            font-size: 20px;
+            font-size: var(--jn-ve-g-tabs-item-font-size);
             color: #333333;
             height: var(--jn-ve-g-tabs-item-base-height);
             line-height: var(--jn-ve-g-tabs-item-base-height);
