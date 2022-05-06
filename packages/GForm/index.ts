@@ -18,6 +18,7 @@ export * from './interface/InfoSelectControlConfig'
 export * from './interface/InfoSelectAllControlConfig'
 export * from './interface/InfoAutocompleteControlConfig'
 export * from './interface/SelectTreeV2ControlConfig'
+export * from './interface/AddressControlConfig'
 
 export { default as FormProps } from './interface/FormProps'
 export { default as FormItemProps } from './interface/FormItemProps'
@@ -36,3 +37,4 @@ export { default as InfoSelectControlConfig } from './interface/InfoSelectContro
 export { default as InfoSelectAllControlConfig } from './interface/InfoSelectAllControlConfig'
 export { default as InfoAutocompleteControlConfig } from './interface/InfoAutocompleteControlConfig'
 export { default as SelectTreeV2ControlConfig } from './interface/SelectTreeV2ControlConfig'
+export { default as AddressControlConfig } from './interface/AddressControlConfig'

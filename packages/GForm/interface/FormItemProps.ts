@@ -23,7 +23,8 @@ import {
     InfoSelectControlConfig,
     InfoAutocompleteControlConfig,
     InfoSelectAllControlConfig,
-    SelectTreeV2ControlConfig
+    SelectTreeV2ControlConfig,
+    AddressControlConfig
 } from '../index'
 
 /**
@@ -44,6 +45,7 @@ import {
  * - InfoSelect 以表格样式展示的下拉框（虚拟滚动）
  * - InfoAutocompleteControlConfig 以表格样式展示的输入建议框
  * - SelectTreeV2ControlConfig 下拉树组件版本2（基于 element-plus 提供的下拉树组件）
+ * - AddressControlConfig 地址选择 + 输入
  */
 export type ControlConfig =
     | InputControlConfig
@@ -69,6 +71,7 @@ export type ControlConfig =
     | InfoAutocompleteControlConfig
     | InfoSelectAllControlConfig
     | SelectTreeV2ControlConfig
+    | AddressControlConfig
 
 /**
  * 控件组的配置

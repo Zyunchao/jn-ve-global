@@ -1,18 +1,13 @@
 <template>
     <div class="examples-base-wrapper">
         <g-form :config="formConfig" />
-        <el-button type="primary" style="margin-left: 80px; margin-top: 20px" @click="getData">
-            获取数据
-        </el-button>
-        <el-button type="primary" @click="resetForm">
-            重置
-        </el-button>
+        <g-button-group :btns="btns" />
     </div>
 </template>
 
 <script lang="tsx" setup>
 import { reactive, watch, ref } from 'vue'
-import { FormProps } from '@component/index'
+import { FormProps, BtnProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
 import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
 
@@ -104,15 +99,24 @@ watch(
     }
 )
 
-const getData = () => {
-    formConfig.value.instance.validate().then((res) => {
-        console.log(`%c model == `, 'color: #67c23a;', formConfig.value.model)
-    })
-}
-
-const resetForm = () => {
-    formConfig.value.instance?.resetFields()
-}
+const btns = reactive<BtnProps[]>([
+    {
+        label: '获取数据',
+        type: 'primary',
+        onClick() {
+            formConfig.value.instance.validate().then((res) => {
+                console.log(`%c model == `, 'color: #67c23a;', formConfig.value.model)
+            })
+        }
+    },
+    {
+        label: '重置',
+        type: 'default',
+        onClick() {
+            formConfig.value.instance?.resetFields()
+        }
+    }
+])
 </script>
 
 <style lang="scss" scoped>

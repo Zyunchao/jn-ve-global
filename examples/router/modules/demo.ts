@@ -30,6 +30,10 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/formTest/index.vue')
     },
     {
+        path: '/address-test',
+        component: () => import('@/views/formTest/address.vue')
+    },
+    {
         path: '/selectTree-test',
         component: () => import('@/views/selectTreeTest/index.vue')
     },

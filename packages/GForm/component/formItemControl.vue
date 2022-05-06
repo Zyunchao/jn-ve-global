@@ -237,6 +237,11 @@
                 :value-key="controlConfig.valueKey"
             />
         </template>
+
+        <!-- 地址输入 -->
+        <template v-if="localControlType === 'address'">
+            <LGAddress v-model="localPropRef" v-bind="controlConfig.props" />
+        </template>
     </template>
 </template>
 
@@ -266,6 +271,7 @@ import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
 import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
 import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
+import LGAddress from '../../GAddress/index.vue'
 
 interface Props {
     /**
@@ -383,13 +389,15 @@ const localControlProps = computed(() => {
     case 'infoAutocomplete':
         controlProps['placeholder'] = controlProps['placeholder']
             ? controlProps['placeholder']
-            : `请输入${props.formItemConfig.label}`
+            : // : `请输入${props.formItemConfig.label}`
+            `请输入`
         break
     case 'select':
     case 'infoSelect':
         controlProps['placeholder'] = controlProps['placeholder']
             ? controlProps['placeholder']
-            : `请选择${props.formItemConfig.label}`
+            : // : `请选择${props.formItemConfig.label}`
+            `请选择`
         break
     }
 

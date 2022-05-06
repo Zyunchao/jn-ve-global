@@ -14,11 +14,11 @@ export default () => {
         instance: null,
         labelPosition: 'right',
         labelWidth: '180px',
-        disabled: true,
+        // disabled: true,
         model: {
-            name: '12345',
+            name: '',
             region: '',
-            sex1: 'm',
+            sex1: '',
             selectMValue: [],
             radio: 'f',
             switch: '2',
@@ -37,7 +37,8 @@ export default () => {
             customLabel: `测试文本-${+new Date()}`,
             avatar: `测试文本-${+new Date()}`,
             clientChannel: `测试文本-${+new Date()}`,
-            arr: []
+            arr: [],
+            address: []
         },
         formItems: [
             {
@@ -347,6 +348,14 @@ export default () => {
                         after: ''
                     }
                 ]
+            },
+            {
+                prop: 'address',
+                label: '地址',
+                span: 12,
+                controlConfig: {
+                    type: 'address'
+                }
             },
             {
                 prop: 'avatar',
