@@ -16,7 +16,8 @@ export default [
             { text: 'InfoSelectAll', link: '/components/InfoSAA/InfoSelectAll.md' },
             { text: 'InfoAutocomplete', link: '/components/InfoSAA/InfoAutocomplete.md' },
             { text: 'SelectTree', link: '/components/SelectTree.md' },
-            { text: 'SelectTreeV2', link: '/components/SelectTreeV2.md' }
+            { text: 'SelectTreeV2', link: '/components/SelectTreeV2.md' },
+            { text: 'Address', link: '/components/Address.md' }
         ]
     },
     {
