@@ -1,7 +1,4 @@
 <template>
-    <el-button type="success" style="margin-bottom: 20px" @click="backfillData">
-        回填数据
-    </el-button>
     <g-form :config="formConfig" />
     <g-button-group :btns="btns" />
 </template>
@@ -20,7 +17,7 @@ const formConfig = reactive<FormProps>({
     instance: null,
     labelWidth: '100',
     model: {
-        address: ''
+        address: []
     },
     formItems: [
         {
