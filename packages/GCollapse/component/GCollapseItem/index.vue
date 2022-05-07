@@ -62,7 +62,7 @@ const tableHeight = computed(() => `${props.height}px`)
 </script>
 
 <style lang="scss" scoped>
-$--icon-size: 18px;
+$--icon-size: 14px;
 $--icon-l: 10px;
 
 .custom-collapse-item {
@@ -70,7 +70,7 @@ $--icon-l: 10px;
     :deep(.el-collapse-item__header) {
         height: 36px;
         font-size: 18px;
-        color: #293545;
+        color: #4e5966;
         font-weight: 600;
         border-bottom: none;
         overflow: hidden;
@@ -95,7 +95,7 @@ $--icon-l: 10px;
             transform: rotate(-90deg);
             margin-left: $--icon-l;
             transition: transform 0.3s;
-            color: #adadad;
+            color: #c2c2c2;
         }
 
         .el-collapse-item__arrow {
