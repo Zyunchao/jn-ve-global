@@ -48,7 +48,8 @@
                             <FormItemControlGroup
                                 :form-item-config="item"
                                 :control-configs="item.controlConfigs"
-                                :prop="toRef(localConfig.model, item.prop)"
+                                :source-model="localConfig.model"
+                                :prop-key="item.prop"
                             />
                         </template>
 

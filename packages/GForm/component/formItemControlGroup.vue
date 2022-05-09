@@ -7,10 +7,9 @@
         >
             <!-- 单控件 -->
             <FormItemControl
-                v-if="!propRefChangeFlag"
                 :form-item-config="formItemConfig"
                 :control-config="extendControlConfig2ControlConfig(extControlConfig)"
-                :prop="toRef(localPropRef, index)"
+                :prop="toRef(localControlBindObjRef, `_${index}`)"
                 @controlFocus="wrapperClass('add')"
                 @controlBlur="wrapperClass('remove')"
             />
@@ -33,9 +32,10 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { PropType, ref, toRef, watch, nextTick } from 'vue'
+import { ref, toRef, watch, reactive, computed } from 'vue'
 import { FormItemProps, ExtendControlConfig, ControlConfig } from '../index'
 import FormItemControl from './formItemControl.vue'
+import _ from 'lodash'
 
 interface Props {
     /**
@@ -47,35 +47,87 @@ interface Props {
      */
     controlConfigs: ExtendControlConfig[]
     /**
-     * 绑定的值，必须是数组
+     * 表单 model 源数据
      */
-    prop: any[] | object
+    sourceModel: object
+    /**
+     * 当前 item 要绑定的字段 key
+     */
+    propKey: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     formItemConfig: null,
     controlConfigs: () => [],
-    prop: () => []
+    sourceModel: () => null,
+    propKey: ''
 })
 
-let localPropRef = ref(props.prop)
 const groupWrapperRef = ref<HTMLElement>(null)
-const propRefChangeFlag = ref<boolean>(false)
+
+const currentSourceProp = computed(() => props.sourceModel[props.propKey])
 
 /**
- * 在重置表单的 model 时，因为当前组件使用的是数组引用
- * 届时 props.prop 会更换引用
- * 但是控件绑定的还是上一个数组引用的某一个 item 的引用
- * 所以，要在 prop 更换引用时，更换控件绑定最新数组的 item 的引用
- * 在这里使用销毁控件再重新创建的方式，如果有更好的方法，请替换
+ * 本地绑定（以对象的 key 进行绑定）
+ * 本地和源需要进行平行区分
+ * 二者关系：
+ *  - 初始化，取外部源的值
+ *  - 本地改变，抛出，使源改变
+ *  - 源改变，内部获取
+ */
+const localControlBindObjRef = reactive<{ [key: string]: any }>({})
+
+/**
+ * 赋予初始化值
+ */
+props.controlConfigs.forEach((item, index) => {
+    localControlBindObjRef[`_${index}`] = _.clone(props.sourceModel[props.propKey][index])
+})
+
+/**
+ * 数据抛出
+ * 获取对象 values，作为实际需要的数据
+ *
+ * 注意：这里通过 props 的引用传递，对外面的源数据进行了修改
+ * 这里是一个危险行为，如果后续出现问题，请重点排查这里
  */
 watch(
-    () => localPropRef.value,
+    () => localControlBindObjRef,
     (val) => {
-        propRefChangeFlag.value = true
-        nextTick(() => {
-            propRefChangeFlag.value = false
-        })
+        /* eslint-disable vue/no-mutating-props */
+        props.sourceModel[props.propKey] = _.cloneDeep(Object.values(localControlBindObjRef))
+    },
+    {
+        deep: true
+    }
+)
+
+/**
+ * 数据回填
+ * 基于本地数据抛出后，响应数组的变化
+ * 如果源数据与本地数据不一致，说明是远程数据的改变
+ *  - 初始化
+ *  - 赋值（回填）
+ *
+ * 故需要将本地与远程同步更改
+ */
+watch(
+    () => currentSourceProp.value,
+    (val) => {
+        // 源数据 和 本地数据 比对
+        if (!_.isEqual(val, Object.values(localControlBindObjRef))) {
+            Object.keys(localControlBindObjRef).forEach((key) => {
+                const index = (key.replace('_', '') as any) - 0
+                const item = val[index]
+
+                if (!_.isEqual(item, localControlBindObjRef[key])) {
+                    localControlBindObjRef[key] = item
+                }
+            })
+        }
+    },
+    {
+        deep: true
     }
 )
 

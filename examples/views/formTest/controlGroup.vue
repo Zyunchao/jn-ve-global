@@ -6,25 +6,27 @@
 </template>
 
 <script lang="tsx" setup>
-import { reactive, watch, ref } from 'vue'
+import { reactive, watch, ref, toRef, watchEffect } from 'vue'
 import { FormProps, BtnProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
 import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
+import { v4 as uuidv4 } from 'uuid'
 
-let formConfig = ref<FormProps>({
+let formConfig1 = reactive<FormProps>({
     instance: null,
     labelPosition: 'right',
     labelWidth: '180px',
     model: {
-        name: '',
-        money: []
+        name: '2222',
+        group: ['33qwer', 0],
+        group2: [],
+        selectM: []
     },
     formItems: [
         {
-            prop: 'money',
+            prop: 'group',
             label: '金额范围',
             span: 24,
-            rules: [],
             controlConfigs: [
                 {
                     type: 'input',
@@ -85,19 +87,88 @@ let formConfig = ref<FormProps>({
             controlConfig: {
                 type: 'input'
             }
+        },
+        {
+            prop: 'selectM',
+            label: '性别',
+            span: 12,
+            controlConfig: {
+                type: 'select',
+                options: [
+                    {
+                        label: '男',
+                        value: 'm'
+                    },
+                    {
+                        label: '女',
+                        value: 'f'
+                    }
+                ],
+                props: {
+                    multiple: true
+                }
+            }
         }
     ]
 })
 
-watch(
-    () => formConfig.value.model,
-    (model) => {
-        console.log(`%c 业务组件 model onChange === `, 'color: #67c23a;', model)
+let formConfig2 = reactive<FormProps>({
+    instance: null,
+    labelPosition: 'right',
+    labelWidth: '180px',
+    model: {
+        name: '',
+        group: [],
+        selectM: []
     },
-    {
-        deep: true
+    formItems: [
+        {
+            prop: 'name',
+            label: '姓名2',
+            span: 12,
+            controlConfig: {
+                type: 'input'
+            }
+        },
+        {
+            prop: 'selectM',
+            label: '性别2',
+            span: 12,
+            controlConfig: {
+                type: 'select',
+                options: [
+                    {
+                        label: '男',
+                        value: 'm'
+                    },
+                    {
+                        label: '女',
+                        value: 'f'
+                    }
+                ],
+                props: {
+                    multiple: true
+                }
+            }
+        }
+    ]
+})
+
+let formConfig = ref<FormProps>(formConfig1)
+
+const flag = ref<boolean>(false)
+
+watch(
+    () => flag.value,
+    (val) => {
+        formConfig.value = val ? formConfig2 : formConfig1
     }
 )
+
+let arr = reactive<any[]>([])
+
+let index1 = toRef(arr, 1)
+let index2 = toRef(arr, 2)
 
 const btns = reactive<BtnProps[]>([
     {
@@ -106,7 +177,29 @@ const btns = reactive<BtnProps[]>([
         onClick() {
             formConfig.value.instance.validate().then((res) => {
                 console.log(`%c model == `, 'color: #67c23a;', formConfig.value.model)
+
+                console.log(
+                    `%c group ==== `,
+                    'color: #67c23a;',
+                    JSON.stringify(formConfig.value.model.group)
+                )
             })
+        }
+    },
+    {
+        label: '数据回填',
+        type: 'primary',
+        onClick() {
+            // formConfig1.model = {
+            //     name: '3333',
+            //     group: ['33qwer', 99],
+            //     group2: [],
+            //     selectM: []
+            // }
+
+            formConfig.value.model.name = 'qwer'
+            formConfig.value.model.group[1] = 999
+            console.log(`%c formConfig1.model == `, 'color: #67c23a;', formConfig1.model)
         }
     },
     {
@@ -114,6 +207,54 @@ const btns = reactive<BtnProps[]>([
         type: 'default',
         onClick() {
             formConfig.value.instance?.resetFields()
+            // formConfig.model.group = []
+        }
+    },
+    {
+        label: '切换表单',
+        type: 'success',
+        onClick() {
+            flag.value = !flag.value
+        }
+    },
+    {
+        label: '数据测试-修改数据',
+        type: 'default',
+        onClick() {
+            index1.value = +new Date()
+            index2.value = uuidv4()
+
+            console.log(`%c index1 === `, 'color: #f56c6c;', index1, index1.value)
+            console.log(`%c index2 === `, 'color: #f56c6c;', index2.value)
+        }
+    },
+    {
+        label: '数据测试-断开链接',
+        type: 'default',
+        onClick() {
+            arr = reactive([])
+        }
+    },
+    {
+        label: '获取测试数据',
+        type: 'default',
+        onClick() {
+            console.log(`%c arr === `, 'color: #67c23a;', arr)
+            console.log(`%c index1 === `, 'color: #f56c6c;', index1.value)
+            console.log(`%c index2 === `, 'color: #f56c6c;', index2.value)
+
+            console.group(`%c ObjectRefImpl`, 'color: skyblue;')
+            console.log(`%c index1 === `, 'color: #f56c6c;', index1)
+            console.log(`%c index2 === `, 'color: #f56c6c;', index2)
+            console.groupEnd()
+        }
+    },
+    {
+        label: '建立链接',
+        type: 'default',
+        onClick() {
+            index1 = toRef(arr, 1)
+            index2 = toRef(arr, 2)
         }
     }
 ])
