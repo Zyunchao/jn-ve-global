@@ -1,6 +1,6 @@
 <template>
     <g-form :config="formConfig" />
-    <el-button type="primary" style="margin-left: 160px; margin-top: 20px" @click="getData">
+    <el-button type="primary" style="margin-left: 160px;" @click="getData">
         获取数据
     </el-button>
     <el-button type="primary" @click="resetForm">

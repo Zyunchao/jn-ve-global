@@ -67,10 +67,15 @@ Element 已经提供了功能丰富的 Form 组件，但我们在使用时多是
 * [ColorPicker](https://element-plus.gitee.io/#/zh-CN/component/color-picker)
 * [Rate](https://element-plus.gitee.io/#/zh-CN/component/rate)
 * [Slider](https://element-plus.gitee.io/#/zh-CN/component/slider)
-* [SelectTree](/element-component/modules/SelectTree.html)
-* [FigureInput](/element-component/modules/FigureInput.html)
-* [IconPicker](/element-component/modules/IconPicker.html)
-* [Upload](/element-component/modules/Upload.html)
+* [SelectTree](./SelectTree.md)
+* [SelectTreeV2](./SelectTreeV2.md)
+* [FigureInput](./FigureInput.md)
+* [IconPicker](./IconPicker.md)
+* [Upload](./Upload.md)
+* [InfoSelect](./InfoSAA/InfoSelect.md)
+* [InfoSelectAll](./InfoSAA/InfoSelectAll.md)
+* [InfoAutocomplete](./InfoSAA/InfoAutocomplete.md)
+* [Address](./Address.md)
 
 <demo-block>
 
