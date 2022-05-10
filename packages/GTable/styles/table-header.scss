@@ -3,6 +3,8 @@
         position: relative;
         z-index: 2;
 
+        --jn-ve-g-form-item-height: var(--jn-ve-g-table-cell-line-height);
+
         .el-table__header {
             thead {
                 tr th {
