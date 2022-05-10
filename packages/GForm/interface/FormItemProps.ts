@@ -114,10 +114,6 @@ interface FormItemBaseProps {
      * default：false
      */
     inlineMessage?: (boolean | string)[]
-    /**
-     * 用于控制该表单域下组件的尺寸
-     */
-    size?: 'large' | 'default' | 'small'
 
     // 自定义扩展 Props -----------------------------------------------------------------------
 
@@ -144,10 +140,6 @@ interface FormItemBaseProps {
      * 控件分组
      */
     group?: string | string[]
-    /**
-     * 扩展字段
-     */
-    // [k: string]: any
 }
 
 // 单控件

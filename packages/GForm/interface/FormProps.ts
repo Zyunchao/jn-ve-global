@@ -34,24 +34,14 @@ export default interface FormProps {
         [k: string]: ExtendRuleItem | ExtendRuleItem[]
     }
     /**
-     * 行内表单模式
-     * default：false
-     */
-    inline?: boolean
-    /**
      * 表单域标签的位置，如果值为 left 或者 right 时，则需要设置 label-width
      * default：'right'
      */
     labelPosition?: 'right' | 'left' | 'top'
     /**
      * 	表单域标签的宽度，例如 '50px'。作为 Form 直接子元素的 form-item 会继承该值。支持 auto。
-     *
      */
     labelWidth?: string
-    /**
-     * 表单域标签的后缀
-     */
-    labelSuffix?: string
     /**
      * 是否显示必填字段的标签旁边的红色星号
      * default?: false
@@ -72,10 +62,6 @@ export default interface FormProps {
      * default?: false
      */
     statusIcon?: boolean
-    /**
-     * 	用于控制该表单内组件的尺寸
-     */
-    // size?: 'large' | 'default' | 'small'
     /**
      * 是否禁用该表单内的所有组件。若设置为 true，则表单内组件上的 disabled 属性不再生效
      * default?: false
