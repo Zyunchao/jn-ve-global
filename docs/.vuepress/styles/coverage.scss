@@ -53,6 +53,18 @@ main.page {
                 }
             }
         }
+
+        >nav.table-of-contents {
+            position: fixed;
+            right: 0;
+            top: 60px;
+            padding-right: 10px;
+            z-index: 999;
+            background-color: #fff;
+            overflow-y: auto;
+            max-width: 220px;
+        }
+
     }
 }
 
