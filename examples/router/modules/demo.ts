@@ -120,6 +120,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/button-group-test',
         component: () => import('@/views/buttonTest/btnGroupTest.vue')
+    },
+    {
+        path: '/form-generate-test',
+        component: () => import('@/views/formGenerateTest/index.vue')
     }
 ]
 

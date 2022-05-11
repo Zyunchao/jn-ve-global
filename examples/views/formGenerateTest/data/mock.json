@@ -1,0 +1,87 @@
+{
+    "labelPosition": "right",
+    "labelWidth": "120px",
+    "formItems": [
+        {
+            "prop": "name",
+            "label": "Input",
+            "span": 12,
+            "required": true,
+            "defaultValue": "Tiga",
+            "controlConfig": { "type": "input" }
+        },
+        {
+            "prop": "name2",
+            "label": "Input",
+            "span": 12,
+            "rules": [
+                { "required": true, "message": "name2 是必填项" },
+                {
+                    "validator": "function(rule, val, cb) { const formConfig = arguments[arguments.length - 1]; console.log(`%c formConfig === `, 'color: #67c23a;', formConfig); cb(new Error('qwer')) }"
+                }
+            ],
+            "defaultValue": "Tiga",
+            "controlConfig": { "type": "input" }
+        },
+        {
+            "prop": "sex1",
+            "label": "Select",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "select",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ]
+            }
+        },
+        {
+            "prop": "selectMValue",
+            "label": "SelectMultiple",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "select",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ],
+                "props": {
+                    "multiple": true,
+                    "onChange": "function(val) { console.log(val);  const formConfig = arguments[arguments.length - 1]; console.log(`%c formConfig === `, 'color: #67c23a;', formConfig) }"
+                }
+            }
+        },
+        {
+            "prop": "radio",
+            "label": "Radio",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "radio",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ]
+            }
+        },
+        {
+            "prop": "radio",
+            "label": "Radio",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "radioButton",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ]
+            }
+        }
+    ]
+}

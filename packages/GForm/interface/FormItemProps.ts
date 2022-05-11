@@ -82,7 +82,7 @@ export type ExtendControlConfig = ControlConfig & {
 }
 
 // formItem 基础参数
-interface FormItemBaseProps {
+export interface FormItemBaseProps {
     /**
      * 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
      */

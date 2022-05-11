@@ -180,3 +180,45 @@ export function partitionObj2HumpObj(obj: object, excludes?: Array<string> | str
 export function getStyle(element, attr) {
     return window.getComputedStyle(element, null).getPropertyValue(attr)
 }
+
+/**
+ * 判断字符串是否为 json
+ * @param str 要判断的字符串
+ * @returns
+ */
+export function isJSON(str: string) {
+    if (typeof str === 'string') {
+        try {
+            var obj = JSON.parse(str)
+            if (typeof obj === 'object' && obj) {
+                return true
+            } else {
+                return false
+            }
+        } catch (e) {
+            // console.log(`%c error：${str} !!! ${e}`, 'color: #f56c6c;')
+            return false
+        }
+    }
+}
+
+/**
+ * 函数字符串转函数体，遇到非函数字符串则抛出错误
+ * @param str
+ */
+export function funStr2FuncBody(str: string) {
+    if (typeof str !== 'string') return false
+
+    // 限制只能使用匿名函数（不能使用箭头函数, 内部需要使用 arguments）
+    if (!str.startsWith('function')) {
+        console.log(`%c funStr must 'function' startsWith, but now: ${str}`, 'color: #f56c6c;' )
+        return false
+    }
+
+    try {
+        return new Function('return ' + str)()
+    } catch (e) {
+        console.log(`%c error：${str} !!! ${e}`, 'color: #f56c6c;')
+        return false
+    }
+}
