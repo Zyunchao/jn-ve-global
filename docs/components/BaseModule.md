@@ -1,5 +1,9 @@
 # BaseModule
 
+[[toc]]
+
+## 前言
+
 基础的增删改查模块组件化
 
 基于 [Form](/element-component/modules/Form) && [Table](/element-component/modules/Table)
@@ -122,7 +126,9 @@ BaseModule 中的多选和 Table 的多选一致，有一个区别是 selectedRo
 
 </demo-block>
 
-## Attributes
+## 参数列表
+
+### Attributes
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
@@ -142,7 +148,7 @@ tabs | 标签页配置数组 | Array<{ lable: string; value: string }> | []
 v-model:activeTab \| :activeTab | 双向绑定的激活的 tab 页的 value 值 | string | 默认第一个 tab 的 value
 v-model:selectedRows | 多选绑定的数组，不传递表示不维护选中列表 | array | null 
 
-## Event
+### Event
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
@@ -150,7 +156,7 @@ v-model:selectedRows | 多选绑定的数组，不传递表示不维护选中列
 @reset | 重置钩子 | Function | --
 @search | 查询钩子 | Function | --
 
-## Slot
+### Slot
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----

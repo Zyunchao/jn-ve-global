@@ -1,5 +1,9 @@
 # Table
 
+[[toc]]
+
+## 前言
+
 在 [Element Table](https://element-plus.gitee.io/#/zh-CN/component/table) 的基础上，进行配置化的封装
 
 实现了：

@@ -1,14 +1,36 @@
 <template>
     <ClientOnly>
         <div class="demo-block">
+            <!-- 案例展示容器 -->
             <div class="component-wrapper">
                 <slot />
             </div>
+
+            <div class="open-handle-wrapper-top">
+                <!-- <g-icon icon="el-DocumentCopy" /> -->
+                <el-tooltip
+                    class="box-item"
+                    effect="dark"
+                    :content="!expanded ? '显示代码' : '隐藏代码'"
+                    placement="right"
+                >
+                    <div>
+                        <g-icon
+                            icon="el-MagicStick"
+                            :class="{ expanded: expanded }"
+                            @click="handleChanleExpanded"
+                        />
+                    </div>
+                </el-tooltip>
+            </div>
+
+            <!-- 代码区域 -->
             <div ref="sourceWrapperRef" :class="['source-wrapper', { expanded: expanded }]">
                 <slot name="code" />
             </div>
-            <div class="open-handle-wrapper" @click="handleChanleExpanded">
-                <i :class="['el-icon-caret-bottom', { expanded: expanded }]" />
+
+            <div v-if="expanded" class="open-handle-wrapper-bottom" @click="handleChanleExpanded">
+                <g-icon icon="el-CaretBottom" :class="{ expanded: expanded }" />
                 {{ !expanded ? '显示代码' : '隐藏代码' }}
             </div>
         </div>
@@ -22,7 +44,11 @@ export default defineComponent({
 })
 </script>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, getCurrentInstance } from 'vue'
+
+const { proxy } = getCurrentInstance()
+
+console.log(`%c solts == `, 'color: #67c23a;', proxy.$slots.code())
 
 const expanded = ref(false)
 const sourceWrapperRef = ref<HTMLElement>(null)
@@ -37,9 +63,10 @@ watch(
     (instance) => {
         if (instance) {
             // 动态获取代码区域的高度
-            sourceHeight.value = `${
-                sourceWrapperRef.value.querySelector('.language-vue').clientHeight
-            }px`
+            // sourceHeight.value = `${
+            //     sourceWrapperRef.value.querySelector('.language-vue').clientHeight
+            // }px`
+            sourceHeight.value = 'auto'
         }
     }
 )
@@ -73,25 +100,43 @@ watch(
         &.expanded {
             height: v-bind(sourceHeight);
         }
-
-        :deep(.language-vue) {
-            margin-top: 0;
-            margin-bottom: 0;
-            border-radius: 0;
-            border: none;
-        }
     }
 
     // 展开按钮
-    .open-handle-wrapper {
+    .open-handle-wrapper-top,
+    .open-handle-wrapper-bottom {
         border-top: 1px solid #dcdfe6;
         height: 44px;
         box-sizing: border-box;
         margin-top: -1px;
         color: rgb(172, 168, 168);
-        cursor: pointer;
         display: flex;
         align-items: center;
+
+        :deep(i.g-icon) {
+            transition: transform 0.4s;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+    }
+
+    .open-handle-wrapper-top {
+        justify-content: flex-end;
+
+        :deep(i.g-icon) {
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 20px;
+
+            &.expanded,
+            &:hover {
+                color: #409eff;
+            }
+        }
+    }
+
+    .open-handle-wrapper-bottom {
+        cursor: pointer;
         justify-content: center;
 
         &:hover {
@@ -101,10 +146,7 @@ watch(
             user-select: none;
         }
 
-        i.el-icon-caret-bottom {
-            transition: transform 0.4s;
-            margin-right: 10px;
-            font-size: 20px;
+        :deep(i.g-icon) {
             &.expanded {
                 transform: rotate(-180deg);
             }

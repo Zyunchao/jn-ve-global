@@ -27,7 +27,7 @@ interface Props {
      *  - JSON
      *  - 配置对象格式
      */
-    config: string | FormGenerateProps
+    config: string | FormGenerateProps | object
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -62,7 +62,7 @@ const localRemoteConfig = computed<FormGenerateProps>(() => {
 watch(
     () => localRemoteConfig.value,
     (remoteConfig) => {
-        if (!remoteConfig) return
+        if (!remoteConfig || _.isEmpty(remoteConfig)) return
         loadDataFinished.value = false
         const { formItems: formGenerateItems, model, instance, ...formProps } = remoteConfig
 

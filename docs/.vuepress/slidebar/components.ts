@@ -21,6 +21,10 @@ export default [
         ]
     },
     {
+        text: '动态表单',
+        children: [{ text: 'FormGenerate', link: '/components/DynamicForm/FormGenerate.md' }]
+    },
+    {
         text: '布局组件',
         children: [
             { text: 'BaseModule', link: '/components/BaseModule.md' },

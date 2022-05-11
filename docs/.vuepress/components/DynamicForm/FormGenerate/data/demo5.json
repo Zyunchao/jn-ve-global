@@ -1,0 +1,95 @@
+{
+    "labelPosition": "right",
+    "labelWidth": "120px",
+    "formItems": [
+        {
+            "prop": "name",
+            "label": "Input",
+            "span": 12,
+            "defaultValue": "",
+            "required": true,
+            "controlConfig": {
+                "type": "input",
+                "props": {
+                    "onInput": "function(val){ console.log(val) }"
+                }
+            }
+        },
+        {
+            "prop": "weight",
+            "label": "Weight",
+            "span": 12,
+            "defaultValue": "",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "体重是必填项"
+                }
+            ],
+            "controlConfig": {
+                "type": "input",
+                "props": {
+                    "onInput": "function(val){ console.log(val) }"
+                }
+            }
+        },
+        {
+            "prop": "sex1",
+            "label": "Select",
+            "span": 12,
+            "defaultValue": "m",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "Select 是必填项"
+                },
+                {
+                    "validator": "function(rule, value, callback) { if(value === 'z') { return false }; const model = arguments[arguments.length - 1]; console.log(`%c model === `, 'color: #67c23a;', model); return true; }",
+                    "message": "不能选择 '中'"
+                }
+            ],
+            "controlConfig": {
+                "type": "select",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ],
+                "props": {
+                    "onChange": "function(val){ console.log(val); const formConfig = arguments[arguments.length - 1]; console.log(`%c formConfig === `, 'color: #67c23a;', formConfig) }"
+                }
+            }
+        },
+        {
+            "prop": "selectMValue",
+            "label": "SelectMultiple",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "select",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ],
+                "props": {
+                    "multiple": true
+                }
+            }
+        },
+        {
+            "prop": "radio",
+            "label": "Radio",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "radio",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ]
+            }
+        }
+    ]
+}
