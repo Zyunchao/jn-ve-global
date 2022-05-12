@@ -54,6 +54,7 @@ main.page {
             }
         }
 
+        // 目录
         >nav.table-of-contents {
             position: fixed;
             right: 0;
@@ -64,7 +65,6 @@ main.page {
             overflow-y: auto;
             max-width: 220px;
         }
-
     }
 }
 
