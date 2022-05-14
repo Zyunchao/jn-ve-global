@@ -41,6 +41,9 @@
     --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
 }
 
+
+/* 2.2.0 样式修复覆盖 */
+
 .el-range-editor.el-input__inner {
     --jn-ve-g-form-item-height: 38px;
 }
@@ -48,3 +51,11 @@
 input::placeholder {
     font-size: 15px !important;
 }
+
+.el-tree-node__content {
+    .el-checkbox {
+        margin-right: 8px;
+    }
+}
+
+/* 2.2.0 样式修复覆盖 */
