@@ -1,7 +1,11 @@
 <template>
-    <div v-loading="loadingFlag" class="examples-base-wrapper">
+    <div class="examples-base-wrapper">
+        <h2>表单生成器：</h2>
         <GFormGenerate ref="formGenerateRef" :config="formConfigJson" />
         <g-button-group :btns="btns" />
+
+        <h2>表单增强测试：</h2>
+        <AdvanceTest />
     </div>
 </template>
 
@@ -15,6 +19,7 @@ export default {
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { FormProps, BtnProps, FormGenerateItemProps } from '@component/index'
 import mockData from './data/mock.json'
+import AdvanceTest from './advance.vue'
 
 const formConfigJson = ref<string>('')
 const loadingFlag = ref<boolean>(true)
@@ -153,5 +158,13 @@ const btns: BtnProps[] = [
 <style lang="scss" scoped>
 .box {
     width: 800px;
+}
+
+h2 {
+    margin: 30px 0 20px;
+
+    &:nth-of-type(1) {
+        margin-top: 0;
+    }
 }
 </style>

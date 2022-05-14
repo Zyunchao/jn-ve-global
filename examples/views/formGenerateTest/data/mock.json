@@ -5,22 +5,20 @@
         {
             "prop": "name",
             "label": "Input",
-            "span": 12,
             "required": true,
-            "defaultValue": "Tiga",
+            "defaultValue": "贝吉塔",
             "controlConfig": { "type": "input" }
         },
         {
             "prop": "name2",
-            "label": "Input",
-            "span": 12,
+            "label": "Input2",
             "rules": [
                 { "required": true, "message": "name2 是必填项" },
                 {
                     "validator": "function(rule, val, cb) { const formConfig = arguments[arguments.length - 1]; console.log(`%c formConfig === `, 'color: #67c23a;', formConfig); cb(new Error('qwer')) }"
                 }
             ],
-            "defaultValue": "Tiga",
+            "defaultValue": "卡卡罗特",
             "controlConfig": { "type": "input" }
         },
         {
