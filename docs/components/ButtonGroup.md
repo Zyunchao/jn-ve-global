@@ -24,7 +24,15 @@ interface BtnProps {
     /**
      * 按钮的类型，同 Element Button
      */
-    type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'default'
+    type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'default'
+    /**
+     * 是否为文字按钮 2.2.0
+     */
+    text?: boolean
+    /**
+     * 是否显示文字按钮背景颜色 2.2.0
+     */
+    bg?: boolean
     /**
      * 禁用
      */

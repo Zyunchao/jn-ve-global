@@ -109,7 +109,7 @@ const tableColumns = reactive<TableColumnProps[]>([
                 <>
                     {!row.edit ? (
                         <el-button
-                            type='text'
+                            text={true}
                             onClick={() => {
                                 row.edit = true
                                 console.log(`%c 编辑，数据：`, 'color: #f56c6c;', row)
@@ -118,7 +118,7 @@ const tableColumns = reactive<TableColumnProps[]>([
                         </el-button>
                     ) : (
                         <el-button
-                            type='text'
+                            text={true}
                             onClick={() => {
                                 row.edit = false
                                 nextTick(() => {
@@ -130,7 +130,7 @@ const tableColumns = reactive<TableColumnProps[]>([
                             保存
                         </el-button>
                     )}
-                    <el-button type='text' class='btn-danger'>
+                    <el-button text={true} type='danger'>
                         删除
                     </el-button>
                 </>

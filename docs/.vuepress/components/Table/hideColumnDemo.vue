@@ -43,7 +43,7 @@ const columns = reactive<TableColumnProps[]>([
             return (
                 <>
                     <el-button
-                        type='text'
+                        text={true}
                         onClick={() => {
                             columns.find((column) => column.prop === 'date').hide = false
 
@@ -59,8 +59,8 @@ const columns = reactive<TableColumnProps[]>([
                         显示
                     </el-button>
                     <el-button
-                        type='text'
-                        class='btn-danger'
+                        text={true}
+                        type='danger'
                         onClick={() => {
                             columns.find((column) => column.prop === 'date').hide = true
 

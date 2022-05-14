@@ -60,9 +60,9 @@ const tableColumns: TableColumnProps[] = [
         render(row) {
             return (
                 <>
-                    <el-button type='text'>编辑</el-button>
-                    <el-button type='text'>人员设置</el-button>
-                    <el-button type='text' class='btn-danger'>
+                    <el-button text={true}>编辑</el-button>
+                    <el-button text={true}>人员设置</el-button>
+                    <el-button text={true} type='danger'>
                         删除
                     </el-button>
                 </>

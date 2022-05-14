@@ -35,35 +35,6 @@
 内部会将配置的 authCode 传递给 uums 平台的 自定义指令 `v-auth` 实现按钮鉴权
 :::
 
-```ts
-/**
- * 按钮组的配置
- */
-export interface BtnProps {
-    /**
-     * 按钮名称
-     */
-    label: string
-    /**
-     * 授权标识
-     */
-    authCode?: string
-    /**
-     * 按钮的类型，同 Element Button
-     */
-    type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
-    /**
-     * 禁用
-     */
-    disabled?: boolean
-    /**
-     * 事件
-     */
-    onClick?: () => void
-}
-
-```
-
 ## 消除机构图标
 
 <demo-block>
@@ -137,7 +108,7 @@ export interface BtnProps {
 data | 树数据 | TreeData[] | []
 mode | 树类型 | 'default' \| 'other' | 'default'
 defaultProps | 配置树的 props | object | {children: 'children', label: 'name' }
-btns | 扩展按钮配置数组 | BtnProps[] | []
+btns | 扩展按钮配置数组 | [BtnProps](./ButtonGroup.md)[] | []
 showBtnArea | 是否显示上方按钮区域 | boolean | true
 filterParentCheckedKeysFlag | 过滤传递的默认勾选的 key 的数组中的父节点 | boolean | false
 hideSearch | 隐藏搜索框 | boolean | false

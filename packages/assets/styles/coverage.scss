@@ -3,7 +3,7 @@
     padding: 0 var(--jn-ve-g-btn-padding-lr) !important;
     font-size: var(--jn-ve-g-base-font-size-s) !important;
 
-    &:not(.el-button--text, .is-disabled) {
+    &:not(.is-text, .is-disabled, .el-button--text) {
         &:focus {
             background-color: var(--el-button-bg-color);
             border: var(--el-border);

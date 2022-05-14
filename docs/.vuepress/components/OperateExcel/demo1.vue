@@ -51,7 +51,7 @@ const tableColumns = reactive<TableColumnProps[]>([
                 <>
                     {row.edit ? (
                         <el-button
-                            type='text'
+                            text={true}
                             onClick={() => {
                                 row.edit = false
                             }}>
@@ -59,15 +59,15 @@ const tableColumns = reactive<TableColumnProps[]>([
                         </el-button>
                     ) : (
                         <el-button
-                            type='text'
+                            text={true}
                             onClick={() => {
                                 row.edit = true
                             }}>
                             编辑
                         </el-button>
                     )}
-                    <el-button type='text'>人员设置</el-button>
-                    <el-button type='text' class='btn-danger'>
+                    <el-button text={true}>人员设置</el-button>
+                    <el-button text={true} class='btn-danger'>
                         删除
                     </el-button>
                 </>

@@ -11,6 +11,9 @@
     <div class="btn-box">
         加载：<g-button-group :btns="loadingBtns" />
     </div>
+    <div class="btn-box">
+        文本：<g-button-group :btns="textBtns" />
+    </div>
 </template>
 
 <script lang="ts">
@@ -51,10 +54,6 @@ const btnsNomal: BtnProps[] = [
     {
         label: 'default',
         type: 'default'
-    },
-    {
-        label: '文本',
-        type: 'text'
     },
     {
         label: '自定义样式',
@@ -147,6 +146,51 @@ const loadingBtns: BtnProps[] = [
         loading() {
             return isLoading.value
         }
+    }
+]
+
+const textBtns: BtnProps[] = [
+    {
+        label: 'primary',
+        type: 'primary',
+        text: true,
+        bg: true
+    },
+    {
+        label: 'success',
+        type: 'success',
+        text: true
+    },
+    {
+        label: 'warning',
+        type: 'warning',
+        text: true,
+        bg: true
+    },
+    {
+        label: 'danger',
+        type: 'danger',
+        text: true
+    },
+    {
+        label: 'info',
+        type: 'info',
+        text: true,
+        bg: true
+    },
+    {
+        label: 'default',
+        type: 'default',
+        text: true
+    },
+    {
+        label: '自定义样式',
+        type: 'default',
+        text: true,
+        style: {
+            color: 'green'
+        },
+        bg: true
     }
 ]
 </script>

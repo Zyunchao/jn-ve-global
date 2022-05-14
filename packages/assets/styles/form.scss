@@ -1,6 +1,6 @@
 :root {
     --jn-ve-g-form-font-size: var(--jn-ve-g-base-font-size-m);
-    --jn-ve-g-form-item-height: 38px;
+    --jn-ve-g-form-item-height: 36px;
     --jn-ve-g-form-item-line-height: 1;
     --jn-ve-g-form-item-margin-b: 18px;
     --jn-ve-g-form-disabled-color: #595959;
@@ -17,7 +17,6 @@
 .el-input-group__append {
     min-height: var(--jn-ve-g-form-item-height) !important;
     line-height: var(--jn-ve-g-form-item-line-height) !important;
-    // line-height: 100%;
 }
 
 // switch & checkbo & radio 的 label
@@ -40,4 +39,12 @@
 .el-picker-panel {
     --jn-ve-g-form-item-height: 32px;
     --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
+}
+
+.el-range-editor.el-input__inner {
+    --jn-ve-g-form-item-height: 38px;
+}
+
+input::placeholder {
+    font-size: 15px !important;
 }

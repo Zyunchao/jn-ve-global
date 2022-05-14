@@ -52,7 +52,7 @@
                             size="small"
                             v-bind="localControlProps"
                         />
-                        <el-button type="text" size="small" @click="control2Text">
+                        <el-button text size="small" @click="control2Text">
                             确定
                         </el-button>
                     </div>

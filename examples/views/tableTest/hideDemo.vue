@@ -39,41 +39,6 @@ const tableColumns = reactive<TableColumnProps[]>([
         prop: 'createTime',
         label: '创建时间'
     }
-    // {
-    //     prop: 'opertion',
-    //     label: '操作',
-    //     width: 300,
-    //     fixed: 'right',
-    //     render(row) {
-    //         return (
-    //             <>
-    //                 <el-button
-    //                     type='text'
-    //                     onClick={() => {
-    //                         tableColumns.find((column) => column.prop === 'instituName').hide =
-    //                             false
-
-    //                         nextTick(() => {
-    //                             tableConfig.instance.doLayout()
-    //                         })
-    //                     }}>
-    //                     显示
-    //                 </el-button>
-    //                 <el-button
-    //                     type='text'
-    //                     class='btn-danger'
-    //                     onClick={() => {
-    //                         tableColumns.find((column) => column.prop === 'instituName').hide = true
-    //                         nextTick(() => {
-    //                             tableConfig.instance.doLayout()
-    //                         })
-    //                     }}>
-    //                     隐藏
-    //                 </el-button>
-    //             </>
-    //         )
-    //     }
-    // }
 ])
 
 const tableConfig = reactive<TableConfig<any>>({

@@ -415,7 +415,7 @@ onChange | 分页变化 | (currentPage?: number, currentPageSize?: number) => vo
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
-btns | 按钮组配置 | TableRowBtnProps\<TBD\>[] | []
+btns | 按钮组配置 | [TableRowBtnProps](./ButtonGroup.md)\<TBD\>[] | []
 maxCount | 最多显示几个按钮，超出部分将于更多操作内显示 | number | --
 width | 操作列的宽度 | number | 200
 hide | 是否隐藏按钮列 | boolean | false
@@ -424,61 +424,6 @@ label | 列标题 | string | '操作'
 align | 对齐方式 |  'left' \| 'center' \| 'right' | 'right'
 
 ```ts
-interface BtnProps {
-    /**
-     * 按钮名称
-     */
-    label: string
-    /**
-     * 授权标识
-     */
-    authCode?: string
-    /**
-     * 按钮的类型，同 Element Button
-     */
-    type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
-    /**
-     * 禁用
-     */
-    disabled?: boolean | ((row?: any, index?: number) => boolean)
-    /**
-     * 事件
-     */
-    onClick?: () => void
-    /**
-     * 按钮尺寸
-     */
-    size?: 'large' | 'default' | 'small'
-    /**
-     * 加载中
-     */
-    loading?: boolean
-    /**
-     * 是否为朴素按钮
-     */
-    plain?: boolean
-    /**
-     * 是否为圆角按钮
-     */
-    round?: boolean
-    /**
-     * 是否为圆形按钮
-     */
-    circle?: boolean
-    /**
-     * 是否隐藏
-     */
-    hide?: boolean | ((row?: any, index?: number) => boolean)
-    /**
-     * 类名
-     */
-    class?: string
-    /**
-     * 具体的行内样式
-     */
-    style?: { [k: string]: any } | string
-}
-
 interface TableRowBtnProps<TBD> extends BtnProps {
     /**
      * 按钮点击事件

@@ -120,8 +120,8 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
         <el-button
             {...btnSourceProps}
             disabled={disabled}
-            type='text'
             v-auth={btn.authCode}
+            text={true}
             onClick={() => {
                 btn.onClick?.(row, index)
             }}>
@@ -131,7 +131,7 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
         <el-button
             {...btnSourceProps}
             disabled={disabled}
-            type='text'
+            text={true}
             onClick={() => {
                 btn.onClick?.(row, index)
             }}>

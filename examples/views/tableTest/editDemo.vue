@@ -37,7 +37,7 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
         console.groupEnd()
     },
     rowBtnConfig: {
-        width: 160,
+        width: 460,
         btns: [
             {
                 label: '编辑',
@@ -60,7 +60,28 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
                 }
             },
             {
-                label: '删除'
+                label: '删除2',
+                type: 'danger'
+            },
+            {
+                label: '删除3',
+                type: 'primary'
+            },
+            {
+                label: '删除4',
+                type: 'success'
+            },
+            {
+                label: '删除5',
+                type: 'warning'
+            },
+            {
+                label: '删除6',
+                type: 'info'
+            },
+            {
+                label: '删除7',
+                type: 'default'
             }
         ]
     }

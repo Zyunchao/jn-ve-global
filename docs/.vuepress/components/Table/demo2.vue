@@ -40,18 +40,18 @@ const columns = reactive<TableColumnProps[]>([
             return (
                 <>
                     <el-button
-                        type='text'
+                        text={true}
                         onClick={() => console.log(`%c 编辑 row == `, 'color: #e6a23c;', row)}>
                         编辑
                     </el-button>
                     <el-button
-                        type='text'
+                        text={true}
                         onClick={() => console.log(`%c 详情 row == `, 'color: #e6a23c;', row)}>
                         详情
                     </el-button>
                     <el-button
-                        type='text'
-                        class='btn-danger'
+                        text={true}
+                        type='danger'
                         onClick={() => console.log(`%c 删除 row == `, 'color: #e6a23c;', row)}>
                         删除
                     </el-button>

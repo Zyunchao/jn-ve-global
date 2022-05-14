@@ -167,9 +167,7 @@ const wrapperClass = (type: 'add' | 'remove') => {
     .control-separator {
         padding: 0 6px;
         color: var(--el-text-color-regular);
-        min-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
-        line-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
-        display: block;
+        margin-top: -2px;
     }
 
     // 控件原始边框

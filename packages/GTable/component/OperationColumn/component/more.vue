@@ -11,7 +11,7 @@
                     'is-visible': dropdownIsVisible
                 }
             ]"
-            type="text"
+            text
         >
             <span>更多操作...</span>
             <!-- <LGIcon icon="el-More" /> -->
@@ -29,7 +29,7 @@
                     <el-button
                         v-if="!btn.authCode"
                         v-bind="getBtnProps(btn)"
-                        type="text"
+                        text
                         @click="handleBtnClick(btn)"
                     >
                         {{ btn.label }}
@@ -40,7 +40,7 @@
                         v-else
                         v-auth="btn.authCode"
                         v-bind="getBtnProps(btn)"
-                        type="text"
+                        text
                         @click="handleBtnClick(btn)"
                     >
                         {{ btn.label }}
