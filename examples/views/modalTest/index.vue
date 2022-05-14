@@ -1,14 +1,6 @@
 <template>
     <div class="examples-base-wrapper">
-        <el-button type="success" @click="drawerShow = true">
-            显示 Drawer
-        </el-button>
-        <el-button type="primary" @click="dialogShow = true">
-            显示 Dialog
-        </el-button>
-        <el-button @click="showMessageBox">
-            Show MessageBox
-        </el-button>
+        <g-button-group :btns="btns" />
     </div>
 
     <g-modal
@@ -17,7 +9,7 @@
         custom-class="abcd"
         width="70%"
         title="评级登记"
-        :btns="btns"
+        :btns="modalBtns"
         type="drawer"
     >
         <FormTest is-component />
@@ -28,10 +20,21 @@
         :show-close="true"
         width="70%"
         title="评级登记"
-        :btns="btns"
+        :btns="modalBtns"
         type="dialog"
     >
         <FormTest is-component />
+    </g-modal>
+
+    <g-modal
+        v-model="baseModuleDialogShow"
+        :show-close="true"
+        width="70%"
+        title="基础模块容器"
+        :btns="modalBtns"
+        type="dialog"
+    >
+        <BaseModuleDemo />
     </g-modal>
 </template>
 
@@ -46,11 +49,13 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { BtnProps } from '@component/index'
 import FormTest from '../formTest/index.vue'
 import { ElMessageBox } from 'element-plus'
+import BaseModuleDemo from './component/index.vue'
 
 const dialogShow = ref<boolean>(false)
 const drawerShow = ref<boolean>(false)
+const baseModuleDialogShow = ref<boolean>(false)
 
-const btns = reactive<BtnProps[]>([
+const modalBtns = reactive<BtnProps[]>([
     {
         label: '提交',
         type: 'primary',
@@ -69,22 +74,42 @@ const btns = reactive<BtnProps[]>([
     }
 ])
 
-watch(
-    () => dialogShow.value,
-    (flag) => {
-        console.log(`%c dialogShow === `, 'color: #67c23a;', flag)
+const btns = reactive<BtnProps[]>([
+    {
+        label: '显示 Drawer',
+        type: 'primary',
+        onClick: () => {
+            drawerShow.value = true
+        }
+    },
+    {
+        label: '显示 Dialog',
+        type: 'primary',
+        onClick: () => {
+            dialogShow.value = true
+        }
+    },
+    {
+        label: '显示 BaseModule Dialog',
+        type: 'success',
+        onClick: () => {
+            baseModuleDialogShow.value = true
+        }
+    },
+    {
+        label: 'Show MessageBox',
+        type: 'primary',
+        onClick: () => {
+            ElMessageBox.confirm('proxy will permanently delete the file. Continue?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            })
+                .then(() => {})
+                .catch(() => {})
+        }
     }
-)
-
-const showMessageBox = () => {
-    ElMessageBox.confirm('proxy will permanently delete the file. Continue?', 'Warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning'
-    })
-        .then(() => {})
-        .catch(() => {})
-}
+])
 </script>
 
 <style lang="scss" scoped></style>

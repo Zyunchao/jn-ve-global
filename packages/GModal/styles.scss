@@ -45,6 +45,10 @@ $--close-btn-font-size: 22px;
     .el-dialog__body {
         padding: 14px $--dialog-base-left-p 14px $--dialog-base-left-p;
         min-height: 100px;
+
+        >.base-module-root {
+            height: 650px;
+        }
     }
 
     .el-dialog__footer {
