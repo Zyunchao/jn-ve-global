@@ -141,7 +141,7 @@
 │   ├── global.d.ts
 │   ├── main.ts
 │   ├── microApp # 微应用运行依赖模块，不同于基座应用，微应用的运行模块做的事情比较多
-│   │   ├── currentMicroTagName.ts # 用来定义当前应用的 micro-app-xx 标签，用来嵌套应用（生产者）的使用
+│   │   ├── currentMicroTagName.ts # 用来定义当前应用的 micro-app-xx 标签，用来嵌套应用（物料提供者）的使用
 │   │   ├── httpInterceptors.ts # 请求拦截处理函数（来自基座应用）
 │   │   ├── lifecycle.ts # 生命周期
 │   │   ├── navTo.ts # 微应用跳转应用的封装方法
@@ -154,7 +154,7 @@
 │   │   └── businessModuleMixin.ts
 │   ├── router # 路由模块，与基座应用差异较大
 │   │   ├── backEnd.ts # 动态路由配置，依赖基座应用
-│   │   ├── common # 公共路由、模糊路由、暴露出的组件路由（生产者）
+│   │   ├── common # 公共路由、模糊路由、暴露出的组件路由（物料提供者）
 │   │   │   ├── blurry.ts
 │   │   │   ├── exposes.ts
 │   │   │   ├── index.ts

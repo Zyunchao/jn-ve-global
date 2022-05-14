@@ -101,9 +101,9 @@ import FirstForm from '@/components/busines/firstForm/index.vue'
 
 ## 远程业务组件
 
-远程业务组件分为生产者，消费者两个
+远程业务组件分为物料提供者，物料使用者两个
 
-### 生产者
+### 物料提供者
 
 1. 在 `/src/components/business` 目录下面新建组件 `firstForm/index.vue`
 
@@ -111,15 +111,15 @@ import FirstForm from '@/components/busines/firstForm/index.vue'
 
 :::tip
 
-所有的生产者，在对外提供物资时，都是通过路由的方式进行提供的
+所有的物料提供者，在对外提供物资时，都是通过路由的方式进行提供的
 
-因为我们作为生产者来说，要提供的物资是确定的，所以我们仅需要注册静态路由即可
+因为我们作为物料提供者来说，要提供的物资是确定的，所以我们仅需要注册静态路由即可
 
 在微应用的路由模块，增加了一个专门配置物资的路由文件，如下
 
 :::
 
-![生产者静态路由.png](/images/realize/生产者静态路由.png)
+![物料提供者静态路由.png](/images/realize/物料提供者静态路由.png)
 
 ```ts
 // /src/router/common/exposes.ts
@@ -146,9 +146,9 @@ const exposesRoutes: Array<RouteRecordRaw> = [
 export default exposesRoutes
 ```
 
-### 消费者
+### 物料使用者
 
-消费者在使用远程组件时，一定要在本地中注册生产者的微应用列表
+物料使用者在使用远程组件时，一定要在本地中注册物料提供者的微应用列表
 
 :::tip
 
