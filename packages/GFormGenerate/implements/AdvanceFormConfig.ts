@@ -1,8 +1,7 @@
-import FormGenerateProps, { FormGenerateItemProps } from '../interface/FormGenerateProps'
 import { isJSON, assignOwnProp, funStr2FuncBody } from '../../utils/utils'
 import _ from 'lodash'
-import FormItemProps, { ControlConfig } from '@component/GForm/interface/FormItemProps'
-import { ExtendRuleItem } from '@component/GForm/interface/FormProps'
+import FormGenerateProps, { FormGenerateItemProps } from '../interface/FormGenerateProps'
+import { FormItemProps, ControlConfig, ExtendRuleItem } from '../../index'
 
 export default class AdvanceFormConfig {
     private formConfigRef: FormGenerateProps
@@ -50,7 +49,6 @@ export default class AdvanceFormConfig {
         const { formItems: formGenerateItems, model, instance, ...formProps } = config
 
         this.mergeFormProps(formProps as FormGenerateProps)
-        this.mappingModelByItems(formGenerateItems)
         this.fillFormItems(formGenerateItems)
         this.setJsonConfig(config)
         return config
@@ -65,40 +63,50 @@ export default class AdvanceFormConfig {
     }
 
     /**
-     * 映射: model， 获取 formItems 的配置，提取 prop 映射成表单的 model
-     * model 未改变引用
-     * @param formGenerateItems 表单 item 的配置
-     */
-    private mappingModelByItems(formGenerateItems: FormGenerateItemProps[]): void {
-        formGenerateItems.forEach((item) => {
-            const key = item.prop
-            this.formConfigRef.model[key] = item.defaultValue || ''
-
-            // 数字选择框特殊处理
-            if (item.controlConfig.type === 'inputNumber') {
-                this.formConfigRef.model[key] = item.defaultValue || 0
-            }
-        })
-    }
-
-    /**
      * 填充: formItems
      *  - 排除 defaultValue
      *  - 控件事件处理
+     *  - 校验规则处理
+     *  - 追加 formItem 的同时, 为数据模型 model 添加字段
+     *      - 如果字段已存在，则不添加，并且不在追加控件
+     *
      * formItems 改变引用
+     * model 保持引用
      * @param formGenerateItems 表单 item 的配置
      */
     private fillFormItems(formGenerateItems: FormGenerateItemProps[]): void {
         this.formConfigRef.formItems = this.formConfigRef.formItems.concat(
-            formGenerateItems.map((item) => {
-                const { defaultValue, ...formItem } = item
+            formGenerateItems
+                .map((item) => {
+                    const key = item.prop
 
-                this.replenishLayout(formItem)
-                this.convertControlConfig(formItem.controlConfig)
-                this.convertRules(formItem)
+                    // 校验是否已存在
+                    if (Object.keys(this.formConfigRef.model).includes(key)) return null
 
-                return formItem
-            })
+                    const { defaultValue, ...formItem } = item
+
+                    /**
+                     * 数据模型添加字段
+                     */
+                    this.formConfigRef.model[key] = defaultValue || ''
+                    // 数字选择框特殊处理
+                    if (item.controlConfig.type === 'inputNumber') {
+                        this.formConfigRef.model[key] = item.defaultValue || 0
+                    }
+
+                    /**
+                     * 处理当前的 formItem
+                     *  - 布局
+                     *  - 事件转换
+                     *  - 校验规则转换
+                     */
+                    this.replenishLayout(formItem)
+                    this.convertControlConfig(formItem.controlConfig)
+                    this.convertRules(formItem)
+
+                    return formItem
+                })
+                .filter((item) => item)
         )
     }
 
@@ -136,18 +144,34 @@ export default class AdvanceFormConfig {
         eventKeys.forEach((key) => {
             if (!props[key] || typeof props[key] !== 'string') return
 
-            // 字符串转函数
+            // 字符串转换函数 或 预定义的事件处理函数
             const _sourceFunStr: string = props[key]
-            const funcBody: Function = funStr2FuncBody(_sourceFunStr)
+            const handleType = _sourceFunStr.substring(0, _sourceFunStr.indexOf('('))
 
-            // 如果是函数
-            if (funcBody) {
-                /**
-                 * 增强
-                 *  - 传递整个表单配置，基于表单配置对象进行联动等操作
-                 */
+            // 传递自定义函数时，只能使用匿名函数（不能使用箭头函数, 内部需要使用 arguments）
+            if (handleType === 'function') {
+                const funcBody: Function = funStr2FuncBody(_sourceFunStr)
+                if (funcBody) {
+                    /**
+                     * 增强
+                     *  - 传递整个表单配置，基于表单配置对象进行联动等操作
+                     */
+                    props[key] = function () {
+                        return funcBody.apply(this, [...arguments, _that.formConfigRef])
+                    }
+                }
+
+                return false
+            } else {
+                const paramsKeys = _sourceFunStr.substring(_sourceFunStr.indexOf('('))
+                const params = paramsKeys
+                    .replace('(', '')
+                    .replace(')', '')
+                    .replace(/\s/g, '')
+                    .split(',')
+
                 props[key] = function () {
-                    return funcBody.apply(this, [...arguments, _that.formConfigRef])
+                    _that.previewEventsHandle[handleType].apply(_that, params)
                 }
             }
         })
@@ -190,5 +214,127 @@ export default class AdvanceFormConfig {
         rule.validator = function () {
             return funcBody.apply(this, [...arguments, _that.formConfigRef.model])
         }
+    }
+
+    public previewEventsHandle = {
+        /**
+         * 加法：所有数相加，结果赋给最后一个 key
+         * 多个字段操作一个字段
+         * @param keys
+         */
+        sum: (...keys: string[]): void => {
+            this.keyIsExist(keys)
+
+            const resKey = keys.splice(keys.length - 1)[0]
+            const resMustNumber = this.keyIsNumber(resKey)
+
+            const res = keys
+                .map((key) => {
+                    const val = Number(this.formConfigRef.model[key])
+                    return _.isNaN(val) ? 0 : val
+                })
+                .reduce((res, num) => {
+                    res += num
+                    return res
+                }, 0)
+
+            this.formConfigRef.model[resKey] = resMustNumber ? res : `${res}`
+        },
+        /**
+         * 减法：第一个数为开始，减去后续的 key，结果赋给最后一个 key
+         * 多个字段操作一个字段
+         * @param keys
+         */
+        sub: (...keys: string[]): void => {
+            this.keyIsExist(keys)
+
+            const resKey = keys.splice(keys.length - 1)[0]
+            const start = Number(this.formConfigRef.model[keys[0]]) || 0
+            const resMustNumber = this.keyIsNumber(resKey)
+
+            const res = keys
+                .filter((item, index) => index > 0)
+                .map((key) => {
+                    const val = Number(this.formConfigRef.model[key])
+                    return _.isNaN(val) ? 0 : val
+                })
+                .reduce((res, num) => {
+                    res -= num
+                    return res
+                }, start)
+
+            this.formConfigRef.model[resKey] = resMustNumber ? res : `${res}`
+        },
+        /**
+         * 乘法
+         * 多个字段操作一个字段
+         * @param keys
+         */
+        mult: (...keys: string[]): void => {
+            this.keyIsExist(keys)
+
+            const resKey = keys.splice(keys.length - 1)[0]
+            const start = Number(this.formConfigRef.model[keys[0]]) || 0
+            const resMustNumber = this.keyIsNumber(resKey)
+
+            const res = keys
+                .filter((item, index) => index > 0)
+                .map((key) => {
+                    const val = Number(this.formConfigRef.model[key])
+                    return _.isNaN(val) ? 0 : val
+                })
+                .reduce((res, num) => {
+                    res *= num
+                    return Number(res)
+                }, start)
+
+            this.formConfigRef.model[resKey] = resMustNumber ? res : `${res}`
+        },
+        /**
+         * 除法
+         * 多个字段操作一个字段
+         * @param keys
+         */
+        division: (...keys: string[]): void => {
+            this.keyIsExist(keys)
+            const resKey = keys.splice(keys.length - 1)[0]
+            const start = Number(this.formConfigRef.model[keys[0]]) || 0
+            const resMustNumber = this.keyIsNumber(resKey)
+
+            const res = keys
+                .filter((item, index) => index > 0)
+                .map((key) => {
+                    const val = Number(this.formConfigRef.model[key])
+                    return _.isNaN(val) ? 0 : val
+                })
+                .reduce((res, num) => {
+                    res /= num
+                    return Number(res)
+                }, start)
+
+            this.formConfigRef.model[resKey] = resMustNumber ? res : `${res}`
+        }
+    }
+
+    /**
+     * 判断目标字段的控件的绑定值是否为 number
+     * @param key
+     * @returns
+     */
+    private keyIsNumber(key: string): boolean {
+        const targetItem = this.formConfigRef.formItems.find((item) => item.prop === key)
+        const numberTypeControls = ['inputNumber']
+        return !!targetItem && numberTypeControls.includes(targetItem.controlConfig.type)
+    }
+
+    /**
+     * 检查每一个 key 是否都存在
+     * @param keys
+     */
+    private keyIsExist(keys: string[]): void {
+        keys.forEach((key) => {
+            if (!Object.keys(this.formConfigRef.model).includes(key))
+                throw new Error(`${key} 在 model 中不存在`)
+        })
     }
 }

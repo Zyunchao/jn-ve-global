@@ -208,13 +208,7 @@ export function isJSON(str: string) {
  */
 export function funStr2FuncBody(str: string) {
     if (typeof str !== 'string') return false
-
-    // 限制只能使用匿名函数（不能使用箭头函数, 内部需要使用 arguments）
-    if (!str.startsWith('function')) {
-        console.log(`%c funStr must 'function' startsWith, but now: ${str}`, 'color: #f56c6c;' )
-        return false
-    }
-
+    
     try {
         return new Function('return ' + str)()
     } catch (e) {

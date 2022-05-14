@@ -14,6 +14,7 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { FormProps, BtnProps, FormGenerateProps } from '@component/index'
 import mockData from './data/mock.json'
 import AdvanceFormConfig from '@component/GFormGenerate/implements/AdvanceFormConfig'
+import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
 
 const formConfigJson = ref<string>('')
 const loadingFlag = ref<boolean>(true)
@@ -31,7 +32,20 @@ const formConfig = reactive<FormProps>({
             label: '体重',
             span: 24,
             controlConfig: {
-                type: 'input'
+                type: 'figureInput',
+                props: {
+                    format: (val) => {
+                        return toThousands(val)
+                    },
+                    onInput() {
+                        advanceFormConfig.previewEventsHandle.division(
+                            'weight',
+                            'name',
+                            'name2',
+                            'sumRes'
+                        )
+                    }
+                }
             }
         },
         {
@@ -51,7 +65,7 @@ const advanceFormConfig = new AdvanceFormConfig({
 
 const btns: BtnProps[] = [
     {
-        label: '追加数据',
+        label: '追加配置数据',
         type: 'default',
         onClick() {
             advanceFormConfig.parseJson(JSON.stringify(mockData))
@@ -83,6 +97,14 @@ const btns: BtnProps[] = [
         type: 'default',
         onClick() {
             formConfig.model['name'] = 'qwer'
+        }
+    },
+    {
+        label: '预设事件处理函数',
+        type: 'default',
+        onClick() {
+            // formConfig.model['name'] = 'qwer'
+            advanceFormConfig.previewEventsHandle.sub('weight', 'name', 'name2', 'sumRes')
         }
     }
 ]
