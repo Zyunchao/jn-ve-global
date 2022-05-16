@@ -8,6 +8,7 @@ import {
     CheckboxControlConfig,
     SelectTreeV2ControlConfig
 } from '../index'
+import { Local } from '../../utils/storage'
 
 // 参数存储字段名称列表
 enum DataFiledName {
@@ -54,13 +55,12 @@ export default ({
     if (!getOptionsUrl) return null
 
     // 获取缓存中的 token
-    // // // const vuexCache = Local.get('vuex')
-    // // // if (!vuexCache) return null
-    // // // // FvnYXf0H66Tbm3ZUG6PgEGCPXHSzFZQPyOwkefeftnWw4aZYxTaqVAfi7auC
-    // // // let Authorization = vuexCache.loginInfo['access_token']
-    // // //     ? `Bearer ${vuexCache.loginInfo['access_token']}`
-    // // //     : 'Bearer FvnYXf0H66Tbm3ZUG6PgEGCPXHSzFZQPyOwkefeftnWw4aZYxTaqVAfi7auC'
-    // // // if (!Authorization) return
+    const vuexCache = Local.get('vuex')
+    if (!vuexCache) return null
+    let Authorization = vuexCache.loginInfo['access_token']
+        ? `Bearer ${vuexCache.loginInfo['access_token']}`
+        : '' // 'Bearer FvnYXf0H66Tbm3ZUG6PgEGCPXHSzFZQPyOwkefeftnWw4aZYxTaqVAfi7auC'
+    if (!Authorization) return
 
     // 通过控件类型，确定存储数据的字段名称
     const dataFieldName = loadOptionsControlTyeps.includes(props.controlConfig.type)
@@ -81,8 +81,7 @@ export default ({
             fetch(url, {
                 method: 'get',
                 headers: {
-                    Authorization:
-                        'Bearer FvnYXf0H66Tbm3ZUG6PgEGCPXHSzFZQPyOwkefeftnWw4aZYxTaqVAfi7auC'
+                    Authorization
                 }
             })
                 .then((e) => e.json())
