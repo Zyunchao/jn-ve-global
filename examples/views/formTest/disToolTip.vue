@@ -2,11 +2,7 @@
     <div class="examples-base-wrapper">
         <div class="box">
             <g-form :config="formConfig" />
-            <el-button
-                type="primary"
-                style="margin-left: 160px; margin-top: 20px"
-                @click="setDisabled"
-            >
+            <el-button type="primary" @click="setDisabled">
                 {{ formConfig.disabled ? '解除禁用' : '禁用' }}
             </el-button>
 
@@ -63,5 +59,6 @@ const addData = () => {
 <style lang="scss" scoped>
 .box {
     width: 800px;
+    padding-top: 100px;
 }
 </style>

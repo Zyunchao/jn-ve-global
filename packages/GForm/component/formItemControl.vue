@@ -261,6 +261,8 @@ import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
 import LGAddress from '../../GAddress/index.vue'
 
+import addInputDisabledTooltip from '../mixins/inputDisabledTooltip'
+
 interface Props {
     /**
      * FormItem 的配置参数
@@ -287,73 +289,16 @@ const emits = defineEmits(['controlFocus', 'controlBlur'])
 const localControlType = computed(() => props.controlConfig.type)
 const localPropRef = ref(props.prop)
 
-/* -------------------- input 禁用时，tooltip 处理 ------------------------------------------------------------------------- */
-const elInputRef = ref(null)
-const inputDisabled = ref<boolean>(null)
-const exceedBoxWidth = ref<boolean>(false)
-
-if (props.controlConfig.type === 'input') {
-    // 观察器的配置（需要观察什么变动）
-    const config: MutationObserverInit = { attributes: true }
-
-    // 当观察到变动时执行的回调函数
-    const callback = function (mutationsList: MutationRecord[], observer: MutationObserver) {
-        for (let mutation of mutationsList) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                setInputDisabled(mutation.target as HTMLElement)
-            }
-        }
-    }
-
-    const setInputDisabled = (dom: HTMLElement) => {
-        const classList = dom.classList
-        // null ===> boolean
-        inputDisabled.value = classList.value.includes('is-disabled')
-    }
-
-    // 创建一个观察器实例并传入回调函数
-    let observer = new MutationObserver(callback)
-
-    onMounted(() => {
-        // 选择需要观察变动的节点
-        const targetNode = elInputRef.value.$el as HTMLElement
-        // 以上述配置开始观察目标节点
-        observer.observe(targetNode, config)
-        // 挂载立即执行一次
-        setInputDisabled(targetNode)
-    })
-
-    onUnmounted(() => {
-        // 卸载，停止观察
-        observer.disconnect()
-        observer = null
-    })
-
-    watchEffect(() => {
-        if (!localPropRef.value) {
-            exceedBoxWidth.value = false
-            return
-        }
-
-        if (!inputDisabled.value) {
-            return
-        }
-
-        const targetDom = elInputRef.value.$el as HTMLElement
-        // 基础字体大小
-        const fontSize = 16
-        // input 的 padding
-        const baseP = 15
-        // input 的宽度
-        const boxWidth = targetDom.offsetWidth
-        // 字符串的长度
-        const contentLength = `${localPropRef.value}`.length
-
-        // 判断内容是否超出 input 的宽度
-        exceedBoxWidth.value = contentLength * fontSize > boxWidth - baseP * 2
-    })
-}
-/* -------------------- input 禁用时，tooltip 处理 ------------------------------------------------------------------------- */
+/**
+ * input 禁用时，tooltip 处理
+ *  - elInputRef：input 控件的 ref
+ *  - inputDisabled：是否禁用
+ *  - exceedBoxWidth：内容是否超出宽度
+ */
+const { elInputRef, inputDisabled, exceedBoxWidth } = addInputDisabledTooltip({
+    props,
+    localPropRef
+})
 
 /**
  * 特殊处理 upload 的 fileList
@@ -371,26 +316,25 @@ const localControlProps = computed(() => {
     }
 
     // 具体控件的差异配置
+    /* eslint-disable indent */
     switch (props.controlConfig!.type) {
-    case 'input':
-    case 'figureInput':
-    case 'infoAutocomplete':
-        controlProps['placeholder'] = controlProps['placeholder']
-            ? controlProps['placeholder']
-            : // : `请输入${props.formItemConfig.label}`
-            `请输入`
-        break
-    case 'select':
-    case 'infoSelect':
-    case 'datePicker':
-    case 'timeSelect':
-    case 'timePicker':
-    case 'dateTimePicker':
-        controlProps['placeholder'] = controlProps['placeholder']
-            ? controlProps['placeholder']
-            : // : `请选择${props.formItemConfig.label}`
-            `请选择`
-        break
+        case 'input':
+        case 'figureInput':
+        case 'infoAutocomplete':
+            controlProps['placeholder'] = controlProps['placeholder']
+                ? controlProps['placeholder']
+                : `请输入`
+            break
+        case 'select':
+        case 'infoSelect':
+        case 'datePicker':
+        case 'timeSelect':
+        case 'timePicker':
+        case 'dateTimePicker':
+            controlProps['placeholder'] = controlProps['placeholder']
+                ? controlProps['placeholder']
+                : `请选择`
+            break
     }
 
     return controlProps
