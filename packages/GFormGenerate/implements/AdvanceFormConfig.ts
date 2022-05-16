@@ -1,7 +1,21 @@
 import { isJSON, assignOwnProp, funStr2FuncBody } from '../../utils/utils'
 import _ from 'lodash'
 import FormGenerateProps, { FormGenerateItemProps } from '../interface/FormGenerateProps'
-import { FormItemProps, ControlConfig, ExtendRuleItem } from '../../index'
+import {
+    FormItemProps,
+    ControlConfig,
+    ExtendRuleItem,
+    SelectControlConfig,
+    CheckboxButtonControlConfig,
+    RadioControlConfig,
+    RadioButtonControlConfig,
+    CheckboxControlConfig,
+    SelectTreeV2ControlConfig
+} from '../../index'
+import {
+    loadOptionsControlTyeps,
+    loadTreeDataControlType
+} from '../../GForm/mixins/getControlOprions'
 
 export default class AdvanceFormConfig {
     private formConfigRef: FormGenerateProps
@@ -98,10 +112,12 @@ export default class AdvanceFormConfig {
                      * 处理当前的 formItem
                      *  - 布局
                      *  - 事件转换
+                     *  - 加载数据的自定义处理函数转换
                      *  - 校验规则转换
                      */
                     this.replenishLayout(formItem)
-                    this.convertControlConfig(formItem.controlConfig)
+                    this.convertControlEvents(formItem.controlConfig)
+                    this.convertControlMapOptionsCb(formItem.controlConfig as any)
                     this.convertRules(formItem)
 
                     return formItem
@@ -132,7 +148,7 @@ export default class AdvanceFormConfig {
      *  - 事件增强（传递当前表单配置）
      * @param controlConfig
      */
-    private convertControlConfig(controlConfig: ControlConfig): void {
+    private convertControlEvents(controlConfig: ControlConfig): void {
         const props = controlConfig.props
         if (!props) return
 
@@ -175,6 +191,51 @@ export default class AdvanceFormConfig {
                 }
             }
         })
+    }
+
+    /**
+     * 转换控件的数据映射自定义方法，适用于
+     *  - select
+     *  - checkBox
+     *  - checkBoxButton
+     *  - radio
+     *  - radioButton
+     *  - selectTreeV2
+     * @param controlConfig
+     */
+    private convertControlMapOptionsCb(
+        controlConfig:
+            | SelectControlConfig
+            | CheckboxControlConfig
+            | CheckboxButtonControlConfig
+            | RadioControlConfig
+            | RadioButtonControlConfig
+            | SelectTreeV2ControlConfig
+    ): void {
+        /**
+         * 1. 不在范围内的组件
+         * 2. 没有 url 的组件
+         * 3. 没有 cb 的组件
+         * 4. cb 不是字符串的
+         * 5. 字符串不以 function 开头的
+         */
+        if (
+            ![...loadOptionsControlTyeps, ...loadTreeDataControlType].includes(
+                controlConfig.type
+            ) ||
+            !controlConfig.getOptionsUrl ||
+            !controlConfig.mapOptionsCb ||
+            !_.isString(controlConfig.mapOptionsCb) ||
+            !controlConfig.mapOptionsCb.startsWith('function')
+        ) {
+            return
+        }
+
+        const funcBody: Function = funStr2FuncBody(controlConfig.mapOptionsCb)
+
+        if (!funcBody) return
+
+        controlConfig.mapOptionsCb = funcBody as any
     }
 
     /**

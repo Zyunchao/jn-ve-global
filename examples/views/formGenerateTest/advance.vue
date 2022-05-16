@@ -11,7 +11,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { FormProps, BtnProps, FormGenerateProps } from '@component/index'
+import { FormProps, BtnProps, FormGenerateProps, RadioControlConfig } from '@component/index'
 import mockData from './data/mock.json'
 import AdvanceFormConfig from '@component/GFormGenerate/implements/AdvanceFormConfig'
 import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
@@ -21,10 +21,13 @@ const loadingFlag = ref<boolean>(true)
 
 const formConfig = reactive<FormProps>({
     instance: null,
-    labelWidth: '100px',
+    labelWidth: '150px',
     model: {
         weight: '',
-        address: []
+        select: '',
+        checkBox: [],
+        radio: '',
+        selectTreeV2: ''
     },
     formItems: [
         {
@@ -38,10 +41,9 @@ const formConfig = reactive<FormProps>({
                         return toThousands(val)
                     },
                     onInput() {
-                        advanceFormConfig.previewEventsHandle.division(
+                        advanceFormConfig.previewEventsHandle.sum(
                             'weight',
                             'name',
-                            'name2',
                             'sumRes'
                         )
                     }
@@ -49,11 +51,152 @@ const formConfig = reactive<FormProps>({
             }
         },
         {
-            prop: 'address',
-            label: '地址',
+            prop: 'select',
+            label: 'Select',
             span: 24,
             controlConfig: {
-                type: 'address'
+                type: 'select',
+                options: [],
+                getOptionsUrl:
+                    '/api/kinso-basic-resources-server/v1/iam-institution-info/listForChanage',
+                mapOptionsCb: (data) => {
+                    return data.map((item) => ({
+                        label: item.name,
+                        value: item.id
+                    }))
+                }
+            }
+        },
+        {
+            prop: 'checkBox',
+            label: 'CheckBox',
+            span: 12,
+            controlConfig: {
+                type: 'checkBox',
+                options: [
+                    {
+                        label: '第一宇宙',
+                        value: '1'
+                    },
+                    {
+                        label: '第六宇宙',
+                        value: '6'
+                    },
+                    {
+                        label: '第七宇宙',
+                        value: '7'
+                    }
+                ],
+                getOptionsUrl:
+                    '/api/kinso-basic-resources-server/v1/iam-institution-info/listForChanage'
+            }
+        },
+        {
+            prop: 'checkBox',
+            label: 'CheckBoxButton',
+            span: 12,
+            controlConfig: {
+                type: 'checkBoxButton',
+                options: [
+                    {
+                        label: '第一宇宙',
+                        value: '1'
+                    },
+                    {
+                        label: '第六宇宙',
+                        value: '6'
+                    },
+                    {
+                        label: '第七宇宙',
+                        value: '7'
+                    }
+                ],
+                getOptionsUrl:
+                    '/api/kinso-basic-resources-server/v1/iam-institution-info/listForChanage'
+            }
+        },
+        {
+            prop: 'radio',
+            label: 'Radio',
+            span: 12,
+            controlConfig: {
+                type: 'radio',
+                options: [
+                    {
+                        label: '第一宇宙',
+                        value: '1'
+                    },
+                    {
+                        label: '第六宇宙',
+                        value: '6'
+                    },
+                    {
+                        label: '第七宇宙',
+                        value: '7'
+                    }
+                ],
+                getOptionsUrl:
+                    '/api/kinso-basic-resources-server/v1/iam-institution-info/listForChanage'
+            }
+        },
+        {
+            prop: 'radio',
+            label: 'RadioButton',
+            span: 12,
+            controlConfig: {
+                type: 'radioButton',
+                options: [
+                    {
+                        label: '第一宇宙',
+                        value: '1'
+                    },
+                    {
+                        label: '第六宇宙',
+                        value: '6'
+                    },
+                    {
+                        label: '第七宇宙',
+                        value: '7'
+                    }
+                ],
+                getOptionsUrl:
+                    '/api/kinso-basic-resources-server/v1/iam-institution-info/listForChanage',
+                mapOptionsCb: (data) => {
+                    return []
+                }
+            }
+        },
+        {
+            prop: 'selectTreeV2',
+            label: 'selectTreeV2',
+            span: 12,
+            controlConfig: {
+                type: 'selectTreeV2',
+                treeData: [
+                    {
+                        id: '1',
+                        label: '第一宇宙',
+                        name: '第一宇宙',
+                        value: '1',
+                        children: []
+                    },
+                    {
+                        id: '6',
+                        label: '第六宇宙',
+                        name: '第六宇宙',
+                        value: '6',
+                        children: []
+                    },
+                    {
+                        id: '7',
+                        label: '第七宇宙',
+                        name: '第七宇宙',
+                        value: '7',
+                        children: []
+                    }
+                ],
+                getOptionsUrl:
+                    '/api/kinso-basic-resources-server/v1/iam-institution-info/institutionChildTreeList'
             }
         }
     ]
@@ -105,6 +248,17 @@ const btns: BtnProps[] = [
         onClick() {
             // formConfig.model['name'] = 'qwer'
             advanceFormConfig.previewEventsHandle.sub('weight', 'name', 'name2', 'sumRes')
+        }
+    },
+    {
+        label: '改变请求地址',
+        type: 'default',
+        onClick() {
+            ;(
+                formConfig.formItems.find((item) => item.prop === 'radio')
+                    .controlConfig as RadioControlConfig
+            ).getOptionsUrl =
+                '/api/kinso-basic-resources-server/v1/iam-institution-info/institutionChildTreeList'
         }
     }
 ]

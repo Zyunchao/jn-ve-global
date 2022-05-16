@@ -75,6 +75,15 @@ export interface RadioControlConfig {
     type: 'radio'
     options: RadioOptionProps[]
     props?: RadioGroupProps
+    /**
+     * 获取待选项列表资源的 url
+     */
+    getOptionsUrl?: string
+    /**
+     * 自定义处理映射源数据，会在请求回来后调用
+     * 回调接收请求回来的源数据，需要进行数据的映射
+     */
+    mapOptionsCb?: (data: Array<any>) => RadioOptionProps[]
 }
 
 /**
@@ -84,4 +93,13 @@ export interface RadioButtonControlConfig {
     type: 'radioButton'
     options: RadioButtonOptionProps[]
     props?: RadioGroupProps
+    /**
+     * 获取待选项列表资源的 url
+     */
+    getOptionsUrl?: string
+    /**
+     * 自定义处理映射源数据，会在请求回来后调用
+     * 回调接收请求回来的源数据，需要进行数据的映射
+     */
+    mapOptionsCb?: (data: Array<any>) => RadioButtonOptionProps[]
 }

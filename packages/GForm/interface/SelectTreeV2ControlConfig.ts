@@ -41,4 +41,13 @@ export default interface SelectTreeV2ControlConfig {
     type: 'selectTreeV2'
     treeData: TreeData | TreeData[]
     props?: TreeConfig & SelectProps & SelectEvents & SelectTreeV2Props
+    /**
+     * 获取待选项列表资源的 url
+     */
+    getOptionsUrl?: string
+    /**
+     * 自定义处理映射源数据，会在请求回来后调用
+     * 回调接收请求回来的源数据，需要进行数据的映射
+     */
+    mapOptionsCb?: (data: Array<any>) => TreeData | TreeData[]
 }

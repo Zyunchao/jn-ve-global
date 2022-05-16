@@ -28,7 +28,7 @@ export interface SelectProps {
      */
     collapseTags?: boolean
     /**
-     * 当鼠标悬停于折叠标签的文本时，是否显示所有选中的标签。 
+     * 当鼠标悬停于折叠标签的文本时，是否显示所有选中的标签。
      * 要使用此属性，collapse-tags属性必须设定为 true
      * default: false
      */
@@ -159,7 +159,25 @@ export interface SelectOptionProps {
 
 export default interface SelectControlConfig {
     type: 'select'
+    /**
+     * 下拉框待选项
+     */
     options: SelectOptionProps[]
+    /**
+     * 获取待选项列表资源的 url
+     */
+    getOptionsUrl?: string
+    /**
+     * 自定义处理映射源数据，会在请求回来后调用
+     * 回调接收请求回来的源数据，需要进行数据的映射
+     */
+    mapOptionsCb?: (data: Array<any>) => SelectOptionProps[]
+    /**
+     * 自定义的 option 的 render
+     */
     optionRender?: (option: any) => JSX.Element | VNode | string | number | HTMLElement
+    /**
+     * 其他一些下拉框的配置
+     */
     props?: SelectProps & SelectEvents
 }

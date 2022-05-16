@@ -1,6 +1,6 @@
 {
     "labelPosition": "right",
-    "labelWidth": "120px",
+    "labelWidth": "150px",
     "formItems": [
         {
             "prop": "name",
@@ -9,7 +9,9 @@
             "defaultValue": "贝吉塔",
             "controlConfig": {
                 "type": "input",
-                "props": {}
+                "props": {
+                    "onInput": "sum(weight, name, sumRes)"
+                }
             }
         },
         {
@@ -30,14 +32,16 @@
             "prop": "sex1",
             "label": "Select",
             "span": 12,
-            "defaultValue": "m",
+            "defaultValue": "1468176258585026561",
             "controlConfig": {
                 "type": "select",
                 "options": [
                     { "label": "男", "value": "m" },
                     { "label": "女", "value": "f" },
                     { "label": "中", "value": "z" }
-                ]
+                ],
+                "getOptionsUrl": "/api/kinso-basic-resources-server/v1/iam-institution-info/listForChanage",
+                "mapOptionsCb": "function(data) { return data.map((item) => ({label: item.name,value: item.id }))}"
             }
         },
         {

@@ -262,6 +262,7 @@ import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
 import LGAddress from '../../GAddress/index.vue'
 
 import addInputDisabledTooltip from '../mixins/inputDisabledTooltip'
+import getControlOprions from '../mixins/getControlOprions'
 
 interface Props {
     /**
@@ -299,6 +300,11 @@ const { elInputRef, inputDisabled, exceedBoxWidth } = addInputDisabledTooltip({
     props,
     localPropRef
 })
+
+/**
+ * 控件增强：自动获取控件的待选 options
+ */
+getControlOprions({ props: props as any })
 
 /**
  * 特殊处理 upload 的 fileList
