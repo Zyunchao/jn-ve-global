@@ -20,12 +20,15 @@ import {
 export default class AdvanceFormConfig {
     private formConfigRef: FormGenerateProps
     private jsonConfig: FormGenerateProps
+    private getOptionsPrefix: string = ''
 
     constructor(params: {
         formConfigRef: FormGenerateProps
         jsonConfig?: string | FormGenerateProps | object
+        getOptionsPrefix?: string
     }) {
         this.formConfigRef = params.formConfigRef
+        this.getOptionsPrefix = params.getOptionsPrefix
 
         // 如果初始化时有值，就进行解析、填充
         if (params.jsonConfig) {
@@ -194,7 +197,7 @@ export default class AdvanceFormConfig {
     }
 
     /**
-     * 转换控件的数据映射自定义方法，适用于
+     * 转换：控件的数据映射自定义方法，适用于
      *  - select
      *  - checkBox
      *  - checkBoxButton
@@ -231,10 +234,18 @@ export default class AdvanceFormConfig {
             return
         }
 
+        // 拼接传递的代理 prefix
+        if (this.getOptionsPrefix) {
+            controlConfig.getOptionsUrl = controlConfig.getOptionsUrl.startsWith(
+                this.getOptionsPrefix
+            )
+                ? controlConfig.getOptionsUrl
+                : `${this.getOptionsPrefix}/${controlConfig.getOptionsUrl}`
+        }
+
+        // 转换自定义处理方法
         const funcBody: Function = funStr2FuncBody(controlConfig.mapOptionsCb)
-
         if (!funcBody) return
-
         controlConfig.mapOptionsCb = funcBody as any
     }
 
