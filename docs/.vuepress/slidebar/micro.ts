@@ -137,6 +137,10 @@ export default [
                         link: '/micro/moduleDetail/componentPractical.md'
                     }
                 ]
+            },
+            {
+                text: '指令',
+                link: '/micro/moduleDetail/directives.md'
             }
         ]
     },
