@@ -28,9 +28,29 @@
 
 </demo-block>
 
+## 扩展类型
+
+定制化的样式， `type` 传递 `big-card`
+
+<demo-block>
+
+<Tabs-demo2 />
+
+<template #code>
+
+@[code](@demoroot/Tabs/demo2.vue)
+
+</template>
+
+</demo-block>
+
 ## GTabs Attributes
 
-当前组件上的所有 attrs，都会通过 `v-bind="$attrs"` 传递到 `<el-tabs>` 内部，故可直接参考 [Element Tabs Attributes](https://element-plus.gitee.io/#/zh-CN/component/tabs#tabs-attributes)
+[Element Tabs Attributes](https://element-plus.gitee.io/zh-CN/component/tabs.html#tabs-%E5%B1%9E%E6%80%A7)
+
+参数 | 说明 | 类型 | 默认值
+-----|-----|-----|-----
+type | tab 类型 | card \| border-card \| big-card \| '' | ''
 
 ## Tab-pane Attributes
 

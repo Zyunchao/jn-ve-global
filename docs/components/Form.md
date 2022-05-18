@@ -269,6 +269,124 @@ interface ExtendRuleItem extends RuleItem {
 
 </demo-block>
 
+### 待选列表自动填充
+
+:::tip 适用于 2.1.0+
+:::
+
+在以往的开发中，我们在操作一个拥有待选列表的控件（如：下拉框、单多选框、下拉树）时，我们需要请求接口，根据接口返回的数据，映射成对应的待选列表，然后再经过查找、赋值，才能回填到控件中，如下
+
+![待选列表](@imgs/realize/待选列表回填.png)
+
+现在，为一些包含带有待选列表的控件，提供了通过配置一个请求地址的方式，实现自动请求、填充、更新的功能
+
+目前已受支持的组件：
+
+* select
+* checkBox
+* checkBoxButton
+* radio
+* radioButton
+* selectTreeV2
+
+:::tip
+
+一个功能组件，应该尽量与业务保持平行，当前的功能属于与业务发生了交叉点，在请求接口的时候，需要携带登录 token，获取的 token 是获取的 vuex 持久化中的 token
+
+如果没有 token，功能将不生效
+
+需要注意的是，在填写请求地址的时候，开发阶段会使用代理，因此需要配置请求代理的前缀，而生产阶段是不需要的，因此需要引用 `api` 模块中配置的 prefix，以保证代理前缀的正确配置（必须）
+
+:::
+
+因为当前组件和业务请求挂钩，各位看到的文档是部署在 gitlub 中的，无法与业务接口进行交互，因此这里仅贴出样例代码
+
+```vue
+<template>
+    <g-form :config="formConfig" />
+    <g-button-group :btns="btns" />
+</template>
+
+<script lang="ts">
+export default {
+    name: 'FormGenerateAdvanceTest'
+}
+</script>
+
+<script lang="ts" setup>
+import { reactive } from 'vue'
+import { FormProps, BtnProps, RadioControlConfig } from 'jn-ve-global/packages'
+import prefix from '@/api/prefix'
+
+console.log(`%c prefix === `, 'color: #e6a23c;', prefix)
+
+const formConfig = reactive<FormProps>({
+    instance: null,
+    labelWidth: '150px',
+    model: {
+        select: '',
+        checkBox: []
+    },
+    formItems: [
+        {
+            prop: 'select',
+            label: 'Select',
+            span: 24,
+            controlConfig: {
+                type: 'select',
+                options: [],
+                getOptionsUrl: `${prefix}/kinso-basic-resources-server/v1/iam-institution-info/listForChanage`,
+                mapOptionsCb: (data) => {
+                    return data.map((item) => ({
+                        label: item.name,
+                        value: item.id
+                    }))
+                }
+            }
+        },
+        {
+            prop: 'checkBox',
+            label: 'CheckBox',
+            span: 24,
+            controlConfig: {
+                type: 'checkBox',
+                options: [],
+                getOptionsUrl: `${prefix}/kinso-basic-resources-server/v1/iam-institution-info/listForChanage`
+            }
+        }
+    ]
+})
+
+const btns: BtnProps[] = [
+    {
+        label: '获取数据',
+        type: 'default',
+        onClick() {
+            console.log(`%c model === `, 'color: #67c23a;', formConfig.model)
+        }
+    },
+    {
+        label: '改变请求地址',
+        type: 'default',
+        onClick() {
+            ;(
+                formConfig.formItems.find((item) => item.prop === 'checkBox')
+                    .controlConfig as RadioControlConfig
+            ).getOptionsUrl = `${prefix}/kinso-basic-resources-server/v1/iam-institution-info/institutionChildTreeList`
+        }
+    }
+]
+</script>
+
+<style lang="scss" scoped></style>
+```
+
+:::tip
+
+接口请求回来的数据，默认会以 id 作为 value，name 作为 label 映射成待选数据，如果需要自定义映射待选列表，需要传递 `mapOptionsCb` 回调，该回调会接收请求回来的数据作为参数，需要返回一个映射完数组
+
+:::
+
 ## GForm :config 配置列表
 
 ### Form Attributes
@@ -316,7 +434,10 @@ controlConfigs| 控件组（一个 item 多个控件）| ExtendControlConfig[] |
 -----|-----|-----|-----
 type | 控件类型 | string | --
 options | 待选列表 | array | --
-props | 具体的控件的配置对象 | {} | --
+props | 具体的控件的配置对象，需要参考对应 Element 的组件的属性，短横线转小驼峰传递到 props 中 | {} | --
+treeData | 下拉树的待选数据列表，是一个树形数据 | [] | --
+getOptionsUrl | 获取待选项列表资源的 url | string | --
+mapOptionsCb | 自定义处理映射源数据，会在请求回来后调用 | (data: Array\<any\>) => TreeData \| TreeData[] | --
 
 ### ExtendControlConfig
 

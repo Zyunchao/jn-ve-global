@@ -1,5 +1,10 @@
 <template>
-    <el-tabs v-bind="$attrs" class="g-tabs" @tab-click="tabChange">
+    <el-tabs
+        v-bind="$attrs"
+        :class="['g-tabs', `custom-${type}`]"
+        :type="localType"
+        @tab-click="tabChange"
+    >
         <el-tab-pane v-for="item in list" :key="item.value" :name="item.value">
             <template #label>
                 <span class="tabs-item-label">{{ item.label }}</span>
@@ -18,20 +23,27 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { useSlots } from 'vue'
+import { computed, useSlots } from 'vue'
 import { TabPaneProps } from './index'
 
 const props = withDefaults(
     defineProps<{
         list: TabPaneProps[]
+        type?: 'card' | 'border-card' | 'big-card' | ''
     }>(),
     {
-        list: () => []
+        list: () => [],
+        type: ''
     }
 )
 
 const emits = defineEmits(['tabChange'])
 const slots = useSlots()
+
+const localType = computed<string>(() => {
+    if (props.type === 'big-card') return 'card'
+    return props.type
+})
 
 const tabChange = (index) => {
     emits('tabChange', index)
@@ -76,6 +88,41 @@ const tabChange = (index) => {
 
     :deep(.el-tabs__content) {
         display: none;
+    }
+
+    &.el-tabs--card.custom-big-card {
+        --jn-ve-g-tabs-item-base-height: 62px;
+        --jn-ve-g-tabs-item-font-size: 18px;
+
+        border-radius: 6px 6px 0 0;
+        overflow: hidden;
+
+        :deep(.el-tabs__header) {
+            border: none;
+            background-color: #f4fbff;
+
+            &,
+            .el-tabs__nav,
+            .el-tabs__item {
+                border: none;
+            }
+
+            .el-tabs__item {
+                padding: 0 !important;
+
+                .tabs-item-label {
+                    padding: 0 44px !important;
+                }
+
+                &:not(.is-active) {
+                    color: #4e5966;
+                }
+
+                &.is-active {
+                    background-color: #fff;
+                }
+            }
+        }
     }
 }
 
