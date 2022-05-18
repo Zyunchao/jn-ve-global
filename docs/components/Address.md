@@ -41,3 +41,19 @@
 </template>
 
 </demo-block>
+
+## 隐藏详细地址栏
+
+控件可以隐藏详细地址填写栏，为组件添加 `hideDetail` 属性
+
+<demo-block>
+
+<Address-hideDetail />
+
+<template #code>
+
+@[code](@demoroot/Address/hideDetail.vue)
+
+</template>
+
+</demo-block>

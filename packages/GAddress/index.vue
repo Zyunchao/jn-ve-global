@@ -1,5 +1,5 @@
 <template>
-    <div class="g-address">
+    <div :class="['g-address', { 'is-hide-detail': hideDetail }]">
         <el-cascader
             v-bind="attrs"
             v-model="selectedRegion"
@@ -7,7 +7,7 @@
             :options="regionData"
             :props="cascaderProps"
         />
-        <el-input v-model.trim="detailAddress" placeholder="详细地址" />
+        <el-input v-if="!hideDetail" v-model.trim="detailAddress" placeholder="详细地址" />
     </div>
 </template>
 
@@ -24,9 +24,11 @@ import regionData from './data/region.json'
 const props = withDefaults(
     defineProps<{
         modelValue?: Array<any>
+        hideDetail?: boolean
     }>(),
     {
-        modelValue: () => []
+        modelValue: () => [],
+        hideDetail: false
     }
 )
 
@@ -46,7 +48,10 @@ const selectedRegion = computed<string[]>({
             ? props.modelValue[0]
             : [],
     set: (val) => {
-        emits('update:modelValue', [toRaw(val), detailAddress.value])
+        emits(
+            'update:modelValue',
+            !props.hideDetail ? [toRaw(val), detailAddress.value] : toRaw(val)
+        )
     }
 })
 
@@ -74,6 +79,12 @@ const detailAddress = computed<string>({
 
     > .el-input {
         width: 59%;
+    }
+
+    &.is-hide-detail {
+        :deep(.el-cascader) {
+            width: 100%;
+        }
     }
 }
 </style>

@@ -9,6 +9,10 @@ export interface AddressProps {
      * '/'
      */
     separator?: string
+    /**
+     * 是否隐藏详细地址
+     */
+    hideDetail?: boolean
 }
 
 export interface AddressCascaderEvents {
