@@ -4,6 +4,7 @@
     --jn-ve-g-form-item-line-height: 1;
     --jn-ve-g-form-item-margin-b: 18px;
     --jn-ve-g-form-disabled-color: #595959;
+    --jn-ve-input-placeholder-font-size: 15px;
 }
 
 
@@ -49,7 +50,7 @@
 }
 
 input::placeholder {
-    font-size: 15px !important;
+    font-size: var(--jn-ve-input-placeholder-font-size) !important;
 }
 
 .el-tree-node__content {

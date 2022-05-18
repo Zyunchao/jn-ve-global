@@ -153,6 +153,18 @@ export default () => {
             render(row) {
                 return toThousands(row.money)
             }
+        },
+        {
+            prop: 'address',
+            label: '地址-Address',
+            editable: true,
+            openSC: true,
+            controlConfig: {
+                type: 'address',
+                props: {
+                    hideDetail: false
+                }
+            }
         }
         // {
         //     prop: 'radio',

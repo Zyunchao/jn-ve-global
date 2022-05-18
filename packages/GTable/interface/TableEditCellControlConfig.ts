@@ -16,7 +16,8 @@ import {
     InfoSelectControlConfig,
     InfoSelectAllControlConfig,
     InfoAutocompleteControlConfig,
-    SelectTreeV2ControlConfig
+    SelectTreeV2ControlConfig,
+    AddressControlConfig
 } from '../../GForm'
 
 type TableEditCellControlConfig =
@@ -38,5 +39,6 @@ type TableEditCellControlConfig =
     | InfoSelectAllControlConfig
     | InfoAutocompleteControlConfig
     | SelectTreeV2ControlConfig
+    | AddressControlConfig
 
 export default TableEditCellControlConfig

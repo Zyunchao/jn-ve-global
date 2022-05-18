@@ -24,8 +24,9 @@
 
     // 单元格内的控件盒子
     :deep(.control) {
+        --jn-ve-input-placeholder-font-size: 1em;
+
         @include control-style;
         @include error-msg;
     }
 }
-

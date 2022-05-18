@@ -22,7 +22,8 @@ export default [
         'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
         'infoSelect': '',
         'infoSelectAll': '',
-        'infoAutocomplete': ''
+        'infoAutocomplete': '',
+        'address': [[], '']
     },
     {
         'id': '2',
@@ -45,7 +46,8 @@ export default [
         'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
         'infoSelect': '',
         'infoSelectAll': '',
-        'infoAutocomplete': ''
+        'infoAutocomplete': '',
+        'address': [[], '']
     },
     {
         'id': '3',
@@ -68,7 +70,8 @@ export default [
         'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
         'infoSelect': '',
         'infoSelectAll': '',
-        'infoAutocomplete': ''
+        'infoAutocomplete': '',
+        'address': [[], '']
     },
     {
         'id': '4',
@@ -91,7 +94,8 @@ export default [
         'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
         'infoSelect': '',
         'infoSelectAll': '',
-        'infoAutocomplete': ''
+        'infoAutocomplete': '',
+        'address': [[], '']
     },
     {
         'id': '5',
@@ -114,6 +118,7 @@ export default [
         'selectTreeMultiple': '1425374852916895745,1425374958969872386,1425375363846037505',
         'infoSelect': '',
         'infoSelectAll': '',
-        'infoAutocomplete': ''
+        'infoAutocomplete': '',
+        'address': [[], '']
     }
 ]

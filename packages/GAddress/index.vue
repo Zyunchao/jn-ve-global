@@ -6,8 +6,15 @@
             :filterable="true"
             :options="regionData"
             :props="cascaderProps"
+            @visible-change="tableEditHide"
         />
-        <el-input v-if="!hideDetail" v-model.trim="detailAddress" placeholder="详细地址" />
+        <el-input
+            v-if="!hideDetail"
+            v-model.trim="detailAddress"
+            placeholder="详细地址"
+            :size="$attrs.size"
+            @blur="emits('table-edit-hide')"
+        />
     </div>
 </template>
 
@@ -32,7 +39,7 @@ const props = withDefaults(
     }
 )
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'table-edit-hide'])
 const attrs = useAttrs()
 
 const cascaderProps = computed(() => ({
@@ -65,6 +72,11 @@ const detailAddress = computed<string>({
         emits('update:modelValue', [toRaw(selectedRegion.value), val])
     }
 })
+
+// 表格中关闭
+const tableEditHide = (val) => {
+    if (!val && props.hideDetail) emits('table-edit-hide')
+}
 </script>
 
 <style lang="scss" scoped>

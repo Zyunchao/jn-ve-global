@@ -367,6 +367,16 @@
                     />
                 </template>
 
+                <!-- 地址 -->
+                <template v-if="localControlType === 'address'">
+                    <LGAddress
+                        v-model="localPropRef"
+                        v-bind="localControlProps"
+                        size="small"
+                        @table-edit-hide="delayControlToText"
+                    />
+                </template>
+
                 <!-- 错误信息，存在 rules 即创建 -->
                 <template v-if="columnConfig.rules">
                     <el-tooltip
@@ -403,6 +413,7 @@ import LGInfoSelect from '../../../GInfoSA/GInfoSelect/index.vue'
 import LGInfoSelectAll from '../../../GInfoSA/GInfoSelectAll/index.vue'
 import LGInfoAutocomplete from '../../../GInfoSA/GInfoAutocomplete/index.vue'
 import LGSelectTreeV2 from '../../../GSelectTreeV2/index.vue'
+import LGAddress from '../../../GAddress/index.vue'
 import {
     getConstant,
     addEscEvent,
