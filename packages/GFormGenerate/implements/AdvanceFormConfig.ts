@@ -160,6 +160,8 @@ export default class AdvanceFormConfig {
 
         if (!eventKeys.length) return
 
+        const previewEventsKeys = Object.keys(_that.previewEventsHandle)
+
         eventKeys.forEach((key) => {
             if (!props[key] || typeof props[key] !== 'string') return
 
@@ -181,7 +183,7 @@ export default class AdvanceFormConfig {
                 }
 
                 return false
-            } else {
+            } else if (previewEventsKeys.includes(handleType)) {
                 const paramsKeys = _sourceFunStr.substring(_sourceFunStr.indexOf('('))
                 const params = paramsKeys
                     .replace('(', '')
@@ -192,6 +194,8 @@ export default class AdvanceFormConfig {
                 props[key] = function () {
                     _that.previewEventsHandle[handleType].apply(_that, params)
                 }
+            } else {
+                throw new Error(`${_sourceFunStr} 不是自定义函数，也不是预定义函数`)
             }
         })
     }
@@ -273,6 +277,11 @@ export default class AdvanceFormConfig {
 
         // 字符串转函数
         const _sourceValidatorStr: string = rule.validator
+
+        // 保证函数不是箭头函数
+        if (!_sourceValidatorStr.startsWith('function'))
+            throw new Error(`${_sourceValidatorStr} is not function startWith`)
+
         const funcBody: Function = funStr2FuncBody(_sourceValidatorStr)
 
         if (!funcBody) return

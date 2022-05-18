@@ -441,3 +441,116 @@ const formConfig = arguments[arguments.length - 1];
 </template>
 
 </demo-block>
+
+## 在已有表单中追加
+
+在开发中，还会存在在已有表单中追加配置的情况，需要使用写好的 `AdvanceFormConfig` 增强类，对已有 `formConfig` 进行追加操作
+
+追加时的配置优先级如下：
+
+* 追加时，表单的一级配置，json 配置中的优先级要高于本地的 form 配置
+* 数据模型字段，已存在的字段将不会追加
+* 已有的模型字段，formItem 也将不再追加（默认一个字段只能绑定一个 控件）
+
+:::tip
+
+增强后，对于表单的所有操作，还是基于原有的 `formConfig`
+
+:::
+
+<demo-block>
+
+<DynamicForm-FormGenerate-advance />
+
+<template #code>
+
+<CodeGroup>
+  <CodeGroupItem title="示例代码" active>
+
+@[code vue{36-38}](@demoroot/DynamicForm/FormGenerate/advance.vue)
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="demo1.json" >
+
+```json
+{
+    "labelPosition": "right",
+    "labelWidth": "120px",
+    "formItems": [
+        {
+            "prop": "name",
+            "label": "Input",
+            "span": 12,
+            "defaultValue": "Tiga",
+            "controlConfig": { "type": "input" }
+        },
+        {
+            "prop": "sex1",
+            "label": "Select",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "select",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ]
+            }
+        },
+        {
+            "prop": "selectMValue",
+            "label": "SelectMultiple",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "select",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ],
+                "props": {
+                    "multiple": true
+                }
+            }
+        },
+        {
+            "prop": "radio",
+            "label": "Radio",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "radio",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ]
+            }
+        },
+        {
+            "prop": "radio",
+            "label": "Radio",
+            "span": 12,
+            "defaultValue": "m",
+            "controlConfig": {
+                "type": "radioButton",
+                "options": [
+                    { "label": "男", "value": "m" },
+                    { "label": "女", "value": "f" },
+                    { "label": "中", "value": "z" }
+                ]
+            }
+        }
+    ]
+}
+```
+
+  </CodeGroupItem>
+</CodeGroup>
+
+</template>
+
+</demo-block>
