@@ -50,10 +50,15 @@ const cascaderProps = computed(() => ({
 
 // 地区
 const selectedRegion = computed<string[]>({
-    get: () =>
-        Array.isArray(props.modelValue) && props.modelValue[0] !== undefined
+    get: () => {
+        if (props.hideDetail) {
+            return Array.isArray(props.modelValue) ? props.modelValue : []
+        }
+
+        return Array.isArray(props.modelValue) && props.modelValue[0] !== undefined
             ? props.modelValue[0]
-            : [],
+            : []
+    },
     set: (val) => {
         emits(
             'update:modelValue',
