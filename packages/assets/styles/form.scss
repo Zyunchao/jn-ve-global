@@ -1,10 +1,12 @@
 :root {
+    --jn-ve-g-form-color: #606266;
+    --jn-ve-g-form-disabled-color: #595959;
     --jn-ve-g-form-font-size: var(--jn-ve-g-base-font-size-m);
     --jn-ve-g-form-item-height: 36px;
     --jn-ve-g-form-item-line-height: 1;
     --jn-ve-g-form-item-margin-b: 18px;
-    --jn-ve-g-form-disabled-color: #595959;
     --jn-ve-input-placeholder-font-size: 15px;
+    --jn-ve-input-placeholder-font-align: left;
 }
 
 
@@ -51,11 +53,20 @@
 
 input::placeholder {
     font-size: var(--jn-ve-input-placeholder-font-size) !important;
+    text-align: var(--jn-ve-input-placeholder-font-align) !important;
 }
 
 .el-tree-node__content {
     .el-checkbox {
         margin-right: 8px;
+    }
+}
+
+.el-date-editor--daterange {
+    --jn-ve-input-placeholder-font-align: center;
+
+    .el-range-separator {
+        color: var(--el-text-color-regular);
     }
 }
 

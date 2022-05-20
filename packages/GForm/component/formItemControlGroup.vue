@@ -147,6 +147,8 @@ const wrapperClass = (type: 'add' | 'remove') => {
 
 <style lang="scss" scoped>
 .form-item-control-group-wrapper {
+    --jn-ve-input-placeholder-font-align: center;
+
     width: 100%;
     display: flex;
     align-items: center;
@@ -168,6 +170,7 @@ const wrapperClass = (type: 'add' | 'remove') => {
         padding: 0 6px;
         color: var(--el-text-color-regular);
         margin-top: -2px;
+        font-size: 14px;
     }
 
     // 控件原始边框

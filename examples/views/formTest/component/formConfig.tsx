@@ -170,7 +170,8 @@ export default () => {
                         type: 'daterange',
                         unlinkPanels: true,
                         startPlaceholder: '请选择开始日期',
-                        endPlaceholder: '请选择结束日期'
+                        endPlaceholder: '请选择结束日期',
+                        rangeSeparator: '至'
                     }
                 }
             },
@@ -329,7 +330,7 @@ export default () => {
                 controlConfigs: [
                     {
                         type: 'input',
-                        after: '-',
+                        after: '至',
                         props: {
                             placeholder: '自定义 label 需要传递 placeholder'
                         }

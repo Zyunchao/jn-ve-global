@@ -1,3 +1,7 @@
+:root {
+    --el-text-color-regular: var(--jn-ve-g-form-color);
+}
+
 .el-button {
     height: var(--jn-ve-g-btn-height) !important;
     padding: 0 var(--jn-ve-g-btn-padding-lr) !important;
