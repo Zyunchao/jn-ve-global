@@ -1,5 +1,7 @@
 ---
-heroImage: /images/不看文档.jpg
+
+# heroImage: /images/不看文档.jpg
+
 home: true
 heroText: 金农前端文档站
 tagline: 📚 站内包含内部组件库、微前端框架等文档
