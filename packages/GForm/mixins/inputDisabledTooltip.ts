@@ -41,7 +41,7 @@ export default ({ props, localPropRef }) => {
 
         onUnmounted(() => {
             // 卸载，停止观察
-            observer.disconnect()
+            elInputRef.value && observer.disconnect()
             observer = null
         })
 
