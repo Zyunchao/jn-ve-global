@@ -4,8 +4,8 @@
             v-bind="attrs"
             v-model="selectedRegion"
             :filterable="true"
-            :options="regionData"
-            :props="cascaderProps"
+            :options="localRegionData"
+            :props="localCascaderProps"
             @visible-change="tableEditHide"
         />
         <el-input
@@ -13,6 +13,7 @@
             v-model.trim="detailAddress"
             placeholder="详细地址"
             :size="$attrs.size"
+            :disabled="$attrs.disabled"
             @blur="emits('table-edit-hide')"
         />
     </div>
@@ -30,19 +31,34 @@ import regionData from './data/region.json'
 
 const props = withDefaults(
     defineProps<{
+        /**
+         * 双向绑定的数据，两种格式
+         *  - 正常：[string[], string]
+         *  - 隐藏详情输入：string[]
+         */
         modelValue?: Array<any>
+        /**
+         * 是否隐藏详情输入框
+         */
         hideDetail?: boolean
+        /**
+         * 区域待选数据，覆盖本地
+         */
+        options?: Array<any>
     }>(),
     {
         modelValue: () => [],
-        hideDetail: false
+        hideDetail: false,
+        options: null
     }
 )
 
 const emits = defineEmits(['update:modelValue', 'table-edit-hide'])
 const attrs = useAttrs()
 
-const cascaderProps = computed(() => ({
+const localRegionData = computed(() => props.options || regionData)
+
+const localCascaderProps = computed(() => ({
     ...(attrs as any).props,
     value: 'id',
     label: 'name'

@@ -57,3 +57,43 @@
 </template>
 
 </demo-block>
+
+## 替换数据
+
+当前组件的数据，默认已提供好，但存在只需要某些地区的数据的需求，可以传递 `options` 以替换默认的数据
+
+<demo-block>
+
+<Address-demo3 />
+
+<template #code>
+
+@[code](@demoroot/Address/demo3.vue)
+
+</template>
+
+</demo-block>
+
+## 特殊行为
+
+一些特殊行为，遵循 [级联选择 Props](https://element-plus.gitee.io/zh-CN/component/cascader.html#props) 的配置方式
+
+:::tip
+
+如：配置多选、多选、每一级都可选择
+
+需要注意的一点，在单独使用时，在标签上配置的是 `props` ，在 `form` 集成中，需要在组件 props 下，配置 `props` 字段
+
+:::
+
+<demo-block>
+
+<Address-demo4 />
+
+<template #code>
+
+@[code](@demoroot/Address/demo4.vue)
+
+</template>
+
+</demo-block>

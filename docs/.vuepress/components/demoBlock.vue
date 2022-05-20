@@ -48,8 +48,6 @@ import { ref, reactive, getCurrentInstance } from 'vue'
 
 const { proxy } = getCurrentInstance()
 
-console.log(`%c solts == `, 'color: #67c23a;', proxy.$slots.code())
-
 const expanded = ref(false)
 const sourceWrapperRef = ref<HTMLElement>(null)
 const sourceHeight = ref<string>('0px')

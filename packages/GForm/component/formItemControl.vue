@@ -228,7 +228,11 @@
 
         <!-- 地址输入 -->
         <template v-if="localControlType === 'address'">
-            <LGAddress v-model="localPropRef" v-bind="controlConfig.props" />
+            <LGAddress
+                v-model="localPropRef"
+                :options="controlConfig.options"
+                v-bind="controlConfig.props"
+            />
         </template>
     </template>
 </template>
