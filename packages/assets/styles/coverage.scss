@@ -46,3 +46,10 @@
         justify-content: center;
     }
 }
+
+// 覆盖自定义 icon 的自定义颜色
+.svg-icon-custom-color {
+    path {
+        fill: currentColor;
+    }
+}

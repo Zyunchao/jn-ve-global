@@ -2,9 +2,9 @@
     <div class="examples-base-wrapper icon-test-wrapper">
         <p>
             <span>本地 Svg：</span>
-            <g-icon icon="menu-open" />
-            <g-icon icon="home-card-notify-icon" />
-            <g-icon icon="notifiy-icon" />
+            <g-icon icon="tongzhi2" custom-color />
+            <g-icon icon="lan" />
+            <g-icon icon="fenxianyujing" custom-color />
         </p>
         <p>
             <span>Ele icon：</span>
@@ -51,6 +51,10 @@ watch(
         svg.custom-svg-icon {
             font-size: 30px !important;
             margin-right: 10px;
+        }
+
+        svg.custom-svg-icon {
+            color: green;
         }
     }
 

@@ -1,5 +1,7 @@
 # Icon
 
+[[toc]]
+
 在项目框架中，图标的使用方式分为三种
 
 * 使用本地 Svg 文件作为图标
@@ -39,6 +41,42 @@ Svg 由 ui 提供，若需要新增 Svg 图标，请联系张云超
 </template>
 
 </demo-block>
+
+### 自定义颜色 & 原彩显示
+
+:::tip 适用 2.1.4+
+
+:::
+
+在我们自己系统设计的图标中，存在带有特殊样式（不单单是线性），且颜色复杂，并非单纯的单色填充，原先的处理都是对于单色填充进行的处理，在 2.1.4 版本后，<strong style="color: #ff3040; ">本地 svg 图标默认不能够自定义颜色（保持原彩）</strong>
+
+如果图标需要自定义颜色，需要传递 api `customColor: true`
+
+:::warning
+
+一般是一些简单的线性图标，复杂的多色图标，不建议使用自定义颜色
+
+:::
+
+<demo-block>
+
+<Icon-customColor />
+
+<template #code>
+
+@[code](@demoroot/Icon/customColor.vue)
+
+</template>
+
+</demo-block>
+
+:::danger 注意
+
+每个名称的 svg 图标都是在全局只存在一个的，比如一个叫 `wodeshijian` 的图标，他在资源目录中，只存在这一个，当你开启这个叫 `wodeshijian` 的图标的自定义颜色后，他生成的就会是一个可以自定义颜色的图标
+
+至于你要改成什么颜色，取决于你设置的它的父级，或它的颜色
+
+:::
 
 ## Element 提供的 icon
 

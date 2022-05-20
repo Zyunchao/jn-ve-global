@@ -1,5 +1,5 @@
 <template>
-    <svg aria-hidden="true" class="custom-svg-icon" :style="{ color: color }">
+    <svg aria-hidden="true" :class="['custom-svg-icon', { 'custom-color': customColor }]">
         <use :xlink:href="symbolId" />
     </svg>
 </template>
@@ -11,24 +11,40 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 
-const props = defineProps({
-    prefix: {
-        type: String,
-        default: 'custom-icon'
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    color: {
-        type: String,
-        default: '#333'
+const props = withDefaults(
+    defineProps<{
+        name: string
+        /**
+         * 生成的 svg 前缀
+         */
+        prefix?: string
+        /**
+         * 本地 svg 存在固有设计样式颜色，需要保留
+         * 因此，需要主动开启自定义颜色
+         */
+        customColor?: boolean
+    }>(),
+    {
+        name: '',
+        prefix: 'custom-icon',
+        customColor: false
+    }
+)
+
+const symbolId = computed<string>(() => `#${props.prefix}-${props.name}`)
+
+/**
+ * 插件将 svg 抽离，挂载到了 body 下面
+ * 注意：生成的组件是全局统一的，也就是说，只会生成这一个，svg 就这一个
+ */
+onMounted(() => {
+    const currentSymbol = document.querySelector(symbolId.value)
+    if (currentSymbol && props.customColor) {
+        currentSymbol.classList.add('svg-icon-custom-color')
     }
 })
-
-const symbolId = computed(() => `#${props.prefix}-${props.name}`)
 </script>
 <style lang="scss" scoped>
 .custom-svg-icon {
@@ -37,8 +53,4 @@ const symbolId = computed(() => `#${props.prefix}-${props.name}`)
     vertical-align: top;
 }
 </style>
-<style lang="scss">
-svg path {
-    fill: currentColor !important;
-}
-</style>
+<style lang="scss"></style>
