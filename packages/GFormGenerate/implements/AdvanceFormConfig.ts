@@ -2,6 +2,7 @@ import { isJSON, assignOwnProp, funStr2FuncBody } from '../../utils/utils'
 import _ from 'lodash'
 import FormGenerateProps, { FormGenerateItemProps } from '../interface/FormGenerateProps'
 import {
+    FormProps,
     FormItemProps,
     ControlConfig,
     ExtendRuleItem,
@@ -18,12 +19,12 @@ import {
 } from '../../GForm/mixins/getControlOprions'
 
 export default class AdvanceFormConfig {
-    private formConfigRef: FormGenerateProps
+    private formConfigRef: FormProps
     private jsonConfig: FormGenerateProps
     private getOptionsPrefix: string = ''
 
     constructor(params: {
-        formConfigRef: FormGenerateProps
+        formConfigRef: FormProps
         jsonConfig?: string | FormGenerateProps | object
         getOptionsPrefix?: string
     }) {
