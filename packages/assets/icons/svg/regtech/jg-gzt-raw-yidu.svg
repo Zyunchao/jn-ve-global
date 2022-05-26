@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="18px" viewBox="0 0 19 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 15备份 2</title>
+    <defs>
+        <circle id="path-1" cx="6.875" cy="6" r="6"></circle>
+        <filter x="-45.8%" y="-29.2%" width="191.7%" height="191.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.392156863   0 0 0 0 0.611764706   0 0 0 0 0.933333333  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页-监管二处-担保" transform="translate(-1179.000000, -570.000000)">
+            <g id="Group-15备份-2" transform="translate(1182.000000, 571.000000)">
+                <g id="Oval-5-Copy-2">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#649CEE" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <circle id="Oval-6-Copy-2" fill="#FFFFFF" cx="6.875" cy="6" r="3"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

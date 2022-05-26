@@ -40,9 +40,12 @@ export default ({ props, localPropRef }) => {
         })
 
         onUnmounted(() => {
-            // 卸载，停止观察
-            elInputRef.value && observer.disconnect()
-            observer = null
+            // if (elInputRef.value && observer) {
+            // console.log(`%c elInputRef.value =========== `, 'color: #67c23a;', elInputRef.value)
+            //     // 卸载，停止观察
+            //     elInputRef.value && observer.disconnect()
+            //     observer = null
+            // }
         })
 
         watchEffect(() => {
