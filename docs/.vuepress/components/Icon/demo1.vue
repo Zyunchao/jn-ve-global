@@ -1,6 +1,6 @@
 <template>
     <div class="project">
-        <h2>监管项目：</h2>
+        <h2>监管项目（共{{ regtechIcons.length }}个）：</h2>
         <div class="icon-wrapper">
             <template v-for="icon in regtechIcons" :key="icon">
                 <div class="item">
@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <h2>新核心项目：</h2>
+    <h2>新核心项目（共{{ newCore.length }}个）：</h2>
     <div class="icon-wrapper">
         <template v-for="icon in newCore" :key="icon">
             <div class="item">
