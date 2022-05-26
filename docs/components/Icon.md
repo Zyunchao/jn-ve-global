@@ -26,6 +26,31 @@
 
 ## 本地 Svg 图标
 
+:::tip
+
+本地图标以项目为单位，区分不同风格的图标，图标的命名规则如下：
+
+* 分系统的，添加系统缩写：
+    - 监管：`jg-`
+    - 新核心：`xhx-`
+
+* 公用的： `public-`
+* 带有复杂颜色的： `raw-`
+* 分业务模块的，添加模块缩写，如：
+    - 现场检查：`xcjc-`
+    - 保理：`bl-`
+* 如果有相似的，添加数字，如：
+    - `public-search`
+    - `public-search2`
+
+示例：
+公用搜索： `public-search / public-search2` <br/>
+带有颜色的： `raw-orange` <br/>
+监管带有颜色的： `jg-raw-blue` <br/>
+监管模块： `jg-xcjc-detail`
+
+:::
+
 Svg 由 ui 提供，若需要新增 Svg 图标，请联系张云超
 
 组件 `icon` 传递的是 Svg 资源的名称

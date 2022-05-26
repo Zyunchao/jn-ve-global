@@ -1,6 +1,19 @@
 <template>
+    <div class="project">
+        <h2>监管项目：</h2>
+        <div class="icon-wrapper">
+            <template v-for="icon in regtechIcons" :key="icon">
+                <div class="item">
+                    <g-icon :icon="icon" />
+                    <p>{{ icon }}</p>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <h2>新核心项目：</h2>
     <div class="icon-wrapper">
-        <template v-for="icon in localIcons" :key="icon">
+        <template v-for="icon in newCore" :key="icon">
             <div class="item">
                 <g-icon :icon="icon" />
                 <p>{{ icon }}</p>
@@ -11,6 +24,9 @@
 
 <script lang="ts" setup>
 import { localIcons } from '@component/GIconPicker/data/icons'
+
+const regtechIcons = localIcons.filter((name) => name.startsWith('jg-'))
+const newCore = localIcons.filter((name) => name.startsWith('xhx-'))
 </script>
 
 <style lang="scss" scoped>
