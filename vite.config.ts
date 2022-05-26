@@ -10,7 +10,11 @@ export default defineConfig({
         vueJsx(),
         createSvgIconsPlugin({
             // 指定需要缓存的图标文件夹
-            iconDirs: [resolve(process.cwd(), 'packages/assets/icons/svg')],
+            iconDirs: [
+                resolve(process.cwd(), 'packages/assets/icons/svg/newCore'),
+                resolve(process.cwd(), 'packages/assets/icons/svg/old'),
+                resolve(process.cwd(), 'packages/assets/icons/svg/regtech')
+            ],
             // 指定symbolId格式
             symbolId: 'custom-icon-[dir]-[name]'
         })

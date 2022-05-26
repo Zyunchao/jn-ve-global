@@ -46,7 +46,11 @@ export default defineUserConfig<DefaultThemeOptions>({
             plugins: [
                 vueJsx(),
                 createSvgIconsPlugin({
-                    iconDirs: [path.resolve(__dirname, '../../packages/assets/icons/svg')],
+                    iconDirs: [
+                        path.resolve(__dirname, '../../packages/assets/icons/svg/old'),
+                        path.resolve(__dirname, '../../packages/assets/icons/svg/newCore'),
+                        path.resolve(__dirname, '../../packages/assets/icons/svg/regtech')
+                    ],
                     symbolId: 'custom-icon-[dir]-[name]'
                 })
             ]

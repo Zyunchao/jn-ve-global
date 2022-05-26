@@ -24,8 +24,12 @@ function getLocalIconNames(): string[] {
     /**
      * 注意: import.meta.globEager 内只能以相对路径传递
      */
-    const files = import.meta.globEager('../../assets/icons/svg/*.svg')
-    return Object.keys(files).map((fileName) => {
+    const newCoreFiles = import.meta.globEager('../../assets/icons/svg/newCore/*.svg')
+    const regtechFiles = import.meta.globEager('../../assets/icons/svg/regtech/*.svg')
+
+    const allFiles = { ...newCoreFiles, ...regtechFiles }
+
+    return Object.keys(allFiles).map((fileName) => {
         return fileName.replace(/(.*\/)*([^.]+).*/gi, '$2')
     })
 }
