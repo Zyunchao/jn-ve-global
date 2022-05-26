@@ -52,7 +52,7 @@ export default {
 import { PropType, watch, ref, computed, reactive, onMounted } from 'vue'
 import { FormProps, FormItemProps } from '../../GForm'
 import LGForm from '../../GForm/index.vue'
-import tableSearchMoreIcon from '@component/assets/icons/svg/table-search-more.svg'
+import tableSearchMoreIcon from '@component/assets/icons/svg/old/table-search-more.svg'
 import { getStyle } from '../../utils/utils'
 import LGModal from '../../GModal/index.vue'
 
