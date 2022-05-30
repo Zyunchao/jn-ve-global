@@ -372,6 +372,7 @@
                     <LGAddress
                         v-model="localPropRef"
                         v-bind="localControlProps"
+                        :options="columnConfig.controlConfig.options"
                         size="small"
                         @table-edit-hide="delayControlToText"
                     />
