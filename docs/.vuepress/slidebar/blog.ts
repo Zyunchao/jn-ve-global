@@ -6,5 +6,9 @@ export default [
     {
         text: '熟悉而陌生的模块化',
         link: '/blog/熟悉而陌生的模块化.md'
+    },
+    {
+        text: '嗨，你知道 let 和 const 吗？',
+        link: '/blog/letconst.md'
     }
 ]
