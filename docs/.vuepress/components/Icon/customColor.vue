@@ -32,7 +32,7 @@ export default {
 
 <script lang="ts" setup></script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .box {
     display: flex;
     align-items: center;
