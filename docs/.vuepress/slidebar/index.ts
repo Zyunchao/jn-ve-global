@@ -4,6 +4,6 @@ import blog from './blog'
 
 export default {
     '/components/': components,
-    '/micro/': micro,
-    '/blog/': blog
+    '/micro/': micro
+    // '/blog/': blog
 }

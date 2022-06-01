@@ -14,11 +14,11 @@ export default [
         link: '/viteSPA/',
         activeMatch: '^/viteSPA/'
     },
-    {
-        text: '前端知识分享',
-        link: '/blog/',
-        activeMatch: '^/blog/'
-    },
+    // {
+    //     text: '前端知识分享',
+    //     link: '/blog/',
+    //     activeMatch: '^/blog/'
+    // },
     {
         text: '组件库更新日志',
         link: '/components/UpdateLog.md'
