@@ -55,6 +55,12 @@ interface PieConfig extends BaseConfig {
 
 ## 饼图
 
+:::tip 2.1.6+
+
+增加图例位置配置 api，默认 `right`
+
+:::
+
 <demo-block>
 
 <Charts-pie-demo1 />

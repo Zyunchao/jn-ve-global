@@ -17,10 +17,12 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, reactive, PropType, toRef } from 'vue'
+import { toRaw, watch, ref, computed, reactive, PropType, toRef, provide } from 'vue'
 import ChartConfig from './interface/ChartConfig'
 import BarOrLine from './component/barOrLine.vue'
 import Pie from './component/pie.vue'
+import { ECharts } from 'echarts'
+import { chartInstanceKey } from './constant/chartInstanceKey'
 
 const props = defineProps({
     config: {
@@ -29,7 +31,16 @@ const props = defineProps({
     }
 })
 
+// 向下抛出 echarts 实例容器
+const chartInstance = ref<ECharts>(null)
+provide(chartInstanceKey, chartInstance)
+
 const chartType = computed(() => props.config.type)
+
+// 抛出
+defineExpose({
+    chartInstance
+})
 </script>
 
 <style lang="scss" scoped></style>

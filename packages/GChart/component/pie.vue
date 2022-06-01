@@ -41,55 +41,74 @@ const colors = computed(() =>
 )
 
 /* ---------- series ------------------------------------------------------------ */
-const series = computed<PieSeriesOption>(() => ({
-    type: 'pie',
-    radius: props.config.radius || [0, '70%'],
-    data: props.config.data,
-    right: size2Rem(106),
-    top: props.config.title ? size2Rem(14) : 0,
-    label: {
-        color:
-            props.config.labelPosition && props.config.labelPosition === 'outside'
-                ? '#606060'
-                : undefined,
-        show: true,
-        position: props.config.labelPosition || 'outside',
-        fontSize: fontSize12,
-        width: size2Rem(100),
-        distanceToLabelLine: size2Rem(6)
-    },
-    labelLine: {
-        lineStyle: {
-            color: '#b9b9b9'
-        }
-    },
-    itemStyle: {
-        borderWidth:
-            props.config.showBorder ||
-            (_.isArray(props.config.radius) &&
-                props.config.radius.length === 2 &&
-                props.config.radius[0] !== 0)
-                ? 1
-                : 0,
-        borderColor: '#fff'
-    },
-    emphasis: {
+const series = computed<PieSeriesOption>(() => {
+    const positionFlag = props.config.legendPosition || 'right'
+
+    const leftLayout = {
+        left: size2Rem(106)
+    }
+    const rightLayout = {
+        right: size2Rem(106)
+    }
+    const bottomLayout = {
+        bottom: size2Rem(16)
+    }
+
+    const seriesPostion = {
+        'right': rightLayout,
+        'left': leftLayout,
+        'bottom': bottomLayout
+    }
+
+    return {
+        type: 'pie',
+        radius: props.config.radius || [0, '70%'],
+        data: props.config.data,
+        top: props.config.title ? size2Rem(14) : 0,
+        ...seriesPostion[positionFlag],
         label: {
-            fontSize: fontSize14,
-            color: 'inherit'
-        }
-    },
-    select: {
-        label: {
-            fontSize: fontSize14,
-            color: 'inherit'
-        }
-    },
-    tooltip: {
-        padding: size2Rem(5),
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        formatter: (data) => {
-            return `
+            color:
+                props.config.labelPosition && props.config.labelPosition === 'outside'
+                    ? '#606060'
+                    : undefined,
+            show: true,
+            position: props.config.labelPosition || 'outside',
+            fontSize: fontSize12,
+            width: size2Rem(100),
+            distanceToLabelLine: size2Rem(6)
+        },
+        labelLine: {
+            lineStyle: {
+                color: '#b9b9b9'
+            }
+        },
+        itemStyle: {
+            borderWidth:
+                props.config.showBorder ||
+                (_.isArray(props.config.radius) &&
+                    props.config.radius.length === 2 &&
+                    props.config.radius[0] !== 0)
+                    ? 1
+                    : 0,
+            borderColor: '#fff'
+        },
+        emphasis: {
+            label: {
+                fontSize: fontSize14,
+                color: 'inherit'
+            }
+        },
+        select: {
+            label: {
+                fontSize: fontSize14,
+                color: 'inherit'
+            }
+        },
+        tooltip: {
+            padding: size2Rem(5),
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            formatter: (data) => {
+                return `
                 <div class="pie-tooltip-wrapper">
                     <span class="round" style="background-color: ${data.color};"></span>
                     <span class="name">${data.name}：</span>
@@ -98,13 +117,50 @@ const series = computed<PieSeriesOption>(() => ({
                     <span class="percent">${data.percent}%</span>
                 </div>
             `
+            },
+            textStyle: {
+                fontSize: fontSize14
+            }
         },
-        textStyle: {
-            fontSize: fontSize14
-        }
-    },
-    roseType: props.config.roseType as any
-}))
+        roseType: props.config.roseType as any
+    }
+})
+
+/* ---------- legend ------------------------------------------------------------ */
+const legendOrient = {
+    'right': 'vertical',
+    'left': 'vertical',
+    'bottom': 'horizontal'
+}
+const legendPostion = computed<EChartsOption['legend']>(() => {
+    const positionFlag = props.config.legendPosition || 'right'
+
+    const leftLayout = {
+        top: size2Rem(30),
+        left: 0
+    }
+
+    const rightLayout = {
+        top: size2Rem(30),
+        right: 0
+    }
+
+    const bottomLayout = {
+        bottom: 0,
+        left: 0
+    }
+
+    const legendLayoutMapping = {
+        'right': rightLayout,
+        'left': leftLayout,
+        'bottom': bottomLayout
+    }
+
+    return {
+        orient: legendOrient[positionFlag] as 'horizontal' | 'vertical',
+        ...legendLayoutMapping[positionFlag]
+    }
+})
 
 /* ---------- EChartsOption ------------------------------------------------------------ */
 const pieOption = computed<EChartsOption>(() => ({
@@ -123,9 +179,7 @@ const pieOption = computed<EChartsOption>(() => ({
     },
     legend: {
         type: 'scroll',
-        orient: 'vertical',
-        top: size2Rem(30),
-        right: size2Rem(0),
+        ...legendPostion.value,
         padding: size2Rem(5),
         itemGap: size2Rem(10),
         itemWidth: size2Rem(20),
@@ -136,7 +190,7 @@ const pieOption = computed<EChartsOption>(() => ({
         textStyle: {
             width: size2Rem(80),
             fontSize: size2Rem(12),
-            overflow: 'break'
+            overflow: 'truncate'
         }
     },
     toolbox: {

@@ -77,7 +77,8 @@ const chartConfig = ref<ChartConfig>({
             value: 1000,
             name: '搜索引擎56'
         }
-    ]
+    ],
+    legendPosition: 'bottom'
 })
 </script>
 

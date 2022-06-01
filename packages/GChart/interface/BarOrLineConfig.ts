@@ -2,7 +2,8 @@ import {
     BarSeriesOption,
     LineSeriesOption,
     XAXisComponentOption,
-    YAXisComponentOption
+    YAXisComponentOption,
+    EChartsOption
 } from 'echarts/types/dist/echarts'
 import BaseConfig from './BaseConfig'
 
@@ -49,4 +50,8 @@ export default interface BarOrLineConfig extends BaseConfig {
      * 是否平滑曲线显示
      */
     lineSmooth?: boolean
+    /**
+     * grid 自定义配置，优先级高于预设的
+     */
+    gridConfig?: EChartsOption['grid']
 }

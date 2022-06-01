@@ -77,7 +77,10 @@ const singleBarConfig = ref<ChartConfig>({
         },
         20
     ],
-    hideToolBox: true
+    hideToolBox: true,
+    gridConfig: {
+        left: 200
+    }
 })
 
 // 多数据

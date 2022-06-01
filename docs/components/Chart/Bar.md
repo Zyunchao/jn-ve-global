@@ -77,6 +77,18 @@ interface BarOrLineConfig extends BaseConfig {
 
 ## 单数据
 
+:::tip 2.1.6+
+
+柱状图 + 折线图 增加自定义的 grid 配置，传递 `gridConfig` 对象，如：
+
+```ts
+gridConfig: {
+    left: 200
+}
+```
+
+:::
+
 <demo-block>
 
 <Charts-bar-demo1 />

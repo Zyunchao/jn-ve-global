@@ -229,108 +229,116 @@ const series = computed<BarSeriesOption | LineSeriesOption>(() => {
 })
 
 /* ---------- EChartsOption ------------------------------------------------------------ */
-const barOption = computed<EChartsOption>(() => ({
-    color: colors.value,
-    title: {
-        show: !!props.config.title,
-        text: props.config.title,
-        textStyle: {
-            fontSize: fontSize16
-        },
-        top: size2Rem(4),
-        left: size2Rem(4)
-    },
-    grid: {
-        top: size2Rem(_.isArray(props.config.data) ? 45 : 85) - boxPaddingTop.value,
-        left: size2Rem(50),
-        right: size2Rem(
-            isObject(props.config.y) && Object.keys(props.config.y).length >= 2
-                ? 25 * Object.keys(props.config.y).length
-                : 40
-        ),
-        bottom: size2Rem(
-            isObject(props.config.x) && Object.keys(props.config.x).length >= 3
-                ? 25 * Object.keys(props.config.x).length
-                : 40
-        )
-    },
-    legend: {
-        top:
-            size2Rem(
-                (isObject(props.config.y) && !!Object.keys(props.config.y).length) ||
-                    (isObject(props.config.x) && !!Object.keys(props.config.x).length)
-                    ? 28
-                    : 40
-            ) - boxPaddingTop.value,
-        left: size2Rem(20),
-        padding: size2Rem(5),
-        itemGap: size2Rem(14),
-        itemWidth: size2Rem(25),
-        itemHeight: size2Rem(14),
-        textStyle: {
-            fontSize: fontSize12,
-            color: '#8c8c8c'
-        },
-        show: isObject(props.config.data) && !!Object.keys(props.config.data).length,
-        type: 'plain',
-        data: Object.keys(props.config.data)
-    },
-    toolbox: {
-        show: !props.config.hideToolBox,
-        itemSize: size2Rem(15),
-        itemGap: size2Rem(13),
-        feature: {
-            dataZoom: {
-                title: {
-                    zoom: '区域缩放',
-                    back: '区域缩放还原'
-                },
-                yAxisIndex: 'none'
+const barOption = computed<EChartsOption>(() => {
+    /**
+     * 用户自定义的 GridConfig
+     */
+    const customGridConfig = props.config.gridConfig !== undefined ? props.config.gridConfig : {}
+
+    return {
+        color: colors.value,
+        title: {
+            show: !!props.config.title,
+            text: props.config.title,
+            textStyle: {
+                fontSize: fontSize16
             },
-            magicType: {
-                type: ['line', 'bar', 'stack'],
-                title: {
-                    line: '切换为折线图',
-                    bar: '切换为柱状图',
-                    stack: '切换为堆叠'
+            top: size2Rem(4),
+            left: size2Rem(4)
+        },
+        grid: {
+            top: size2Rem(_.isArray(props.config.data) ? 45 : 85) - boxPaddingTop.value,
+            left: size2Rem(50),
+            right: size2Rem(
+                isObject(props.config.y) && Object.keys(props.config.y).length >= 2
+                    ? 25 * Object.keys(props.config.y).length
+                    : 40
+            ),
+            bottom: size2Rem(
+                isObject(props.config.x) && Object.keys(props.config.x).length >= 3
+                    ? 25 * Object.keys(props.config.x).length
+                    : 40
+            ),
+            ...customGridConfig
+        },
+        legend: {
+            top:
+                size2Rem(
+                    (isObject(props.config.y) && !!Object.keys(props.config.y).length) ||
+                        (isObject(props.config.x) && !!Object.keys(props.config.x).length)
+                        ? 28
+                        : 40
+                ) - boxPaddingTop.value,
+            left: size2Rem(20),
+            padding: size2Rem(5),
+            itemGap: size2Rem(14),
+            itemWidth: size2Rem(25),
+            itemHeight: size2Rem(14),
+            textStyle: {
+                fontSize: fontSize12,
+                color: '#8c8c8c'
+            },
+            show: isObject(props.config.data) && !!Object.keys(props.config.data).length,
+            type: 'plain',
+            data: Object.keys(props.config.data)
+        },
+        toolbox: {
+            show: !props.config.hideToolBox,
+            itemSize: size2Rem(15),
+            itemGap: size2Rem(13),
+            feature: {
+                dataZoom: {
+                    title: {
+                        zoom: '区域缩放',
+                        back: '区域缩放还原'
+                    },
+                    yAxisIndex: 'none'
+                },
+                magicType: {
+                    type: ['line', 'bar', 'stack'],
+                    title: {
+                        line: '切换为折线图',
+                        bar: '切换为柱状图',
+                        stack: '切换为堆叠'
+                    }
+                },
+                restore: {
+                    title: '还原'
+                },
+                saveAsImage: {
+                    title: '保存'
                 }
             },
-            restore: {
-                title: '还原'
+            iconStyle: {
+                borderColor: '#bababa'
             },
-            saveAsImage: {
-                title: '保存'
+            top: size2Rem(2),
+            right: size2Rem(10)
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    margin: size2Rem(5),
+                    fontSize: fontSize12,
+                    lineHeight: size2Rem(12),
+                    height: size2Rem(10),
+                    padding: [size2Rem(5), size2Rem(7)],
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)'
+                }
+            },
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            padding: size2Rem(5),
+            textStyle: {
+                fontSize: fontSize14
             }
         },
-        iconStyle: {
-            borderColor: '#bababa'
-        },
-        top: size2Rem(2),
-        right: size2Rem(10)
-    },
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            label: {
-                margin: size2Rem(5),
-                fontSize: fontSize12,
-                lineHeight: size2Rem(12),
-                height: size2Rem(10),
-                padding: [size2Rem(5), size2Rem(7)],
-                backgroundColor: 'rgba(0, 0, 0, 0.7)'
-            }
-        },
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        padding: size2Rem(5),
-        textStyle: {
-            fontSize: fontSize14
-        }
-    },
-    xAxis: xAxis.value,
-    yAxis: yAxis.value,
-    series: series.value
-}))
+        xAxis: xAxis.value,
+        yAxis: yAxis.value,
+        series: series.value
+    }
+})
 </script>
 
 <style lang="scss" scoped></style>

@@ -37,7 +37,10 @@ const chartConfig = ref<ChartConfig>({
         },
         20
     ],
-    hideToolBox: true
+    hideToolBox: true,
+    gridConfig: {
+        left: 300
+    }
 })
 </script>
 

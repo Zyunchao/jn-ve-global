@@ -10,11 +10,12 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, PropType, watch } from 'vue'
+import { ref, onMounted, onUnmounted, inject } from 'vue'
 import * as echarts from 'echarts'
 import ResizeObserver from 'resize-observer-polyfill'
 import { ECharts, EChartsOption } from 'echarts'
 import _ from 'lodash'
+import { chartInstanceKey } from '../../constant/chartInstanceKey'
 
 interface Props {
     option: EChartsOption
@@ -25,6 +26,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emits = defineEmits(['getChartInstance'])
+
+// 获取 GChart 的 echarts 实例容器
+const parentChartInstanceWrap = inject(chartInstanceKey)
 
 const chartBoxRef = ref<HTMLElement>(null)
 const chartInstance = ref<ECharts>(null)
@@ -38,6 +42,13 @@ onMounted(() => {
 
     // 抛出 echarts 实例
     emits('getChartInstance', cI)
+
+    /**
+     * 如果是嵌套（封装好的图标）使用，通过 inject 获取容器（Ref）引用，然后将 echarts 实例包装到容器中
+     */
+    if (parentChartInstanceWrap) {
+        parentChartInstanceWrap.value = cI
+    }
 
     // 监听容器变化，进行图标的重绘
     const resizeObserver = new ResizeObserver(
@@ -63,6 +74,11 @@ onMounted(() => {
 onUnmounted(() => {
     chartInstance.value?.dispose()
     chartBoxRef.value && ob.value && ob.value.unobserve(chartBoxRef.value)
+})
+
+// 抛出
+defineExpose({
+    chartInstance
 })
 </script>
 

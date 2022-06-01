@@ -1,7 +1,10 @@
 <template>
     <div class="examples-base-wrapper">
+        <el-button @click="getInstance">
+            获取实例
+        </el-button>
         <div class="chart-box">
-            <GChart :config="singleLineConfig1" />
+            <GChart ref="chartRef" :config="singleLineConfig1" />
         </div>
 
         <div class="chart-box">
@@ -26,6 +29,12 @@ import * as echarts from 'echarts'
 import ChartConfig from '@component/GChart/interface/ChartConfig'
 import { ECharts, EChartsOption } from 'echarts'
 
+const chartRef = ref<any>(null)
+
+const getInstance = () => {
+    console.log(`%c chartRef === `, 'color: #67c23a;', chartRef.value.chartInstance)
+}
+
 // 少量数据饼图
 const singleLineConfig1 = ref<ChartConfig>({
     title: '少量数据饼图',
@@ -48,7 +57,8 @@ const singleLineConfig1 = ref<ChartConfig>({
             value: 1000,
             name: '搜索引擎222'
         }
-    ]
+    ],
+    legendPosition: 'left'
 })
 
 // 圆环多数据
@@ -114,9 +124,9 @@ const singleLineConfig2 = ref<ChartConfig>({
             value: 1000,
             name: '搜索引擎56'
         }
-    ]
+    ],
+    legendPosition: 'right'
 })
-
 
 // 南丁格尔图（玫瑰图）
 const singleLineConfig3 = ref<ChartConfig>({
@@ -182,10 +192,9 @@ const singleLineConfig3 = ref<ChartConfig>({
             value: 1000,
             name: '搜索引擎56'
         }
-    ]
+    ],
+    legendPosition: 'bottom'
 })
-
-
 </script>
 
 <style lang="scss" scoped>
