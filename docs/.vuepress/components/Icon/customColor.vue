@@ -43,13 +43,13 @@ export default {
         text-align: right;
     }
 
-    .custom-svg-icon {
+    :deep(.custom-svg-icon) {
         font-size: 30px;
         margin-right: 8px;
     }
 
     &.custom-color {
-        .custom-svg-icon {
+        :deep(.custom-svg-icon) {
             &:first-of-type {
                 color: red;
             }
