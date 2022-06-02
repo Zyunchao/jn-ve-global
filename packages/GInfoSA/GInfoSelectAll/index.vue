@@ -42,7 +42,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import { SelectOptionProps } from '../../index'
 import InfoHeader from '../component/infoHeader.vue'
@@ -138,7 +138,7 @@ const {
     mutationOb,
     popperClassSpecific: 'el-select-v2__popper',
     scrollWrapDomClass: 'el-select-dropdown__list',
-    optionsData: props.optionsData
+    optionsData: toRef(props, 'optionsData')
 })
 
 // 下拉框出现/隐藏

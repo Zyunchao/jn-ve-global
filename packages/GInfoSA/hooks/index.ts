@@ -3,6 +3,7 @@ import ListenPopper from './listenPopper'
 import ListenScroll from './listenScroll'
 import ToBody from './toBody'
 import { SelectOptionProps } from '../../index'
+import { Ref } from 'vue'
 
 interface HooksProps {
     /**
@@ -24,7 +25,7 @@ interface HooksProps {
     /**
      * 数据（响应式）
      */
-    optionsData?: SelectOptionProps[]
+    optionsData?: Ref<SelectOptionProps[]>
     /**
      * 数据变化时的额外执行函数
      */
@@ -66,7 +67,7 @@ export default (props: HooksProps) => {
      *  - select & selectAll
      *  - autocomplete 自处理
      */
-    if (!!props.optionsData && !!props.scrollWrapDomClass) {
+    if (!!props.optionsData.value && !!props.scrollWrapDomClass) {
         ListenScroll({
             popperClass,
             randomId,

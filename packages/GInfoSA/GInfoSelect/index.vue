@@ -72,7 +72,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, ref, computed, onMounted, onUnmounted, watchEffect, nextTick } from 'vue'
+import { toRef, ref, computed, onMounted, onUnmounted, watchEffect, nextTick } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import { SelectOptionProps } from '../../index'
 import InfoHeader from '../component/infoHeader.vue'
@@ -196,7 +196,7 @@ const {
     mutationOb,
     popperClassSpecific: 'el-select__popper',
     scrollWrapDomClass: 'el-scrollbar__wrap',
-    optionsData: props.optionsData,
+    optionsData: toRef(props, 'optionsData'),
     dataChangeEffect: () => {
         listenHeight()
     }
@@ -230,6 +230,8 @@ watchEffect(() => {
 // 监听下拉列表的高度变化
 let resizeOb: ResizeObserver = null
 function listenHeight() {
+    if (resizeOb !== null) return
+
     const optionItemWrapperDom = document.querySelector(
         `.${popperClass}.${randomId}.el-select-dropdown`
     )

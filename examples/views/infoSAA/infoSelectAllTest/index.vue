@@ -4,8 +4,7 @@
             <span>单选：</span>
             <g-info-select-all
                 v-model="active"
-                hide-header
-                :options-data="userList"
+                :options-data="firstUserList"
                 :columns="columns"
             />
         </div>
@@ -50,6 +49,13 @@ const total = userList.length
 const active = ref<string>('')
 const multipleActive = ref<string[]>([])
 const selectOptions = ref([])
+
+const firstUserList = ref<any[]>([])
+
+setTimeout(() => {
+    console.log(`%c 填充数据 ==== `, 'color: #f56c6c;')
+    firstUserList.value = userList
+}, 2000)
 
 watch(
     () => active.value,

@@ -7,14 +7,14 @@ export interface ListeneSrollProps {
     scrollWrapDomClass: string
     scrollWrapper: Ref<HTMLElement>
     scrollLeft: Ref<number>
-    optionsData: SelectOptionProps[]
+    optionsData: Ref<SelectOptionProps[]>
     dataChangeEffect: () => void
     scrollEventHandle: (e: Event) => void
 }
 
 export default (props: ListeneSrollProps) => {
     watch(
-        () => props.optionsData,
+        () => props.optionsData.value,
         (data) => {
             /**
              * 只有在待选项的数据不为空时，列表容器才会生成
