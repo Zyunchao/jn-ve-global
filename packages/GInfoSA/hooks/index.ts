@@ -67,7 +67,7 @@ export default (props: HooksProps) => {
      *  - select & selectAll
      *  - autocomplete 自处理
      */
-    if (!!props.optionsData.value && !!props.scrollWrapDomClass) {
+    if (!!props.optionsData && !!props.optionsData.value && !!props.scrollWrapDomClass) {
         ListenScroll({
             popperClass,
             randomId,
