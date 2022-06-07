@@ -9,7 +9,7 @@
         <el-row :gutter="localConfig.gutter ?? 20">
             <template v-for="item in localConfig.formItems" :key="item.prop">
                 <!-- 栅格 col -->
-                <el-col v-if="!item.hide" :span="item.span ?? 6">
+                <el-col v-if="!item.hide" v-bind="getElColConfigs(item)">
                     <el-form-item
                         :class="{ 'no-colon': localConfig.colon === false }"
                         v-bind="getFormItemConfigs(item)"
@@ -130,9 +130,47 @@ const formRootConfigs = computed(() => {
 
 // 获取 formItem 的配置（二级配置）
 const getFormItemConfigs = (item: FormItemProps) => {
-    const { label, span, hide, group, render, controlConfigs, controlConfig, ...formItemConfigs } =
-        item
+    const {
+        label,
+        hide,
+        group,
+        render,
+        controlConfigs,
+        controlConfig,
+        span,
+        offset,
+        xs,
+        sm,
+        md,
+        lg,
+        xl,
+        ...formItemConfigs
+    } = item
     return formItemConfigs
+}
+
+const getElColConfigs = (item: FormItemProps) => {
+    const baseConfig = {
+        offset: item.offset ?? 0
+    }
+
+    const spanConfig = {
+        ...baseConfig,
+        span: item.span ?? 6
+    }
+
+    const bootstrapConfig = {
+        ...baseConfig,
+        xs: item.xs ?? 24,
+        sm: item.sm ?? 12,
+        md: item.md ?? 12,
+        lg: item.lg ?? 8,
+        xl: item.xl ?? 8
+    }
+
+    if (item.span) return spanConfig
+    if (item.xs || item.sm || item.md || item.lg || item.xl) return bootstrapConfig
+    return spanConfig
 }
 </script>
 

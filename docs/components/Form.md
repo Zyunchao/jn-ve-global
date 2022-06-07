@@ -387,6 +387,41 @@ const btns: BtnProps[] = [
 
 :::
 
+### 表单项响应式布局
+
+:::tip 2.1.9+
+
+原本每个 FormItem 的布局采用的是：一行 24 栅格式固定式布局（写多少就是多少，不会变化）
+
+2.1.9 起，提供响应式布局方式，会依照屏幕的大小，进行栅格的预配置调整，响应式基于 [Element Layout 响应式布局](https://element-plus.gitee.io/zh-CN/component/layout.html#%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80)
+
+注意：组件会以 `span` 的配置为第一优先级，也就是说 `span` 会覆盖响应式布局， `span` 和 `响应式` 二选一配置
+
+注意：传递 `xs/sm/md/lg/xl` 任意一个，就会认为采用响应式布局（如果只配置一个，其他则取默认值，如：配置xs，xl 就默认取 8）
+:::
+
+默认响应栅格配置：
+
+```ts
+xs: item.xs ?? 24,
+sm: item.sm ?? 12,
+md: item.md ?? 12,
+lg: item.lg ?? 8,
+xl: item.xl ?? 8
+```
+
+<demo-block>
+
+<Form-bootstrapLayout />
+
+<template #code>
+
+@[code](@demoroot/Form/bootstrapLayout.vue)
+
+</template>
+
+</demo-block>
+
 ## GForm :config 配置列表
 
 ### Form Attributes

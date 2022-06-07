@@ -124,11 +124,6 @@ export interface FormItemBaseProps {
      */
     label?: string | ((prop?: any) => JSX.Element | VNode | string | number)
     /**
-     * FormItem 所占的栅格（1 - 24）
-     * default：6
-     */
-    span?: number
-    /**
      * className
      */
     class?: string
@@ -140,6 +135,35 @@ export interface FormItemBaseProps {
      * 控件分组
      */
     group?: string | string[]
+    /**
+     * FormItem 所占的栅格（1 - 24）
+     * default：6
+     */
+    span?: number
+    /**
+     * 栅格左侧的间隔格数
+     */
+    offset?: number
+    /**
+     * <768px 响应式栅格数或者栅格属性对象
+     */
+    xs?: number | { span: number; offset: number }
+    /**
+     * ≥768px 响应式栅格数或者栅格属性对象
+     */
+    sm?: number | { span: number; offset: number }
+    /**
+     * ≥992px 响应式栅格数或者栅格属性对象
+     */
+    md?: number | { span: number; offset: number }
+    /**
+     * ≥1200px 响应式栅格数或者栅格属性对象
+     */
+    lg?: number | { span: number; offset: number }
+    /**
+     * ≥1920px 响应式栅格数或者栅格属性对象
+     */
+    xl?: number | { span: number; offset: number }
 }
 
 // 单控件
