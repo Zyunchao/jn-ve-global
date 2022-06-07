@@ -5,7 +5,12 @@
         :type="localType"
         @tab-click="tabChange"
     >
-        <el-tab-pane v-for="item in list" :key="item.value" :name="item.value">
+        <el-tab-pane
+            v-for="item in list"
+            :key="item.value"
+            :name="item.value"
+            :disabled="item.disabled"
+        >
             <template #label>
                 <span class="tabs-item-label">{{ item.label }}</span>
             </template>
@@ -77,6 +82,11 @@ const tabChange = (index) => {
             &.is-active {
                 color: #409eff;
                 font-weight: 600;
+            }
+
+            &.is-disabled {
+                opacity: 0.6 !important;
+                cursor: not-allowed !important;
             }
         }
 
