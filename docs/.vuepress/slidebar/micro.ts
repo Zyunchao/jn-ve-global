@@ -149,6 +149,10 @@ export default [
         link: '/micro/theme.md'
     },
     {
+        text: '流程平台',
+        link: '/micro/workflow.md'
+    },
+    {
         text: '生产&发布',
         link: '/micro/production.md'
     },

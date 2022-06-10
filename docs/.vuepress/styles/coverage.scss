@@ -61,7 +61,7 @@ main.page {
             top: 60px;
             padding-right: 10px;
             z-index: 999;
-            background-color: #fff;
+            background-color: var(--c-bg-sidebar);
             overflow-y: auto;
             max-width: 220px;
         }
