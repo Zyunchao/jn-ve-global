@@ -24,7 +24,8 @@ import {
     InfoAutocompleteControlConfig,
     InfoSelectAllControlConfig,
     SelectTreeV2ControlConfig,
-    AddressControlConfig
+    AddressControlConfig,
+    JnEditorControlConfig
 } from '../index'
 
 /**
@@ -72,6 +73,7 @@ export type ControlConfig =
     | InfoSelectAllControlConfig
     | SelectTreeV2ControlConfig
     | AddressControlConfig
+    | JnEditorControlConfig
 
 /**
  * 控件组的配置

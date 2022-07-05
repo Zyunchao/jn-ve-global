@@ -147,14 +147,14 @@ export default (
              * redo：重做
              * undo：撤消更改
              */
-            editor.on('change input undo redo', (e: EditorEvent<any>) => {
-                emits('update:modelValue', editor.getContent())
-                emits('change', e)
-                emits('input', e)
-                emits('undo', e)
-                emits('redo', e)
-            })
-
+            editor
+                .on('change input undo redo', () => emits('update:modelValue', editor.getContent()))
+                .on('change', (e: EditorEvent<any>) => emits('change', e))
+                .on('input', (e: EditorEvent<any>) => emits('input', e))
+                .on('undo', (e: EditorEvent<any>) => emits('undo', e))
+                .on('redo', (e: EditorEvent<any>) => emits('redo', e))
+            
+            // 执行用户传递的 setup
             emits('setup', editor)
         },
         init_instance_callback(editor: TinyMCEEditor) {

@@ -234,6 +234,11 @@
                 v-bind="controlConfig.props"
             />
         </template>
+
+        <!-- 富文本 -->
+        <template v-if="localControlType === 'jnEditor'">
+            <LJnEditor v-model="localPropRef" v-bind="controlConfig.props" />
+        </template>
     </template>
 </template>
 
@@ -264,6 +269,7 @@ import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
 import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
 import LGAddress from '../../GAddress/index.vue'
+import LJnEditor from '../../JnEditor/index.vue'
 
 import addInputDisabledTooltip from '../mixins/inputDisabledTooltip'
 import getControlOprions from '../mixins/getControlOprions'

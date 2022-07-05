@@ -38,7 +38,8 @@ export default () => {
             avatar: `测试文本-${+new Date()}`,
             clientChannel: `测试文本-${+new Date()}`,
             arr: [],
-            address: []
+            address: [],
+            html: '<h1>Hello Tiny</h1>'
         },
         formItems: [
             {
@@ -402,6 +403,42 @@ export default () => {
                             const fileList = config.props.fileList
 
                             console.log(`%c onRemove fileList == `, 'color: #67c23a;', fileList)
+                        }
+                    }
+                }
+            },
+            {
+                prop: 'html',
+                label: '富文本',
+                span: 24,
+                controlConfig: {
+                    type: 'jnEditor',
+                    props: {
+                        // disabled: true,
+                        onSetup(editor) {
+                            console.log(`%c setup run......`, 'color: #67c23a;', +new Date())
+                        },
+                        onInit() {
+                            console.log(`%c init run......`, 'color: #67c23a;', +new Date())
+                        },
+                        onInitInstanceCallback(editor) {
+                            console.log(
+                                `%c initInstanceCallback run......`,
+                                'color: #67c23a;',
+                                +new Date()
+                            )
+                        },
+                        onChange(e) {
+                            console.log(`%c onChange == `, 'color: #f56c6c;', e)
+                        },
+                        onInput(e) {
+                            console.log(`%c input == `, 'color: #f56c6c;', e)
+                        },
+                        onUndo(e) {
+                            console.log(`%c onUndo == `, 'color: #f56c6c;', e)
+                        },
+                        onRedo(e) {
+                            console.log(`%c onRedo == `, 'color: #f56c6c;', e)
                         }
                     }
                 }
