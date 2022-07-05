@@ -47,11 +47,15 @@ export default (
         plugins: 'imagetools quickbars powerpaste axupimgs tpImportword formatpainter indent2em'
     }
     const functionalList = {
-        plugins: `print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern emoticons ${myFunctionalList.plugins}`,
+        plugins: `print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern emoticons ${
+            myFunctionalList.plugins
+        } ${props.config?.plugins ? props.config.plugins : ''}`,
         toolbar: [
             'fullscreen preview undo redo | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent indent2em lineheight | bullist numlist | blockquote subscript superscript removeformat ',
             'styleselect formatselect fontselect fontsizeselect | tpImportword image axupimgs media emoticons charmap hr pagebreak insertdatetime  selectall visualblocks searchreplace | code print formatpainter',
-            'table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol'
+            `table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol ${
+                props.config?.toolbar ? props.config.toolbar : ''
+            }`
         ]
     }
 
@@ -153,7 +157,7 @@ export default (
                 .on('input', (e: EditorEvent<any>) => emits('input', e))
                 .on('undo', (e: EditorEvent<any>) => emits('undo', e))
                 .on('redo', (e: EditorEvent<any>) => emits('redo', e))
-            
+
             // 执行用户传递的 setup
             emits('setup', editor)
         },

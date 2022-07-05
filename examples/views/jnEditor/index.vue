@@ -10,6 +10,7 @@
                 v-model="html"
                 :disabled="editDisabled"
                 :upload-url="uploadUrl"
+                :config="cunstomConfig"
                 @setup="editSetupHandle"
                 @initInstanceCallback="initInstanceCallback"
             />
@@ -36,6 +37,16 @@ const html = ref<string>('<h1>Hello Tiny!</h1>')
 const isDestroy = ref<boolean>(false)
 const editDisabled = ref<boolean>(false)
 const uploadUrl = `${prefix}/kinso-basic-open-server/v1/document/file/upload`
+
+// 追加功能
+const cunstomConfig = {
+    toolbar: 'template mybtns',
+    plugins: 'template',
+    templates: [
+        { 'title': 'Some title 1', 'description': '这是一个测试模板', 'content': '<h1>这是一个测试模板</h1>' },
+        { 'title': 'Some title 2', 'description': 'Some desc 2', 'content': 'development.html' }
+    ]
+}
 
 const btns = computed<BtnProps[]>(() => [
     {
@@ -74,6 +85,13 @@ const editSetupHandle = (editor) => {
         'color: #f56c6c;',
         +new Date()
     )
+
+    editor.ui.registry.addButton('mybtns', {
+        text: '新增模版变量',
+        onAction: function () {
+            console.log(`%c 新增模版变量 == `, 'color: #67c23a;')
+        }
+    })
 }
 
 // 指定每次初始化编辑器实例时要执行的函数
