@@ -5,5 +5,6 @@ export * from './GBaseModule'
 export * from './GTabs'
 export * from './GChart'
 export * from './GFormGenerate'
+export * from './JnEditor/interface/tinymce'
 
 export { default as InfoColumnProps } from './GInfoSA/interface/InfoColumnProps'

@@ -5,6 +5,9 @@ import './assets/styles/index.scss'
 import '@component/assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
 
+// 特殊的组件 editor
+export { default as JnEditor } from './JnEditor/edit.vue'
+
 /**
  * 全局注册组件
  */

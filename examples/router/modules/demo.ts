@@ -124,6 +124,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/form-generate-test',
         component: () => import('@/views/formGenerateTest/index.vue')
+    },
+    {
+        path: '/jneditor-test',
+        component: () => import('@/views/jnEditor/index.vue')
     }
 ]
 

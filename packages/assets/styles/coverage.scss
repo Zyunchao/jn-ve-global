@@ -53,3 +53,16 @@
         fill: currentColor;
     }
 }
+
+// TinyMce 富文本编辑器
+.tox-tinymce-aux {
+    z-index: 13001 !important;
+}
+
+.mce-content-body.mce-edit-focus {
+    outline: #409eff auto 1px !important;
+}
+
+.tox-tinymce-inline {
+    z-index: 13000;
+}
