@@ -10,21 +10,11 @@
                 v-model="html"
                 :disabled="editDisabled"
                 :upload-url="uploadUrl"
-                mode="inline"
                 @setup="editSetupHandle"
                 @initInstanceCallback="initInstanceCallback"
             />
-            <!-- <MyTinyEditor v-if="!isDestroy" v-model="html" /> -->
         </div>
     </div>
-
-    <g-modal v-model="modalShow" title="富文本测试弹框">
-        <g-tabs v-model="activeName" :list="tabList" />
-
-        <keep-alive>
-            <BaseEditor v-if="activeName === 'BaseEditor'" v-model="htmlBase" />
-        </keep-alive>
-    </g-modal>
 </template>
 
 <script lang="ts">
@@ -37,9 +27,6 @@ export default {
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { TinyMCE, BtnProps, TabPaneProps } from '@component/index'
 import MyTinyEditor from './Tinymce.vue'
-import { JnEditor } from '@component/register'
-import { JnEditor as BaseEditor, JnEditor as UserEditor } from '@component/register'
-// import { JnEditor } from '@component/register'
 
 const prefix = '/api'
 
@@ -47,8 +34,6 @@ const jnEditorRef = ref<any>(null)
 
 const html = ref<string>('<h1>Hello Tiny!</h1>')
 const isDestroy = ref<boolean>(false)
-const modalShow = ref<boolean>(false)
-const editMode = ref<string>('inline')
 const editDisabled = ref<boolean>(false)
 const uploadUrl = `${prefix}/kinso-basic-open-server/v1/document/file/upload`
 
@@ -58,13 +43,6 @@ const btns = computed<BtnProps[]>(() => [
         type: !isDestroy.value ? 'danger' : 'success',
         onClick() {
             isDestroy.value = !isDestroy.value
-        }
-    },
-    {
-        label: '打开弹框',
-        type: 'primary',
-        onClick() {
-            modalShow.value = true
         }
     },
     {
@@ -81,24 +59,6 @@ const btns = computed<BtnProps[]>(() => [
         }
     }
 ])
-
-const activeName = ref<string>('BaseEditor')
-const htmlBase = ref<string>('BaseEditor')
-const htmlUser = ref<string>('UserEditor')
-const tabList: TabPaneProps[] = [
-    {
-        label: '基本信息',
-        value: 'BaseEditor'
-    },
-    {
-        label: '用户信息',
-        value: 'UserEditor'
-    },
-    {
-        label: '角色信息',
-        value: 'Role'
-    }
-]
 
 watch(
     () => html.value,

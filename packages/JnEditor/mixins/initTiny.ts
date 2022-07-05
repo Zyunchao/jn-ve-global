@@ -85,7 +85,7 @@ export default (
         language: 'zh_CN',
         readonly: props.disabled, // 只读（禁用）
         branding: true, // 品牌推广：免费和开源用户需要产品归属（避免出现不必要的纠纷）
-        min_height: 400,
+        min_height: 440,
         elementpath: false, // 底栏的元素路径
         placeholder: '请输入...',
         font_formats:
