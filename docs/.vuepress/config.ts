@@ -18,6 +18,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     title: 'JN Frontend Docs',
     description: '江苏金农股份有限公司前端文档站，站内包含内部组件库、微前端框架等文档',
     base,
+    head: [['script', { type: 'text/javascript', src: '/lib/tinymce5.10.5/tinymce.min.js' }]],
 
     // 主题配置
     themeConfig: {
@@ -75,4 +76,6 @@ export default defineUserConfig<DefaultThemeOptions>({
 
     host: 'localhost',
     port: 3067
+    // templateDev: path.resolve(__dirname, './templates/base.html'),
+    // templateBuild: path.resolve(__dirname, './templates/base.html')
 })

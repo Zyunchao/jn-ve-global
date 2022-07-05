@@ -69,5 +69,9 @@ export default [
                 link: '/components/Chart/Pie.md'
             }
         ]
+    },
+    {
+        text: '富文本编辑器',
+        link: '/components/JnEditor.md'
     }
 ]
