@@ -53,7 +53,7 @@ export default (
         toolbar: [
             'fullscreen preview undo redo | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent indent2em lineheight | bullist numlist | blockquote subscript superscript removeformat ',
             'styleselect formatselect fontselect fontsizeselect | tpImportword image axupimgs media emoticons charmap hr pagebreak insertdatetime  selectall visualblocks searchreplace | code print formatpainter',
-            `table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol ${
+            `table tabledelete | tableprops tablerowprops tablecellprops | tablemergecells tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol ${
                 props.config?.toolbar ? props.config.toolbar : ''
             }`
         ]

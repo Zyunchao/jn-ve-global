@@ -30,7 +30,7 @@
         "xlsx": "^0.17.4"
     },
     "scripts": {
-        "dev": "vite & serve -l 9099 --cors lib",
+        "dev": "serve -l 9099 --cors lib & vite",
         "build": "vite build",
         "serve": "vite preview",
         "docs:dev": "vuepress dev docs --open",
