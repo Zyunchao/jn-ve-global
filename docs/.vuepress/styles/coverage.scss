@@ -66,6 +66,16 @@ main.page {
             max-width: 220px;
         }
     }
+
+    // 覆盖 tinymce 的样式污染
+    div[class*=language-] {
+
+        code,
+        span {
+            text-shadow: none;
+            background-color: transparent;
+        }
+    }
 }
 
 
