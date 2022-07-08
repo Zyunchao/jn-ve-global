@@ -79,4 +79,11 @@
         height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
         min-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
     }
+
+    // 日期、时间 范围选择框
+    .el-range-editor.el-input__inner {
+        --jn-ve-g-form-item-height: calc(var(--jn-ve-g-table-cell-line-height) - 2px - 2px);
+        --jn-ve-g-form-item-line-height: calc(var(--jn-ve-g-table-cell-line-height) - 2px - 2px);
+        background-color: #fff;
+    }
 }

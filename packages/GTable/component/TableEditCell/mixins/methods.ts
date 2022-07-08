@@ -58,29 +58,21 @@ export default ({
     const datePickerValueVerify = () => {
         // 传递了 props
         if (!!localControlProps.value) {
-            const isValFm =
-                typeof (localControlProps.value as DatePickerControlConfig['props']).valueFormat ===
-                'string'
-            const isRange =
-                (localControlProps.value as DatePickerControlConfig['props']).type === 'daterange'
+            const isRange = ['monthrange', 'datetimerange', 'daterange'].includes(
+                (localControlProps.value as DatePickerControlConfig['props']).type
+            )
 
             if (isRange) {
-                if (Array.isArray(localPropRef.value)) {
-                    return isValFm
-                        ? !localPropRef.value.some((item) => typeof item !== 'string')
-                        : !localPropRef.value.some((item) => !(item instanceof Date))
-                } else {
-                    return false
-                }
-            } else {
-                return isValFm
-                    ? typeof localPropRef.value === 'string'
-                    : localPropRef.value instanceof Date
+                return Array.isArray(localPropRef.value)
             }
         }
 
         // 未传递 props，校验值是否为 Date
-        return localPropRef.value instanceof Date
+        return (
+            localPropRef.value instanceof Date ||
+            typeof localPropRef.value === 'string' ||
+            typeof localPropRef.value === 'number'
+        )
     }
 
     // 转换到编辑状态

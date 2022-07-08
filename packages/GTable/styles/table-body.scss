@@ -9,6 +9,11 @@
         // 可编辑行
         &.is-edit {
             overflow: visible;
+
+            .control {
+                display: flex;
+                align-items: center
+            }
         }
 
         @include cell-content;
