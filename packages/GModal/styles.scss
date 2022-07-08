@@ -103,18 +103,18 @@ $--close-btn-font-size: 22px;
         }
     }
 
-    .el-drawer__body {
+    >.el-drawer__body {
         padding: 0;
         display: flex;
         flex-direction: column;
 
-        .drawer-content {
+        >.drawer-content {
             padding: 14px 0 14px $--dialog-base-left-p;
             height: 100%;
             overflow: hidden;
 
-            .drawer-content-scrollbar {
-                .el-scrollbar__view {
+            >.drawer-content-scrollbar {
+                >.el-scrollbar__wrap>.el-scrollbar__view {
                     padding: 0;
                     overflow: hidden;
                     padding-right: $--dialog-base-left-p;
