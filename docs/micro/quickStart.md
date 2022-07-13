@@ -76,37 +76,7 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 
 ## 基座应用
 
-1. 注册微应用 `/public/microApps/index.js`
-
-![regMicroApps](/images/realize/regMicroApps.png)
-
-```js
-/**
- * interface MicroApp {
- *  // 应用名称，每个name都对应一个应用，当多个应用同时渲染时，name不可以重复。
- *  name: string
- *
- *  // 应用地址
- *  url: string
- *
- *  // 是否开启keep-alive模式，开启keep-alive后，应用卸载时会进入缓存，而不是销毁它们，以便保留应用的状态和提升重复渲染的性能。
- *  keepAlive?: boolean
- * }
- */
-
-// 子应用注册列表，基座应用依据当前列表进行注册子应用，可在生产环境更换
-window.__MICRO_APP_LIST__ = [{
-        name: 'ares',
-        url: 'http://localhost:3001/',
-        keepAlive: true
-    },
-    {
-        name: 'apollo',
-        url: 'http://localhost:3002/',
-        keepAlive: true
-    }
-]
-```
+1. 注册微应用 `/public/microApps/index.js` 详见 [微应用注册列表](./microRegList.md)
 
 2. 确认基座应用的路由模式为 “静态路由” `/.env` 或 `/.env.local`
 

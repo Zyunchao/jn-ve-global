@@ -25,6 +25,10 @@ export default [
         link: '/micro/storeMage.md'
     },
     {
+        text: '微应用注册列表',
+        link: '/micro/microRegList.md'
+    },
+    {
         text: '快速开始',
         children: [
             {
