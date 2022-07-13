@@ -88,26 +88,21 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import Layout from '@/components/business/homeBaseCardLayout/index.vue'
 
-const state = reactive<{
-    notifyList: any[]
-    loadingFalg: boolean
-}>({
-    notifyList: [],
-    loadingFalg: false
-})
+const notifyList = ref<any[]>([])
+const loadingFalg = ref<boolean>(false)
 
 new Promise((res, rej) => {
-    state.loadingFalg = true
+    loadingFalg.value = true
     setTimeout(() => {
         res('a')
     }, 400)
 }).then((res) => {
-    state.loadingFalg = false
+    loadingFalg.value = false
 
-    state.notifyList = [
+    notifyList.value = [
         {
             id: '1',
             text: '省综合金融服务平台“大数据+征信”赋能普惠金融显实效'
