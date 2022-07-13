@@ -227,3 +227,9 @@ window.__MICRO_APP_LIST__ = mappingMicroList(microAppList, isProduction)
 优化的本质，是对之前需要频繁修改注册列表的优化，微应用注册列表的本质还是之前的格式，代码中对于 `__MICRO_APP_LIST__` 的操作，没有任何变化
 
 :::
+
+:::tip
+
+以往的注册列表依旧生效
+
+:::
