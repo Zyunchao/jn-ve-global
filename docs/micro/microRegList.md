@@ -232,4 +232,6 @@ window.__MICRO_APP_LIST__ = mappingMicroList(microAppList, isProduction)
 
 以往的注册列表依旧生效
 
+优化同样适用于远程组件时微应用中的微应用注册列表
+
 :::
