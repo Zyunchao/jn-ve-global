@@ -7,7 +7,7 @@ import {
 } from '../interface/tinymce'
 import { getTinymce } from '../constant/TinyMCE'
 import JnEditorProps from '../interface/JnEditorProps'
-// import { Local } from '../../utils/storage'
+import { getStrSize } from '../../utils/utils'
 
 export type EditorOptions = Parameters<TinyMCE['init']>[0]
 
@@ -152,7 +152,23 @@ export default (
              * undo：撤消更改
              */
             editor
-                .on('change input undo redo', () => emits('update:modelValue', editor.getContent()))
+                .on('change input undo redo', () => {
+                    const content = editor.getContent()
+                    const contentSize = getStrSize(content)
+                    const maxSize = props.size * 1024 * 1024
+
+                    // console.log(`%c contentSize === `, 'color: #e6a23c;', contentSize, maxSize)
+
+                    if (contentSize > maxSize) {
+                        editor.windowManager.alert(
+                            `您输入的内容已超出${props.size}M，后续输入的内容将不会被存储，请联系管理员`
+                        )
+                        return
+                    }
+
+                    // 抛出
+                    emits('update:modelValue', content)
+                })
                 .on('change', (e: EditorEvent<any>) => emits('change', e))
                 .on('input', (e: EditorEvent<any>) => emits('input', e))
                 .on('undo', (e: EditorEvent<any>) => emits('undo', e))

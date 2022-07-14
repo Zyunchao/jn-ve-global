@@ -208,11 +208,39 @@ export function isJSON(str: string) {
  */
 export function funStr2FuncBody(str: string) {
     if (typeof str !== 'string') return false
-    
+
     try {
         return new Function('return ' + str)()
     } catch (e) {
         console.log(`%c error：${str} !!! ${e}`, 'color: #f56c6c;')
         return false
     }
+}
+
+/**
+ * 获取字符串占据内存的大小
+ * @param str 字符串
+ * @param charset Unicode 编码集
+ * @returns
+ */
+export function getStrSize(str: string, charset: string = 'UTF-8') {
+    let total = 0
+    charset = charset?.toLowerCase() || ''
+    for (let i = 0; i < str.length; i++) {
+        let charCode = str.charCodeAt(i)
+        if (charset === 'utf-16' || charset === 'utf16') {
+            total += charCode <= 0xffff ? 2 : 4
+        } else {
+            if (charCode <= 0x007f) {
+                total += 1
+            } else if (charCode <= 0x07ff) {
+                total += 2
+            } else if (charCode <= 0xffff) {
+                total += 3
+            } else {
+                total += 4
+            }
+        }
+    }
+    return total
 }
