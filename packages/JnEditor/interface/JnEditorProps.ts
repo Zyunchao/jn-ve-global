@@ -34,7 +34,7 @@ export default interface JnEditorProps {
      */
     downloadUrl?: string
     /**
-     * 内容现在大小，单位：M
+     * 内容限制大小，单位：M
      */
-    size?: number
+    maxSize?: number
 }

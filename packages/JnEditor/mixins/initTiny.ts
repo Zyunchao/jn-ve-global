@@ -155,13 +155,13 @@ export default (
                 .on('change input undo redo', () => {
                     const content = editor.getContent()
                     const contentSize = getStrSize(content)
-                    const maxSize = props.size * 1024 * 1024
+                    const maxSize = props.maxSize * 1024 * 1024
 
                     // console.log(`%c contentSize === `, 'color: #e6a23c;', contentSize, maxSize)
 
                     if (contentSize > maxSize) {
                         editor.windowManager.alert(
-                            `您输入的内容已超出${props.size}M，后续输入的内容将不会被存储，请联系管理员`
+                            `您输入的内容已超出${props.maxSize}M，后续输入的内容将不会被存储，请联系管理员`
                         )
                         return
                     }

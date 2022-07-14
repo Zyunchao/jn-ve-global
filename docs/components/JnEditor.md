@@ -171,7 +171,7 @@ mode | 编辑器模式 | 'classic' \| 'inline' \| 'distraction-free' | 'classic'
 id | 编辑器依据的 dom 节点 id（非必填，内部会做随机值）| string | uuidv4()
 tagName | inline 模式下的依据 dom 标签名称 | string | 'div'
 disabled | 禁用 | boolean | false
-size | 限制输入内容的大小（单位：M） | number | 20
+maxSize | 限制输入内容的大小（单位：M） | number | 20
 
 ## 事件列表
 

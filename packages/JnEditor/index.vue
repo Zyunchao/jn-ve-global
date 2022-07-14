@@ -61,9 +61,9 @@ interface JnEditorProps {
      */
     downloadUrl?: string
     /**
-     * 内容现在大小，单位：M
+     * 内容限制大小，单位：M
      */
-    size?: number
+    maxSize?: number
 }
 
 const props = withDefaults(defineProps<JnEditorProps>(), {
@@ -74,7 +74,7 @@ const props = withDefaults(defineProps<JnEditorProps>(), {
     disabled: false,
     uploadUrl: '',
     downloadUrl: '',
-    size: 20,
+    maxSize: 20,
     config: () => ({})
 })
 
