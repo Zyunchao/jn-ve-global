@@ -8,6 +8,8 @@ import {
 import { getTinymce } from '../constant/TinyMCE'
 import JnEditorProps from '../interface/JnEditorProps'
 import { getStrSize } from '../../utils/utils'
+import { Local } from '../../utils/storage'
+import { ElMessage } from 'element-plus'
 
 export type EditorOptions = Parameters<TinyMCE['init']>[0]
 
@@ -102,7 +104,7 @@ export default (
         powerpaste_googledocs_import: 'prompt', // 控制如何过滤从 Google 文档粘贴的内容
         paste_data_images: true,
         images_upload_handler: getImagesUploadHandler(props), // 自定义上传
-        file_picker_callback: filPickerCallback, // 文件上传处理函数
+        file_picker_callback: getFilePickerCallback(props), // 文件上传处理函数
         textpattern_patterns: [
             { start: '*', end: '*', format: 'italic' },
             { start: '**', end: '**', format: 'bold' },
@@ -157,8 +159,6 @@ export default (
                     const contentSize = getStrSize(content)
                     const maxSize = props.maxSize * 1024 * 1024
 
-                    // console.log(`%c contentSize === `, 'color: #e6a23c;', contentSize, maxSize)
-
                     if (contentSize > maxSize) {
                         editor.windowManager.alert(
                             `您输入的内容已超出${props.maxSize}M，后续输入的内容将不会被存储，请联系管理员`
@@ -186,110 +186,136 @@ export default (
     editorMounted.value = true
 }
 
-/**
- * 图片上传自定义实现（闭包）
- * @param props 组件参数
- * @returns
- */
+// 闭包获取自定义上传
 function getImagesUploadHandler(props: JnEditorProps) {
+    /**
+     * 上传行为有两种：
+     *  - 上传到服务器，需要同时传递 uploadUrl、downloadUrl
+     *  - 以 base64 存储到页面资源中，文本资源较大
+     *
+     * @param blobInfo
+     * @param success
+     * @param failure
+     * @param progress
+     */
     const imagesUploadHandler: RawEditorSettings['images_upload_handler'] = (
         blobInfo,
         success,
         failure,
         progress
     ) => {
-        /**
-         * 图片转换 base64 存储到页面中
-         */
-        const oFileReader = new FileReader()
-        oFileReader.onloadend = function (e) {
-            success(e.target.result as string)
+        // 上传到服务器中
+        if (props.uploadUrl && props.downloadUrl) {
+            uploadFile(blobInfo.blob(), props, success)
+        } else {
+            // base64 存储
+            const oFileReader = new FileReader()
+            oFileReader.onloadend = function (e) {
+                success(e.target.result as string)
+            }
+            oFileReader.readAsDataURL(blobInfo.blob())
         }
-        oFileReader.readAsDataURL(blobInfo.blob())
-
-        /**
-         * 上传到服务器的逻辑，暂不需要
-         */
-        // 获取鉴权信息，否则放弃
-        // const uploadHeaders = new Headers()
-        // // const vuexCache = Local.get('vuex')
-        // // if (!vuexCache) {
-        // //     failure('上传失败，未能获取登录信息')
-        // //     return
-        // // }
-        // // if (vuexCache.loginInfo['access_token']) {
-        // //     uploadHeaders.append('Authorization', `Bearer ${vuexCache.loginInfo['access_token']}`)
-        // // } else {
-        // //     failure('上传失败，未能获取登录信息')
-        // //     return
-        // // }
-
-        // const file = blobInfo.blob()
-        // const formData = new FormData()
-        // formData.append('file', file)
-
-        // console.log(`%c imagesUploadHandler file == `, 'color: #f56c6c;', file)
-        // console.log(`%c uploadHeaders == `, 'color: #e6a23c;', uploadHeaders)
-
-        // fetch(props.uploadUrl, {
-        //     method: 'POST',
-        //     headers: uploadHeaders,
-        //     body: formData
-        // })
-        //     .then((response) => response.json())
-        //     .then((result) => {
-        //         if (result.code === '000000') {
-        //             // console.log(`%c result.data === `, 'color: #e6a23c;', result.data)
-        //             success(result.data.fileUrl)
-        //         } else {
-        //             failure(result.msg)
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         failure(error)
-        //     })
     }
 
     return imagesUploadHandler
 }
 
-/**
- * 文件上传处理函数
- * @param callback
- * @param value
- * @param meta
- */
-function filPickerCallback(callback, value, meta) {
-    let filetype // 限制文件的上传类型,需要什么就添加什么的后缀
-    if (meta.filetype === 'image') {
-        filetype = '.jpg, .jpeg, .png, .gif, .ico, .svg'
-    } else if (meta.filetype === 'media') {
-        filetype = '.mp3, .mp4, .avi, .mov'
-    } else {
-        filetype =
-            '.pdf, .txt, .zip, .rar, .7z, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .mp3, .mp4, .jpg, .jpeg, .png, .gif, .ico, .svg'
-    }
-    const inputElem = document.createElement('input') // 创建文件选择
-    inputElem.setAttribute('type', 'file')
-    inputElem.setAttribute('accept', filetype)
-    inputElem.click()
-    inputElem.onchange = () => {
-        const file = inputElem.files[0] // 获取文件信息
+// 闭包获取文件上传（按钮）处理函数
+function getFilePickerCallback(props: JnEditorProps) {
+    /**
+     * 文件上传处理函数
+     *
+     * @param callback
+     * @param value
+     * @param meta
+     */
+    return function filePickerCallback(callback, value, meta) {
+        // 限制文件的上传类型,需要什么就添加什么的后缀
+        let filetype: string
 
-        // 所有都转成base64文件流,来自官方文档https://www.tiny.cloud/docs/configure/file-image-upload/#file_picker_callback
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = function () {
-            // Note: Now we need to register the blob in TinyMCEs image blob
-            // registry. In the next release this part hopefully won't be
-            // necessary, as we are looking to handle it internally.
-            const id = 'blobid' + new Date().getTime()
-            const blobCache = getTinymce().activeEditor.editorUpload.blobCache
-            const base64 = (reader.result as string).split(',')[1]
-            const blobInfo = blobCache.create(id, file, base64)
-            blobCache.add(blobInfo)
+        if (meta.filetype === 'image') {
+            filetype = imgSuffix.join(',')
+        } else if (meta.filetype === 'media') {
+            filetype = '.mp3, .mp4, .avi, .mov'
+        } else {
+            filetype =
+                '.pdf, .txt, .zip, .rar, .7z, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .mp3, .mp4, .jpg, .jpeg, .png, .gif, .ico, .svg'
+        }
 
-            callback(blobInfo.blobUri(), { title: file.name })
+        // 创建文件选择
+        const inputElem = document.createElement('input')
+        inputElem.setAttribute('type', 'file')
+        inputElem.setAttribute('accept', filetype)
+        inputElem.click()
+
+        // 文件列表发生变化，获取文件信息执行上传
+        inputElem.onchange = () => {
+            const file = inputElem.files[0]
+
+            // 上传到服务器
+            if (props.uploadUrl && props.downloadUrl) {
+                uploadFile(file, props, (url) => {
+                    callback(url, { title: file.name })
+                })
+            } else {
+                // base64 存储
+                const reader = new FileReader()
+                reader.readAsDataURL(file)
+                reader.onload = function () {
+                    const id = 'blobid' + new Date().getTime()
+                    const blobCache = getTinymce().activeEditor.editorUpload.blobCache
+                    const base64 = (reader.result as string).split(',')[1]
+                    const blobInfo = blobCache.create(id, file, base64)
+                    blobCache.add(blobInfo)
+
+                    callback(blobInfo.blobUri(), { title: file.name })
+                }
+            }
         }
     }
+}
+
+/**
+ * 上传文件 handle
+ * @param file 文件
+ * @param props 组件参数
+ * @param success 成功回调
+ * @returns
+ */
+function uploadFile(file: Blob | File, props: JnEditorProps, success: (url: string) => void) {
+    // 获取鉴权信息，否则放弃
+    const uploadHeaders = new Headers()
+
+    const vuexCache = Local.get('vuex')
+    if (!vuexCache) {
+        ElMessage.error('上传失败，未能获取登录信息')
+        return
+    }
+    if (vuexCache.loginInfo['access_token']) {
+        uploadHeaders.append('Authorization', `Bearer ${vuexCache.loginInfo['access_token']}`)
+    } else {
+        ElMessage.error('上传失败，未能获取登录信息')
+        return
+    }
+
+    const formData = new FormData()
+    formData.append('file', file)
+
+    // 通信
+    fetch(props.uploadUrl, {
+        method: 'POST',
+        headers: uploadHeaders,
+        body: formData
+    })
+        .then((response) => response.json())
+        .then((result) => {
+            if (result.code === '000000') {
+                success(`${props.downloadUrl}/${result.data.fileId}`)
+            } else {
+                ElMessage.error(result.msg)
+            }
+        })
+        .catch((error) => {
+            ElMessage.error(error)
+        })
 }
