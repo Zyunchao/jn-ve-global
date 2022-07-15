@@ -9,6 +9,8 @@ import treeData from '../../selectTreeTest/data.json'
 import FileSource from '../fileList.json'
 import { reactive } from 'vue'
 
+const prefix = '/api'
+
 export default () => {
     const formConfig = reactive<FormProps>({
         instance: null,
@@ -368,7 +370,7 @@ export default () => {
                 controlConfig: {
                     type: 'upload',
                     props: {
-                        action: '/api/kinso-basic-open-server/v1/document/file/upload',
+                        action: `${prefix}/kinso-basic-open-server/v1/document/file/upload`,
                         fileList: FileSource.map((item) => {
                             return {
                                 name: item.fileRName,
@@ -415,6 +417,8 @@ export default () => {
                     type: 'jnEditor',
                     props: {
                         // disabled: true,
+                        // uploadUrl: `${prefix}/kinso-basic-open-server/v1/document/file/upload`,
+                        // downloadUrl: `${prefix}/kinso-basic-open-server/v1/document/file/download`,
                         onSetup(editor) {
                             console.log(`%c setup run......`, 'color: #67c23a;', +new Date())
                         },
