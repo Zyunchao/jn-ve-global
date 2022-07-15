@@ -206,7 +206,7 @@ function getImagesUploadHandler(props: JnEditorProps) {
     ) => {
         // 上传到服务器中
         if (props.uploadUrl && props.downloadUrl) {
-            uploadFile(blobInfo.blob(), props, success)
+            uploadFile(blobInfo.blob(), props, success, failure)
         } else {
             // base64 存储
             const oFileReader = new FileReader()
@@ -282,19 +282,28 @@ function getFilePickerCallback(props: JnEditorProps) {
  * @param success 成功回调
  * @returns
  */
-function uploadFile(file: Blob | File, props: JnEditorProps, success: (url: string) => void) {
+function uploadFile(
+    file: Blob | File,
+    props: JnEditorProps,
+    success: (url: string) => void,
+    failure?: (err: string) => void
+) {
     // 获取鉴权信息，否则放弃
     const uploadHeaders = new Headers()
 
     const vuexCache = Local.get('vuex')
     if (!vuexCache) {
-        ElMessage.error('上传失败，未能获取登录信息')
+        !!failure
+            ? failure('上传失败，未能获取登录信息')
+            : ElMessage.error('上传失败，未能获取登录信息')
         return
     }
     if (vuexCache.loginInfo['access_token']) {
         uploadHeaders.append('Authorization', `Bearer ${vuexCache.loginInfo['access_token']}`)
     } else {
-        ElMessage.error('上传失败，未能获取登录信息')
+        !!failure
+            ? failure('上传失败，未能获取登录信息')
+            : ElMessage.error('上传失败，未能获取登录信息')
         return
     }
 
@@ -312,10 +321,10 @@ function uploadFile(file: Blob | File, props: JnEditorProps, success: (url: stri
             if (result.code === '000000') {
                 success(`${props.downloadUrl}/${result.data.fileId}`)
             } else {
-                ElMessage.error(result.msg)
+                !!failure ? failure(result.msg) : ElMessage.error(result.msg)
             }
         })
         .catch((error) => {
-            ElMessage.error(error)
+            !!failure ? failure(error) : ElMessage.error(error)
         })
 }
