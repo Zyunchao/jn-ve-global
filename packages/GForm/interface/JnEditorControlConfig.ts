@@ -11,21 +11,33 @@ export interface FormControlJnEditorProps {
      */
     config?: RawEditorSettings
     /**
-     * 编辑器模式
+     * 模式
      */
     mode?: 'classic' | 'inline' | 'distraction-free'
     /**
-     * 生成编辑器的 dom id
+     * dom Id
      */
     id?: string
     /**
-     * 内联编辑器的标签 name
+     * 内联模式下，标签的名字
      */
     tagName?: string
     /**
-     * 是否禁用
+     * 禁用
      */
     disabled?: boolean
+    /**
+     * 上传文件的 url
+     */
+    uploadUrl?: string
+    /**
+     * 下载、展示的 url
+     */
+    downloadUrl?: string
+    /**
+     * 内容限制大小，单位：M
+     */
+    maxSize?: number
 }
 
 export interface FormControlJnEditorEvents {
