@@ -10,6 +10,7 @@
                 v-model="html"
                 :disabled="editDisabled"
                 :upload-url="uploadUrl"
+                :download-url="downloadUrl"
                 :config="cunstomConfig"
                 @setup="editSetupHandle"
                 @initInstanceCallback="initInstanceCallback"
@@ -27,16 +28,17 @@ export default {
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { TinyMCE, BtnProps, TabPaneProps } from '@component/index'
-import MyTinyEditor from './Tinymce.vue'
 
 const prefix = '/api'
 
 const jnEditorRef = ref<any>(null)
 
-const html = ref<string>('<h1>Hello Tiny!</h1>')
+const html = ref<string>('')
 const isDestroy = ref<boolean>(false)
 const editDisabled = ref<boolean>(false)
+
 const uploadUrl = `${prefix}/kinso-basic-open-server/v1/document/file/upload`
+const downloadUrl = `${prefix}/kinso-basic-open-server/v1/document/file/download`
 
 // 追加功能
 const cunstomConfig = {

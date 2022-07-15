@@ -161,6 +161,116 @@ interface JnEditor {
 
 </demo-block>
 
+### 文件上传
+
+目前富文本支持的文件上传：
+
+* 图片
+* 视频
+
+:::tip
+
+建议只将 图片 & 视频 作为内嵌文本内容，其他附件用业务划分出去
+
+:::
+
+文件上传分为服务器上传与文本内嵌两种，区别：
+
+* 服务器上传需要配置上传与下载路径，需要后台服务的支持，组件与业务是强关联关系
+* 文本内嵌不需要后台的支持，但是内容（图片、视频）会以 base64 的形式存储在整个内容里面，会造成数据超大，需要注意数据库中字段的类型设置
+
+#### 服务器上传
+
+:::tip 注意
+
+服务器上传需要配置上传与下载路径（缺一不可），本身图片与视频的获取资源就是一个 get 请求
+
+服务器上传方式，是与业务强关联的，组件内部对于接口响应是约定格式的，且组件需要获取到登录信息（组件通过获取系统业务框架存储在 localStorage 中的登录信息实现）
+
+:::
+
+本身统一管理平台这边提供了上传与下载的接口，可以都使用平台的接口，后台也可以自定义接口，但会返回的数据格式要符合如下结构：
+
+```json
+{
+    "code": "000000",
+    "data": {
+        "fileId": "3,017c821ca4eacb",
+        "lastModified": 0,
+        "fileName": null,
+        "contentType": null,
+        "size": 52614,
+        "fileUrl": "http://172.31.71.131:7080/3,017c821ca4eacb"
+    },
+    "msg": "执行成功!",
+    "status": 200,
+    "success": true
+}
+```
+
+平台提供的接口（可直接在业务框架中复制粘贴使用）：
+
+```ts
+import prefix from '@/api/prefix'
+
+const uploadUrl = `${prefix}/kinso-basic-open-server/v1/document/file/upload`
+const downloadUrl = `${prefix}/kinso-basic-open-server/v1/document/file/download`
+```
+
+:::tip
+
+`prefix` 是基座处于开发模式下所必须的代理前缀，基于已部署的基座开发模式，可忽略 `prefix`
+
+:::
+
+:::danger 注意
+
+组件库文档处于 gitlab 自动部署，部署环境没有后台服务，文档中的服务器上传示例，仅做代码的查看，请将代码粘贴到项目中测试服务器上传
+
+:::
+
+<demo-block>
+
+<JnEditor-serverUpload />
+
+<template #code>
+
+@[code](@demoroot/JnEditor/serverUpload.vue)
+
+</template>
+
+</demo-block>
+
+:::tip
+
+在粘贴图片时，等同于点击上传图片，与上传按钮上传不同在于：
+
+如果上传失败，图片将以 base64 内嵌到内容中
+
+:::
+
+#### 页面内嵌（默认）
+
+上传图片，打开控制台，查看输出的日志
+
+<demo-block>
+
+<JnEditor-contentStorage />
+
+<template #code>
+
+@[code](@demoroot/JnEditor/contentStorage.vue)
+
+</template>
+
+</demo-block>
+
+:::warning
+
+以 base64 存储时，意味着这一个字段可能会很大，组件内置了限制输入内容的大小，通过 `maxSize` api 控制，默认 100M
+
+:::
+
 ## Attributes
 
 参数|说明|类型|默认值
@@ -171,7 +281,9 @@ mode | 编辑器模式 | 'classic' \| 'inline' \| 'distraction-free' | 'classic'
 id | 编辑器依据的 dom 节点 id（非必填，内部会做随机值）| string | uuidv4()
 tagName | inline 模式下的依据 dom 标签名称 | string | 'div'
 disabled | 禁用 | boolean | false
-maxSize | 限制输入内容的大小（单位：M） | number | 20
+maxSize | 限制输入内容的大小（单位：M） | number | 100
+uploadUrl | 上传文件的 url | string | --
+downloadUrl | 内容链接文件（图片、视频）的 url | string | --
 
 ## 事件列表
 

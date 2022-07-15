@@ -74,7 +74,7 @@ const props = withDefaults(defineProps<JnEditorProps>(), {
     disabled: false,
     uploadUrl: '',
     downloadUrl: '',
-    maxSize: 20,
+    maxSize: 100,
     config: () => ({})
 })
 
