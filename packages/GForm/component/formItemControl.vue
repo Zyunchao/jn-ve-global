@@ -174,6 +174,7 @@
                 v-model="localPropRef"
                 v-model:fileList="localUploadFileList"
                 v-bind="controlConfig.props"
+                :disabled="controlDisabled"
             />
         </template>
 
@@ -237,7 +238,11 @@
 
         <!-- 富文本 -->
         <template v-if="localControlType === 'jnEditor'">
-            <LJnEditor v-model="localPropRef" v-bind="controlConfig.props" />
+            <LJnEditor
+                v-model="localPropRef"
+                v-bind="controlConfig.props"
+                :disabled="controlDisabled"
+            />
         </template>
     </template>
 </template>
@@ -250,7 +255,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, computed, toRef, onMounted, watch, onUnmounted, watchEffect } from 'vue'
+import { ref, computed, toRef, inject, watch, onUnmounted, watchEffect } from 'vue'
 import {
     FormItemProps,
     RadioOptionProps,
@@ -270,6 +275,8 @@ import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
 import LGAddress from '../../GAddress/index.vue'
 import LJnEditor from '../../JnEditor/index.vue'
+
+import formConfigProvideKey from '../constant/formConfigProvideKey'
 
 import addInputDisabledTooltip from '../mixins/inputDisabledTooltip'
 import getControlOprions from '../mixins/getControlOprions'
@@ -296,9 +303,17 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emits = defineEmits(['controlFocus', 'controlBlur'])
+const rootFormConfig = inject(formConfigProvideKey)
 
 const localControlType = computed(() => props.controlConfig.type)
 const localPropRef = ref(props.prop)
+
+// 个别控件需要手动同步 form 的 disabled 状态
+const controlDisabled = computed(() =>
+    rootFormConfig.value.disabled
+        ? rootFormConfig.value.disabled
+        : (props.controlConfig.props as any).disabled
+)
 
 /**
  * input 禁用时，tooltip 处理

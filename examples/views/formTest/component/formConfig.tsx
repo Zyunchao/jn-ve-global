@@ -381,7 +381,6 @@ export default () => {
                         name: 'file',
                         size: 2,
                         listType: 'picture-card',
-                        disabled: false,
                         onSuccess(res) {
                             if (res.code === '000000') {
                                 const config = formConfig.formItems.find(

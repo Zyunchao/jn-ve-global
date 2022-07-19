@@ -74,11 +74,12 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, PropType, ref, toRef, nextTick, computed, isReactive } from 'vue'
+import { watch, provide, ref, toRef, nextTick, computed, isReactive } from 'vue'
 import { FormProps, FormItemProps, FormInstance } from './index'
 import FunctionalComponent from '../FunctionalComponent'
 import FormItemControl from './component/formItemControl.vue'
 import FormItemControlGroup from './component/formItemControlGroup.vue'
+import formConfigProvideKey from './constant/formConfigProvideKey'
 
 const props = withDefaults(
     defineProps<{
@@ -88,6 +89,8 @@ const props = withDefaults(
         config: () => null
     }
 )
+
+provide(formConfigProvideKey, toRef(props, 'config'))
 
 const localInstance = ref<FormInstance | null>(null)
 const refreshLoad = ref(true)

@@ -1,9 +1,12 @@
 <template>
-    <div :class="!isComponent ? 'examples-base-wrapper' : ''">
-        <el-scrollbar>
-            <g-form :config="formConfig" />
-            <g-button-group v-if="!isComponent" :btns="btns" />
-        </el-scrollbar>
+    <div class="form-test" :class="!isComponent ? 'examples-base-wrapper' : ''">
+        <div class="form-content">
+            <el-scrollbar>
+                <g-form :config="formConfig" />
+            </el-scrollbar>
+        </div>
+
+        <g-button-group v-if="!isComponent" :btns="btns" />
     </div>
 </template>
 
@@ -60,27 +63,57 @@ const btns: BtnProps[] = [
                 }
             ]
         }
+    },
+    {
+        label: '禁用',
+        type: 'danger',
+        hide: () => formConfig.disabled,
+        onClick() {
+            formConfig.disabled = true
+        }
+    },
+    {
+        label: '解除禁用',
+        type: 'warning',
+        hide: () => !formConfig.disabled,
+        onClick() {
+            formConfig.disabled = false
+        }
     }
 ]
 </script>
 
 <style lang="scss">
-.form-test-custom-label {
-    span {
-        &:first-of-type {
-            color: red;
+.form-test {
+    .form-content {
+        height: calc(100% - 50px);
+
+        .el-scrollbar__view {
+            padding-right: 20px;
         }
-        &:nth-of-type(2) {
-            color: orange;
-        }
-        &:nth-of-type(3) {
-            color: blue;
-        }
-        &:nth-of-type(4) {
-            color: green;
-        }
-        &:nth-of-type(5) {
-            color: purple;
+    }
+
+    .g-button-group {
+        margin-top: 10px;
+    }
+
+    .form-test-custom-label {
+        span {
+            &:first-of-type {
+                color: red;
+            }
+            &:nth-of-type(2) {
+                color: orange;
+            }
+            &:nth-of-type(3) {
+                color: blue;
+            }
+            &:nth-of-type(4) {
+                color: green;
+            }
+            &:nth-of-type(5) {
+                color: purple;
+            }
         }
     }
 }
