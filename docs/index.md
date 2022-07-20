@@ -32,8 +32,8 @@ features:
 
 ## 资料站
 
-🗻 &nbsp; [Vue3](https://vue3js.cn/docs/zh/) <br/>
-🎠 &nbsp; [Typescript](https://www.tslang.cn/index.html) <br/>
+🗻 &nbsp; [Vue3](https://staging-cn.vuejs.org) <br/>
+🎠 &nbsp; [Typescript](https://ts.yayujs.com/handbook/TheBasics.html#%E5%9F%BA%E7%A1%80-the-basics) <br/>
 💈 &nbsp; [Element-plus](https://element-plus.gitee.io/#/zh-CN/component/installation) <br/>
 🚀 &nbsp; [Vite](https://cn.vitejs.dev/) <br/>
 📦 &nbsp; [Vue-cli](https://cli.vuejs.org/zh/) <br/>
