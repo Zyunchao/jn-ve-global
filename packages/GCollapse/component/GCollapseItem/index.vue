@@ -1,6 +1,7 @@
 <template>
     <el-collapse-item class="custom-collapse-item">
         <template #title>
+            <LGIcon v-if="prefix" :icon="prefix" class="prefix-icon" />
             <span>{{ attrs.title }}</span>
             <LGIcon icon="el-DArrowRight" class="active-icon" />
         </template>
@@ -49,12 +50,17 @@ interface Props {
      * 高度，表格可能需要最小高度
      */
     height?: number
+    /**
+     * 前缀图标
+     */
+    prefix?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     formConfig: null,
     tableConfig: null,
-    height: 300
+    height: 300,
+    prefix: ''
 })
 
 const attrs = useAttrs()
@@ -76,18 +82,23 @@ $--icon-l: 10px;
         overflow: hidden;
 
         // > span {
-        //     // position: relative;
+        //     position: relative;
 
-        //     // &::after {
-        //     //     content: '';
-        //     //     width: 10000px;
-        //     //     height: 1px;
-        //     //     background-color: #e1e1e1;
-        //     //     position: absolute;
-        //     //     top: 50%;
-        //     //     left: calc(100% + $--icon-size + $--icon-l * 2);
-        //     //     transform: translateY(-50%);
-        //     // }
+        //     &::after {
+        //         content: '';
+        //         width: 10000px;
+        //         height: 1px;
+        //         background-color: #e1e1e1;
+        //         position: absolute;
+        //         top: 50%;
+        //         left: calc(100% + $--icon-size + $--icon-l * 2);
+        //         transform: translateY(-50%);
+        //     }
+        // }
+
+        // .custom-svg-icon {
+        //     margin-right: 4px;
+        //     font-size: inherit;
         // }
 
         .active-icon {
@@ -96,6 +107,11 @@ $--icon-l: 10px;
             margin-left: $--icon-l;
             transition: transform 0.3s;
             color: #c2c2c2;
+        }
+
+        .prefix-icon {
+            font-size: inherit;
+            margin-right: 4px;
         }
 
         .el-collapse-item__arrow {
