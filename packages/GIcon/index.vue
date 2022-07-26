@@ -48,7 +48,7 @@ const elIconComponentName = computed(() => {
     line-height: 1;
     width: auto;
     height: auto;
-    
+
     svg {
         vertical-align: top;
     }

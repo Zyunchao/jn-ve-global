@@ -2,7 +2,7 @@
 import './assets/styles/index.scss'
 
 // 图标
-import '@component/assets/icons/ali/iconfont.css'
+import './assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
 
 /**

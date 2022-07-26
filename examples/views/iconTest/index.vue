@@ -21,7 +21,7 @@
 
         <h3>IconPicker</h3>
         <div class="box">
-            <g-icon-picker v-model="selectedIcon" disabled />
+            <g-icon-picker v-model="selectedIcon" />
         </div>
     </div>
 </template>
