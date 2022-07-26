@@ -1,8 +1,8 @@
 export default `@font-face {
   font-family: "iconfont"; /* Project id 2683065 */
-  src: url('iconfont.woff2?t=1638166890255') format('woff2'),
-       url('iconfont.woff?t=1638166890255') format('woff'),
-       url('iconfont.ttf?t=1638166890255') format('truetype');
+  src: url('iconfont.woff2?t=1658816024386') format('woff2'),
+       url('iconfont.woff?t=1658816024386') format('woff'),
+       url('iconfont.ttf?t=1658816024386') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,122 @@ export default `@font-face {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ali-icon-zujian:before {
+  content: "\e648";
+}
+
+.ali-icon-switch:before {
+  content: "\e746";
+}
+
+.ali-icon-danxuankuang-copy:before {
+  content: "\e608";
+}
+
+.ali-icon-shijian:before {
+  content: "\e667";
+}
+
+.ali-icon-shuxing:before {
+  content: "\e67a";
+}
+
+.ali-icon-touxiang:before {
+  content: "\e60d";
+}
+
+.ali-icon-biaodanzujian-shurukuang:before {
+  content: "\eb94";
+}
+
+.ali-icon-biaodanzujian-xialakuang:before {
+  content: "\eb95";
+}
+
+.ali-icon-biaodanzujian-anniu:before {
+  content: "\eb96";
+}
+
+.ali-icon-switch1:before {
+  content: "\e87d";
+}
+
+.ali-icon-yunduanshangchuan:before {
+  content: "\ec1d";
+}
+
+.ali-icon-xiaolian:before {
+  content: "\ec80";
+}
+
+.ali-icon-shijian1:before {
+  content: "\e604";
+}
+
+.ali-icon-24gl-calendar:before {
+  content: "\eb3f";
+}
+
+.ali-icon-shijian2:before {
+  content: "\e65b";
+}
+
+.ali-icon-biaodanzujian-biaoge:before {
+  content: "\e60e";
+}
+
+.ali-icon-dizhixuanze:before {
+  content: "\e615";
+}
+
+.ali-icon-riqixuanze:before {
+  content: "\e618";
+}
+
+.ali-icon-jiliandongxuanzeqi:before {
+  content: "\e619";
+}
+
+.ali-icon-shuzhuangjiegou:before {
+  content: "\e61b";
+}
+
+.ali-icon-wujiliandongdizhi:before {
+  content: "\e61d";
+}
+
+.ali-icon-xialaxuanze:before {
+  content: "\e61e";
+}
+
+.ali-icon-zhankaibiaodan:before {
+  content: "\e61f";
+}
+
+.ali-icon-zidongbuquanshurukuang:before {
+  content: "\e620";
+}
+
+.ali-icon-fuwenben:before {
+  content: "\e706";
+}
+
+.ali-icon-checkbox-ok:before {
+  content: "\ea68";
+}
+
+.ali-icon-bumenxuanze:before {
+  content: "\e63e";
+}
+
+.ali-icon-shuzi:before {
+  content: "\e640";
+}
+
+.ali-icon-fujian:before {
+  content: "\e63f";
 }
 
 .ali-icon-quanping:before {
