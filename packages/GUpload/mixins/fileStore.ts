@@ -18,13 +18,6 @@ export default ({ emits, props }) => {
         }
     })
 
-    watch(
-        () => currentFile.value,
-        (file) => {
-            console.log(`%c currentFile === `, 'color: #67c23a;', file)
-        }
-    )
-
     return {
         currentFile,
         localFileList

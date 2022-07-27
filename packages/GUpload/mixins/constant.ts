@@ -92,9 +92,10 @@ export default () => {
      * avatar 模式将限制文件类型为 'image/*'
      * 其他这由用户指定
      */
-    const localAccept = computed(() =>
-        attrs.value['list-type'] === 'avatar' ? 'image/*' : attrs.value['accept']
-    )
+    const localAccept = computed(() => {
+        if (attrs.value['accept']) return attrs.value['accept']
+        return attrs.value['list-type'] === 'avatar' ? 'image/*' : attrs.value['accept']
+    })
 
     return {
         modalShow,
