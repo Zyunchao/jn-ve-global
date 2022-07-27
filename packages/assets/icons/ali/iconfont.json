@@ -6,6 +6,27 @@
   "description": "统一管理平台",
   "glyphs": [
     {
+      "icon_id": "1635107",
+      "name": "06-组件",
+      "font_class": "-zujian",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "6246309",
+      "name": "组件",
+      "font_class": "zujian1",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "23626694",
+      "name": "多行输入",
+      "font_class": "duohangshuru",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
       "icon_id": "1183004",
       "name": "组件",
       "font_class": "zujian",

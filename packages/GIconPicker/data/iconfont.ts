@@ -1,8 +1,8 @@
 export default `@font-face {
   font-family: "iconfont"; /* Project id 2683065 */
-  src: url('iconfont.woff2?t=1658816024386') format('woff2'),
-       url('iconfont.woff?t=1658816024386') format('woff'),
-       url('iconfont.ttf?t=1658816024386') format('truetype');
+  src: url('iconfont.woff2?t=1658904637784') format('woff2'),
+       url('iconfont.woff?t=1658904637784') format('woff'),
+       url('iconfont.ttf?t=1658904637784') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,18 @@ export default `@font-face {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ali-icon--zujian2:before {
+  content: "\e609";
+}
+
+.ali-icon-zujian1:before {
+  content: "\e652";
+}
+
+.ali-icon-duohangshuru:before {
+  content: "\e64a";
 }
 
 .ali-icon-zujian:before {
