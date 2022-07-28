@@ -5,14 +5,21 @@
         class="g-form"
         v-bind="formRootConfigs"
     >
-        <el-row :gutter="localConfig.gutter ?? 20">
-            <template v-for="item in localConfig.formItems" :key="item.prop">
-                <el-col v-if="!item.hide" v-bind="getElColConfigs(item)">
-                    <!-- 增强的 form-item -->
-                    <LGFormItem :form-config="localConfig" :form-item-config="item" />
-                </el-col>
-            </template>
-        </el-row>
+        <!-- 
+            提供默认插槽
+            - 可以自定义表单内容的渲染
+            - 配合拖拽平台
+         -->
+        <slot :form-items="localConfig.formItems">
+            <el-row :gutter="localConfig.gutter ?? 20">
+                <template v-for="item in localConfig.formItems" :key="item.prop">
+                    <el-col v-if="!item.hide" v-bind="getElColConfigs(item)">
+                        <!-- 增强的 form-item -->
+                        <LGFormItem :form-config="localConfig" :form-item-config="item" />
+                    </el-col>
+                </template>
+            </el-row>
+        </slot>
     </el-form>
 </template>
 <script lang="ts">
