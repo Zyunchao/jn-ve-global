@@ -5,63 +5,11 @@
         class="g-form"
         v-bind="formRootConfigs"
     >
-        <!-- 栅格 row -->
         <el-row :gutter="localConfig.gutter ?? 20">
             <template v-for="item in localConfig.formItems" :key="item.prop">
-                <!-- 栅格 col -->
                 <el-col v-if="!item.hide" v-bind="getElColConfigs(item)">
-                    <el-form-item
-                        :class="{ 'no-colon': localConfig.colon === false }"
-                        v-bind="getFormItemConfigs(item)"
-                        :label-width="
-                            item.label
-                                ? item.labelWidth
-                                    ? item.labelWidth
-                                    : localConfig.labelWidth
-                                        ? localConfig.labelWidth
-                                        : 'auto'
-                                : '0px'
-                        "
-                    >
-                        <!-- 自定义 label -->
-                        <template v-if="item.label" #label>
-                            <span v-if="typeof item.label === 'string'">
-                                {{ item.label }}
-                            </span>
-
-                            <!-- tsx -->
-                            <FunctionalComponent
-                                v-if="typeof item.label === 'function'"
-                                :render="item.label()"
-                            />
-                        </template>
-
-                        <!-- 优先级1：自定义 Render 控件 -->
-                        <template v-if="item.render">
-                            <FunctionalComponent
-                                :render="item.render(toRef(localConfig.model, item.prop))"
-                            />
-                        </template>
-
-                        <!-- 优先级2：配置式控件（组） -->
-                        <template v-else-if="item.controlConfigs && item.controlConfigs.length > 0">
-                            <FormItemControlGroup
-                                :form-item-config="item"
-                                :control-configs="item.controlConfigs"
-                                :source-model="localConfig.model"
-                                :prop-key="item.prop"
-                            />
-                        </template>
-
-                        <!-- 优先级3：配置式控件（单） -->
-                        <template v-else-if="item.controlConfig">
-                            <FormItemControl
-                                :form-item-config="item"
-                                :control-config="item.controlConfig"
-                                :prop="toRef(localConfig.model, item.prop)"
-                            />
-                        </template>
-                    </el-form-item>
+                    <!-- 增强的 form-item -->
+                    <LGFormItem :form-config="localConfig" :form-item-config="item" />
                 </el-col>
             </template>
         </el-row>
@@ -74,21 +22,18 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, provide, ref, toRef, nextTick, computed, isReactive } from 'vue'
+import { watch, provide, ref, toRef, nextTick, computed } from 'vue'
 import { FormProps, FormItemProps, FormInstance } from './index'
-import FunctionalComponent from '../FunctionalComponent'
-import FormItemControl from './component/formItemControl.vue'
-import FormItemControlGroup from './component/formItemControlGroup.vue'
+import LGFormItem from './component/GFormItem/index.vue'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 
-const props = withDefaults(
-    defineProps<{
-        config: FormProps
-    }>(),
-    {
-        config: () => null
-    }
-)
+interface Props {
+    config: FormProps
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    config: () => null
+})
 
 provide(formConfigProvideKey, toRef(props, 'config'))
 
@@ -130,27 +75,6 @@ const formRootConfigs = computed(() => {
     const { instance, formItems, gutter, colon, ...formConfigs } = props.config
     return formConfigs
 })
-
-// 获取 formItem 的配置（二级配置）
-const getFormItemConfigs = (item: FormItemProps) => {
-    const {
-        label,
-        hide,
-        group,
-        render,
-        controlConfigs,
-        controlConfig,
-        span,
-        offset,
-        xs,
-        sm,
-        md,
-        lg,
-        xl,
-        ...formItemConfigs
-    } = item
-    return formItemConfigs
-}
 
 const getElColConfigs = (item: FormItemProps) => {
     const baseConfig = {
