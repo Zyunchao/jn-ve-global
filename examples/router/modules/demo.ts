@@ -128,6 +128,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/jneditor-test',
         component: () => import('@/views/jnEditor/index.vue')
+    },
+    {
+        path: '/splitItem-test',
+        component: () => import('@/views/formTest/splitItem.vue')
     }
 ]
 
