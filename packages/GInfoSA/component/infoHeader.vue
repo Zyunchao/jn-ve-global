@@ -114,7 +114,7 @@ const emits = defineEmits(['paramsChange', 'preventParentPopperHide'])
 
 const infoHeaderWrapRef = ref<HTMLElement>(null)
 const infoHeaderHight = ref<number>(34)
-const localZI = computed(() => parseInt(props.zIndex) + 5)
+const localZI = computed(() => parseInt(props.zIndex) + 1)
 
 // ------------- 参数处理：select 带有分页的 ----------------------------------------------------------------------
 const isCreateQuery = ref<boolean>(false)
