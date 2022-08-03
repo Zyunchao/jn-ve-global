@@ -11,7 +11,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, nextTick } from 'vue'
 
 const props = withDefaults(
     defineProps<{
@@ -40,10 +40,12 @@ const symbolId = computed<string>(() => `#${props.prefix}-${props.name}`)
  * 注意：生成的组件是全局统一的，也就是说，只会生成这一个，svg 就这一个
  */
 onMounted(() => {
-    const currentSymbol = document.querySelector(symbolId.value)
-    if (currentSymbol && props.customColor) {
-        currentSymbol.classList.add('svg-icon-custom-color')
-    }
+    setTimeout(() => {
+        const currentSymbol = document.querySelector(symbolId.value)
+        if (currentSymbol && props.customColor) {
+            currentSymbol.classList.add('svg-icon-custom-color')
+        }
+    }, 0)
 })
 </script>
 <style lang="scss" scoped>
