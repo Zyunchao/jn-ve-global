@@ -43,3 +43,26 @@ export function clearNoNum(str: string | number) {
         .replace(/\./g, '') // 除特殊字符的 . 其余替换掉
         .replace('$#$', '.') // 将保留的特殊字符转换成 .
 }
+
+/**
+ * 依照数值，获取当前数值的单位
+ * @param number 
+ * @returns 
+ */
+export function getNumUnit(number: number) {
+    if (!number && number !== 0) return number
+    let unit: string = ''
+    const mapping = {
+        '千': number >= 1e3 && number < 1e4,
+        '万': number >= 1e4 && number < 1e5,
+        '十万': number >= 1e5 && number < 1e6,
+        '百万': number >= 1e6 && number < 1e7,
+        '千万': number >= 1e7 && number < 1e8,
+        '亿': number >= 1e8 && number < 1e9,
+        '十亿': number >= 1e9 && number < 1e10,
+        '百亿': number >= 1e10 && number < 1e11,
+        '千亿': number >= 1e11 && number < 1e12
+    }
+    unit = Object.keys(mapping).find((key) => mapping[key]) || ''
+    return unit
+}

@@ -1,20 +1,22 @@
 <template>
-    <!-- 负责搜集数据的框 -->
-    <el-input
-        v-show="!showInputShow"
-        ref="gatherFigureInputRef"
-        v-model="gatherFigureInputVal"
-        v-bind="$attrs"
-        @blur="gatherFigureInputControlBlur"
-    />
-    <!-- 展示的框 -->
-    <el-input
-        v-show="showInputShow"
-        ref="showFigureInputRef"
-        v-model="showFigureInputVal"
-        v-bind="$attrs"
-        @focus="showFigureInputControlFocus"
-    />
+    <div :data-unit="unit" class="g-figure-input">
+        <!-- 负责搜集数据的框 -->
+        <el-input
+            v-show="!showInputShow"
+            ref="gatherFigureInputRef"
+            v-model="gatherFigureInputVal"
+            v-bind="$attrs"
+            @blur="gatherFigureInputControlBlur"
+        />
+        <!-- 展示的框 -->
+        <el-input
+            v-show="showInputShow"
+            ref="showFigureInputRef"
+            v-model="showFigureInputVal"
+            v-bind="$attrs"
+            @focus="showFigureInputControlFocus"
+        />
+    </div>
 </template>
 
 <script lang="ts">
@@ -28,6 +30,7 @@ export default {
 import { nextTick, ref, computed, PropType } from 'vue'
 import { FigureInputProps } from '../GForm'
 import { clearNoNum } from './utils'
+import { getNumUnit } from './utils'
 
 const props = defineProps({
     /**
@@ -58,6 +61,8 @@ const showInputShow = ref<boolean>(true)
 const gatherFigureInputRef = ref(null)
 // 展示框 ref
 const showFigureInputRef = ref(null)
+// 单位
+const unit = computed(() => getNumUnit(props.modelValue as number))
 
 // 搜集数据输入框绑定值，主要做限制数字
 const gatherFigureInputVal = computed({
@@ -119,4 +124,30 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.g-figure-input {
+    position: relative;
+    width: 100%;
+    
+    &::after {
+        content: attr(data-unit);
+        position: absolute;
+        font-size: 10px;
+        right: 10px;
+        bottom: calc(-1 * var(--jn-ve-g-form-item-margin-b));
+        height: var(--jn-ve-g-form-item-margin-b);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        z-index: 999;
+        color: var(--el-color-info-light-3);
+    }
+}
+</style>
+<style lang="scss">
+.g-table-root {
+    .g-figure-input::after {
+        display: none;
+    }
+}
+</style>
