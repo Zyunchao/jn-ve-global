@@ -1,4 +1,5 @@
 import { ref, onMounted, onUnmounted, watchEffect } from 'vue'
+import { getStyle } from '../../utils/utils'
 
 /**
  * input 禁用时，tooltip 处理
@@ -39,14 +40,14 @@ export default ({ props, localPropRef }) => {
             setInputDisabled(targetNode)
         })
 
-        onUnmounted(() => {
-            // if (elInputRef.value && observer) {
-            // console.log(`%c elInputRef.value =========== `, 'color: #67c23a;', elInputRef.value)
-            //     // 卸载，停止观察
-            //     elInputRef.value && observer.disconnect()
-            //     observer = null
-            // }
-        })
+        // onUnmounted(() => {
+        //     // if (elInputRef.value && observer) {
+        //     // console.log(`%c elInputRef.value =========== `, 'color: #67c23a;', elInputRef.value)
+        //     //     // 卸载，停止观察
+        //     //     elInputRef.value && observer.disconnect()
+        //     //     observer = null
+        //     // }
+        // })
 
         watchEffect(() => {
             if (!localPropRef.value) {
@@ -54,22 +55,17 @@ export default ({ props, localPropRef }) => {
                 return
             }
 
-            if (!inputDisabled.value) {
-                return
-            }
+            if (!inputDisabled.value) return
+            if (!elInputRef.value) return
 
             const targetDom = elInputRef.value.$el as HTMLElement
-            // 基础字体大小
-            const fontSize = 16
-            // input 的 padding
-            const baseP = 15
-            // input 的宽度
-            const boxWidth = targetDom.offsetWidth
-            // 字符串的长度
+            const inputDom = targetDom.querySelector('.el-input__inner')
+            const fontSize = parseFloat(getStyle(inputDom, 'font-size'))
+            const inputWidth = inputDom.clientWidth
             const contentLength = `${localPropRef.value}`.length
 
             // 判断内容是否超出 input 的宽度
-            exceedBoxWidth.value = contentLength * fontSize > boxWidth - baseP * 2
+            exceedBoxWidth.value = contentLength * fontSize > inputWidth
         })
     }
 

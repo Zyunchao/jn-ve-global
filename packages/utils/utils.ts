@@ -177,7 +177,7 @@ export function partitionObj2HumpObj(obj: object, excludes?: Array<string> | str
  * @param attr 属性
  * @returns
  */
-export function getStyle(element, attr) {
+export function getStyle(element: Element, attr: string) {
     return getComputedStyle(element, null).getPropertyValue(attr)
 }
 
