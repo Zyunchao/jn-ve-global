@@ -10,6 +10,7 @@ import JnEditorProps from '../interface/JnEditorProps'
 import { getStrSize } from '../../utils/utils'
 import { Local } from '../../utils/storage'
 import { ElMessage } from 'element-plus'
+import { imgCompress } from './utils'
 
 export type EditorOptions = Parameters<TinyMCE['init']>[0]
 
@@ -105,6 +106,7 @@ export default (
         paste_data_images: true,
         images_upload_handler: getImagesUploadHandler(props), // 自定义上传
         file_picker_callback: getFilePickerCallback(props), // 文件上传处理函数
+        convert_urls: false, // 将当前图片路径变为相对路径
         textpattern_patterns: [
             { start: '*', end: '*', format: 'italic' },
             { start: '**', end: '**', format: 'bold' },
@@ -208,10 +210,24 @@ function getImagesUploadHandler(props: JnEditorProps) {
         if (props.uploadUrl && props.downloadUrl) {
             uploadFile(blobInfo.blob(), props, success, failure)
         } else {
-            // base64 存储
+            /**
+             * base64 存储
+             *  - 压缩：imgCompress
+             *  - 不压缩
+             */
             const oFileReader = new FileReader()
             oFileReader.onloadend = function (e) {
-                success(e.target.result as string)
+                if (props.compress) {
+                    imgCompress(
+                        e.target.result as string,
+                        { quality: props.compressRatio },
+                        (compressBase64: string) => {
+                            success(compressBase64)
+                        }
+                    )
+                } else {
+                    success(e.target.result as string)
+                }
             }
             oFileReader.readAsDataURL(blobInfo.blob())
         }
@@ -268,7 +284,20 @@ function getFilePickerCallback(props: JnEditorProps) {
                     const blobInfo = blobCache.create(id, file, base64)
                     blobCache.add(blobInfo)
 
-                    callback(blobInfo.blobUri(), { title: file.name })
+                    /**
+                     * 如果是图片，并且组件指定压缩
+                     */
+                    if (props.compress && meta.filetype === 'image') {
+                        imgCompress(
+                            blobInfo.blobUri() as string,
+                            { quality: props.compressRatio },
+                            (compressBase64: string) => {
+                                callback(compressBase64, { title: file.name })
+                            }
+                        )
+                    } else {
+                        callback(blobInfo.blobUri(), { title: file.name })
+                    }
                 }
             }
         }

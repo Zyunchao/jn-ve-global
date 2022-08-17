@@ -37,4 +37,13 @@ export default interface JnEditorProps {
      * 内容限制大小，单位：M
      */
     maxSize?: number
+    /**
+     * 开启图片压缩，会失帧
+     * 默认开启
+     */
+    compress?: boolean
+    /**
+     * 压缩率
+     */
+    compressRatio?: number
 }
