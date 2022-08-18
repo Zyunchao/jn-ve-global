@@ -9,6 +9,10 @@ export interface FigureInputProps extends InputProps {
      * 绑定的值的格式化方式（反格式化）
      */
     valueFormat?: (val: string | number) => string | number
+    /**
+     * 显示单位提示
+     */
+    showUnitTip?: boolean
 }
 
 export default interface FigureInputControlConfig {

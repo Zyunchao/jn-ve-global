@@ -60,3 +60,12 @@ export function restrictDecimals(str: string, s: number = 2) {
     return `${str}`.replace(reg, '$1')
 }
 ```
+
+## Attributes
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+modelValue | 绑定的值 | string \| number | --
+format | 展示的格式化方式（千分位、保留小数..） | (val: string \| number) => string \| number | null
+valueFormat | 绑定的值的格式化方式（反格式化） | (val: string \| number) => string \| number | null
+showUnitTip | 显示单位提示 | boolean | true

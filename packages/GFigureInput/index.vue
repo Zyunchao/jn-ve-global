@@ -32,26 +32,31 @@ import { FigureInputProps } from '../GForm'
 import { clearNoNum } from './utils'
 import { getNumUnit } from './utils'
 
-const props = defineProps({
-    /**
-     * 双向绑定的值
-     */
-    modelValue: [String, Number],
-    /**
-     * 展示格式化
-     */
-    format: {
-        type: Function as PropType<FigureInputProps['format']>,
-        default: null
-    },
-    /**
-     * 搜集值格式化（会直接影响到用户的输入行为）
-     */
-    valueFormat: {
-        type: Function as PropType<FigureInputProps['valueFormat']>,
-        default: null
+const props = withDefaults(
+    defineProps<{
+        /**
+         * 双向绑定的值
+         */
+        modelValue: string | number
+        /**
+         * 展示格式化
+         */
+        format?: FigureInputProps['format']
+        /**
+         * 搜集值格式化（会直接影响到用户的输入行为）
+         */
+        valueFormat?: FigureInputProps['valueFormat']
+        /**
+         * 显示单位提示
+         */
+        showUnitTip?: boolean
+    }>(),
+    {
+        format: null,
+        valueFormat: null,
+        showUnitTip: true
     }
-})
+)
 
 const emits = defineEmits(['update:modelValue', 'tableEditHide'])
 
@@ -62,7 +67,7 @@ const gatherFigureInputRef = ref(null)
 // 展示框 ref
 const showFigureInputRef = ref(null)
 // 单位
-const unit = computed(() => getNumUnit(props.modelValue as number))
+const unit = computed(() => (props.showUnitTip ? getNumUnit(props.modelValue as number) : ''))
 
 // 搜集数据输入框绑定值，主要做限制数字
 const gatherFigureInputVal = computed({
@@ -128,7 +133,7 @@ defineExpose({
 .g-figure-input {
     position: relative;
     width: 100%;
-    
+
     &::after {
         content: attr(data-unit);
         position: absolute;

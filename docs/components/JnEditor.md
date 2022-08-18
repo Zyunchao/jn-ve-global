@@ -284,6 +284,8 @@ disabled | 禁用 | boolean | false
 maxSize | 限制输入内容的大小（单位：M） | number | 100
 uploadUrl | 上传文件的 url | string | --
 downloadUrl | 内容链接文件（图片、视频）的 url | string | --
+compress | 开启图片压缩，会失帧 | boolean | true
+compressRatio | 压缩率 | number | 0.2
 
 ## 事件列表
 
