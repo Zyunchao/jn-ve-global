@@ -4,7 +4,7 @@
         <GBaseModule
             highlight-current-row
             no-search-label
-            more-search-mode="pull-down"
+            more-search-mode="popup"
             search-btn-horizontal
             :search-form-props="searchFormConfig"
             :btns="btns"

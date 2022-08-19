@@ -17,6 +17,7 @@
         <!-- 搜索 -->
         <TableSearch
             v-if="searchFormProps"
+            ref="tableSearchRef"
             :search-form-props="searchFormProps"
             :search-btns-config="searchBtnsConfig"
             :no-search-label="noSearchLabel"
@@ -73,7 +74,6 @@ import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } fro
 import TableSearch from './component/TableSearch.vue'
 import { RefreshLeft, Search } from '@element-plus/icons-vue'
 import { partitionObj2HumpObj, assignOwnProp } from '../utils/utils'
-import LGForm from '../GForm/index.vue'
 import LGTable from '../GTable/index.vue'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 
@@ -190,6 +190,8 @@ const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selec
 const attrs = useAttrs()
 const humpAttrs = computed(() => partitionObj2HumpObj(attrs, ['onReset', 'onSearch']))
 
+const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
+
 // 激活的 tab 页
 const localActiveTab = computed({
     get: () => {
@@ -237,15 +239,7 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                         type='primary'
                         icon={Search}
                         onClick={() => {
-                            // 优先执行用户传递的 search
-                            if (attrs.onSearch && typeof attrs.onSearch === 'function') {
-                                attrs.onSearch()
-                                return
-                            }
-
-                            if (!props.loadTableMethods)
-                                throw new Error('core load-table-methods 未找到')
-                            props.loadTableMethods?.(1)
+                            searchHandle()
                         }}>
                         查询
                     </el-button>
@@ -254,15 +248,7 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                         type='primary'
                         icon={Search}
                         onClick={() => {
-                            // 优先执行用户传递的 search
-                            if (attrs.onSearch && typeof attrs.onSearch === 'function') {
-                                attrs.onSearch()
-                                return
-                            }
-
-                            if (!props.loadTableMethods)
-                                throw new Error('core load-table-methods 未找到')
-                            props.loadTableMethods?.(1)
+                            searchHandle()
                         }}>
                         查询
                     </el-button>
@@ -271,6 +257,25 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
         )
     }
 }))
+
+async function searchHandle() {
+    // 校验
+    const validateRes = await props.searchFormProps.instance.validate()
+
+    // 更多查询条件时，查询关闭弹框
+    if (props.moreSearchMode === 'popup' && tableSearchRef.value.popupShow) {
+        tableSearchRef.value.closePopup()
+    }
+
+    // 优先执行用户传递的 search
+    if (attrs.onSearch && typeof attrs.onSearch === 'function') {
+        attrs.onSearch()
+        return
+    }
+
+    if (!props.loadTableMethods) throw new Error('core load-table-methods 未找到')
+    props.loadTableMethods?.(1)
+}
 
 // 包装本地表格配置（中转站）
 const localTableConfig = reactive<TableConfig<any>>({

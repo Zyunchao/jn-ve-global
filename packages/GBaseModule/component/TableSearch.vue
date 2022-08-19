@@ -34,8 +34,9 @@
         title="更多查询"
         width="80%"
         top="5vh"
+        :destroy-on-close="false"
     >
-        <el-scrollbar max-height="600px">
+        <el-scrollbar max-height="400px">
             <LGForm :config="localSearchFormConfig" />
         </el-scrollbar>
         <LGForm :config="localSearchBtnsFormConfig" />
@@ -152,6 +153,13 @@ const handleMoreSearch = () => {
         pullDownFlag.value = !pullDownFlag.value
     }
 }
+
+defineExpose({
+    closePopup: () => {
+        dialogVisible.value = false
+    },
+    popupShow: dialogVisible
+})
 </script>
 
 <style lang="scss" scoped>
