@@ -68,7 +68,7 @@ const tableHeight = computed(() => `${props.height}px`)
 </script>
 
 <style lang="scss" scoped>
-$--icon-size: 14px;
+$--icon-size: 16px;
 $--icon-l: 10px;
 
 .custom-collapse-item {
