@@ -3,6 +3,8 @@
 @import './item-disabled.scss';
 
 .g-form {
+    --jn-ve-g-btn-height: calc(var(--jn-ve-g-form-item-height) + 2px);
+
     font-size: var(--jn-ve-g-form-font-size);
 
     :deep(.el-form-item) {

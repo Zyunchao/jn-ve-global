@@ -96,6 +96,7 @@ const elFormItemProps = computed(() => {
         md,
         lg,
         xl,
+        selected,
         ...formItemProps
     } = props.formItemConfig
     return formItemProps

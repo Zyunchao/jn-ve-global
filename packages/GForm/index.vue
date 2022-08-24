@@ -33,6 +33,8 @@ import { watch, provide, ref, toRef, nextTick, computed } from 'vue'
 import { FormProps, FormItemProps, FormInstance } from './index'
 import LGFormItem from './component/GFormItem/index.vue'
 import formConfigProvideKey from './constant/formConfigProvideKey'
+import _ from 'lodash'
+import { assignOwnProp } from '@/utils/utils'
 
 interface Props {
     config: FormProps
@@ -47,6 +49,8 @@ provide(formConfigProvideKey, toRef(props, 'config'))
 const localInstance = ref<FormInstance | null>(null)
 const refreshLoad = ref(true)
 const localConfig = ref<FormProps>(props.config)
+// 缓存初始（创建前）的 model
+const modelCache = ref<FormProps['model']>(_.cloneDeep(props.config.model))
 
 /**
  * 惰性监听（只在后续改变时执行）
@@ -63,14 +67,32 @@ watch(
         })
 
         localConfig.value = config
+        modelCache.value = _.cloneDeep(config.model)
     }
 )
 
-// 监听实例的变化，抛出
+/**
+ * 监听实例的变化
+ *  - 抛出
+ *  - 扩展方法：initModel、init
+ */
 watch(
     () => localInstance.value,
     (instance) => {
-        instance && (localConfig.value.instance = instance)
+        if (instance) {
+            instance['initModel'] = () => {
+                assignOwnProp(localConfig.value.model, modelCache.value)
+            }
+
+            instance['init'] = function () {
+                this.initModel()
+                nextTick(() => {
+                    this.resetFields()
+                })
+            }
+
+            localConfig.value.instance = instance
+        }
     }
 )
 

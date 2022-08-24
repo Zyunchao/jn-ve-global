@@ -17,6 +17,8 @@ export interface FormInstance {
         props: string | string[],
         cb: (isValid?: string, invalidFields?: ValidateFieldsError) => void
     ) => void
+    initModel: () => void
+    init: () => void
     [k: string]: unknown
 }
 

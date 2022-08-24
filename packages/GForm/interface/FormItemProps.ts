@@ -1,4 +1,4 @@
-import { VNode } from 'vue'
+import { VNode, Ref } from 'vue'
 import { ExtendRuleItem } from './FormProps'
 import {
     InputControlConfig,
@@ -83,42 +83,7 @@ export type ExtendControlConfig = ControlConfig & {
     after: string
 }
 
-// formItem 基础参数
-export interface FormItemBaseProps {
-    /**
-     * 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
-     */
-    prop: string
-    /**
-     * 表单域标签的的宽度，例如 '50px'。支持 auto。
-     */
-    labelWidth?: string
-    /**
-     * 是否必填，如不设置，则会根据校验规则自动生成
-     * default：false
-     */
-    required?: boolean
-    /**
-     * 表单验证规则, 具体配置见下表, 更多内容参考 async-validator
-     */
-    rules?: ExtendRuleItem | ExtendRuleItem[]
-    /**
-     * 表单域验证错误信息, 设置该值会使表单验证状态变为error，并显示该错误信息
-     */
-    error?: string
-    /**
-     * 是否显示校验错误信息
-     * default：true
-     */
-    showMessage?: boolean
-    /**
-     * 以行内形式展示校验信息
-     * default：false
-     */
-    inlineMessage?: (boolean | string)[]
-
-    // 自定义扩展 Props -----------------------------------------------------------------------
-
+export interface FormItemCustomProps {
     /**
      * 标签文本
      * 原生需要一个字符串，
@@ -166,6 +131,49 @@ export interface FormItemBaseProps {
      * ≥1920px 响应式栅格数或者栅格属性对象
      */
     xl?: number | { span: number; offset: number }
+    /**
+     * item 是否选中（适用拖拽平台）
+     */
+    selected?: boolean
+    /**
+     * 扩展字段
+     */
+    [k: string]: any
+}
+
+// formItem 基础参数
+export interface FormItemBaseProps extends FormItemCustomProps {
+    /**
+     * 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
+     */
+    prop: string
+    /**
+     * 表单域标签的的宽度，例如 '50px'。支持 auto。
+     */
+    labelWidth?: string
+    /**
+     * 是否必填，如不设置，则会根据校验规则自动生成
+     * default：false
+     */
+    required?: boolean
+    /**
+     * 表单验证规则, 具体配置见下表, 更多内容参考 async-validator
+     */
+    rules?: ExtendRuleItem | ExtendRuleItem[]
+    /**
+     * 表单域验证错误信息, 设置该值会使表单验证状态变为error，并显示该错误信息
+     */
+    error?: string
+    /**
+     * 是否显示校验错误信息
+     * default：true
+     */
+    showMessage?: boolean
+    /**
+     * 以行内形式展示校验信息
+     * default：false
+     */
+    inlineMessage?: (boolean | string)[]
 }
 
 // 单控件
@@ -173,7 +181,7 @@ export interface ControlFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render?: (prop?: any) => JSX.Element | VNode | string | number
+    render?: (prop?: Ref<any>) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */
@@ -189,7 +197,7 @@ export interface ControlsFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render?: (prop?: any) => JSX.Element | VNode | string | number
+    render?: (prop?: Ref<any>) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */
@@ -205,7 +213,7 @@ export interface RenderFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render: (prop?: any) => JSX.Element | VNode | string | number
+    render: (prop?: Ref<any>) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */
