@@ -67,8 +67,8 @@
     // 单选框 & 多选框 按钮模式
     .el-checkbox-button__inner,
     .el-radio-button__inner {
-        height: var(--jn-ve-g-form-item-height) !important;
-        line-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
+        height: calc(var(--jn-ve-g-form-item-height) + 2px) !important;
+        line-height: calc(var(--jn-ve-g-form-item-height) - 2px + 2px) !important;
         padding: 0 15px;
     }
 

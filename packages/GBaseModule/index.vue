@@ -313,7 +313,7 @@ watch(
     (obj) => {
         assignOwnProp(localTableConfig, obj, ['instance', 'columns', 'data'])
         nextTick(() => {
-            localTableConfig.instance.doLayout()
+            localTableConfig.instance?.doLayout()
         })
     }
 )
