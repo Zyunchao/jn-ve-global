@@ -4,6 +4,7 @@ import './assets/styles/index.scss'
 // 图标
 import './assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
+import { elIconKeys, aliIcons, localIcons } from './GIconPicker/data/icons'
 
 /**
  * 全局注册组件
@@ -45,3 +46,8 @@ export default (app) => {
         app.component(name, functionalComponents[name])
     })
 }
+
+/**
+ * 抛出组件库内的图标资源
+ */
+export const icons = { elIconKeys, aliIcons, localIcons }
