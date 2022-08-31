@@ -76,7 +76,7 @@ const props = withDefaults(defineProps<Props>(), {
 const labelWidth = computed(() => {
     if (!props.formItemConfig.label) return '0px'
     if (props.formItemConfig.labelWidth) return props.formItemConfig.labelWidth
-    if (props.formConfig.labelWidth) return props.formConfig.labelWidth
+    if (props.formConfig?.labelWidth) return props.formConfig.labelWidth
     return 'auto'
 })
 

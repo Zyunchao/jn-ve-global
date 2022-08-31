@@ -9,11 +9,25 @@
                 v-bind="localControlProps"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"
-            />
+            >
+                <template v-if="localControlProps.prepend" #prepend>
+                    <component :is="localControlProps.prepend" />
+                </template>
+                <template v-if="localControlProps.append" #append>
+                    <component :is="localControlProps.append" />
+                </template>
+            </el-input>
 
             <template v-if="inputDisabled && exceedBoxWidth">
                 <el-tooltip :content="localPropRef" placement="top-start">
-                    <el-input :model-value="localPropRef" v-bind="localControlProps" />
+                    <el-input :model-value="localPropRef" v-bind="localControlProps">
+                        <template v-if="localControlProps.prepend" #prepend>
+                            <component :is="localControlProps.prepend" />
+                        </template>
+                        <template v-if="localControlProps.append" #append>
+                            <component :is="localControlProps.append" />
+                        </template>
+                    </el-input>
                 </el-tooltip>
             </template>
         </template>

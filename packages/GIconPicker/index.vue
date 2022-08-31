@@ -147,6 +147,12 @@ const handleClearIcon = () => {
 const panelClick = () => {
     elInputRef.value.focus()
 }
+
+defineExpose({
+    elIconKeys,
+    aliIcons,
+    localIcons
+})
 </script>
 
 <style lang="scss">

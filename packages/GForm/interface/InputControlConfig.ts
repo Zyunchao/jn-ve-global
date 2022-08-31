@@ -1,3 +1,5 @@
+import { VNode } from 'vue'
+
 type AutosizeProp =
     | {
           minRows?: number
@@ -33,7 +35,7 @@ export interface InputEvents {
     [k: string]: any
 }
 
-export interface InputProps extends InputEvents {
+export interface InputProps {
     /**
      * 类型：text，textarea 和其他 原生 input 的 type 值
      * default：text
@@ -78,11 +80,11 @@ export interface InputProps extends InputEvents {
     /**
      * 输入框头部图标
      */
-    prefixIcon?: string
+    prefixIcon?: VNode | JSX.Element
     /**
      * 输入框尾部图标
      */
-    suffixIcon?: string
+    suffixIcon?: VNode | JSX.Element
     /**
      * 输入框行数，只对 type="textarea" 有效
      * default：2
@@ -128,7 +130,26 @@ export interface InputProps extends InputEvents {
     inputStyle?: object
 }
 
+export interface InputSlots {
+    // /**
+    //  * 输入框头部内容，只对非 type="textarea" 有效
+    //  */
+    // prefix?: VNode | JSX.Element
+    // /**
+    //  * 输入框尾部内容
+    //  */
+    // suffix?: VNode | JSX.Element
+    /**
+     * 输入框前置内容
+     */
+    prepend?: VNode | JSX.Element
+    /**
+     * 输入框后置内容
+     */
+    append?: VNode | JSX.Element
+}
+
 export default interface InputControlConfig {
     type: 'input'
-    props?: InputProps
+    props?: InputProps & InputSlots & InputEvents
 }

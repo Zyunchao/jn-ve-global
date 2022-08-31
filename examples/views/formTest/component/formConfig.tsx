@@ -50,7 +50,11 @@ export default () => {
                 span: 12,
                 required: true,
                 controlConfig: {
-                    type: 'input'
+                    type: 'input',
+                    props: {
+                        append: <g-icon icon="ali-icon-riqi"/>,
+                        prepend: <g-icon icon="ali-icon-riqi"/>
+                    }
                 }
             },
             {
