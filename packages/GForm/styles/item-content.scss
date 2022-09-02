@@ -3,9 +3,16 @@
     line-height: 1;
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
 
-    >div {
+    >div:not(.el-radio-group, .el-checkbox-group, .el-switch, .el-color-picker, .el-rate) {
         width: 100%;
+    }
+
+    .item-tip {
+        margin-left: 10px;
+        font-size: 22px;
+        color: #767575;
     }
 
     @include control-style;
@@ -56,13 +63,6 @@
 }
 
 @mixin control-height {
-
-    // 多选框组容器
-    .el-checkbox-group,
-    .el-switch,
-    .el-color-picker {
-        width: fit-content !important;
-    }
 
     // 单选框 & 多选框 按钮模式
     .el-checkbox-button__inner,

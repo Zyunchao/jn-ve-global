@@ -136,6 +136,10 @@ export interface FormItemCustomProps {
      */
     selected?: boolean
     /**
+     * tooltip 提示信息
+     */
+    tip?: string
+    /**
      * 扩展字段
      */
     [k: string]: any

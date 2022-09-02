@@ -45,6 +45,19 @@
                 :prop="toRef(formConfig.model, formItemConfig.prop)"
             />
         </template>
+
+        <!-- 提醒 -->
+        <el-tooltip
+            v-if="formItemConfig.tip"
+            class="box-item"
+            effect="dark"
+            :content="formItemConfig.tip"
+            placement="top"
+        >
+            <span class="item-tip">
+                <LGIcon icon="el-QuestionFilled" />
+            </span>
+        </el-tooltip>
     </el-form-item>
 </template>
 
@@ -62,6 +75,7 @@ import type { FormProps, FormItemProps } from '../../index'
 import FunctionalComponent from '../../../FunctionalComponent'
 import FormItemControl from '../formItemControl.vue'
 import FormItemControlGroup from '../formItemControlGroup.vue'
+import LGIcon from '../../../GIcon/index.vue'
 
 interface Props {
     formConfig: FormProps

@@ -93,6 +93,7 @@ export default () => {
                 prop: 'radio',
                 label: 'Radio',
                 span: 12,
+                tip: '性别',
                 controlConfig: {
                     type: 'radio',
                     options: [
