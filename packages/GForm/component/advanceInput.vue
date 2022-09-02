@@ -15,7 +15,7 @@
          -->
         <template v-for="(slot, key) in inputSlots" :key="key" #[key]>
             <component :is="slot" v-if="typeof slot !== 'string'" />
-            <g-icon v-else-if="stringIsIcon(slot)" :icon="slot" />
+            <LGIcon v-else-if="stringIsIcon(slot)" :icon="slot" />
             <span v-else>{{ slot }}</span>
         </template>
     </el-input>
@@ -26,7 +26,7 @@
             <el-input :model-value="localPropRef" v-bind="localInputProps">
                 <template v-for="(slot, key) in inputSlots" :key="key" #[key]>
                     <component :is="slot" v-if="typeof slot !== 'string'" />
-                    <g-icon v-else-if="stringIsIcon(slot)" :icon="slot" />
+                    <LGIcon v-else-if="stringIsIcon(slot)" :icon="slot" />
                     <span v-else>{{ slot }}</span>
                 </template>
             </el-input>
@@ -45,6 +45,7 @@ export default {
 import { ref, computed, Ref } from 'vue'
 import type { InputControlConfig } from '../index'
 import addInputDisabledTooltip from '../mixins/inputDisabledTooltip'
+import LGIcon from '../../GIcon/index.vue'
 
 const props = defineProps<{
     /**
@@ -73,7 +74,9 @@ const localInputProps = computed<InputControlConfig['props']>(() => {
 /**
  * 获取有效的 slot
  */
-const inputSlots = computed(() => {
+const inputSlots = computed<{
+    [k: string]: any
+}>(() => {
     const { prefix, suffix, prepend, append } = props.inputProps
 
     const collection = {
