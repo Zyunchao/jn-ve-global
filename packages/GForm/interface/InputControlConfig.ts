@@ -131,22 +131,22 @@ export interface InputProps {
 }
 
 export interface InputSlots {
-    // /**
-    //  * 输入框头部内容，只对非 type="textarea" 有效
-    //  */
-    // prefix?: VNode | JSX.Element
-    // /**
-    //  * 输入框尾部内容
-    //  */
-    // suffix?: VNode | JSX.Element
+    /**
+     * 输入框头部内容，只对非 type="textarea" 有效
+     */
+    prefix?: VNode | JSX.Element | string
+    /**
+     * 输入框尾部内容
+     */
+    suffix?: VNode | JSX.Element | string
     /**
      * 输入框前置内容
      */
-    prepend?: VNode | JSX.Element
+    prepend?: VNode | JSX.Element | string
     /**
      * 输入框后置内容
      */
-    append?: VNode | JSX.Element
+    append?: VNode | JSX.Element | string
 }
 
 export default interface InputControlConfig {

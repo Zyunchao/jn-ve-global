@@ -2,34 +2,12 @@
     <template v-if="controlConfig">
         <!-- Input -->
         <template v-if="localControlType === 'input'">
-            <el-input
-                v-show="!inputDisabled || !exceedBoxWidth"
-                ref="elInputRef"
-                v-model.trim="localPropRef"
-                v-bind="localControlProps"
-                @focus="emits('controlFocus')"
-                @blur="emits('controlBlur')"
-            >
-                <template v-if="localControlProps.prepend" #prepend>
-                    <component :is="localControlProps.prepend" />
-                </template>
-                <template v-if="localControlProps.append" #append>
-                    <component :is="localControlProps.append" />
-                </template>
-            </el-input>
-
-            <template v-if="inputDisabled && exceedBoxWidth">
-                <el-tooltip :content="localPropRef" placement="top-start">
-                    <el-input :model-value="localPropRef" v-bind="localControlProps">
-                        <template v-if="localControlProps.prepend" #prepend>
-                            <component :is="localControlProps.prepend" />
-                        </template>
-                        <template v-if="localControlProps.append" #append>
-                            <component :is="localControlProps.append" />
-                        </template>
-                    </el-input>
-                </el-tooltip>
-            </template>
+            <AdvanceInput
+                :prop="prop"
+                :input-props="localControlProps"
+                @controlFocus="emits('controlFocus')"
+                @controlBlur="emits('controlBlur')"
+            />
         </template>
 
         <!-- InputNumber -->
@@ -269,7 +247,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, computed, toRef, inject, watch, onUnmounted, watchEffect } from 'vue'
+import { ref, computed, toRef, inject, watch, onUnmounted, Ref } from 'vue'
 import {
     FormItemProps,
     RadioOptionProps,
@@ -282,17 +260,15 @@ import LGSelectTree from '../../GSelectTree/index.vue'
 import LGFigureInput from '../../GFigureInput/index.vue'
 import LGIconPicker from '../../GIconPicker/index.vue'
 import LGUpload from '../../GUpload/index.vue'
-import UploadFile from '../../GUpload/interface/UploadFile'
 import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
 import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
 import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
 import LGAddress from '../../GAddress/index.vue'
 import LJnEditor from '../../JnEditor/index.vue'
+import AdvanceInput from './advanceInput.vue'
 
 import formConfigProvideKey from '../constant/formConfigProvideKey'
-
-import addInputDisabledTooltip from '../mixins/inputDisabledTooltip'
 import getControlOprions from '../mixins/getControlOprions'
 
 interface Props {
@@ -305,9 +281,9 @@ interface Props {
      */
     controlConfig: ControlConfig
     /**
-     * 表单绑定的值（ref 引用）
+     * 表单绑定的值
      */
-    prop: string | number | boolean | object | Array<any>
+    prop: Ref<string | number | boolean | object | Array<any>>
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -328,17 +304,6 @@ const controlDisabled = computed(() =>
         ? rootFormConfig.value.disabled
         : (props.controlConfig.props as any).disabled
 )
-
-/**
- * input 禁用时，tooltip 处理
- *  - elInputRef：input 控件的 ref
- *  - inputDisabled：是否禁用
- *  - exceedBoxWidth：内容是否超出宽度
- */
-const { elInputRef, inputDisabled, exceedBoxWidth } = addInputDisabledTooltip({
-    props,
-    localPropRef
-})
 
 /**
  * 控件增强：自动获取控件的待选 options
