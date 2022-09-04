@@ -213,7 +213,7 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
     span:
         props.searchBtnHorizontal || !!props.moreSearchMode
             ? 24
-            : props.searchFormProps.formItems[props.searchFormProps.formItems.length - 1].span,
+            : props.searchFormProps.formItems[props.searchFormProps.formItems.length - 1]?.span || 24,
     render() {
         return (
             <>
@@ -226,7 +226,8 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                             return
                         }
 
-                        props.searchFormProps.instance.resetFields()
+                        props.searchFormProps.instance?.resetFields()
+                        
                         if (!props.loadTableMethods)
                             throw new Error('core load-table-methods 未找到')
                         props.loadTableMethods?.(1)

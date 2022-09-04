@@ -13,7 +13,11 @@
         <slot :form-items="localConfig.formItems">
             <el-row :gutter="localConfig.gutter ?? 20">
                 <template v-for="item in localConfig.formItems" :key="item.prop">
-                    <el-col v-if="!item.hide" v-bind="getElColConfigs(item)">
+                    <el-col
+                        v-if="!item.hide"
+                        :class="item.class ?? `${item.class} form-item-col`"
+                        v-bind="getElColConfigs(item)"
+                    >
                         <!-- 增强的 form-item -->
                         <LGFormItem :form-config="localConfig" :form-item-config="item" />
                     </el-col>

@@ -11,6 +11,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .custom-collapse {
-    border: none;
+    border: none !important;
 }
 </style>

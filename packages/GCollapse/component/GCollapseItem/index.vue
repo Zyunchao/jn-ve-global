@@ -72,6 +72,13 @@ $--icon-size: 16px;
 $--icon-l: 10px;
 
 .custom-collapse-item {
+    &.is-disabled {
+        :deep(.el-collapse-item__header) {
+            color: #4e5966 !important;
+            cursor: default !important;
+        }
+    }
+
     /* 头 */
     :deep(.el-collapse-item__header) {
         height: 36px;
