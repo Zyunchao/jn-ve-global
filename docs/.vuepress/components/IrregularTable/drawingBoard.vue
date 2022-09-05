@@ -1,5 +1,5 @@
 <template>
-    <g-irregular-table :col-num="38" :row-num="6" :cell-list="[]" />
+    <g-irregular-table :col-num="38" :row-num="5" :cell-list="[]" />
 </template>
 
 <script lang="ts">
