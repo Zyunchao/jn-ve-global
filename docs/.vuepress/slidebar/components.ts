@@ -46,7 +46,8 @@ export default [
         children: [
             { text: 'DebounceButton', link: '/components/DebounceButton.md' },
             { text: 'LodingShade', link: '/components/LodingShade.md' },
-            { text: 'ButtonGroup', link: '/components/ButtonGroup.md' }
+            { text: 'ButtonGroup', link: '/components/ButtonGroup.md' },
+            { text: 'HintBox', link: '/components/HintBox.md' }
         ]
     },
     {
