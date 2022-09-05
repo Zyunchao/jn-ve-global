@@ -8,3 +8,4 @@ export * from './GFormGenerate'
 export * from './JnEditor/interface/tinymce'
 
 export { default as InfoColumnProps } from './GInfoSA/interface/InfoColumnProps'
+export { default as IrregularTableCell } from './GIrregularTable/interface/Cell'
