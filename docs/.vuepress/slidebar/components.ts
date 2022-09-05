@@ -38,8 +38,8 @@ export default [
         children: [
             { text: 'Icon', link: '/components/Icon.md' },
             { text: 'Table', link: '/components/Table.md' },
-            { text: 'Tree', link: '/components/Tree.md' },
-            { text: 'IrregularTable', link: '/components/IrregularTable.md' }
+            { text: 'Tree', link: '/components/Tree.md' }
+            // { text: 'IrregularTable', link: '/components/IrregularTable.md' }
         ]
     },
     {
