@@ -161,46 +161,11 @@ export default () => {
 
     const row6 = reactive<IrregularTableCell[]>([
         {
-            content: '序 号',
+            content:'',
             ri: 5,
             ci: 0,
-            colspan: 3,
-            align: 'center'
-        },
-        {
-            content: '物品名称',
-            ri: 5,
-            ci: 3,
-            colspan: 9,
-            align: 'center'
-        },
-        {
-            content: '重 量',
-            ri: 5,
-            ci: 12,
-            colspan: 6,
-            align: 'center'
-        },
-        {
-            content: '数 量',
-            ri: 5,
-            ci: 18,
-            colspan: 3,
-            align: 'center'
-        },
-        {
-            content: '单 价',
-            ri: 5,
-            ci: 21,
-            colspan: 4,
-            align: 'center'
-        },
-        {
-            content: '总 价',
-            ri: 5,
-            ci: 25,
-            colspan: 3,
-            align: 'center'
+            colspan: 28,
+            rowspan: 2
         },
         {
             content: '千',
@@ -265,46 +230,6 @@ export default () => {
     ])
 
     const row7 = reactive<IrregularTableCell[]>([
-        {
-            content: '1',
-            ri: 6,
-            ci: 0,
-            colspan: 3,
-            align: 'center'
-        },
-        {
-            content: '',
-            ri: 6,
-            ci: 3,
-            colspan: 9
-        },
-        {
-            content: '',
-            ri: 6,
-            ci: 12,
-            colspan: 6
-        },
-        {
-            content: '1',
-            ri: 6,
-            ci: 18,
-            colspan: 3,
-            align: 'right'
-        },
-        {
-            content: '3000000',
-            ri: 6,
-            ci: 21,
-            colspan: 4,
-            align: 'right'
-        },
-        {
-            content: '33.33',
-            ri: 6,
-            ci: 25,
-            colspan: 3,
-            align: 'right'
-        },
         {
             content: '',
             ri: 6,
