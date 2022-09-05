@@ -31,7 +31,10 @@ export default (props: { inputProps: InputControlConfig['props'] }) => {
                 else delete inputSlots[key]
             })
         },
-        { deep: true }
+        {
+            deep: true,
+            immediate: true
+        }
     )
 
     /**
