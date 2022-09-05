@@ -3,7 +3,6 @@
     line-height: 1;
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
 
     >div:not(.el-radio-group, .el-checkbox-group, .el-switch, .el-color-picker, .el-rate) {
         width: 100%;

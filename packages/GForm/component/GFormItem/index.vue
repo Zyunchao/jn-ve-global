@@ -1,7 +1,11 @@
 <template>
     <el-form-item
         v-if="formConfig && formItemConfig"
-        :class="{ 'no-colon': formConfig.colon === false, 'g-form-item': true }"
+        :class="{
+            'no-colon': formConfig.colon === false,
+            'g-form-item': true,
+            'show-tip': formItemConfig.tip
+        }"
         v-bind="elFormItemProps"
         :label-width="labelWidth"
     >
@@ -111,6 +115,9 @@ const elFormItemProps = computed(() => {
         lg,
         xl,
         selected,
+        tip,
+        // 拖拽平台扩展属性
+        formItemControlPropertys,
         ...formItemProps
     } = props.formItemConfig
     return formItemProps

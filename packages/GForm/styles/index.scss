@@ -53,6 +53,13 @@
             margin-bottom: 0;
         }
 
+        // 显示 tooltip 的 item
+        &.show-tip {
+            .el-form-item__content {
+                flex-wrap: nowrap
+            }
+        }
+
         @include item-disabled;
     }
 }
