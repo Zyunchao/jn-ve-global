@@ -1,12 +1,8 @@
 <template>
     <div class="examples-base-wrapper">
         <g-form :config="formConfig" />
-        <el-button type="primary" @click="getData">
-            获取数据
-        </el-button>
-        <el-button type="primary" @click="resetForm">
-            重置
-        </el-button>
+
+        <g-button-group :btns="btns" />
 
         <h1>GFigureInput</h1>
         <div class="box">
@@ -24,19 +20,31 @@
 
 <script lang="tsx" setup>
 import { reactive, watch, ref } from 'vue'
-import { FormProps } from '@component/index'
+import { FormProps, BtnProps, InputControlConfig } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
 import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
 
-let formConfig = ref<FormProps>({
+let formConfig = reactive<FormProps>({
     instance: null,
     labelPosition: 'right',
     labelWidth: '180px',
-    disabled: true,
+    // disabled: true,
     model: {
-        money: '1231'
+        money: ''
     },
     formItems: [
+        {
+            prop: 'money',
+            label: '输入',
+            span: 24,
+            controlConfig: {
+                type: 'input',
+                props: {
+                    append: 'el-EditPen',
+                    suffix: 'el-ChatLineRound'
+                }
+            }
+        },
         {
             prop: 'money',
             label: '收集的数据',
@@ -105,23 +113,32 @@ let formConfig = ref<FormProps>({
     ]
 })
 
-watch(
-    () => formConfig.value.model,
-    (model) => {
-        console.log(`%c model onChange === `, 'color: #67c23a;', model)
+const btns: BtnProps[] = [
+    {
+        label: '获取数据',
+        onClick() {
+            console.log(`%c model == `, 'color: #67c23a;', formConfig.model)
+        }
     },
     {
-        deep: true
+        label: '重置',
+        onClick() {
+            formConfig.instance?.resetFields()
+        }
+    },
+    {
+        label: '添加 input 尾部图标',
+        onClick() {
+            if (!(formConfig.formItems[0].controlConfig as InputControlConfig).props['suffix']) {
+                ;(formConfig.formItems[0].controlConfig as InputControlConfig).props['suffix'] =
+                    'el-EditPen'
+            } else {
+                ;(formConfig.formItems[0].controlConfig as InputControlConfig).props['suffix'] =
+                    undefined
+            }
+        }
     }
-)
-
-const getData = () => {
-    console.log(`%c model == `, 'color: #67c23a;', formConfig.value.model)
-}
-
-const resetForm = () => {
-    formConfig.value.instance?.resetFields()
-}
+]
 
 // --------------------------- 测试单个 figureInput
 const figureVal = ref<number>(123456)
