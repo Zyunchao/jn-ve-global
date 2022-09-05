@@ -53,6 +53,8 @@
 
 <CodeGroupItem title="efficaciousCellList.tsx" >
 
+@[code](@demoroot/IrregularTable/data/efficaciousCellList.tsx)
+
 </CodeGroupItem>
 </CodeGroup>
 </template>
