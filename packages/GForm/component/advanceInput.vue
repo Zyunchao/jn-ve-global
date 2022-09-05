@@ -1,7 +1,7 @@
 <template>
     <!-- 正常的 -->
     <el-input
-        v-if="!inputDisabled || !exceedBoxWidth"
+        v-if="(!inputDisabled || !exceedBoxWidth) && !reload"
         ref="elInputRef"
         v-model.trim="localPropRef"
         v-bind="localInputProps"
@@ -42,10 +42,11 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, computed, Ref } from 'vue'
+import { ref, computed, Ref, watch, nextTick, reactive } from 'vue'
 import type { InputControlConfig } from '../index'
 import addInputDisabledTooltip from '../mixins/inputDisabledTooltip'
 import LGIcon from '../../GIcon/index.vue'
+import getInputSlots from '../mixins/getInputSlots'
 
 const props = defineProps<{
     /**
@@ -72,26 +73,9 @@ const localInputProps = computed<InputControlConfig['props']>(() => {
 })
 
 /**
- * 获取有效的 slot
+ * 获取有效的 slot 及主动重绘
  */
-const inputSlots = computed<{
-    [k: string]: any
-}>(() => {
-    const { prefix, suffix, prepend, append } = props.inputProps
-
-    const collection = {
-        prefix,
-        suffix,
-        prepend,
-        append
-    }
-
-    const slots = Object.keys(collection).reduce((temp, currentKey) => {
-        if (collection[currentKey]) temp[currentKey] = collection[currentKey]
-        return temp
-    }, {})
-    return slots
-})
+const { inputSlots, reload } = getInputSlots(props)
 
 /**
  * input 禁用时，tooltip 处理
