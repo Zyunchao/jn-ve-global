@@ -26,6 +26,12 @@
 
 新增组件 “不规则表格”
 
+<h3>优化</h3>
+
+<h4>GCollapseItem</h4>
+
+禁用状态与普通状态同步
+
 <h3>BugFix</h3>
 
 <h4>BaseModule</h4>
