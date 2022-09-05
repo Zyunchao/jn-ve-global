@@ -71,7 +71,7 @@ export default () => {
             content: '用 户',
             ri: 2,
             ci: 0,
-            rowspan: 3,
+            rowspan: 2,
             colspan: 3,
             align: 'center'
         },
@@ -162,68 +162,68 @@ export default () => {
     const row6 = reactive<IrregularTableCell[]>([
         {
             content:'',
-            ri: 5,
+            ri: 4,
             ci: 0,
             colspan: 28,
             rowspan: 2
         },
         {
             content: '千',
-            ri: 5,
+            ri: 4,
             ci: 28,
             align: 'center'
         },
         {
             content: '百',
-            ri: 5,
+            ri: 4,
             ci: 29,
             align: 'center'
         },
         {
             content: '十',
-            ri: 5,
+            ri: 4,
             ci: 30,
             align: 'center'
         },
         {
             content: '万',
-            ri: 5,
+            ri: 4,
             ci: 31,
             align: 'center'
         },
         {
             content: '千',
-            ri: 5,
+            ri: 4,
             ci: 32,
             align: 'center'
         },
         {
             content: '百',
-            ri: 5,
+            ri: 4,
             ci: 33,
             align: 'center'
         },
         {
             content: '十',
-            ri: 5,
+            ri: 4,
             ci: 34,
             align: 'center'
         },
         {
             content: '元',
-            ri: 5,
+            ri: 4,
             ci: 35,
             align: 'center'
         },
         {
             content: '角',
-            ri: 5,
+            ri: 4,
             ci: 36,
             align: 'center'
         },
         {
             content: '分',
-            ri: 5,
+            ri: 4,
             ci: 37,
             align: 'center'
         }
@@ -297,9 +297,9 @@ export default () => {
         ...row2,
         ...row3,
         ...row4,
-        ...row5,
-        ...row6,
-        ...row7
+        // ...row5,
+        ...row6
+        // ...row7
     ])
 
     return {
