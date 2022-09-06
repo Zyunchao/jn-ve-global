@@ -244,3 +244,73 @@ export function getStrSize(str: string, charset: string = 'UTF-8') {
     }
     return total
 }
+
+/**
+ * 获取 url 中的参数，并转换为对象
+ * @returns
+ */
+export function getUrlParams(queryString: string = window.location.search) {
+    let result = {}
+    let reg = /[?&][^?&]+=[^?&]+/g
+    let newSearch = queryString.match(reg)
+    if (newSearch) {
+        newSearch.forEach((item) => {
+            let temp = item.substring(1).split('=')
+            let key = temp[0]
+            let value = temp[1]
+            result[key] = value
+        })
+    }
+    return result
+}
+
+/**
+ * 增强版序列化对象：可以将对象转换成字符串，通过 JSON.stringify 实现
+ *  - JSON.stringify 不能序列化函数，当前方法可以序列化函数
+ *  - 但是不能序列化简写的函数，如：对象函数简写方式
+ *
+ * 注意：可序列化的函数，只能是声明式或箭头函数
+ */
+export const advanceSerialize = {
+    FUNC_PREFIX: 'FUNC_PREFIX',
+    stringify(obj: any, space?: number | string, error?: (err: Error | unknown) => void) {
+        try {
+            return JSON.stringify(
+                obj,
+                (k, v) => {
+                    if (typeof v === 'function') {
+                        return `${this.FUNC_PREFIX}${v}`
+                    }
+                    return v
+                },
+                space
+            )
+        } catch (err) {
+            error && error(err)
+        }
+    },
+    parse(jsonStr: string, error?: (err: Error | unknown) => void) {
+        try {
+            return JSON.parse(jsonStr, (key, value) => {
+                if (value && typeof value === 'string') {
+                    return value.indexOf(this.FUNC_PREFIX) !== -1
+                        ? new Function(`return ${value.replace(this.FUNC_PREFIX, '')}`)()
+                        : value
+                }
+                return value
+            })
+        } catch (err) {
+            error && error(err)
+        }
+    }
+}
+
+/**
+ * 探查字符串是否为组件库的图标
+ */
+export function stringIsIcon(str: string): boolean {
+    if(!str) return false
+    const iconPrefix = ['ali-', 'el-', 'jg-']
+    const res = iconPrefix.some((item) => str.startsWith(item))
+    return res
+}

@@ -12,7 +12,7 @@
 
 <template #date>
 
-2022-9-5
+2022-9-6
 
 </template>
 
@@ -26,6 +26,10 @@
 
 新增组件 “不规则表格”
 
+<h4>FigureInput</h4>
+
+同步 input 的修改（增加前后缀内容）；
+
 <h3>优化</h3>
 
 <h4>GCollapseItem</h4>
@@ -38,6 +42,10 @@
 
 1. 搜索表单 items 为空时，按钮创建报错
 2. 搜索表单 items 为空时，表单验证报错
+
+<h4>Input ToolTip</h4>
+
+1. 禁用后超长展示 toolTip，解除禁用双向数据绑定失效
 
 </update-log-block>
 

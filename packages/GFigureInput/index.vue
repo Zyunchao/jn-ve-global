@@ -1,17 +1,18 @@
 <template>
     <div :data-unit="unit" class="g-figure-input">
         <!-- 负责搜集数据的框 -->
-        <el-input
+        <LGAdvanceInput
             v-show="!showInputShow"
-            ref="gatherFigureInputRef"
+            v-model:el-input-ref="gatherFigureInputRef"
             v-model="gatherFigureInputVal"
             v-bind="$attrs"
             @blur="gatherFigureInputControlBlur"
         />
+
         <!-- 展示的框 -->
-        <el-input
+        <LGAdvanceInput
             v-show="showInputShow"
-            ref="showFigureInputRef"
+            v-model:el-input-ref="showFigureInputRef"
             v-model="showFigureInputVal"
             v-bind="$attrs"
             @focus="showFigureInputControlFocus"
@@ -27,10 +28,12 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { nextTick, ref, computed, PropType } from 'vue'
+import { nextTick, ref, computed, watch } from 'vue'
 import { FigureInputProps } from '../GForm'
 import { clearNoNum } from './utils'
 import { getNumUnit } from './utils'
+import { ElInput as ElInputCom } from 'element-plus'
+import LGAdvanceInput from '../GForm/component/GAdvanceInput/core.vue'
 
 const props = withDefaults(
     defineProps<{
@@ -63,9 +66,9 @@ const emits = defineEmits(['update:modelValue', 'tableEditHide'])
 // 展示 input 显示 flag
 const showInputShow = ref<boolean>(true)
 // 搜集框 ref
-const gatherFigureInputRef = ref(null)
+const gatherFigureInputRef = ref<InstanceType<typeof ElInputCom> | null>(null)
 // 展示框 ref
-const showFigureInputRef = ref(null)
+const showFigureInputRef = ref<InstanceType<typeof ElInputCom> | null>(null)
 // 单位
 const unit = computed(() => (props.showUnitTip ? getNumUnit(props.modelValue as number) : ''))
 

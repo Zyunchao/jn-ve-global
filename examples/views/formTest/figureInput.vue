@@ -10,6 +10,9 @@
 
             <GFigureInput
                 v-model="figureVal"
+                clearable
+                prefix="el-EditPen"
+                prepend="el-EditPen"
                 :format="figureInputFormat"
                 :value-format="figureInputValueFormat"
                 placeholder="请输入...."
@@ -61,7 +64,9 @@ let formConfig = reactive<FormProps>({
                 props: {
                     format: (val) => {
                         return toThousands(val)
-                    }
+                    },
+                    append: 'el-EditPen',
+                    suffix: 'el-ChatLineRound'
                 }
             }
         },
@@ -136,6 +141,12 @@ const btns: BtnProps[] = [
                 ;(formConfig.formItems[0].controlConfig as InputControlConfig).props['suffix'] =
                     undefined
             }
+        }
+    },
+    {
+        label: '禁用',
+        onClick() {
+            formConfig.disabled = !formConfig.disabled
         }
     }
 ]

@@ -1,13 +1,13 @@
 import { watch, reactive, ref, nextTick, Ref } from 'vue'
-import { InputControlConfig } from '../index'
+import { InputControlConfig } from '../../../index'
 
-export default (props: { inputProps: InputControlConfig['props'] }) => {
+export default (attrs: InputControlConfig['props']) => {
     /**
      * 获取有效的 slot
      */
     const inputSlots = reactive<{ [k: string]: any }>({})
     watch(
-        () => props.inputProps,
+        () => attrs,
         (inputProps) => {
             /**
              * 每次 props 发生变化

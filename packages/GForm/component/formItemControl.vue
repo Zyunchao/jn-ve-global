@@ -2,11 +2,11 @@
     <template v-if="controlConfig">
         <!-- Input -->
         <template v-if="localControlType === 'input'">
-            <AdvanceInput
-                :prop="prop"
-                :input-props="localControlProps"
-                @controlFocus="emits('controlFocus')"
-                @controlBlur="emits('controlBlur')"
+            <LGAdvanceInput
+                v-model="localPropRef"
+                v-bind="localControlProps"
+                @focus="emits('controlFocus')"
+                @blur="emits('controlBlur')"
             />
         </template>
 
@@ -266,7 +266,7 @@ import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
 import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
 import LGAddress from '../../GAddress/index.vue'
 import LJnEditor from '../../JnEditor/index.vue'
-import AdvanceInput from './advanceInput.vue'
+import LGAdvanceInput from './GAdvanceInput/index.vue'
 
 import formConfigProvideKey from '../constant/formConfigProvideKey'
 import getControlOprions from '../mixins/getControlOprions'

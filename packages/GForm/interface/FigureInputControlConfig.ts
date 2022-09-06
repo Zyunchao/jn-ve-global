@@ -1,6 +1,6 @@
-import { InputProps } from './InputControlConfig'
+import { InputProps, InputEvents, InputSlots } from './InputControlConfig'
 
-export interface FigureInputProps extends InputProps {
+export interface FigureInputProps extends InputProps, InputEvents, InputSlots {
     /**
      * 展示的格式化方式（千分位、保留小数..）
      */
