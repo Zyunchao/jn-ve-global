@@ -102,6 +102,7 @@ function getContent(ri: number, ci: number): Cell {
 
 <style lang="scss" scoped>
 .irregular-table {
+    --irregular-table-row-default-height: 40px;
     --border-color: var(--el-border-color);
 
     border-spacing: 0;
@@ -117,8 +118,11 @@ function getContent(ri: number, ci: number): Cell {
 
     tr {
         td {
-            height: 40px;
-            min-height: 40px;
+            height: var(--irregular-table-row-height, var(--irregular-table-row-default-height));
+            min-height: var(
+                --irregular-table-row-height,
+                var(--irregular-table-row-default-height)
+            );
             width: calc(100% / v-bind(colNum));
             min-width: calc(100% / v-bind(colNum));
             border-right: 1px solid var(--border-color);
@@ -128,9 +132,13 @@ function getContent(ri: number, ci: number): Cell {
             padding: 0 8px;
             font-size: 14px;
 
-            &.center,
-            &.label {
+            &.center {
                 text-align: center;
+                font-weight: 700;
+                color: #000;
+            }
+
+            &.label {
                 font-weight: 700;
                 color: #000;
             }
@@ -145,6 +153,10 @@ function getContent(ri: number, ci: number): Cell {
 
             &.bg {
                 background-color: #e1f6fa;
+            }
+
+            &.no-border-r {
+                border-right: none;
             }
         }
 
