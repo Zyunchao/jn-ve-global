@@ -1,9 +1,6 @@
-export interface IconPickerProps {
-    /**
-     * 禁用
-     */
-    disabled?: boolean
-}
+import { InputProps, InputEvents } from './InputControlConfig'
+
+export interface IconPickerProps extends InputProps, InputEvents {}
 
 export default interface IconPickerControlConfig {
     type: 'iconPicker'

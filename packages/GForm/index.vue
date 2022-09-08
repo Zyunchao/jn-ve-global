@@ -15,7 +15,7 @@
                 <template v-for="item in localConfig.formItems" :key="item.prop">
                     <el-col
                         v-if="!item.hide"
-                        :class="item.class ?? `${item.class} form-item-col`"
+                        :class="`${item.class + ' ' || ''}form-item-col`"
                         v-bind="getElColConfigs(item)"
                     >
                         <!-- 增强的 form-item -->

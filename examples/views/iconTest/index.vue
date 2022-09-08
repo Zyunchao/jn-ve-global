@@ -23,6 +23,11 @@
         <div class="box">
             <g-icon-picker v-model="selectedIcon" />
         </div>
+
+        <h3>IconPickerV2</h3>
+        <div class="box">
+            <GIconPickerV2 v-model="selectedIcon" />
+        </div>
     </div>
 </template>
 
@@ -56,6 +61,10 @@ watch(
         svg.custom-svg-icon {
             color: green;
         }
+    }
+
+    h3 {
+        margin-top: 20px;
     }
 
     .box {

@@ -91,8 +91,8 @@ export default {
 
 <script lang="ts" setup>
 import { onMounted, watch, nextTick, ref, computed } from 'vue'
-import LGIcon from '../GIcon/index.vue'
-import { elIconKeys, aliIcons, localIcons } from './data/icons'
+import LGIcon from '../../GIcon/index.vue'
+import { elIconKeys, aliIcons, localIcons } from '../data/icons'
 
 const props = defineProps({
     /**

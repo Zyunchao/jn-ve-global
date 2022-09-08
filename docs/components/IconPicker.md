@@ -2,6 +2,8 @@
 
 图标选择器
 
+## V1
+
 <demo-block>
 
 <IconPicker-demo1 />
@@ -9,6 +11,20 @@
 <template #code>
 
 @[code](@demoroot/IconPicker/demo1.vue)
+
+</template>
+
+</demo-block>
+
+## V2
+
+<demo-block>
+
+<IconPicker-demo2 />
+
+<template #code>
+
+@[code](@demoroot/IconPicker/demo2.vue)
 
 </template>
 

@@ -182,7 +182,7 @@
 
         <!-- 图标选择器 -->
         <template v-if="localControlType === 'iconPicker'">
-            <LGIconPicker v-model="localPropRef" v-bind="controlConfig.props" />
+            <LGIconPickerV2 v-model="localPropRef" v-bind="controlConfig.props" />
         </template>
 
         <!-- 下拉框 多列展示（分页） -->
@@ -258,7 +258,7 @@ import {
 import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/index.vue'
 import LGFigureInput from '../../GFigureInput/index.vue'
-import LGIconPicker from '../../GIconPicker/index.vue'
+import LGIconPickerV2 from '../../GIconPicker/v2/index.vue'
 import LGUpload from '../../GUpload/index.vue'
 import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
 import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
