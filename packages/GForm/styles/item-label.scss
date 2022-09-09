@@ -1,6 +1,6 @@
 @mixin item-label {
     font-size: var(--jn-ve-g-form-font-size);
-    line-height: var(--jn-ve-g-form-item-height);
+    line-height: calc(var(--jn-ve-g-form-item-height) + 2px);
     padding: 0;
     padding-right: 4px;
 

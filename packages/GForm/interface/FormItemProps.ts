@@ -89,7 +89,7 @@ export interface FormItemCustomProps {
      * 原生需要一个字符串，
      * 扩展可传递自定义渲染函数
      */
-    label?: string | ((prop?: any) => JSX.Element | VNode | string | number)
+    label?: string | ((prop?: any) => JSX.Element | VNode | string | number) | JSX.Element | VNode
     /**
      * className
      */
@@ -139,6 +139,14 @@ export interface FormItemCustomProps {
      * tooltip 提示信息
      */
     tip?: string
+    /**
+     * 提示信息位置
+     */
+    tipPosition?: 'label' | 'append'
+    /**
+     * 提示的图标
+     */
+    tipIcon?: string
     /**
      * 扩展字段
      */

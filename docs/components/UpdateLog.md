@@ -12,7 +12,7 @@
 
 <template #date>
 
-2022-9-8
+2022-9-9
 
 </template>
 
@@ -22,6 +22,12 @@
 
 1. 增加 V2 版本，V1 保留
 2. form 可配置的 IconPicker 默认采用 V2
+
+<h4>FormItem</h4>
+
+1. 增加调整 tooltip 位置的 api
+2. tooltip 图标可更换
+3. 自定义 labl 支持 VNode 类型传递
 
 </update-log-block>
 

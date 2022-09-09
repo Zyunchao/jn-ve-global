@@ -4,22 +4,38 @@
         :class="{
             'no-colon': formConfig.colon === false,
             'g-form-item': true,
-            'show-tip': formItemConfig.tip
+            'show-tip': formItemConfig.tip,
+            [`tip-${formItemConfig.tipPosition || 'append'}`]: formItemConfig.tip
         }"
         v-bind="elFormItemProps"
         :label-width="labelWidth"
     >
         <!-- 自定义 label -->
         <template v-if="formItemConfig.label" #label>
-            <span v-if="typeof formItemConfig.label === 'string'">
+            <!-- 组件 || jsx 元素 -->
+            <component :is="formItemConfig.label" v-if="isVNode(formItemConfig.label)" />
+
+            <!-- 文本 -->
+            <span v-if="_.isString(formItemConfig.label)">
                 {{ formItemConfig.label }}
             </span>
 
             <!-- tsx -->
             <FunctionalComponent
-                v-if="typeof formItemConfig.label === 'function'"
+                v-if="_.isFunction(formItemConfig.label)"
                 :render="formItemConfig.label()"
             />
+
+            <!-- 提醒：label -->
+            <el-tooltip
+                v-if="formItemConfig.tip && formItemConfig.tipPosition === 'label'"
+                :content="formItemConfig.tip"
+                placement="top"
+            >
+                <span class="item-tip">
+                    <LGIcon :icon="formItemConfig.tipIcon || 'el-QuestionFilled'" />
+                </span>
+            </el-tooltip>
         </template>
 
         <!-- 优先级1：自定义 Render 控件 -->
@@ -50,16 +66,14 @@
             />
         </template>
 
-        <!-- 提醒 -->
+        <!-- 提醒：append -->
         <el-tooltip
-            v-if="formItemConfig.tip"
-            class="box-item"
-            effect="dark"
+            v-if="formItemConfig.tip && formItemConfig.tipPosition !== 'label'"
             :content="formItemConfig.tip"
             placement="top"
         >
             <span class="item-tip">
-                <LGIcon icon="el-QuestionFilled" />
+                <LGIcon :icon="formItemConfig.tipIcon || 'el-QuestionFilled'" />
             </span>
         </el-tooltip>
     </el-form-item>
@@ -72,8 +86,9 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRef, computed } from 'vue'
+import { toRef, computed, isVNode } from 'vue'
 import type { FormProps, FormItemProps } from '../../index'
+import _ from 'lodash'
 
 // 组件
 import FunctionalComponent from '../../../FunctionalComponent'

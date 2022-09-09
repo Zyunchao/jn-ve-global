@@ -52,8 +52,8 @@ export default () => {
                 controlConfig: {
                     type: 'input',
                     props: {
-                        append: <g-icon icon="ali-icon-riqi"/>,
-                        prepend: <g-icon icon="ali-icon-riqi"/>
+                        append: <g-icon icon='ali-icon-riqi' />,
+                        prepend: <g-icon icon='ali-icon-riqi' />
                     }
                 }
             },
@@ -74,6 +74,8 @@ export default () => {
                 prop: 'selectMValue',
                 label: 'Select',
                 span: 12,
+                class: 'tip2222',
+                tip: '这是一个多选下拉',
                 controlConfig: {
                     type: 'select',
                     options: [
@@ -132,8 +134,11 @@ export default () => {
             },
             {
                 prop: 'time1',
-                label: 'TimePicker',
+                label: '时间',
                 span: 12,
+                tip: '这是一个时间选择器',
+                tipPosition: 'label',
+                // tipIcon: 'jg-jgxx-gantanhao',
                 controlConfig: {
                     type: 'timePicker',
                     props: {
@@ -281,17 +286,15 @@ export default () => {
             },
             {
                 prop: 'customLabel',
-                label: () => {
-                    return (
-                        <span class='form-test-custom-label'>
-                            <span>自</span>
-                            <span>定</span>
-                            <span>义</span>
-                            <span>标</span>
-                            <span>签</span>
-                        </span>
-                    )
-                },
+                label: (
+                    <span class='form-test-custom-label'>
+                        <span>自</span>
+                        <span>定</span>
+                        <span>义</span>
+                        <span>标</span>
+                        <span>签</span>
+                    </span>
+                ),
                 span: 12,
                 controlConfig: {
                     type: 'input',

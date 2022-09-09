@@ -55,8 +55,31 @@
 
         // 显示 tooltip 的 item
         &.show-tip {
-            .el-form-item__content {
-                flex-wrap: nowrap
+            &.tip-append {
+                .el-form-item__content {
+                    flex-wrap: nowrap
+                }
+            }
+
+            &.tip-label {
+                .el-form-item__label {
+                    .item-tip {
+                        margin-left: 4px;
+
+                        i,
+                        .custom-svg-icon {
+                            transform: translateY(9px);
+                            position: relative;
+                        }
+                    }
+                }
+            }
+
+
+            .item-tip {
+                margin-left: 10px;
+                font-size: 22px;
+                color: #767575;
             }
         }
 
