@@ -45,6 +45,30 @@ export function assignOwnProp(target: object, provider: object, excludes?: Array
 }
 
 /**
+ * 合并两个对象的有效字段，无效字段从目标对象中移除
+ * @param source 来源对象
+ * @param target 目标输出对象，是对源对象进行操作的
+ */
+export function assignValidField(source: object, target: object) {
+    Object.keys(source).forEach((key) => {
+        if (
+            _.isNull(source[key]) ||
+            _.isUndefined(source[key]) ||
+            (_.isArray(source[key]) && !source[key].length) ||
+            (_.isString(source[key]) && !source[key]) ||
+            (_.isNumber(source[key]) && source[key] === 0) ||
+            (_.isBoolean(source[key]) && source[key] === false) ||
+            (_.isObject(source[key]) && _.isEmpty(source[key]))
+        ) {
+            delete target[key]
+            return
+        } else {
+            target[key] = source[key]
+        }
+    })
+}
+
+/**
  * 依据子节点的 parentId 查找父节点
  * @param source 源数据（树）
  * @param pid 子节点的 parentId
@@ -306,11 +330,40 @@ export const advanceSerialize = {
 }
 
 /**
+ * 清空 obj 所有的 key，非改变引用
+ * @param obj
+ */
+export function emptyObj(obj: object) {
+    Object.keys(obj).forEach((key) => delete obj[key])
+}
+
+/**
  * 探查字符串是否为组件库的图标
  */
 export function stringIsIcon(str: string): boolean {
-    if(!str) return false
+    if (!str) return false
     const iconPrefix = ['ali-', 'el-', 'jg-']
     const res = iconPrefix.some((item) => str.startsWith(item))
     return res
+}
+
+/**
+ * 将传递的尺寸进行 rem 的换算
+ * @param size
+ * @returns
+ */
+export function size2Rem(size: number) {
+    const rootFontSize = document.querySelector('html')?.style?.fontSize
+    if (!rootFontSize) return size
+    return (size / 100) * parseFloat(rootFontSize)
+}
+
+/**
+ * 获取数组 or 对象的长度
+ * @param target
+ * @returns
+ */
+export function getLength(target: Array<any> | object) {
+    if (_.isArray(target)) return target.length
+    if (_.isObject(target)) return Object.keys(target).length
 }
