@@ -198,4 +198,12 @@ export default interface TableColumnProps extends EleTableColumnProps {
      * single click
      */
     openSC?: boolean
+    /**
+     * 列分组（筛选）
+     */
+    group?: string | string[]
+    /**
+     * 扩展字段
+     */
+    [k: string]: any
 }
