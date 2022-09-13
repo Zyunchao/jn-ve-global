@@ -22,7 +22,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRefs, watch, ref, computed, reactive, useAttrs } from 'vue'
-import getInputSlots from './mixins/getInputSlots'
+import useInputSlots from './mixins/useInputSlots'
 import { InputControlConfig } from '../../../index'
 import { stringIsIcon } from '../../../utils/utils'
 import LGIcon from '../../../GIcon/index.vue'
@@ -52,7 +52,7 @@ const localInputProps = computed<InputControlConfig['props']>(() => {
 /**
  * 获取有效的 slot 及主动重绘
  */
-const { inputSlots, reload } = getInputSlots(attrs)
+const { inputSlots, reload } = useInputSlots(attrs)
 
 /**
  * 抛出本地实际的 input ref

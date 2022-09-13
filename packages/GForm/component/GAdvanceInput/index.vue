@@ -22,7 +22,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
-import addInputDisabledTooltip from './mixins/inputDisabledTooltip'
+import useInputDisabledTooltip from './mixins/useInputDisabledTooltip'
 import InputCore from './core.vue'
 import { ElInput as ElInputCom } from 'element-plus'
 
@@ -56,7 +56,7 @@ const {
     elInputRef: localInputRef,
     inputDisabled,
     exceedBoxWidth
-} = addInputDisabledTooltip(localModelValue)
+} = useInputDisabledTooltip(localModelValue)
 
 /**
  * 抛出 input 的 ref 引用
