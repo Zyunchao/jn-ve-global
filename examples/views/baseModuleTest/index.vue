@@ -1,7 +1,9 @@
 <template>
     <BusinessLayout>
         <!-- :tabs="moduleTabs" -->
-        <GBaseModule
+        <g-base-module
+            v-model:selected-rows="selectedRows"
+            :show-selection="true"
             highlight-current-row
             no-search-label
             more-search-mode="popup"
@@ -31,7 +33,7 @@ import _ from 'lodash'
 
 const searchFormConfig = SearchFormConfig()
 const tableColumns = TableColumns()
-const tableData = ref(mockData.data1)
+const tableData = ref([])
 
 const tablePagination = reactive<PaginationProps>({
     currentPage: 1,
@@ -41,6 +43,20 @@ const tablePagination = reactive<PaginationProps>({
         tableData.value = mockData[`data${page}`]
     }
 })
+
+const selectedRows = ref<any[]>([mockData.data1[0]])
+
+setTimeout(() => {
+    tableData.value = mockData.data1
+    // selectedRows.value = [mockData.data1[0]]
+}, 1000)
+
+watch(
+    () => selectedRows.value,
+    (list) => {
+        console.log(`%c selectedRows === `, 'color: #67c23a;', list)
+    }
+)
 
 // 表格外操作按钮
 const btns: BtnProps[] = [
@@ -90,7 +106,7 @@ const btns: BtnProps[] = [
 
             datas[0].date = '1234'
             datas[0].id = '123491823qwe'
-            
+
             tableData.value = datas
         }
     }

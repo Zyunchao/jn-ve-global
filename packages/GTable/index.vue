@@ -171,26 +171,39 @@ if (localConfig.value.pagination) {
 /**
  * 如果表格没有传递 config.selectedRows 将被理解为不维护所选行
  */
-watch(
-    () => localConfig.value.selectedRows,
-    (rows, oldRows) => {
-        if (!localConfig.value.showSelection || !rows) {
-            return
-        }
+function setSelectRow(selectedRows: any[]) {
+    if (!localConfig.value.showSelection || !selectedRows) {
+        return
+    }
 
+    nextTick(() => {
+        localInstance.value?.clearSelection()
         nextTick(() => {
-            localInstance.value?.clearSelection()
-            nextTick(() => {
-                rows.forEach((row) => {
-                    localInstance.value?.toggleRowSelection(row, true)
-                })
+            selectedRows.forEach((row) => {
+                localInstance.value?.toggleRowSelection(row, true)
             })
         })
+    })
+}
+
+watch(
+    () => localConfig.value.selectedRows,
+    (rows) => {
+        setSelectRow(rows)
     },
     {
         // 外部可能会有数组的 push、splice 等不改引用改原数组的操作
         deep: true,
         immediate: true
+    }
+)
+
+watch(
+    () => localConfig.value.data,
+    (data) => {
+        if (data && data.length) {
+            setSelectRow(localConfig.value.selectedRows)
+        }
     }
 )
 
@@ -230,13 +243,7 @@ const localSelectAll = (selection: any[], row) => {
  * 切换分页情况下：依据所有已选行进行表格行选中状态的切换
  */
 const toggleTableRowSelection = () => {
-    if (!localConfig.value.showSelection || !localConfig.value.selectedRows) return
-    localInstance.value?.clearSelection()
-    nextTick(() => {
-        localConfig.value.selectedRows.forEach((row) => {
-            localInstance.value?.toggleRowSelection(row, true)
-        })
-    })
+    setSelectRow(localConfig.value.selectedRows)
 }
 // *********************↑ 表格多选，跨页多选 ↑**************************************************************************************
 
