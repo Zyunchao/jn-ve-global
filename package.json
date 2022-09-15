@@ -1,14 +1,16 @@
 {
     "name": "jn-ve-global",
-    "version": "2.1.17-beta.3",
+    "version": "2.1.17-beta.6",
     "author": "zyc",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
         "dist",
-        "packages"
+        "packages",
+        "@types"
     ],
     "main": "./dist/jn-ve-global.umd.js",
     "module": "./dist/jn-ve-global.es.js",
+    "types": "./@types/index.d.ts",
     "exports": {
         ".": {
             "import": "./dist/jn-ve-global.es.js",
@@ -17,7 +19,9 @@
         "./style.css": "./dist/style.css",
         "./dist/*": "./dist/*",
         "./packages/*": "./packages/*",
-        "./packages": "./packages"
+        "./packages": "./packages",
+        "./@types/*": "./@types/*",
+        "./@types": "./@types"
     },
     "peerDependencies": {
         "@element-plus/icons-vue": "1.1.4",
@@ -67,7 +71,10 @@
         "sass": "^1.51.0",
         "typescript": "^4.6.3",
         "vite": "2.9.8",
+        "vite-plugin-dts": "^1.5.0",
+        "vite-plugin-eslint": "^1.8.1",
         "vite-plugin-svg-icons": "2.0.1",
+        "vite-plugin-vue-setup-extend": "^0.4.0",
         "vue-router": "^4.0.14",
         "vue-tsc": "^0.34.10",
         "vuepress": "2.0.0-beta.39"

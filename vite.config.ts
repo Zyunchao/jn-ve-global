@@ -1,13 +1,38 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-const { resolve } = require('path')
+import { resolve } from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import dts from 'vite-plugin-dts'
+import eslintPlugin from 'vite-plugin-eslint'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 export default defineConfig({
     plugins: [
         vue(),
         vueJsx(),
+        // 生成 .d.ts
+        dts({
+            outputDir: resolve(__dirname, '@types'),
+            include: [
+                'packages/**/*.ts',
+                'packages/**/*.d.ts',
+                'packages/**/*.tsx',
+                'packages/**/*.vue'
+            ],
+            exclude: [
+                'packages/**/utils/**/*.ts',
+                'packages/**/mixins/**/*.ts',
+                'packages/**/hooks/**/*.ts'
+            ],
+            beforeWriteFile(filePath: string, content: string) {
+                return {
+                    filePath: filePath.replace('/packages', ''),
+                    content: content.replace(/\;/g, '')
+                }
+            },
+            insertTypesEntry: false
+        }),
         createSvgIconsPlugin({
             // 指定需要缓存的图标文件夹
             iconDirs: [
@@ -17,6 +42,12 @@ export default defineConfig({
             ],
             // 指定symbolId格式
             symbolId: 'custom-icon-[dir]-[name]'
+        }),
+        // setup 增强，标签添加 name 属性
+        vueSetupExtend(),
+        // vite eslint 集成
+        eslintPlugin({
+            include: ['src/**/*.{js,jsx,ts,tsx,vue}']
         })
     ],
 
