@@ -29,7 +29,7 @@ export default defineConfig({
             beforeWriteFile(filePath: string, content: string) {
                 return {
                     filePath: filePath.replace('/packages', ''),
-                    content: content.replace(/\;/g, '')
+                    content
                 }
             },
             insertTypesEntry: false
