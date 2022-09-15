@@ -23,7 +23,8 @@ export default defineConfig({
             exclude: [
                 'packages/**/utils/**/*.ts',
                 'packages/**/mixins/**/*.ts',
-                'packages/**/hooks/**/*.ts'
+                'packages/**/hooks/**/*.ts',
+                'packages/**/utils.ts'
             ],
             beforeWriteFile(filePath: string, content: string) {
                 return {
