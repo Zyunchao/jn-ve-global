@@ -18,6 +18,9 @@ const components = Object.keys(globalComponentFiles).reduce((components: any, pa
     // const componentName = nameArr[nameArr.length - 2]
     const context = globalComponentFiles[path]
     const componentName = context.default.name
+
+    // console.log(`%c ************ ${componentName} ************`, 'color: #67c23a;' )
+    
     components[componentName] = context.default
     return components
 }, {})

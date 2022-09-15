@@ -4,13 +4,7 @@
     </div>
 </template>
 
-<script lang="ts">
-export default {
-    name: 'JnEditor'
-}
-</script>
-
-<script lang="ts" setup>
+<script lang="ts" setup name="JnEditor">
 import {
     shallowRef,
     ref,

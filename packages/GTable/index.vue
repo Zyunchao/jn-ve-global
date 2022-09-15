@@ -74,13 +74,7 @@
     </div>
 </template>
 
-<script lang="ts">
-export default {
-    name: 'GTable'
-}
-</script>
-
-<script lang="ts" setup>
+<script lang="ts" setup name="GTable">
 import { PropType, watch, nextTick, computed, ref, reactive, toRaw, provide, readonly } from 'vue'
 import { TableConfig, TableMethods as TableInstance, TableColumnProps } from './index'
 import { getTableProps } from './utils'

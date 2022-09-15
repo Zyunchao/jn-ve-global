@@ -4,13 +4,7 @@
     </svg>
 </template>
 
-<script lang="ts">
-export default {
-    name: 'SvgIcon'
-}
-</script>
-
-<script lang="ts" setup>
+<script lang="ts" setup name="SvgIcon">
 import { computed, onMounted, nextTick } from 'vue'
 
 const props = withDefaults(
