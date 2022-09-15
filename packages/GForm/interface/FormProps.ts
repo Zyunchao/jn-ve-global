@@ -22,7 +22,7 @@ export interface FormInstance {
     [k: string]: unknown
 }
 
-export default interface FormProps {
+interface ElFormProps {
     /**
      * 表单数据对象
      */
@@ -74,9 +74,16 @@ export default interface FormProps {
      * default?: true
      */
     validateOnRuleChange?: boolean
+}
 
-    // 自定义扩展 Props -----------------------------------------------------------------------
-
+/**
+ * 自定义的表单配置字段
+ */
+export default interface FormProps extends ElFormProps {
+    /**
+     * 多个表单的主键
+     */
+    id?: string
     /**
      * 表单的实例（实际为 ref）
      */
@@ -94,4 +101,8 @@ export default interface FormProps {
      * 表示是否显示 label 后面的冒号
      */
     colon?: boolean
+    /**
+     * 扩展字段
+     */
+    [k: string]: any
 }
