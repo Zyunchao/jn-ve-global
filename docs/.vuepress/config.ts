@@ -4,6 +4,8 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import sidebar from './slidebar'
 import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import eslintPlugin from 'vite-plugin-eslint'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 const path = require('path')
 
 /**
@@ -53,6 +55,12 @@ export default defineUserConfig<DefaultThemeOptions>({
                         path.resolve(__dirname, '../../packages/assets/icons/svg/regtech')
                     ],
                     symbolId: 'custom-icon-[dir]-[name]'
+                }),
+                // setup 增强，标签添加 name 属性
+                vueSetupExtend(),
+                // vite eslint 集成
+                eslintPlugin({
+                    include: ['src/**/*.{js,jsx,ts,tsx,vue}']
                 })
             ]
         }
