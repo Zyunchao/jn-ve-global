@@ -11,18 +11,14 @@
             - 配合拖拽平台
          -->
         <slot :form-items="localConfig.formItems">
-            <el-row :gutter="localConfig.gutter ?? 20">
+            <LGFormRow :form-config="localConfig">
                 <template v-for="item in localConfig.formItems" :key="item.prop">
-                    <el-col
-                        v-if="!item.hide"
-                        :class="['g-form-item-col', item.class ? `${item.class}-col` : undefined]"
-                        v-bind="getElColConfigs(item)"
-                    >
-                        <!-- 增强的 form-item -->
-                        <LGFormItem :form-config="localConfig" :form-item-config="item" />
-                    </el-col>
+                    <LGColFormItem
+                        :form-config="localConfig"
+                        :form-item-config="item"
+                    />
                 </template>
-            </el-row>
+            </LGFormRow>
         </slot>
     </el-form>
 </template>
@@ -34,11 +30,12 @@ export default {
 
 <script lang="ts" setup>
 import { watch, provide, ref, toRef, nextTick, computed } from 'vue'
-import { FormProps, FormItemProps, FormInstance } from './index'
-import LGFormItem from './component/GFormItem/index.vue'
+import { FormProps, FormInstance } from './index'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import _ from 'lodash'
 import { assignOwnProp } from '@/utils/utils'
+import LGFormRow from './component/GFormRow/index.vue'
+import LGColFormItem from './component/GColFormItem/index.vue'
 
 interface Props {
     config: FormProps
@@ -108,30 +105,6 @@ const formRootConfigs = computed(() => {
     const { instance, formItems, gutter, colon, ...formConfigs } = props.config
     return formConfigs
 })
-
-const getElColConfigs = (item: FormItemProps) => {
-    const baseConfig = {
-        offset: item.offset ?? 0
-    }
-
-    const spanConfig = {
-        ...baseConfig,
-        span: item.span ?? 6
-    }
-
-    const bootstrapConfig = {
-        ...baseConfig,
-        xs: item.xs ?? 24,
-        sm: item.sm ?? 12,
-        md: item.md ?? 12,
-        lg: item.lg ?? 8,
-        xl: item.xl ?? 8
-    }
-
-    if (item.span) return spanConfig
-    if (item.xs || item.sm || item.md || item.lg || item.xl) return bootstrapConfig
-    return spanConfig
-}
 </script>
 
 <style lang="scss" scoped>
