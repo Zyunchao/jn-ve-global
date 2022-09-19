@@ -40,7 +40,7 @@ export interface InputProps {
      * 类型：text，textarea 和其他 原生 input 的 type 值
      * default：text
      */
-    type?: 'text' | 'textarea' | 'number'
+    type?: 'text' | 'textarea'
     /**
      * 原生属性，最大输入长度
      */

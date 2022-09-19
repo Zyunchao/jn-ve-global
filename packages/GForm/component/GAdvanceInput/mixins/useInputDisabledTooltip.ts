@@ -52,6 +52,13 @@ export default (modelValue: Ref<string | number>) => {
 
         const targetDom = elInputRef.value.$el as HTMLElement
         const inputDom = targetDom.querySelector('.el-input__inner')
+
+        /**
+         * 只有 input 框需要禁用提示，文本域则不需要，这里只是根据类名查找的
+         * 文本域没有这个类名，不往下走了
+         */
+        if (!inputDom) return
+
         const fontSize = parseFloat(getStyle(inputDom, 'font-size'))
         const inputWidth = inputDom.clientWidth
         const contentLength = `${modelValue.value}`.length
