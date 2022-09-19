@@ -10,16 +10,41 @@ export interface ExtendRuleItem extends RuleItem {
 }
 
 export interface FormInstance {
+    /**
+     * el-plus：全量校验
+     */
     validate: (callback?: Callback) => Promise<boolean>
+    /**
+     * el-plus：重置（创建前）
+     */
     resetFields: () => void
+    /**
+     * el-plus：清理校验消息
+     */
     clearValidate: (props?: string | string[]) => void
+    /**
+     * el-plus：校验单个字段
+     */
     validateField: (
         props: string | string[],
         cb: (isValid?: string, invalidFields?: ValidateFieldsError) => void
     ) => void
+    /**
+     * custom：重置表单 mode（创建前）
+     */
     initModel: () => void
+    /**
+     * custom：重置表单 mode（创建前）并初始化校验信息
+     */
     init: () => void
-    [k: string]: unknown
+    /**
+     * custom：主动缓存 model
+     */
+    cacheModel: () => void
+    /**
+     * custom：校验是否自上次缓存后改变 model
+     */
+    isChangeByCache: () => boolean
 }
 
 interface ElFormProps {

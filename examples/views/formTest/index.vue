@@ -45,6 +45,22 @@ const btns: BtnProps[] = [
         }
     },
     {
+        label: '缓存（保存）',
+        onClick() {
+            formConfig.instance.cacheModel()
+        }
+    },
+    {
+        label: '比对（自上次主动缓存）',
+        onClick() {
+            console.log(
+                `%c 是否改变 ===== `,
+                'color: #67c23a;',
+                formConfig.instance.isChangeByCache()
+            )
+        }
+    },
+    {
         label: '数据回填',
         type: 'success',
         onClick() {

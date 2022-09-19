@@ -13,10 +13,7 @@
         <slot :form-items="localConfig.formItems">
             <LGFormRow :form-config="localConfig">
                 <template v-for="item in localConfig.formItems" :key="item.prop">
-                    <LGColFormItem
-                        :form-config="localConfig"
-                        :form-item-config="item"
-                    />
+                    <LGColFormItem :form-config="localConfig" :form-item-config="item" />
                 </template>
             </LGFormRow>
         </slot>
@@ -33,7 +30,7 @@ import { watch, provide, ref, toRef, nextTick, computed } from 'vue'
 import { FormProps, FormInstance } from './index'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import _ from 'lodash'
-import { assignOwnProp } from '@/utils/utils'
+import { assignOwnProp, advanceSerialize } from '../utils/utils'
 import LGFormRow from './component/GFormRow/index.vue'
 import LGColFormItem from './component/GColFormItem/index.vue'
 
@@ -52,6 +49,8 @@ const refreshLoad = ref(true)
 const localConfig = ref<FormProps>(props.config)
 // 缓存初始（创建前）的 model
 const modelCache = ref<FormProps['model']>(_.cloneDeep(props.config.model))
+// 用户主动缓存
+const userCache = ref<FormProps['model']>(null)
 
 /**
  * 惰性监听（只在后续改变时执行）
@@ -75,7 +74,7 @@ watch(
 /**
  * 监听实例的变化
  *  - 抛出
- *  - 扩展方法：initModel、init
+ *  - 扩展方法：initModel、init、cacheModel、isChangeByCache
  */
 watch(
     () => localInstance.value,
@@ -90,6 +89,21 @@ watch(
                 nextTick(() => {
                     this.resetFields()
                 })
+            }
+
+            instance['cacheModel'] = () => {
+                userCache.value = _.cloneDeep(localConfig.value.model)
+            }
+
+            instance['isChangeByCache'] = () => {
+                if (!userCache.value) {
+                    console.log(`%c 未主动缓存，不予比对`, 'color: #f56c6c;')
+                    return false
+                }
+
+                const cacheStr = advanceSerialize.stringify(userCache.value)
+                const currentModelStr = advanceSerialize.stringify(localConfig.value.model)
+                return !(cacheStr === currentModelStr)
             }
 
             localConfig.value.instance = instance
