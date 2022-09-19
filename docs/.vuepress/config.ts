@@ -57,11 +57,11 @@ export default defineUserConfig<DefaultThemeOptions>({
                     symbolId: 'custom-icon-[dir]-[name]'
                 }),
                 // setup 增强，标签添加 name 属性
-                vueSetupExtend(),
+                vueSetupExtend()
                 // vite eslint 集成
-                eslintPlugin({
-                    include: ['src/**/*.{js,jsx,ts,tsx,vue}']
-                })
+                // eslintPlugin({
+                //     include: ['src/**/*.{js,jsx,ts,tsx,vue}']
+                // })
             ]
         }
     },
