@@ -14,7 +14,7 @@
 
         <template #append>
             <div class="trigger" @click="!disabled && (modalShow = true)">
-                <LGIcon icon="ali-icon-xiaolian" />
+                <LGIcon icon="el-Pointer" />
             </div>
         </template>
     </el-input>
