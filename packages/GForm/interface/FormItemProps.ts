@@ -83,7 +83,28 @@ export type ExtendControlConfig = ControlConfig & {
     after: string
 }
 
-export interface FormItemCustomProps {
+// 适配低码平台的额外属性
+interface _LowCodeFormItemCustomProps {
+    /**
+     * 表单 item 的配置项
+     *  - 控件配置项
+     *
+     * 用来表述表单控件的可配置属性的配置对象，取值方式依赖于 g-form 的对应的控件接口
+     * 每个字段都代表了源控件的一个配置属性，字段取值因为是要生成表单控件（属性配置菜单）
+     *  故：属性值为控件配置对象
+     */
+    _control_propertys_?: FormItemProps[]
+    /**
+     * 可供选择的事件
+     */
+    _events_provide_?: string[]
+    /**
+     * 持有的事件
+     */
+    _events_holding_?: string[]
+}
+
+export interface FormItemCustomProps extends _LowCodeFormItemCustomProps {
     /**
      * 标签文本
      * 原生需要一个字符串，

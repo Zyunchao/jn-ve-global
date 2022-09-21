@@ -131,8 +131,12 @@ const elFormItemProps = computed(() => {
         xl,
         selected,
         tip,
+
         // 拖拽平台扩展属性
-        formItemControlPropertys,
+        _control_propertys_,
+        _events_provide_,
+        _events_holding_,
+
         ...formItemProps
     } = props.formItemConfig
     return formItemProps
