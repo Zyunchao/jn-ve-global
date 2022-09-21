@@ -347,6 +347,18 @@ const localControlProps = computed(() => {
             break
     }
 
+    const temp = {}
+    if (Object.keys(controlProps).some((key) => key.startsWith('_on'))) {
+        Object.keys(controlProps).forEach((key) => {
+            if (!key.startsWith('_on')) {
+                temp[key] = controlProps[key]
+            }
+        })
+    }
+    if (!!Object.keys(temp).length) {
+        return temp
+    }
+
     return controlProps
 })
 
