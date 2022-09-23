@@ -163,7 +163,7 @@ export interface FormItemCustomProps extends _LowCodeFormItemCustomProps {
      */
     tip?: string | VNode | JSX.Element | (() => VNode | JSX.Element)
     /**
-     * 提示信息位置
+     * 提示图标位置
      */
     tipPosition?: 'label' | 'append'
     /**
