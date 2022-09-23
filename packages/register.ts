@@ -58,4 +58,4 @@ export default (app) => {
 export const icons = { elIconKeys, aliIcons, localIcons }
 
 // 版本号输出，增加辨识
-console.log(`[jn-ve-global] v${packageInfo.version}`)
+console.log(`[${packageInfo.name}] v${packageInfo.version}`)
