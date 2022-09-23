@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="22px" viewBox="0 0 21 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>jg-public-kapian-yujinghongse.svg</title>
+    <defs>
+        <path d="M6.49905262,14 C6.37589273,14 6.25273284,13.9762654 6.13715202,13.9287963 L0.490744789,11.5672076 C0.19137152,11.4417535 0,11.1721967 0,10.8755147 L0,0.762896585 C0,0.340760475 0.380848273,0 0.852645387,0 L12.1473546,0 C12.6191517,0 13,0.340760475 13,0.762896585 L13,10.8755147 C13,11.1721967 12.8086285,11.4417535 12.5092552,11.5672076 L6.86095321,13.9287963 C6.74537239,13.9762654 6.62221251,14 6.49905262,14 Z" id="path-1"></path>
+        <filter x="-46.9%" y="-29.3%" width="193.8%" height="187.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="0.6" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 0.462745098   0 0 0 0 0.329411765  0 0 0 0.42 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="小贷" transform="translate(-1478.000000, -238.000000)" fill-rule="nonzero">
+            <g id="jg-public-kapian-yujinghongse.svg" transform="translate(1482.000000, 240.000000)">
+                <g id="路径">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use stroke="#FF7654" stroke-width="1.2" fill="#FFFFFF" xlink:href="#path-1"></use>
+                </g>
+                <path d="M7.08942488,3.29274158 L7.79806794,4.73087014 C7.87385864,4.88624107 8.02354527,4.99424282 8.19407435,5.0188748 L9.77999477,5.25003644 C10.2120018,5.31256377 10.3844256,5.84309867 10.071789,6.14815625 L8.92355985,7.26606909 C8.80039996,7.38733421 8.74355693,7.56165282 8.77197844,7.7321819 L9.0429302,9.31241801 C9.11682613,9.74253024 8.66587146,10.070325 8.27933889,9.8675849 L6.86015801,9.12104649 C6.70668184,9.03957149 6.52288939,9.03957149 6.37130799,9.12104649 L4.95212711,9.8675849 C4.56559454,10.070325 4.11463986,9.74253024 4.1885358,9.31241801 L4.45948755,7.7321819 C4.48790907,7.56165282 4.43296081,7.38733421 4.30790615,7.26606909 L3.15967703,6.14815625 C2.84704039,5.84309867 3.01946423,5.31256377 3.45147123,5.25003644 L5.03739165,5.0188748 C5.20792073,4.99424282 5.35760736,4.88624107 5.43339806,4.73087014 L6.14204112,3.29274158 C6.33909694,2.90241947 6.89615859,2.90241947 7.08942488,3.29274158 L7.08942488,3.29274158 Z" id="路径" fill="#FF7654"></path>
+            </g>
+        </g>
+    </g>
+</svg>
