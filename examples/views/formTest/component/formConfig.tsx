@@ -136,9 +136,12 @@ export default () => {
                 prop: 'time1',
                 label: '时间',
                 span: 12,
-                tip: '这是一个时间选择器',
+                required: true,
+                tip: () => <div style="background-color: #fff; color: #000;">'这是一个时间选择器'</div>,
                 tipPosition: 'label',
-                // tipIcon: 'jg-jgxx-gantanhao',
+                tipIcon: 'jg-jgxx-gantanhao',
+                tipPopperClass: 'qwer',
+                tipPlacement: 'bottom',
                 controlConfig: {
                     type: 'timePicker',
                     props: {

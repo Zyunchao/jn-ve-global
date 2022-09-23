@@ -161,7 +161,7 @@ export interface FormItemCustomProps extends _LowCodeFormItemCustomProps {
     /**
      * tooltip 提示信息
      */
-    tip?: string
+    tip?: string | VNode | JSX.Element | (() => VNode | JSX.Element)
     /**
      * 提示信息位置
      */
@@ -170,6 +170,26 @@ export interface FormItemCustomProps extends _LowCodeFormItemCustomProps {
      * 提示的图标
      */
     tipIcon?: string
+    /**
+     * 提示的自定义类名
+     */
+    tipPopperClass?: string
+    /**
+     * 提示出现的位置
+     */
+    tipPlacement?:
+        | 'top'
+        | 'top-start'
+        | 'top-end'
+        | 'bottom'
+        | 'bottom-start'
+        | 'bottom-end'
+        | 'left'
+        | 'left-start'
+        | 'left-end'
+        | 'right'
+        | 'right-start'
+        | 'right-end'
     /**
      * 扩展字段
      */

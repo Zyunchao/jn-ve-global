@@ -12,6 +12,14 @@
     >
         <!-- 自定义 label -->
         <template v-if="formItemConfig.label" #label>
+            <FormItemLabelTip
+                v-if="formItemConfig.tip && formItemConfig.tipPosition === 'label'"
+                :content="formItemConfig.tip"
+                :icon="formItemConfig.tipIcon"
+                :popper-class="formItemConfig.tipPopperClass"
+                :placement="formItemConfig.tipPlacement"
+            />
+
             <!-- 组件 || jsx 元素 -->
             <component :is="formItemConfig.label" v-if="isVNode(formItemConfig.label)" />
 
@@ -25,17 +33,6 @@
                 v-if="_.isFunction(formItemConfig.label)"
                 :render="formItemConfig.label()"
             />
-
-            <!-- 提醒：label -->
-            <el-tooltip
-                v-if="formItemConfig.tip && formItemConfig.tipPosition === 'label'"
-                :content="formItemConfig.tip"
-                placement="top"
-            >
-                <span class="item-tip">
-                    <LGIcon :icon="formItemConfig.tipIcon || 'el-QuestionFilled'" />
-                </span>
-            </el-tooltip>
         </template>
 
         <!-- 优先级1：自定义 Render 控件 -->
@@ -67,15 +64,13 @@
         </template>
 
         <!-- 提醒：append -->
-        <el-tooltip
+        <FormItemLabelTip
             v-if="formItemConfig.tip && formItemConfig.tipPosition !== 'label'"
             :content="formItemConfig.tip"
-            placement="top"
-        >
-            <span class="item-tip">
-                <LGIcon :icon="formItemConfig.tipIcon || 'el-QuestionFilled'" />
-            </span>
-        </el-tooltip>
+            :icon="formItemConfig.tipIcon"
+            :popper-class="formItemConfig.tipPopperClass"
+            :placement="formItemConfig.tipPlacement"
+        />
     </el-form-item>
 </template>
 
@@ -94,7 +89,7 @@ import _ from 'lodash'
 import FunctionalComponent from '../../../FunctionalComponent'
 import FormItemControl from '../formItemControl.vue'
 import FormItemControlGroup from '../formItemControlGroup.vue'
-import LGIcon from '../../../GIcon/index.vue'
+import FormItemLabelTip from './components/labelTip.vue'
 
 interface Props {
     formConfig: FormProps
