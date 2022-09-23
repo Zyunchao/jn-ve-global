@@ -1,3 +1,5 @@
+import packageInfo from '../package.json'
+
 // 样式资源
 import './assets/styles/index.scss'
 
@@ -20,7 +22,7 @@ const components = Object.keys(globalComponentFiles).reduce((components: any, pa
     const componentName = context.default.name
 
     // console.log(`%c ************ ${componentName} ************`, 'color: #67c23a;' )
-    
+
     components[componentName] = context.default
     return components
 }, {})
@@ -54,3 +56,6 @@ export default (app) => {
  * 抛出组件库内的图标资源
  */
 export const icons = { elIconKeys, aliIcons, localIcons }
+
+// 版本号输出，增加辨识
+console.log(`[jn-ve-global] v${packageInfo.version}`)

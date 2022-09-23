@@ -101,7 +101,9 @@ interface _LowCodeFormItemCustomProps {
     /**
      * 持有的事件
      */
-    _events_holding_?: string[]
+    _events_holding_?: {
+        [k: string]: string
+    }
 }
 
 export interface FormItemCustomProps extends _LowCodeFormItemCustomProps {
