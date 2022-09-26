@@ -11,6 +11,7 @@
                 v-model:fileList="fileList"
                 action="/api/kinso-basic-open-server/v1/document/file/upload"
                 list-type="text"
+                download-url="/api/kinso-basic-open-server/v1/document/file/download"
             />
         </div>
 
@@ -21,6 +22,7 @@
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture-card"
             download-hide
+            download-url="/api/kinso-basic-open-server/v1/document/file/download"
         />
 
         <h3>列表</h3>
@@ -30,6 +32,7 @@
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture"
             del-hide
+            download-url="/api/kinso-basic-open-server/v1/document/file/download"
         />
 
         <h3>头像</h3>
@@ -38,6 +41,7 @@
             :img-url="imgUrl"
             action="/api/kinso-basic-open-server/v1/document/file/upload"
             list-type="avatar"
+            download-url="/api/kinso-basic-open-server/v1/document/file/download"
         />
     </div>
 </template>
@@ -88,13 +92,7 @@ watch(
 )
 
 const updateFileList = () => {
-    fileList.value = source.map((item) => {
-        return {
-            name: item.fileRName,
-            url: item.filePath,
-            ...item
-        }
-    })
+    fileList.value = source
 }
 
 const onPreview = (file) => {

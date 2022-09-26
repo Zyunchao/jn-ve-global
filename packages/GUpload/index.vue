@@ -170,6 +170,10 @@ interface UploadCustomProps {
      * 预览的钩子，将会覆盖本地操作
      */
     onMagnify?: (file: UploadFile) => void
+    /**
+     * 下载 & 预览文件的 url
+     */
+    downloadUrl?: string
 }
 
 const props = withDefaults(defineProps<UploadCustomProps>(), {
@@ -182,7 +186,8 @@ const props = withDefaults(defineProps<UploadCustomProps>(), {
     onMagnify: null,
     downloadHide: false,
     delHide: false,
-    successNoMsg: false
+    successNoMsg: false,
+    downloadUrl: '/kinso-basic-open-server/v1/document/file/download'
 })
 
 const emits = defineEmits(['update:modelValue', 'update:fileList', 'getUploadRef'])

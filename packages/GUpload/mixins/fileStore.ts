@@ -1,4 +1,5 @@
 import { ref, computed, watch } from 'vue'
+import _ from 'lodash'
 
 export default ({ emits, props }) => {
     /**
@@ -12,7 +13,13 @@ export default ({ emits, props }) => {
      * 普通的列表模式，将抛出有效的 fileList
      */
     const localFileList = computed({
-        get: () => props.fileList,
+        get: () =>
+            _.cloneDeep(props.fileList).map((file) => {
+                if (!file.url && file.fileId && props.downloadUrl) {
+                    file.url = `${props.downloadUrl}/${file.fileId}`
+                }
+                return file
+            }),
         set: (list) => {
             emits('update:fileList', list)
         }

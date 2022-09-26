@@ -382,13 +382,8 @@ export default () => {
                     type: 'upload',
                     props: {
                         action: `${prefix}/kinso-basic-open-server/v1/document/file/upload`,
-                        fileList: FileSource.map((item) => {
-                            return {
-                                name: item.fileRName,
-                                url: item.filePath,
-                                ...item
-                            }
-                        }),
+                        downloadUrl: `${prefix}/kinso-basic-open-server/v1/document/file/download`,
+                        fileList: FileSource,
                         name: 'file',
                         size: 2,
                         listType: 'picture-card',

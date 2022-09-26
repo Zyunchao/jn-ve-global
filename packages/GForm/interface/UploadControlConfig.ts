@@ -164,6 +164,10 @@ export interface UploadCustomProps {
      * 上传成功后不显示消息
      */
     successNoMsg?: boolean
+    /**
+     * 下载 & 预览文件的 url
+     */
+    downloadUrl?: string
 }
 
 export default interface UploadControlConfig {
