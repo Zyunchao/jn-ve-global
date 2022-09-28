@@ -6,7 +6,18 @@ interface Callback {
 }
 
 export interface ExtendRuleItem extends RuleItem {
+    /**
+     * 触发方式
+     */
     trigger?: 'blur' | 'change'
+    /**
+     * 低码平台：自定义校验的处理函数字符串
+     */
+    _validator_source_?: string
+    /**
+     * 低码平台：异步自定义校验的处理函数字符串
+     */
+    _async_validator_source_?: string
 }
 
 export interface FormInstance {

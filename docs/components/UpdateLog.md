@@ -20,7 +20,9 @@
 
 <h4>Upload</h4>
 
-上传组件的 预览&下载 不再需要手动传递 url（<strong style="color: #ff3040; ">用户传递的优先</strong>），增加 `downloadUrl` 配置 api，内部自动拼接 fileId 获取文件
+1. 上传组件的 预览&下载 不再需要传递 url，也可传递（兼容以前的写法），以用户传递的优先
+
+2. 增加 `downloadUrl` 配置 api（可选），内部自动拼接 fileId 获取文件，组件默认取 `/kinso-basic-open-server/v1/document/file/download` ，以用户传递的优先
 
 <h4>Form</h4>
 
