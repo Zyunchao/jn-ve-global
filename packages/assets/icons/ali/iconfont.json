@@ -6,6 +6,34 @@
   "description": "统一管理平台",
   "glyphs": [
     {
+      "icon_id": "1041",
+      "name": "平板电脑",
+      "font_class": "pingbandiannao",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "5387751",
+      "name": "导入_o",
+      "font_class": "daoru_o",
+      "unicode": "eb49",
+      "unicode_decimal": 60233
+    },
+    {
+      "icon_id": "1074",
+      "name": "显示器",
+      "font_class": "xianshiqi",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "5027",
+      "name": "手机",
+      "font_class": "shouji",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
       "icon_id": "907856",
       "name": "日期",
       "font_class": "riqi",

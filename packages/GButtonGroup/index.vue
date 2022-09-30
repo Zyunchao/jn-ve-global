@@ -79,7 +79,7 @@ const getElButtonProps = (config: BtnProps) => {
         > span {
             .custom-svg-icon,
             > i {
-                font-size: 20px;
+                font-size: 18px;
                 margin-right: 4px;
             }
         }

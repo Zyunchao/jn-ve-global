@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2683065 */
-  src: url('iconfont.woff2?t=1658906164761') format('woff2'),
-       url('iconfont.woff?t=1658906164761') format('woff'),
-       url('iconfont.ttf?t=1658906164761') format('truetype');
+  src: url('iconfont.woff2?t=1664541309104') format('woff2'),
+       url('iconfont.woff?t=1664541309104') format('woff'),
+       url('iconfont.ttf?t=1664541309104') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,22 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ali-icon-pingbandiannao:before {
+  content: "\e621";
+}
+
+.ali-icon-daoru_o:before {
+  content: "\eb49";
+}
+
+.ali-icon-xianshiqi:before {
+  content: "\e601";
+}
+
+.ali-icon-shouji:before {
+  content: "\e612";
 }
 
 .ali-icon-riqi:before {
