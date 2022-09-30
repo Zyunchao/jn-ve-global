@@ -48,7 +48,7 @@ const localInstance = ref<FormInstance | null>(null)
 const refreshLoad = ref(true)
 const localConfig = ref<FormProps>(props.config)
 // 缓存初始（创建前）的 model
-const modelCache = ref<FormProps['model']>(_.cloneDeep(props.config.model))
+const modelCache = ref<FormProps['model']>(_.cloneDeep(props.config?.model))
 // 用户主动缓存
 const userCache = ref<FormProps['model']>(null)
 
