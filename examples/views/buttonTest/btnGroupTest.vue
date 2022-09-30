@@ -32,15 +32,18 @@ const isDis = ref<boolean>(false)
 const btnsNomal: BtnProps[] = [
     {
         label: 'primary',
-        type: 'primary'
+        type: 'primary',
+        icon: 'jg-gzt-raw-new'
     },
     {
         label: 'success',
-        type: 'success'
+        type: 'success',
+        icon: 'jg-public-anniu-chongzhi'
     },
     {
         label: 'warning',
-        type: 'warning'
+        type: 'warning',
+        icon: 'el-ChatLineRound'
     },
     {
         label: 'danger',
@@ -56,7 +59,7 @@ const btnsNomal: BtnProps[] = [
     },
     {
         label: '文本',
-        type: 'text'
+        text: true
     },
     {
         label: '自定义样式',

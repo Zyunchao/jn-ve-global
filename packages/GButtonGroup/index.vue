@@ -6,11 +6,12 @@
                 v-if="btn.authCode"
                 v-show="!getStatus(btn, 'hide', index)"
                 v-auth="btn.authCode"
-                v-bind="btn"
+                v-bind="getElButtonProps(btn)"
                 :type="btn.type || 'primary'"
                 :disabled="getStatus(btn, 'disabled', index)"
                 :loading="getStatus(btn, 'loading', index)"
             >
+                <g-icon v-if="btn.icon" :icon="btn.icon" custom-color />
                 {{ btn.label }}
             </el-button>
 
@@ -18,11 +19,12 @@
             <el-button
                 v-else
                 v-show="!getStatus(btn, 'hide', index)"
-                v-bind="btn"
+                v-bind="getElButtonProps(btn)"
                 :type="btn.type || 'primary'"
                 :disabled="getStatus(btn, 'disabled', index)"
                 :loading="getStatus(btn, 'loading', index)"
             >
+                <g-icon v-if="btn.icon" :icon="btn.icon" custom-color />
                 {{ btn.label }}
             </el-button>
         </template>
@@ -63,6 +65,24 @@ const getStatus = (
 
     return false
 }
+
+// 排除部分属性
+const getElButtonProps = (config: BtnProps) => {
+    const { icon, authCode, ...props } = config
+    return props
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.g-button-group {
+    :deep(.el-button) {
+        > span {
+            .custom-svg-icon,
+            > i {
+                font-size: 20px;
+                margin-right: 4px;
+            }
+        }
+    }
+}
+</style>
