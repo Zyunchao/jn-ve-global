@@ -36,6 +36,18 @@
     >
         <BaseModuleDemo />
     </g-modal>
+
+    <g-modal v-model="echartsModelShow" width="70%" title="图表" @closed="closeHandle">
+        <div v-if="create" style="height: 600px">
+            <GChart :config="chartConfig" />
+        </div>
+    </g-modal>
+
+    <!-- <el-dialog v-model="echartsModelShow" width="70%" title="Tips">
+        <div v-if="create" style="height: 600px">
+            <GChart :config="chartConfig" />
+        </div>
+    </el-dialog> -->
 </template>
 
 <script lang="ts">
@@ -46,7 +58,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { BtnProps } from '@component/index'
+import { BtnProps, ChartConfig } from '@component/index'
 import FormTest from '../formTest/index.vue'
 import { ElMessageBox } from 'element-plus'
 import BaseModuleDemo from './component/index.vue'
@@ -54,6 +66,8 @@ import BaseModuleDemo from './component/index.vue'
 const dialogShow = ref<boolean>(false)
 const drawerShow = ref<boolean>(false)
 const baseModuleDialogShow = ref<boolean>(false)
+const echartsModelShow = ref<boolean>(false)
+const create = ref<boolean>(false)
 
 const modalBtns = reactive<BtnProps[]>([
     {
@@ -108,8 +122,33 @@ const btns = reactive<BtnProps[]>([
                 .then(() => {})
                 .catch(() => {})
         }
+    },
+    {
+        label: 'Show Echarts Modal',
+        type: 'danger',
+        onClick() {
+            echartsModelShow.value = true
+
+            setTimeout(() => {
+                create.value = true
+            }, 0)
+        }
     }
 ])
+
+const chartConfig = ref<ChartConfig>({
+    type: 'bar',
+    x: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+    data: {
+        '销量': [5, 20, 36, 10, 10, 20],
+        '价格': [50, 10, 16, 40, 60, 20],
+        '人数': [60, 20, 46, 10, 40, 70]
+    }
+})
+
+const closeHandle = () => {
+    create.value = false
+}
 </script>
 
 <style lang="scss" scoped></style>
