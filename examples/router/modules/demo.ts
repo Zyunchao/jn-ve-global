@@ -132,6 +132,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/splitItem-test',
         component: () => import('@/views/formTest/splitItem.vue')
+    },
+    {
+        path: '/lowcode-platform',
+        component: () => import('@/views/lowcodePlatform/index.vue')
     }
 ]
 
