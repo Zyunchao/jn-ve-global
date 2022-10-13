@@ -226,7 +226,11 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
                             return
                         }
 
+                        // 清空查询条件
                         props.searchFormProps.instance?.resetFields()
+
+                        // 清空多选
+                        emits('update:selectedRows', [])
                         
                         if (!props.loadTableMethods)
                             throw new Error('core load-table-methods 未找到')
