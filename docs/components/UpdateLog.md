@@ -12,7 +12,7 @@
 
 <template #date>
 
-2022-9-30
+2022-10-13
 
 </template>
 
@@ -33,6 +33,10 @@
 <h4>Form</h4>
 
 formConfig 无效时，缓存 model 报错问题；
+
+<h4>FormGenerate</h4>
+
+1. 处理函数声明时，函数 key 截取出错问题；
 
 </update-log-block>
 
