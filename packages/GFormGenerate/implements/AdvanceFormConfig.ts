@@ -168,9 +168,11 @@ export default class AdvanceFormConfig {
 
             // 字符串转换函数 或 预定义的事件处理函数
             const _sourceFunStr: string = props[key]
-            const handleType = _sourceFunStr.substring(0, _sourceFunStr.indexOf('('))
+            const handleType = _sourceFunStr
+                .substring(0, _sourceFunStr.indexOf('('))
+                .replace(/ /g, '')
 
-            // 传递自定义函数时，只能使用匿名函数（不能使用箭头函数, 内部需要使用 arguments）
+            // 传递自定义函数时，只能使用声明式函数（不能使用箭头函数, 内部需要使用 arguments）
             if (handleType === 'function') {
                 const funcBody: Function = funStr2FuncBody(_sourceFunStr)
                 if (funcBody) {
@@ -185,18 +187,16 @@ export default class AdvanceFormConfig {
 
                 return false
             } else if (previewEventsKeys.includes(handleType)) {
-                const paramsKeys = _sourceFunStr.substring(_sourceFunStr.indexOf('('))
-                const params = paramsKeys
-                    .replace('(', '')
-                    .replace(')', '')
-                    .replace(/\s/g, '')
-                    .split(',')
+                const paramsKeys = _sourceFunStr.match(/(?<=\()[\s\S]*(?=\))/)?.[0]
+                if (!paramsKeys) return
+
+                const params = paramsKeys.split(',')
 
                 props[key] = function () {
                     _that.previewEventsHandle[handleType].apply(_that, params)
                 }
             } else {
-                throw new Error(`${_sourceFunStr} 不是自定义函数，也不是预定义函数`)
+                throw new Error(`${_sourceFunStr} 不是声明式函数，也不是预定义函数`)
             }
         })
     }
@@ -280,8 +280,9 @@ export default class AdvanceFormConfig {
         const _sourceValidatorStr: string = rule.validator
 
         // 保证函数不是箭头函数
-        if (!_sourceValidatorStr.startsWith('function'))
+        if (!/^function/.test(_sourceValidatorStr)) {
             throw new Error(`${_sourceValidatorStr} is not function startWith`)
+        }
 
         const funcBody: Function = funStr2FuncBody(_sourceValidatorStr)
 
