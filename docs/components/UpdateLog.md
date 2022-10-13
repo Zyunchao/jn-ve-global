@@ -28,6 +28,10 @@
 2. 增加 ali 图标
 3. 优化 ali 资源的引用方式
 
+<h4>BaseModule</h4>
+
+重置时，清空多选列表
+
 <h3>BugFix</h3>
 
 <h4>Form</h4>
