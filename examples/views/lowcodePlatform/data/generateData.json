@@ -1,0 +1,41 @@
+{
+    "instance": null,
+    "labelPosition": "right",
+    "labelWidth": "1.4rem",
+    "disabled": false,
+    "model": {
+        "5d29f74c8ef04f9a97890e22a2ff0065": "",
+        "74d014d6fa7a4b7497b30702696c207a": ""
+    },
+    "formItems": [
+        {
+            "prop": "5d29f74c8ef04f9a97890e22a2ff0065",
+            "label": "输入框",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 24,
+            "xl": 24,
+            "controlConfig": {
+                "type": "input"
+            },
+            "tipPosition": "label"
+        },
+        {
+            "prop": "74d014d6fa7a4b7497b30702696c207a",
+            "label": "输入框",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 24,
+            "xl": 24,
+            "controlConfig": {
+                "type": "input",
+                "props": {
+                    "onInput": "function (val) {\n    //CONTEXT_STARTS\n    const formConfig = arguments[arguments.length - 1]\n    //CONTEXT_END\n\n    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓\n    // formConfig.formItems\n    console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)\n    console.log(`%c event val ===== `, 'color: #409eff;', val)\n}\n"
+                }
+            },
+            "tipPosition": "label"
+        }
+    ]
+}

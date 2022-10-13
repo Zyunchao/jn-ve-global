@@ -136,6 +136,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/lowcode-platform',
         component: () => import('@/views/lowcodePlatform/index.vue')
+    },
+    {
+        path: '/lowcode-platform-generate',
+        component: () => import('@/views/lowcodePlatform/generate.vue')
     }
 ]
 
