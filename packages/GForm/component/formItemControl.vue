@@ -236,6 +236,11 @@
                 :disabled="controlDisabled"
             />
         </template>
+
+        <!-- 表格，仅做展示 -->
+        <template v-if="localControlType === 'table'">
+            <LGTable :config="controlConfig.props" />
+        </template>
     </template>
 </template>
 
@@ -267,6 +272,7 @@ import LGSelectTreeV2 from '../../GSelectTreeV2/index.vue'
 import LGAddress from '../../GAddress/index.vue'
 import LJnEditor from '../../JnEditor/index.vue'
 import LGAdvanceInput from './GAdvanceInput/index.vue'
+import LGTable from '../../GTable/index.vue'
 
 import formConfigProvideKey from '../constant/formConfigProvideKey'
 import getControlOprions from '../mixins/getControlOprions'

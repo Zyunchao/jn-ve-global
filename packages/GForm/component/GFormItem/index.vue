@@ -5,7 +5,8 @@
             'no-colon': formConfig.colon === false,
             'g-form-item': true,
             'show-tip': formItemConfig.tip,
-            [`tip-${formItemConfig.tipPosition || 'append'}`]: formItemConfig.tip
+            [`tip-${formItemConfig.tipPosition || 'append'}`]: formItemConfig.tip,
+            'no-margin-b': formItemConfig?.controlConfig?.type === 'table'
         }"
         v-bind="elFormItemProps"
         :label-width="labelWidth"
