@@ -3,116 +3,32 @@
     "labelWidth": "1.4rem",
     "disabled": false,
     "model": {
-        "989013f26e5b40aba88d1a655f356673": "",
-        "d1d1ed5ecf7e4ca5856226a84af66260": "",
-        "36b7ab3c8d80487a8f33eda389b82935": "",
-        "4dfb6e70b65244319255da5df4a336af": "",
-        "10cf145b825e46d189b9effa22684b0f": "",
-        "ebe6ec6fe93142f08a25ce9724867ccf": "",
-        "a818839dc452476dbd1e47d013fc781b": "",
-        "e904e2972984467e9bb03e93bee1c586": "",
-        "2ed269c89f2a4eec9d0033ca9f590b65": "",
-        "a42845b5b5a04c78b38ef831bbbf8a3d": "",
-        "60216fe2f8d74aaa82cac65f878a412f": "",
-        "2c5c86503e044339a827eaefb3403f44": ""
+        "6334a751b8f240e8a3d13d9b030e1444": "",
+        "44029d6a9f49442b800992067087ada4": "",
+        "2723bf3184cf45e596de0c24a21cc3d2": "",
+        "7047bdf612a04741840f58f2a7b0ada7": "",
+        "e986a8eb20bc4ff380aa27daa2ba1fae": "",
+        "d55bd11469fe4946b1cbf2bd48c936c3": "",
+        "154ec927e80f45e8bc3acda53f5b8f24": "",
+        "85190bf1fb7848e3beadbe0e23c8b47e": "3332222",
+        "d46bd24130b74241b1c91f808fd93371": "",
+        "b799182793f843e29d6f0492bbd1391f": "",
+        "cda7afa7655c4e3faaeb6bdb014a42b1": "",
+        "1b86e889b7cf4de7952acc67384394da": "22223333",
+        "f8b4b4d9183e4764b94e23acc9478dbc": "",
+        "dc5a8b5919c9472ba474892ef9006572": "",
+        "d5cf140215234b998b56f0af7c1a95ee": "",
+        "7a97b4410ca14055ac4c1925c248bf78": "22223"
     },
     "formItems": [
         {
-            "prop": "989013f26e5b40aba88d1a655f356673",
-            "label": "输入框",
-            "xs": 24,
-            "sm": 24,
-            "md": 12,
-            "lg": 24,
-            "xl": 24,
-            "controlConfig": {
-                "type": "input"
-            },
-            "tipPosition": "label"
-        },
-        {
-            "prop": "d1d1ed5ecf7e4ca5856226a84af66260",
-            "label": "输入框",
-            "xs": 24,
-            "sm": 24,
-            "md": 12,
-            "lg": 24,
-            "xl": 24,
-            "controlConfig": {
-                "type": "input"
-            }
-        },
-        {
-            "prop": "36b7ab3c8d80487a8f33eda389b82935",
-            "label": "输入框",
-            "xs": 24,
-            "sm": 24,
-            "md": 12,
-            "lg": 24,
-            "xl": 24,
-            "controlConfig": {
-                "type": "input"
-            }
-        },
-        {
-            "prop": "4dfb6e70b65244319255da5df4a336af",
-            "label": "输入框",
-            "xs": 24,
-            "sm": 24,
-            "md": 12,
-            "lg": 24,
-            "xl": 24,
-            "controlConfig": {
-                "type": "input"
-            }
-        },
-        {
-            "prop": "10cf145b825e46d189b9effa22684b0f",
-            "label": "输入框",
-            "xs": 24,
-            "sm": 24,
-            "md": 12,
-            "lg": 12,
-            "xl": 12,
-            "controlConfig": {
-                "type": "input"
-            },
-            "tipPosition": "label"
-        },
-        {
-            "prop": "ebe6ec6fe93142f08a25ce9724867ccf",
+            "prop": "85190bf1fb7848e3beadbe0e23c8b47e",
             "label": "_输入框_",
             "xs": 24,
             "sm": 24,
             "md": 12,
-            "lg": 12,
-            "xl": 12,
-            "controlConfig": {
-                "type": "input"
-            },
-            "tipPosition": "label"
-        },
-        {
-            "prop": "a818839dc452476dbd1e47d013fc781b",
-            "label": "_输入框_",
-            "xs": 24,
-            "sm": 24,
-            "md": 12,
-            "lg": 12,
-            "xl": 12,
-            "controlConfig": {
-                "type": "input"
-            },
-            "tipPosition": "label"
-        },
-        {
-            "prop": "e904e2972984467e9bb03e93bee1c586",
-            "label": "_输入框_",
-            "xs": 24,
-            "sm": 24,
-            "md": 12,
-            "lg": 12,
-            "xl": 12,
+            "lg": 8,
+            "xl": 8,
             "controlConfig": {
                 "type": "input",
                 "props": {
@@ -120,59 +36,78 @@
                     "onInput": "function (val) {\n    //CONTEXT_STARTS\n    const formConfig = arguments[arguments.length - 1]\n    //CONTEXT_END\n\n    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓\n    // formConfig.formItems\n    console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)\n    console.log(`%c event val ===== `, 'color: #409eff;', val)\n}\n"
                 }
             },
-            "tipPosition": "label",
             "rules": [
                 {
                     "required": true,
                     "message": "_输入框_是必填项"
-                },
-                {
-                    "validator": "function (rule, value, callback, source) {\n    //CONTEXT_STARTS\n    const formConfig = arguments[arguments.length - 1]\n    //CONTEXT_END\n\n    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓\n    // formConfig.formItems\n    // console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)\n    if (value === '222') {\n        callback('不能是 222')\n    }\n}\n"
                 }
             ]
         },
         {
-            "prop": "2ed269c89f2a4eec9d0033ca9f590b65",
-            "label": "_输入框_",
+            "prop": "7047bdf612a04741840f58f2a7b0ada7",
+            "label": "输入框",
             "xs": 24,
             "sm": 24,
             "md": 12,
-            "lg": 12,
-            "xl": 12,
+            "lg": 8,
+            "xl": 8,
             "controlConfig": {
-                "type": "input"
+                "type": "input",
+                "props": {
+                    "suffix": "jg-public-raw-guanbi",
+                    "prepend": "jg-public-kapian-yujinghongse",
+                    "append": "jg-public-kapian-yujinghuangse",
+                    "prefix": "jg-public-kapian-guquanjiaoyi"
+                }
             },
-            "tipPosition": "label"
+            "rules": [
+                {
+                    "validator": "function (rule, value, callback, source) {\n    //CONTEXT_STARTS\n    const formConfig = arguments[arguments.length - 1]\n    //CONTEXT_END\n\n    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓\n    if (!value) {\n        callback('不能为空')\n    }\n\n    if (value === '222') {\n        callback('不能是 2222')\n    }\n\n    if(value === '333') {\n        callback('也不能是 333')\n    }\n}\n"
+                }
+            ]
         },
         {
-            "prop": "a42845b5b5a04c78b38ef831bbbf8a3d",
-            "label": "_输入框_",
+            "prop": "6334a751b8f240e8a3d13d9b030e1444",
+            "label": "输入框",
             "xs": 24,
             "sm": 24,
             "md": 12,
-            "lg": 12,
-            "xl": 12,
+            "lg": 24,
+            "xl": 24,
             "controlConfig": {
                 "type": "input"
             },
-            "tipPosition": "label"
+            "rules": [
+                {
+                    "required": true,
+                    "message": "输入框是必填项"
+                }
+            ]
         },
         {
-            "prop": "60216fe2f8d74aaa82cac65f878a412f",
-            "label": "_输入框_",
+            "prop": "7a97b4410ca14055ac4c1925c248bf78",
+            "label": "输入框",
             "xs": 24,
             "sm": 24,
             "md": 12,
-            "lg": 12,
-            "xl": 12,
+            "lg": 24,
+            "xl": 24,
             "controlConfig": {
-                "type": "input"
+                "type": "input",
+                "props": {
+                    "onInput": "function (val) {\n    //CONTEXT_STARTS\n    const formConfig = arguments[arguments.length - 1]\n    //CONTEXT_END\n\n    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓\n    // formConfig.formItems\n    console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)\n    console.log(`%c event val ===== `, 'color: #409eff;', val)\n}\n"
+                }
             },
-            "tipPosition": "label"
+            "rules": [
+                {
+                    "required": true,
+                    "message": "输入框是必填项"
+                }
+            ]
         },
         {
-            "prop": "2c5c86503e044339a827eaefb3403f44",
-            "label": "_输入框_",
+            "prop": "f8b4b4d9183e4764b94e23acc9478dbc",
+            "label": "输入框",
             "xs": 24,
             "sm": 24,
             "md": 12,
@@ -180,8 +115,153 @@
             "xl": 12,
             "controlConfig": {
                 "type": "input"
+            }
+        },
+        {
+            "prop": "44029d6a9f49442b800992067087ada4",
+            "label": "输入框",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 24,
+            "xl": 24,
+            "controlConfig": {
+                "type": "input"
+            }
+        },
+        {
+            "prop": "2723bf3184cf45e596de0c24a21cc3d2",
+            "label": "输入框",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 24,
+            "xl": 24,
+            "controlConfig": {
+                "type": "input"
             },
-            "tipPosition": "label"
+            "rules": [
+                {
+                    "required": true,
+                    "message": "输入框是必填项"
+                }
+            ]
+        },
+        {
+            "prop": "e986a8eb20bc4ff380aa27daa2ba1fae",
+            "label": "_输入框_",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 8,
+            "xl": 8,
+            "controlConfig": {
+                "type": "input"
+            }
+        },
+        {
+            "prop": "d55bd11469fe4946b1cbf2bd48c936c3",
+            "label": "_输入框_",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 8,
+            "xl": 8,
+            "controlConfig": {
+                "type": "input"
+            }
+        },
+        {
+            "prop": "154ec927e80f45e8bc3acda53f5b8f24",
+            "label": "_输入框_",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 8,
+            "xl": 8,
+            "controlConfig": {
+                "type": "input"
+            }
+        },
+        {
+            "prop": "d46bd24130b74241b1c91f808fd93371",
+            "label": "_输入框_",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 8,
+            "xl": 8,
+            "controlConfig": {
+                "type": "input"
+            }
+        },
+        {
+            "prop": "b799182793f843e29d6f0492bbd1391f",
+            "label": "_输入框_",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 8,
+            "xl": 8,
+            "controlConfig": {
+                "type": "input"
+            }
+        },
+        {
+            "prop": "cda7afa7655c4e3faaeb6bdb014a42b1",
+            "label": "_输入框_",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 8,
+            "xl": 8,
+            "controlConfig": {
+                "type": "input"
+            }
+        },
+        {
+            "prop": "dc5a8b5919c9472ba474892ef9006572",
+            "label": "输入框",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 16,
+            "xl": 16,
+            "controlConfig": {
+                "type": "input"
+            }
+        },
+        {
+            "prop": "1b86e889b7cf4de7952acc67384394da",
+            "label": "_输入框_",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 8,
+            "xl": 8,
+            "controlConfig": {
+                "type": "input",
+                "props": {
+                    "onChange": "function (val) {\n    //CONTEXT_STARTS\n    const formConfig = arguments[arguments.length - 1]\n    //CONTEXT_END\n\n    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓\n    // formConfig.formItems\n    console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)\n    console.log(`%c event val ===== `, 'color: #409eff;', val)\n}\n"
+                }
+            },
+            "rules": [
+                {
+                    "validator": "function (rule, value, callback, source) {\n    //CONTEXT_STARTS\n    const formConfig = arguments[arguments.length - 1]\n    //CONTEXT_END\n\n    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓\n    // formConfig.formItems\n    console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)\n}\n"
+                }
+            ]
+        },
+        {
+            "prop": "d5cf140215234b998b56f0af7c1a95ee",
+            "label": "输入框",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 16,
+            "xl": 16,
+            "controlConfig": {
+                "type": "input"
+            }
         }
     ]
 }

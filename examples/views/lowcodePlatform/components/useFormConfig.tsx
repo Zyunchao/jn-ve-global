@@ -1,23 +1,27 @@
 import { reactive, ref } from 'vue'
-import type { FormProps } from '@component/index'
+import type { FormProps } from 'jn-ve-global'
 
 // 参数类型
-interface Props { }
+interface Props {}
 
 // 初始 model
 export const baseModel = {
-    'ee3c153e320a45f9a3d2f15e6fb7c01a': '',
-    '39e8678ed67f44cf88613fb6ff8ca92d': '',
-    'b7c03a802a4f45b7b29f6ac08aa940e3': '',
-    '812007d66b4345819a83e53db6e4d120': '',
-    'b94be899d84d4dc989569f035d9f02d8': '',
-    '0425458768d9464bacf41ddb5a4a23be': '',
-    'aa7dffe75b7b4e17ab1e2138a086d306': '',
-    '30d76c466fc54d86abdf20325e004e9d': '',
-    'e1ad7b6192944549a6ae7d62d013373b': '',
-    '13e6f04b46344b1aa8026cc96164b90b': '',
-    'da940aca2f25443588e2af25d3f0f957': '',
-    'dbb2708879dd49c6bbc1e2e7c34afd33': ''
+    '6334a751b8f240e8a3d13d9b030e1444': '',
+    '44029d6a9f49442b800992067087ada4': '',
+    '2723bf3184cf45e596de0c24a21cc3d2': '',
+    '7047bdf612a04741840f58f2a7b0ada7': '',
+    'e986a8eb20bc4ff380aa27daa2ba1fae': '',
+    'd55bd11469fe4946b1cbf2bd48c936c3': '',
+    '154ec927e80f45e8bc3acda53f5b8f24': '',
+    '85190bf1fb7848e3beadbe0e23c8b47e': '333',
+    'd46bd24130b74241b1c91f808fd93371': '',
+    'b799182793f843e29d6f0492bbd1391f': '',
+    'cda7afa7655c4e3faaeb6bdb014a42b1': '',
+    '1b86e889b7cf4de7952acc67384394da': '',
+    'f8b4b4d9183e4764b94e23acc9478dbc': '',
+    'dc5a8b5919c9472ba474892ef9006572': '',
+    'd5cf140215234b998b56f0af7c1a95ee': '',
+    '7a97b4410ca14055ac4c1925c248bf78': '22223'
 }
 
 export default (props?: Props) => {
@@ -30,181 +34,266 @@ export default (props?: Props) => {
         model: {
             ...baseModel
         },
-        formItems: [{
-            prop: 'ee3c153e320a45f9a3d2f15e6fb7c01a',
-            label: '输入框',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 8,
-            xl: 8,
-            controlConfig: {
-                type: 'input'
+        formItems: [
+            {
+                prop: '6334a751b8f240e8a3d13d9b030e1444',
+                label: '输入框',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 24,
+                xl: 24,
+                controlConfig: {
+                    type: 'input'
+                },
+                rules: [
+                    {
+                        required: true,
+                        message: '输入框是必填项'
+                    }
+                ]
             },
-            tipPosition: 'label',
-            rules: [{
-                validator: function (rule, value: any, callback: (error?: string | Error) => void, source) {
-
-                    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓
-                    // formConfig.formItems
-                    console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)
-
-                    if (!value) {
-                        callback('不能为空')
+            {
+                prop: '7a97b4410ca14055ac4c1925c248bf78',
+                label: '输入框',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 24,
+                xl: 24,
+                controlConfig: {
+                    type: 'input',
+                    props: {
+                        onInput: function (val) {
+                            // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓
+                            // formConfig.formItems
+                            console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)
+                            console.log(`%c event val ===== `, 'color: #409eff;', val)
+                        }
                     }
-
-                    if (value === '2222') {
-                        callback(new Error('不能是 2222'))
+                },
+                rules: [
+                    {
+                        required: true,
+                        message: '输入框是必填项'
                     }
+                ]
+            },
+            {
+                prop: 'f8b4b4d9183e4764b94e23acc9478dbc',
+                label: '输入框',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 12,
+                xl: 12,
+                controlConfig: {
+                    type: 'input'
                 }
-            }]
-        }, {
-            prop: '30d76c466fc54d86abdf20325e004e9d',
-            label: '_输入框_',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 8,
-            xl: 8,
-            controlConfig: {
-                type: 'input'
             },
-            tipPosition: 'label'
-        }, {
-            prop: 'aa7dffe75b7b4e17ab1e2138a086d306',
-            label: '_输入框_',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 8,
-            xl: 8,
-            controlConfig: {
-                type: 'input'
-            },
-            tipPosition: 'label'
-        }, {
-            prop: '39e8678ed67f44cf88613fb6ff8ca92d',
-            label: '_输入框_',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 8,
-            xl: 8,
-            controlConfig: {
-                type: 'input'
-            },
-            tipPosition: 'label'
-        }, {
-            prop: 'b7c03a802a4f45b7b29f6ac08aa940e3',
-            label: '_输入框_',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 8,
-            xl: 8,
-            controlConfig: {
-                type: 'input',
-                props: {
-                    onInput: function (val) {
-
-                        // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓
-                        // formConfig.formItems
-                        console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)
-                        console.log(`%c onInput event val ===== `, 'color: #409eff;', val)
+            {
+                prop: '7047bdf612a04741840f58f2a7b0ada7',
+                label: '输入框',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input',
+                    props: {
+                        suffix: 'jg-public-raw-guanbi',
+                        prepend: 'jg-public-kapian-yujinghongse',
+                        append: 'jg-public-kapian-yujinghuangse',
+                        prefix: 'jg-public-kapian-guquanjiaoyi'
                     }
                 }
             },
-            tipPosition: 'label',
-            rules: [{
-                required: true,
-                message: '_输入框_是必填项'
-            }, {
-                min: 5,
-                message: '最少需要 5 个字符'
-            }]
-        }, {
-            prop: '812007d66b4345819a83e53db6e4d120',
-            label: '_输入框_',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 8,
-            xl: 8,
-            controlConfig: {
-                type: 'input'
+            {
+                prop: '44029d6a9f49442b800992067087ada4',
+                label: '输入框',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 24,
+                xl: 24,
+                controlConfig: {
+                    type: 'input'
+                }
             },
-            tipPosition: 'label'
-        }, {
-            prop: 'b94be899d84d4dc989569f035d9f02d8',
-            label: '_输入框_',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 8,
-            xl: 8,
-            controlConfig: {
-                type: 'input'
+            {
+                prop: '2723bf3184cf45e596de0c24a21cc3d2',
+                label: '输入框',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 24,
+                xl: 24,
+                controlConfig: {
+                    type: 'input'
+                },
+                rules: [
+                    {
+                        required: true,
+                        message: '输入框是必填项'
+                    }
+                ]
             },
-            tipPosition: 'label'
-        }, {
-            prop: '0425458768d9464bacf41ddb5a4a23be',
-            label: '_输入框_',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 16,
-            xl: 16,
-            controlConfig: {
-                type: 'input'
+            {
+                prop: 'e986a8eb20bc4ff380aa27daa2ba1fae',
+                label: '_输入框_',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input'
+                }
             },
-            tipPosition: 'label'
-        }, {
-            prop: 'e1ad7b6192944549a6ae7d62d013373b',
-            label: '输入框',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 24,
-            xl: 24,
-            controlConfig: {
-                type: 'input'
+            {
+                prop: 'd55bd11469fe4946b1cbf2bd48c936c3',
+                label: '_输入框_',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input'
+                }
             },
-            tipPosition: 'label'
-        }, {
-            prop: '13e6f04b46344b1aa8026cc96164b90b',
-            label: '输入框',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 24,
-            xl: 24,
-            controlConfig: {
-                type: 'input'
+            {
+                prop: '154ec927e80f45e8bc3acda53f5b8f24',
+                label: '_输入框_',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input'
+                }
+            },
+            {
+                prop: '85190bf1fb7848e3beadbe0e23c8b47e',
+                label: '_输入框_',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input',
+                    props: {
+                        onChange: function (val) {
+                            // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓
+                            // formConfig.formItems
+                            console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)
+                            console.log(`%c event val ===== `, 'color: #409eff;', val)
+                        },
+                        onInput: function (val) {
+                            // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓
+                            // formConfig.formItems
+                            console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)
+                            console.log(`%c event val ===== `, 'color: #409eff;', val)
+                        }
+                    }
+                },
+                rules: [
+                    {
+                        required: true,
+                        message: '_输入框_是必填项'
+                    }
+                ]
+            },
+            {
+                prop: 'd46bd24130b74241b1c91f808fd93371',
+                label: '_输入框_',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input'
+                }
+            },
+            {
+                prop: 'b799182793f843e29d6f0492bbd1391f',
+                label: '_输入框_',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input'
+                }
+            },
+            {
+                prop: 'cda7afa7655c4e3faaeb6bdb014a42b1',
+                label: '_输入框_',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input'
+                }
+            },
+            {
+                prop: 'dc5a8b5919c9472ba474892ef9006572',
+                label: '输入框',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 16,
+                xl: 16,
+                controlConfig: {
+                    type: 'input'
+                }
+            },
+            {
+                prop: '1b86e889b7cf4de7952acc67384394da',
+                label: '_输入框_',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 8,
+                xl: 8,
+                controlConfig: {
+                    type: 'input',
+                    props: {
+                        onChange: function (val) {
+                            // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓
+                            // formConfig.formItems
+                            console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)
+                            console.log(`%c event val ===== `, 'color: #409eff;', val)
+                        }
+                    }
+                },
+                rules: [
+                    {
+                        required: true,
+                        message: '_输入框_是必填项'
+                    }
+                ]
+            },
+            {
+                prop: 'd5cf140215234b998b56f0af7c1a95ee',
+                label: '输入框',
+                xs: 24,
+                sm: 24,
+                md: 12,
+                lg: 16,
+                xl: 16,
+                controlConfig: {
+                    type: 'input'
+                }
             }
-        }, {
-            prop: 'da940aca2f25443588e2af25d3f0f957',
-            label: '输入框',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 24,
-            xl: 24,
-            controlConfig: {
-                type: 'input'
-            }
-        }, {
-            prop: 'dbb2708879dd49c6bbc1e2e7c34afd33',
-            label: '输入框',
-            xs: 24,
-            sm: 24,
-            md: 12,
-            lg: 24,
-            xl: 24,
-            controlConfig: {
-                type: 'input'
-            },
-            tipPosition: 'label'
-        }]
+        ]
     })
 
     return {
