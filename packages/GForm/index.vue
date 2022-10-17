@@ -12,7 +12,10 @@
          -->
         <slot :form-items="localConfig.formItems">
             <LGFormRow :form-config="localConfig">
-                <template v-for="item in localConfig.formItems" :key="item.prop">
+                <template
+                    v-for="(item, index) in localConfig.formItems"
+                    :key="`${item.prop}-${index}`"
+                >
                     <LGColFormItem :form-config="localConfig" :form-item-config="item" />
                 </template>
             </LGFormRow>

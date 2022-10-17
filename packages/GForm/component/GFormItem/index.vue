@@ -91,15 +91,22 @@ import FormItemControl from '../formItemControl.vue'
 import FormItemControlGroup from '../formItemControlGroup.vue'
 import FormItemLabelTip from './components/labelTip.vue'
 
-interface Props {
-    formConfig: FormProps
-    formItemConfig: FormItemProps
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    formConfig: null,
-    formItemConfig: null
-})
+const props = withDefaults(
+    defineProps<{
+        /**
+         * 表单 item 配置参数
+         */
+        formItemConfig: FormItemProps
+        /**
+         * 表单配置对象
+         */
+        formConfig: FormProps
+    }>(),
+    {
+        formItemConfig: null,
+        formConfig: null
+    }
+)
 
 const labelWidth = computed(() => {
     if (!props.formItemConfig.label) return '0px'

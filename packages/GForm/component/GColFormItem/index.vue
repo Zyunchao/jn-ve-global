@@ -10,7 +10,7 @@
         ]"
         v-bind="getElColConfigs(formItemConfig)"
     >
-        <LGFormItem :form-config="formConfig" :form-item-config="formItemConfig" />
+        <LGFormItem v-bind="props" />
     </el-col>
 </template>
 
