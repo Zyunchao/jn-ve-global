@@ -1,5 +1,7 @@
 import { ref, reactive } from 'vue'
 import { FormProps } from '@component/index'
+import { columns } from './columns'
+import mock from './data.json'
 
 export default () => {
     return reactive<FormProps>({
@@ -210,6 +212,22 @@ export default () => {
                     type: 'input',
                     props: {
                         placeholder: '自定义 label 需要传递 placeholder'
+                    }
+                }
+            },
+            {
+                prop: '',
+                label: '',
+                span: 24,
+                group: 'first-table',
+                controlConfig: {
+                    type: 'table',
+                    props: {
+                        instance: null,
+                        columns: columns,
+                        data: mock.data1,
+                        height: false,
+                        stripe: true
                     }
                 }
             }
