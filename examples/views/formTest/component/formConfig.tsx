@@ -65,6 +65,14 @@ export default () => {
                 }
             },
             {
+                prop: '',
+                label: 'placeholder',
+                span: 12,
+                controlConfig: {
+                    type: 'placeholder'
+                }
+            },
+            {
                 prop: 'sex1',
                 label: 'Select',
                 span: 12,
