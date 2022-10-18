@@ -13,17 +13,11 @@
         <slot :form-items="localConfig.formItems">
             <!-- 默认表单项 || 不被 Collapse 控制的表单项 -->
             <LGFormRow
+                v-if="baseFormItems.length"
                 :form-config="localConfig"
-                :class="{
-                    'is-collapse-layout': isCollapseLayout
-                }"
+                :class="{ 'is-collapse-layout': isCollapseLayout }"
             >
-                <template
-                    v-for="(item, index) in !isCollapseLayout
-                        ? localConfig.formItems
-                        : collapseBeforeFormItems"
-                    :key="`${item.prop}-${index}`"
-                >
+                <template v-for="(item, index) in baseFormItems" :key="`${item.prop}-${index}`">
                     <LGColFormItem :form-config="localConfig" :form-item-config="item" />
                 </template>
             </LGFormRow>
@@ -100,6 +94,15 @@ const userCache = ref<FormProps['model']>(null)
 
 const { isCollapseLayout, collapseItems, collapseBeforeFormItems, activeCollapses } =
     useCollapseLayout(props)
+
+/**
+ * 基础的，不受控制的表单项
+ *  - 如果是 collapse 布局，则是第一个 collapseItem 之前不受控制的项的集合
+ *  - 非 collapse 布局，则是全部
+ */
+const baseFormItems = computed(() =>
+    !isCollapseLayout.value ? localConfig.value.formItems : collapseBeforeFormItems.value
+)
 
 /**
  * 惰性监听（只在后续改变时执行）
