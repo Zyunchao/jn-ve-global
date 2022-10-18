@@ -42,3 +42,4 @@ export { default as AddressControlConfig } from './interface/AddressControlConfi
 export { default as JnEditorControlConfig } from './interface/JnEditorControlConfig'
 export { default as FormItemTableTableConfig } from './interface/FormItemTableTableConfig'
 export { default as CollapseItemControlConfig } from './interface/CollapseItemControlConfig'
+export { default as PlaceholderControlConfig } from './interface/PlaceholderControlConfig'

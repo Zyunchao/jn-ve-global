@@ -27,7 +27,8 @@ import {
     AddressControlConfig,
     JnEditorControlConfig,
     FormItemTableTableConfig,
-    CollapseItemControlConfig
+    CollapseItemControlConfig,
+    PlaceholderControlConfig
 } from '../index'
 
 /**
@@ -78,6 +79,7 @@ export type ControlConfig =
     | JnEditorControlConfig
     | FormItemTableTableConfig
     | CollapseItemControlConfig
+    | PlaceholderControlConfig
 
 /**
  * 控件组的配置

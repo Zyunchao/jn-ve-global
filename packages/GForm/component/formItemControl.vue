@@ -246,6 +246,11 @@
         <template v-if="localControlType === 'collapseItem'">
             <ImitativeCollapseItem :title="formItemConfig.label" v-bind="controlConfig.props" />
         </template>
+
+        <!-- 占据排版的占位符 -->
+        <template v-if="localControlType === 'placeholder'">
+            {{ null }}
+        </template>
     </template>
 </template>
 
