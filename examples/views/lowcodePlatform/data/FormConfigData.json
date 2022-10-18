@@ -20,7 +20,9 @@
         "d5cf140215234b998b56f0af7c1a95ee": "",
         "7a97b4410ca14055ac4c1925c248bf78": "22223",
         "3464d78965d94cafa8e447c8e2e4b8a3": "",
-        "1c02ef7301d346d394413c0f08769ad9": ""
+        "031c1bf98bb846c0a354334f143c62f4": "",
+        "099e5cfedccc401485c0c368d13c6502": "",
+        "0dc3cea686474ea4bee1945c44fb605a": ""
     },
     "formItems": [
         {
@@ -132,6 +134,18 @@
             }
         },
         {
+            "prop": "031c1bf98bb846c0a354334f143c62f4",
+            "label": "分类",
+            "xs": 24,
+            "sm": 24,
+            "md": 24,
+            "lg": 24,
+            "xl": 24,
+            "controlConfig": {
+                "type": "collapseItem"
+            }
+        },
+        {
             "prop": "44029d6a9f49442b800992067087ada4",
             "label": "输入框",
             "xs": 24,
@@ -142,21 +156,6 @@
             "controlConfig": {
                 "type": "input"
             }
-        },
-        {
-            "prop": "1c02ef7301d346d394413c0f08769ad9",
-            "xs": 24,
-            "sm": 24,
-            "md": 24,
-            "lg": 24,
-            "xl": 24,
-            "controlConfig": {
-                "type": "collapseItem",
-                "props": {
-                    "disabled": true
-                }
-            },
-            "label": "不带校验的"
         },
         {
             "prop": "2723bf3184cf45e596de0c24a21cc3d2",
@@ -177,7 +176,7 @@
             ]
         },
         {
-            "prop": "e986a8eb20bc4ff380aa27daa2ba1fae",
+            "prop": "d55bd11469fe4946b1cbf2bd48c936c3",
             "label": "_输入框_",
             "xs": 24,
             "sm": 24,
@@ -189,7 +188,7 @@
             }
         },
         {
-            "prop": "d55bd11469fe4946b1cbf2bd48c936c3",
+            "prop": "e986a8eb20bc4ff380aa27daa2ba1fae",
             "label": "_输入框_",
             "xs": 24,
             "sm": 24,
@@ -213,7 +212,19 @@
             }
         },
         {
-            "prop": "d46bd24130b74241b1c91f808fd93371",
+            "prop": "099e5cfedccc401485c0c368d13c6502",
+            "label": "分类",
+            "xs": 24,
+            "sm": 24,
+            "md": 24,
+            "lg": 24,
+            "xl": 24,
+            "controlConfig": {
+                "type": "collapseItem"
+            }
+        },
+        {
+            "prop": "b799182793f843e29d6f0492bbd1391f",
             "label": "_输入框_",
             "xs": 24,
             "sm": 24,
@@ -225,8 +236,8 @@
             }
         },
         {
-            "prop": "b799182793f843e29d6f0492bbd1391f",
-            "label": "_输入框_",
+            "prop": "0dc3cea686474ea4bee1945c44fb605a",
+            "label": "__输入框__",
             "xs": 24,
             "sm": 24,
             "md": 12,
@@ -279,6 +290,18 @@
                     "validator": "function (rule, value, callback, source) {\n    //CONTEXT_STARTS\n    const formConfig = arguments[arguments.length - 1]\n    //CONTEXT_END\n\n    // ↓↓↓↓↓↓↓↓ 您的代码 ↓↓↓↓↓↓↓↓\n    // formConfig.formItems\n    console.log(`%c formConfig ==== `, 'color: #67c23a;', formConfig)\n}\n"
                 }
             ]
+        },
+        {
+            "prop": "d46bd24130b74241b1c91f808fd93371",
+            "label": "_输入框_",
+            "xs": 24,
+            "sm": 24,
+            "md": 12,
+            "lg": 8,
+            "xl": 8,
+            "controlConfig": {
+                "type": "input"
+            }
         },
         {
             "prop": "d5cf140215234b998b56f0af7c1a95ee",
