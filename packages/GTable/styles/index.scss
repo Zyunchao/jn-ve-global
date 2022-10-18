@@ -10,11 +10,12 @@
     flex-direction: column;
     background-color: #fff;
     border: 1px solid var(--jn-ve-g-base-border-color);
-    border-bottom: none;
     border-radius: 4px 4px 0 0;
-
+    
     // 无分页
     &.hide-pagination {
+        border-bottom: none;
+
         .g-table-main {
             height: 100%;
 
