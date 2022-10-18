@@ -241,6 +241,11 @@
         <template v-if="localControlType === 'table'">
             <LGTable :config="controlConfig.props" />
         </template>
+
+        <!-- 虚假的 collapseItem，仅做展示效果，为拖拽设计器服务 -->
+        <template v-if="localControlType === 'collapseItem'">
+            <ImitativeCollapseItem :title="formItemConfig.label" v-bind="controlConfig.props" />
+        </template>
     </template>
 </template>
 
@@ -273,6 +278,7 @@ import LGAddress from '../../GAddress/index.vue'
 import LJnEditor from '../../JnEditor/index.vue'
 import LGAdvanceInput from './GAdvanceInput/index.vue'
 import LGTable from '../../GTable/index.vue'
+import ImitativeCollapseItem from './imitativeCollapseItem.vue'
 
 import formConfigProvideKey from '../constant/formConfigProvideKey'
 import getControlOprions from '../mixins/getControlOprions'

@@ -112,6 +112,7 @@ const props = withDefaults(
 )
 
 const labelWidth = computed(() => {
+    if (props.formItemConfig?.controlConfig?.type === 'collapseItem') return '0px'
     if (!props.formItemConfig.label) return '0px'
     if (props.formItemConfig.labelWidth) return props.formItemConfig.labelWidth
     if (props.formConfig?.labelWidth) return props.formConfig.labelWidth

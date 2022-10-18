@@ -24,7 +24,7 @@ export interface CustomCollapseItem {
      */
     prefix?: string
     /**
-     * 是否展开
+     * 是否默认展开
      */
     active?: boolean
     /**
