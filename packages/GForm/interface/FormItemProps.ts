@@ -90,6 +90,14 @@ export type ExtendControlConfig = ControlConfig & {
 // 适配低码平台的额外属性
 interface _LowCodeFormItemCustomProps {
     /**
+     * 控件的默认值（适用拖拽平台）
+     */
+    default?: any
+    /**
+     * item 是否选中（适用拖拽平台）
+     */
+    selected?: boolean
+    /**
      * 表单 item 的配置项
      *  - 控件配置项
      *
@@ -158,10 +166,6 @@ export interface FormItemCustomProps extends _LowCodeFormItemCustomProps {
      * ≥1920px 响应式栅格数或者栅格属性对象
      */
     xl?: number | { span: number; offset: number }
-    /**
-     * item 是否选中（适用拖拽平台）
-     */
-    selected?: boolean
     /**
      * tooltip 提示信息
      */
