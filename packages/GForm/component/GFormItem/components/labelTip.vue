@@ -5,9 +5,7 @@
             <component :is="content" v-if="isVNode(content)" />
 
             <!-- 文本 -->
-            <span v-if="_.isString(content)">
-                {{ content }}
-            </span>
+            <span v-if="_.isString(content)" v-html="content" />
 
             <!-- render 函数 -->
             <FunctionalComponent v-if="_.isFunction(content)" :render="content()" />
