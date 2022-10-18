@@ -45,6 +45,13 @@ export default () => {
         },
         formItems: [
             {
+                prop: '',
+                label: '简单的',
+                controlConfig: {
+                    type: 'collapseItem'
+                }
+            },
+            {
                 prop: 'name',
                 label: 'Input',
                 span: 12,
@@ -133,11 +140,20 @@ export default () => {
                 }
             },
             {
+                prop: '',
+                label: '时间选择',
+                controlConfig: {
+                    type: 'collapseItem'
+                }
+            },
+            {
                 prop: 'time1',
                 label: '时间',
                 span: 12,
                 required: true,
-                tip: () => <div style="background-color: #fff; color: #000;">'这是一个时间选择器'</div>,
+                tip: () => (
+                    <div style='background-color: #fff; color: #000;'>'这是一个时间选择器'</div>
+                ),
                 tipPosition: 'label',
                 tipIcon: 'jg-jgxx-gantanhao',
                 tipPopperClass: 'qwer',
@@ -188,6 +204,16 @@ export default () => {
                         startPlaceholder: '请选择开始日期',
                         endPlaceholder: '请选择结束日期',
                         rangeSeparator: '至'
+                    }
+                }
+            },
+            {
+                prop: '',
+                label: '评分',
+                controlConfig: {
+                    type: 'collapseItem',
+                    props: {
+                        isTail: true
                     }
                 }
             },
@@ -288,6 +314,13 @@ export default () => {
                 }
             },
             {
+                prop: '',
+                label: '自定义',
+                controlConfig: {
+                    type: 'collapseItem'
+                }
+            },
+            {
                 prop: 'customLabel',
                 label: (
                     <span class='form-test-custom-label'>
@@ -367,6 +400,13 @@ export default () => {
                 ]
             },
             {
+                prop: '',
+                label: '复杂的',
+                controlConfig: {
+                    type: 'collapseItem'
+                }
+            },
+            {
                 prop: 'address',
                 label: '地址',
                 span: 12,
@@ -415,8 +455,15 @@ export default () => {
                 }
             },
             {
-                prop: 'html',
+                prop: '',
                 label: '富文本',
+                controlConfig: {
+                    type: 'collapseItem'
+                }
+            },
+            {
+                prop: 'html',
+                label: '',
                 span: 24,
                 controlConfig: {
                     type: 'jnEditor',
