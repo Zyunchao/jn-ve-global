@@ -11,14 +11,53 @@
             - 配合拖拽平台
          -->
         <slot :form-items="localConfig.formItems">
-            <LGFormRow :form-config="localConfig">
+            <!-- 默认表单项 || 不被 Collapse 控制的表单项 -->
+            <LGFormRow
+                :form-config="localConfig"
+                :class="{
+                    'is-collapse-layout': isCollapseLayout
+                }"
+            >
                 <template
-                    v-for="(item, index) in localConfig.formItems"
+                    v-for="(item, index) in !isCollapseLayout
+                        ? localConfig.formItems
+                        : collapseBeforeFormItems"
                     :key="`${item.prop}-${index}`"
                 >
                     <LGColFormItem :form-config="localConfig" :form-item-config="item" />
                 </template>
             </LGFormRow>
+
+            <!-- Collapse 布局容器 -->
+            <LGCollapse v-if="isCollapseLayout" v-model="activeCollapses">
+                <template
+                    v-for="(collapseItem, index) in collapseItems"
+                    :key="`${collapseItem.title}-${index}`"
+                >
+                    <LGCollapseItem
+                        :title="collapseItem.title"
+                        :name="collapseItem.name"
+                        :disabled="collapseItem.disabled"
+                        :prefix="collapseItem.prefix"
+                        :class="{
+                            'form-item-classify': true,
+                            'is-tail': collapseItem.isTail
+                        }"
+                    >
+                        <LGFormRow :form-config="localConfig">
+                            <template
+                                v-for="(item, index) in collapseItem.content"
+                                :key="`${item.prop}-${index}`"
+                            >
+                                <LGColFormItem
+                                    :form-config="localConfig"
+                                    :form-item-config="item"
+                                />
+                            </template>
+                        </LGFormRow>
+                    </LGCollapseItem>
+                </template>
+            </LGCollapse>
         </slot>
     </el-form>
 </template>
@@ -29,13 +68,17 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, provide, ref, toRef, nextTick, computed } from 'vue'
+import { watch, provide, ref, toRef, nextTick, computed, Ref } from 'vue'
 import { FormProps, FormInstance } from './index'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import _ from 'lodash'
 import { assignOwnProp, advanceSerialize } from '../utils/utils'
+// 本地组件
 import LGFormRow from './component/GFormRow/index.vue'
 import LGColFormItem from './component/GColFormItem/index.vue'
+import LGCollapse from '../GCollapse/index.vue'
+import LGCollapseItem from '../GCollapse/component/GCollapseItem/index.vue'
+import useCollapseLayout from './mixins/useCollapseLayout'
 
 interface Props {
     config: FormProps
@@ -54,6 +97,9 @@ const localConfig = ref<FormProps>(props.config)
 const modelCache = ref<FormProps['model']>(_.cloneDeep(props.config?.model))
 // 用户主动缓存
 const userCache = ref<FormProps['model']>(null)
+
+const { isCollapseLayout, collapseItems, collapseBeforeFormItems, activeCollapses } =
+    useCollapseLayout(props)
 
 /**
  * 惰性监听（只在后续改变时执行）

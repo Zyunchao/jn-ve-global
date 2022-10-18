@@ -6,7 +6,9 @@
             'g-form-item': true,
             'show-tip': formItemConfig.tip,
             [`tip-${formItemConfig.tipPosition || 'append'}`]: formItemConfig.tip,
-            'no-margin-b': formItemConfig?.controlConfig?.type === 'table'
+            'no-margin-b':
+                formItemConfig?.controlConfig?.type === 'table' ||
+                formItemConfig?.controlConfig?.type === 'collapseItem'
         }"
         v-bind="elFormItemProps"
         :label-width="labelWidth"

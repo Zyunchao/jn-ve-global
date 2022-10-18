@@ -79,6 +79,16 @@ $--icon-l: 10px;
         }
     }
 
+    &.form-item-classify.is-tail {
+        :deep(.el-collapse-item__header) {
+            display: none;
+        }
+
+        :deep(.el-collapse-item__content) {
+            padding: 0 20px;
+        }
+    }
+
     /* 头 */
     :deep(.el-collapse-item__header) {
         height: 36px;

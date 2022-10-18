@@ -1,5 +1,5 @@
 <template>
-    <el-row :gutter="formConfig?.gutter ?? 20">
+    <el-row :gutter="formConfig?.gutter ?? 20" class="form-item-row">
         <slot />
     </el-row>
 </template>
@@ -17,4 +17,10 @@ const props = withDefaults(
 )
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.form-item-row {
+    &.is-collapse-layout {
+        padding: 10px 20px 14px;
+    }
+}
+</style>

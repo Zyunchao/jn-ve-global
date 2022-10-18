@@ -20,7 +20,8 @@
 
 <h4>Form</h4>
 
-formItem 配置增加 table 的渲染
+1. FormItem 增加 table 类别
+2. FormItem 增加 collapseItem 类别
 
 </update-log-block>
 

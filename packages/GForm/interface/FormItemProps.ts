@@ -26,7 +26,8 @@ import {
     SelectTreeV2ControlConfig,
     AddressControlConfig,
     JnEditorControlConfig,
-    FormItemTableTableConfig
+    FormItemTableTableConfig,
+    CollapseItemControlConfig
 } from '../index'
 
 /**
@@ -76,6 +77,7 @@ export type ControlConfig =
     | AddressControlConfig
     | JnEditorControlConfig
     | FormItemTableTableConfig
+    | CollapseItemControlConfig
 
 /**
  * 控件组的配置

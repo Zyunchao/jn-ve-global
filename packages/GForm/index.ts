@@ -41,3 +41,4 @@ export { default as SelectTreeV2ControlConfig } from './interface/SelectTreeV2Co
 export { default as AddressControlConfig } from './interface/AddressControlConfig'
 export { default as JnEditorControlConfig } from './interface/JnEditorControlConfig'
 export { default as FormItemTableTableConfig } from './interface/FormItemTableTableConfig'
+export { default as CollapseItemControlConfig } from './interface/CollapseItemControlConfig'
