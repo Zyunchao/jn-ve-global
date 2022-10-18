@@ -86,6 +86,21 @@ export default () => {
                 }
             },
             {
+                prop: '',
+                label: '用户信息2',
+                // span: 24,
+                // hide: true,
+                group: 'first',
+                controlConfig: {
+                    type: 'collapseItem',
+                    props: {
+                        // disabled: true,
+                        // active: true
+                        prefix: 'jg-public-kapian-jiangbuzijin'
+                    }
+                }
+            },
+            {
                 prop: 'time1',
                 label: 'TimePicker',
                 span: 12,
@@ -135,6 +150,22 @@ export default () => {
                     type: 'rate',
                     props: {
                         max: 10
+                    }
+                }
+            },
+            {
+                prop: '',
+                label: '用户信息结尾',
+                // span: 24,
+                // hide: true,
+                group: 'first',
+                controlConfig: {
+                    type: 'collapseItem',
+                    props: {
+                        // disabled: true,
+                        // active: false,
+                        prefix: 'jg-public-kapian-jiangbuzijin'
+                        // isTail: true
                     }
                 }
             },
@@ -213,6 +244,15 @@ export default () => {
                     props: {
                         placeholder: '自定义 label 需要传递 placeholder'
                     }
+                }
+            },
+            {
+                prop: '',
+                label: '产品信息',
+                span: 24,
+                // hide: true,
+                controlConfig: {
+                    type: 'collapseItem'
                 }
             },
             {

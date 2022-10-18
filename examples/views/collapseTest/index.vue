@@ -1,6 +1,8 @@
 <template>
     <div class="examples-base-wrapper">
-        <g-collapse v-model="activeNames" @change="handleChange">
+        <g-button-group :btns="btns" />
+        <g-form :config="formConfig" />
+        <!-- <g-collapse v-model="activeNames" @change="handleChange">
             <GCollapseItem title="表单" name="1" :form-config="formConfig" />
             <GCollapseItem title="表格" name="2" :table-config="tableConfig" :height="500" />
             <GCollapseItem title="自定义" name="3">
@@ -13,7 +15,7 @@
                 <GTable :config="tableConfig" />
                 <GForm :config="formConfig" />
             </GCollapseItem>
-        </g-collapse>
+        </g-collapse> -->
     </div>
 </template>
 
@@ -26,8 +28,9 @@ export default {
 <script lang="tsx" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import FormConfig from './data/formConfig'
-import { TableColumnProps, TableConfig } from '@component/index'
+import { TableColumnProps, TableConfig, BtnProps } from '@component/index'
 import mockData from './data/data.json'
+import _ from 'lodash'
 
 const activeNames = ref<string[]>(['1'])
 
@@ -36,6 +39,80 @@ const formConfig = FormConfig()
 const handleChange = (val) => {
     console.log(val)
 }
+
+const btns = reactive<BtnProps[]>([
+    {
+        label: '改变 label',
+        onClick() {
+            const firstCollapase = formConfig.formItems.find(
+                (item) => item.group && item.group === 'first'
+            )
+            firstCollapase.label = `${+new Date()}`
+        }
+    },
+    {
+        label: '隐藏',
+        type: 'danger',
+        onClick() {
+            const firstCollapase = formConfig.formItems.find(
+                (item) => item.group && item.group === 'first'
+            )
+            firstCollapase.hide = true
+        }
+    },
+    {
+        label: '显示',
+        type: 'success',
+        onClick() {
+            const firstCollapase = formConfig.formItems.find(
+                (item) => item.group && item.group === 'first'
+            )
+            firstCollapase.hide = false
+        }
+    },
+    {
+        label: '上移',
+        onClick() {
+            const firstCollapase = formConfig.formItems.find(
+                (item) => item.group && item.group === 'first'
+            )
+            const firstCollapaseIndex = formConfig.formItems.findIndex(
+                (item) => item.group && item.group === 'first'
+            )
+
+            const preIndex = firstCollapaseIndex - 1
+
+            if (preIndex === -1) {
+                return
+            }
+
+            formConfig.formItems[firstCollapaseIndex] = formConfig.formItems[preIndex]
+
+            formConfig.formItems[preIndex] = firstCollapase
+        }
+    },
+    {
+        label: '下移',
+        onClick() {
+            const firstCollapase = formConfig.formItems.find(
+                (item) => item.group && item.group === 'first'
+            )
+            const firstCollapaseIndex = formConfig.formItems.findIndex(
+                (item) => item.group && item.group === 'first'
+            )
+
+            const nextIndex = firstCollapaseIndex + 1
+
+            if (nextIndex === formConfig.formItems.length) {
+                return
+            }
+
+            formConfig.formItems[firstCollapaseIndex] = formConfig.formItems[nextIndex]
+
+            formConfig.formItems[nextIndex] = firstCollapase
+        }
+    }
+])
 
 const tableColumns: TableColumnProps[] = [
     {
