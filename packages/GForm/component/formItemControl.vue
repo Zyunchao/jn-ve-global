@@ -249,7 +249,7 @@
 
         <!-- 占据排版的占位符 -->
         <template v-if="localControlType === 'placeholder'">
-            {{ null }}
+            <div class="form-item-placeholder" />
         </template>
     </template>
 </template>

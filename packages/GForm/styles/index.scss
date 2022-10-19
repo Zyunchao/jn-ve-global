@@ -10,14 +10,6 @@
     :deep(.el-form-item) {
         margin-bottom: var(--jn-ve-g-form-item-margin-b);
 
-        &.no-colon {
-            .el-form-item__label {
-                &::after {
-                    content: '';
-                }
-            }
-        }
-
         .el-form-item__error {
             font-size: 12px;
         }
@@ -30,7 +22,16 @@
             @include item-content;
         }
 
-        // 自定义类名
+        &.no-colon {
+            .el-form-item__label {
+                padding-right: 14px;
+
+                &::after {
+                    content: '';
+                }
+            }
+        }
+
         &.content-left {
             .el-form-item__content {
                 justify-content: start;
@@ -51,6 +52,12 @@
 
         &.no-margin-b {
             margin-bottom: 0;
+        }
+
+        &.no-label {
+            .el-form-item__label {
+                display: none;
+            }
         }
 
         // 显示 tooltip 的 item

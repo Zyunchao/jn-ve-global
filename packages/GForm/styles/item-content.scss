@@ -8,6 +8,11 @@
         width: 100%;
     }
 
+    // 占位符节点
+    .form-item-placeholder {
+        min-height: calc(var(--jn-ve-g-form-item-height) + 2px);
+    }
+
     @include control-style;
 }
 

@@ -8,7 +8,10 @@
             [`tip-${formItemConfig.tipPosition || 'append'}`]: formItemConfig.tip,
             'no-margin-b':
                 formItemConfig?.controlConfig?.type === 'table' ||
-                formItemConfig?.controlConfig?.type === 'collapseItem'
+                formItemConfig?.controlConfig?.type === 'collapseItem',
+            'no-label':
+                formItemConfig?.controlConfig?.type === 'collapseItem' ||
+                formItemConfig?.controlConfig?.type === 'placeholder'
         }"
         v-bind="elFormItemProps"
         :label-width="labelWidth"
