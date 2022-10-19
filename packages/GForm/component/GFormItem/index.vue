@@ -115,9 +115,7 @@ const props = withDefaults(
 )
 
 // 没有 label 的控件列表：将 labelWidth 置为 0
-const noLabelControlTypes = ['placeholder', 'collapseItem']
 const labelWidth = computed(() => {
-    if (noLabelControlTypes.includes(props.formItemConfig?.controlConfig?.type)) return '0px'
     if (!props.formItemConfig.label) return '0px'
     if (props.formItemConfig.labelWidth) return props.formItemConfig.labelWidth
     if (props.formConfig?.labelWidth) return props.formConfig.labelWidth
