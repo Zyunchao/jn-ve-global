@@ -85,13 +85,12 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { PropType, watch, watchEffect, ref } from 'vue'
+import { watch, watchEffect, ref } from 'vue'
 import { BtnProps } from '../index'
-import { TreeData } from '../GSelectTree/index'
+import type { TreeData, SelectTreeTreeProps as TreeProps } from '../GSelectTree/v1/index'
 import { nodeHasChildren } from './utils'
 import LGIcon from '../GIcon/index.vue'
 import LGButtonGroup from '../GButtonGroup/index.vue'
-import TreeProps from '../GSelectTree/interface/TreeProps'
 import _ from 'lodash'
 
 interface Props {

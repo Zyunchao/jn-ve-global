@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 import { watch, reactive, ref, onMounted } from 'vue'
 import mockData from './data.json'
-import TreeConfig from '@component/GSelectTree/interface/TreeConfig'
+import type { SelectTreeTreeConfig as TreeConfig } from '@component/index'
 
 const avtiveValM = ref<string[]>(['1425375363846037505', '1423533477376192513'])
 const avtiveVal = ref<string | string[]>('')
