@@ -2,64 +2,105 @@
     --jn-ve-g-form-color: #606266;
     --jn-ve-g-form-disabled-color: #595959;
     --jn-ve-g-form-font-size: var(--jn-ve-g-base-font-size-m);
-    --jn-ve-g-form-item-height: 36px;
-    --jn-ve-g-form-item-line-height: 1;
-    --jn-ve-g-form-item-margin-b: 18px;
     --jn-ve-input-placeholder-font-size: 15px;
     --jn-ve-input-placeholder-font-align: left;
+    --jn-ve-g-form-item-height: 38px;
+    --jn-ve-g-form-item-line-height: 1;
+    --jn-ve-g-form-item-margin-b: 18px;
+
+
+    // 覆盖 element 的变量
+    --el-component-size: var(--jn-ve-g-form-item-height);
+    --el-checkbox-font-size: var(--jn-ve-g-form-font-size);
 }
 
+.el-form-item {
+    margin-bottom: var(--jn-ve-g-form-item-margin-b);
 
-// 表单控件最小高度，取变量，部分场景下会本地覆盖
-.el-input__inner,
-.el-checkbox,
-.el-switch,
-.el-switch__label,
+    .el-form-item__label {
+        font-size: var(--jn-ve-g-form-font-size);
+        height: var(--el-component-size);
+        line-height: var(--el-component-size);
+    }
+
+    .el-form-item__error {
+        font-size: 12px;
+    }
+}
+
+.el-select {
+    .el-input__inner {
+        min-height: var(--el-input-inner-height) !important;
+        line-height: var(--el-input-inner-height);
+    }
+}
+
 .el-radio,
-.el-input-group__prepend,
-.el-input-group__append {
-    min-height: var(--jn-ve-g-form-item-height) !important;
-    line-height: var(--jn-ve-g-form-item-line-height) !important;
+.el-radio-button__inner,
+.el-checkbox,
+.el-checkbox-button__inner,
+.el-slider,
+.el-rate {
+    font-size: var(--jn-ve-g-form-font-size);
+    height: var(--el-component-size);
 }
 
-// switch & checkbo & radio 的 label
-.el-switch__label,
 .el-checkbox__label,
 .el-radio__label {
-    line-height: var(--jn-ve-g-form-item-height) !important;
+    font-size: inherit !important;
+    height: var(--el-component-size);
+    display: inline-flex;
+    align-items: center;
 }
 
+.el-checkbox,
+.el-radio {
+    margin-right: 24px;
+}
 
-// 虚拟下拉框
-.g-info-select-all {
-    .el-select-v2__combobox-input {
-        line-height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
-        height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
+.el-radio-button__inner,
+.el-checkbox-button__inner {
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.el-color-dropdown {
+    .el-color-dropdown__btns {
+        --jn-ve-g-btn-height: 24px;
     }
 }
 
-// 时间选择框内部 input
-.el-picker-panel {
-    --jn-ve-g-form-item-height: 32px;
-    --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
+.el-color-picker {
+    .el-color-picker__trigger {
+        height: var(--el-component-size);
+        width: var(--el-component-size);
+    }
 }
 
+// // 虚拟下拉框
+// .g-info-select-all {
+//     .el-select-v2__combobox-input {
+//         line-height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
+//         height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
+//     }
+// }
 
-/* 2.2.0 样式修复覆盖 */
+// // 时间选择框内部 input
+// .el-picker-panel {
+//     --jn-ve-g-form-item-height: 32px;
+//     --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
+// }
 
-.el-range-editor.el-input__inner {
-    --jn-ve-g-form-item-height: 38px;
-}
+
+// /* 2.2.0 样式修复覆盖 */
+
+// .el-range-editor.el-input__inner {
+//     --jn-ve-g-form-item-height: 38px;
+// }
 
 input::placeholder {
-    font-size: var(--jn-ve-input-placeholder-font-size) !important;
     text-align: var(--jn-ve-input-placeholder-font-align) !important;
-}
-
-.el-tree-node__content {
-    .el-checkbox {
-        margin-right: 8px;
-    }
 }
 
 .el-date-editor--daterange {
@@ -70,4 +111,8 @@ input::placeholder {
     }
 }
 
-/* 2.2.0 样式修复覆盖 */
+// .el-tree-node__content {
+//     .el-checkbox {
+//         margin-right: 8px;
+//     }
+// }

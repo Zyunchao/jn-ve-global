@@ -1,18 +1,14 @@
 @import './item-label.scss';
 @import './item-content.scss';
 @import './item-disabled.scss';
+@import './form-item-custom-class.scss';
 
 .g-form {
-    --jn-ve-g-btn-height: calc(var(--jn-ve-g-form-item-height) + 2px);
+    --jn-ve-g-btn-height: var(--jn-ve-g-form-item-height);
 
     font-size: var(--jn-ve-g-form-font-size);
 
     :deep(.el-form-item) {
-        margin-bottom: var(--jn-ve-g-form-item-margin-b);
-
-        .el-form-item__error {
-            font-size: 12px;
-        }
 
         .el-form-item__label {
             @include item-label;
@@ -23,42 +19,10 @@
         }
 
         &.no-colon {
-            .el-form-item__label {
-                padding-right: 14px;
-
-                &::after {
-                    content: '';
-                }
-            }
+            @include no-colon;
         }
 
-        &.content-left {
-            .el-form-item__content {
-                justify-content: start;
-            }
-        }
-
-        &.content-right {
-            .el-form-item__content {
-                justify-content: end;
-            }
-        }
-
-        &.content-center {
-            .el-form-item__content {
-                justify-content: center;
-            }
-        }
-
-        &.no-margin-b {
-            margin-bottom: 0;
-        }
-
-        &.no-label {
-            .el-form-item__label {
-                display: none;
-            }
-        }
+        @include custom-class;
 
         // 显示 tooltip 的 item
         &.show-tip {
@@ -70,15 +34,14 @@
 
             &.tip-label {
                 .el-form-item__label {
+                    align-items: center;
+
                     .item-tip {
                         margin-right: 4px;
                         margin-left: 0;
-
-                        i,
-                        .custom-svg-icon {
-                            transform: translateY(9px);
-                            position: relative;
-                        }
+                        display: inline-flex;
+                        align-items: center;
+                        height: 100%;
                     }
                 }
             }

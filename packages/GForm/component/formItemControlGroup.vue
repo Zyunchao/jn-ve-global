@@ -148,6 +148,7 @@ const wrapperClass = (type: 'add' | 'remove') => {
 <style lang="scss" scoped>
 .form-item-control-group-wrapper {
     --jn-ve-input-placeholder-font-align: center;
+    --el-component-size: calc(var(--jn-ve-g-form-item-height) - 2px);
 
     width: 100%;
     display: flex;
@@ -156,7 +157,6 @@ const wrapperClass = (type: 'add' | 'remove') => {
     border-radius: var(--el-input-border-radius, var(--el-border-radius-base));
     transition: var(--el-transition-border);
     box-sizing: border-box;
-    min-height: var(--jn-ve-g-form-item-height) !important;
 
     &:hover {
         border-color: var(--el-input-hover-border, var(--el-border-color-hover));

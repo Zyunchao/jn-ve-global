@@ -13,11 +13,6 @@
         min-height: calc(var(--jn-ve-g-form-item-height) + 2px);
     }
 
-    @include control-style;
-}
-
-@mixin control-style {
-    @include control-height;
 
     .el-textarea,
     .el-input,
@@ -34,67 +29,87 @@
     .el-range-input {
         font-size: var(--jn-ve-g-form-font-size);
     }
-
-    // 多选框
-    .el-checkbox__inner {
-        width: var(--jn-ve-g-form-font-size);
-        height: var(--jn-ve-g-form-font-size);
-
-        &::after {
-            height: calc(var(--jn-ve-g-form-font-size) / 2);
-            width: calc(var(--jn-ve-g-form-font-size) / 4);
-        }
-    }
-
-    // 时间选择框
-    .el-date-editor {
-        &.el-range-editor {
-            .el-range-separator {
-                width: auto;
-            }
-        }
-
-        .el-icon.el-input__icon {
-            font-size: var(--jn-ve-g-form-font-size);
-        }
-    }
 }
 
-@mixin control-height {
+// @mixin control-style {
+//     @include control-height;
 
-    // 单选框 & 多选框 按钮模式
-    .el-checkbox-button__inner,
-    .el-radio-button__inner {
-        height: calc(var(--jn-ve-g-form-item-height) + 2px) !important;
-        line-height: calc(var(--jn-ve-g-form-item-height) - 2px + 2px) !important;
-        padding: 0 15px;
-    }
+//     .el-textarea,
+//     .el-input,
+//     .el-checkbox,
+//     .el-checkbox__label,
+//     .el-switch,
+//     .el-switch__label,
+//     .el-switch__label span,
+//     .el-checkbox-button__inner,
+//     .el-radio .el-radio__label,
+//     .el-radio-button__inner,
+//     .el-select-v2__wrapper,
+//     .el-select-v2__combobox-input,
+//     .el-range-input {
+//         font-size: var(--jn-ve-g-form-font-size);
+//     }
 
-    // 颜色选择器
-    .el-color-picker {
-        .el-color-picker__trigger {
-            height: var(--jn-ve-g-form-item-height) !important;
-            width: var(--jn-ve-g-form-item-height) !important;
-        }
-    }
+//     // 多选框
+//     .el-checkbox__inner {
+//         width: var(--jn-ve-g-form-font-size);
+//         height: var(--jn-ve-g-form-font-size);
 
-    // 进度条
-    .el-slider {
-        height: var(--jn-ve-g-form-item-height) !important;
-    }
+//         &::after {
+//             height: calc(var(--jn-ve-g-form-font-size) / 2);
+//             width: calc(var(--jn-ve-g-form-font-size) / 4);
+//         }
+//     }
 
-    // 评级
-    .el-rate {
-        height: 100%;
-        display: flex;
-        align-items: center;
-    }
+//     // 时间选择框
+//     .el-date-editor {
+//         &.el-range-editor {
+//             .el-range-separator {
+//                 width: auto;
+//             }
+//         }
 
-    // 控件组
-    .form-item-control-group-wrapper {
-        .el-input__inner {
-            min-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
-            line-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
-        }
-    }
-}
+//         .el-icon.el-input__icon {
+//             font-size: var(--jn-ve-g-form-font-size);
+//         }
+//     }
+// }
+
+// @mixin control-height {
+
+//     // 单选框 & 多选框 按钮模式
+//     .el-checkbox-button__inner,
+//     .el-radio-button__inner {
+//         height: calc(var(--jn-ve-g-form-item-height) + 2px) !important;
+//         line-height: calc(var(--jn-ve-g-form-item-height) - 2px + 2px) !important;
+//         padding: 0 15px;
+//     }
+
+//     // 颜色选择器
+//     .el-color-picker {
+//         .el-color-picker__trigger {
+//             height: var(--jn-ve-g-form-item-height) !important;
+//             width: var(--jn-ve-g-form-item-height) !important;
+//         }
+//     }
+
+//     // 进度条
+//     .el-slider {
+//         height: var(--jn-ve-g-form-item-height) !important;
+//     }
+
+//     // 评级
+//     .el-rate {
+//         height: 100%;
+//         display: flex;
+//         align-items: center;
+//     }
+
+//     // 控件组
+//     .form-item-control-group-wrapper {
+//         .el-input__inner {
+//             min-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
+//             line-height: calc(var(--jn-ve-g-form-item-height) - 2px) !important;
+//         }
+//     }
+// }

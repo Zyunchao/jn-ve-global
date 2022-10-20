@@ -1,11 +1,18 @@
 @mixin item-label {
-    font-size: var(--jn-ve-g-form-font-size);
-    line-height: calc(var(--jn-ve-g-form-item-height) + 2px);
-    height: calc(var(--jn-ve-g-form-item-height) + 2px);
     padding: 0;
     overflow: hidden;
 
     &::after {
         content: '：';
+    }
+}
+
+@mixin no-colon {
+    .el-form-item__label {
+        padding-right: 14px;
+
+        &::after {
+            content: '';
+        }
     }
 }

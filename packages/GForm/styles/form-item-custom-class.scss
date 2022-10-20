@@ -1,0 +1,29 @@
+@mixin custom-class {
+    &.content-left {
+        .el-form-item__content {
+            justify-content: start;
+        }
+    }
+
+    &.content-right {
+        .el-form-item__content {
+            justify-content: end;
+        }
+    }
+
+    &.content-center {
+        .el-form-item__content {
+            justify-content: center;
+        }
+    }
+
+    &.no-margin-b {
+        margin-bottom: 0;
+    }
+
+    &.no-label {
+        .el-form-item__label {
+            display: none;
+        }
+    }
+}
