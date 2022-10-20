@@ -7,13 +7,13 @@
         destroy-on-close
         top="5vh"
         append-to-body
-        v-bind="$attrs"
-        :custom-class="`g-custom-dialog${
-            $attrs['custom-class'] ? ' ' + $attrs['custom-class'] : ''
-        }${isVerticalCenter ? ' vertical-center' : ''}`"
+        v-bind="eleProps"
+        :class="`g-custom-dialog
+            ${attrs['custom-class'] ? ' ' + attrs['custom-class'] : ''}`"
+        :align-center="verticalCenter"
     >
         <!-- title -->
-        <template v-if="$slots.title" #title>
+        <template v-if="$slots.title" #header>
             <slot name="title" />
         </template>
 
@@ -41,11 +41,11 @@
         :size="localWidth"
         destroy-on-close
         append-to-body
-        v-bind="$attrs"
-        :custom-class="`g-custom-drawer ${$attrs['custom-class'] || ''}`"
+        v-bind="eleProps"
+        :custom-class="`g-custom-drawer ${attrs['custom-class'] || ''}`"
     >
         <!-- title -->
-        <template v-if="$slots.title" #title>
+        <template v-if="$slots.title" #header>
             <slot name="title" />
         </template>
 
@@ -80,6 +80,8 @@ export default {
 import { toRaw, watch, ref, computed, reactive, toRefs, PropType, useAttrs } from 'vue'
 import BtnProps from '../GButtonGroup/interface/BtnProps'
 import LGButtonGroup from '../GButtonGroup/index.vue'
+import _ from 'lodash'
+import { partitionObj2HumpObj } from '../utils/utils'
 
 interface Props {
     /**
@@ -112,9 +114,21 @@ const props = withDefaults(defineProps<Props>(), {
     verticalCenter: false
 })
 
+const attrs = useAttrs()
+const eleProps = computed(() => {
+    const obj = partitionObj2HumpObj(attrs) as any
+
+    if (props.type === 'dialog') {
+        const { alignCenter, customClass, ...dialogEleProps } = obj
+        return dialogEleProps
+    } else {
+        const { alignCenter, ...drawerEleProps } = obj
+        return drawerEleProps
+    }
+})
+
 // 本地类型（做统一化控制）
 const localType = computed(() => props.type)
-
 const modalRef = ref(null)
 
 // 本地 width
@@ -124,13 +138,8 @@ const localWidth = computed(() => {
     return '50%'
 })
 
-// 垂直居中仅对 dialog 生效
-const isVerticalCenter = computed(() => props.type === 'dialog' && props.verticalCenter)
-
-// 抛出的
 defineExpose({
     localType,
-    isVerticalCenter,
     modalRef
 })
 </script>
