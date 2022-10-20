@@ -408,12 +408,12 @@ export default {
 <script lang="tsx" setup>
 import { TableColumnProps, BaseTableDataItem } from '../../index'
 import FunctionalComponent from '../../../FunctionalComponent'
-import LGSelectTree from '../../../GSelectTree/index.vue'
+import LGSelectTree from '../../../GSelectTree/v1/index.vue'
 import LGFigureInput from '../../../GFigureInput/index.vue'
 import LGInfoSelect from '../../../GInfoSA/GInfoSelect/index.vue'
 import LGInfoSelectAll from '../../../GInfoSA/GInfoSelectAll/index.vue'
 import LGInfoAutocomplete from '../../../GInfoSA/GInfoAutocomplete/index.vue'
-import LGSelectTreeV2 from '../../../GSelectTreeV2/index.vue'
+import LGSelectTreeV2 from '../../../GSelectTree/v2/index.vue'
 import LGAddress from '../../../GAddress/index.vue'
 import {
     getConstant,

@@ -18,10 +18,10 @@ export default {
 
 <script lang="ts" setup>
 import { computed, useAttrs } from 'vue'
-import { TreeData } from '../GSelectTree/interface/TreeData'
-import TreeProps from '../GSelectTree/interface/TreeProps'
+import { TreeData } from '../v1/interface/TreeData'
+import TreeProps from '../v1/interface/TreeProps'
 import _ from 'lodash'
-import { humpObj2PartitionObj } from '../utils/utils'
+import { humpObj2PartitionObj } from '../../utils/utils'
 
 interface SelectTreeV2TreeProps extends TreeProps {
     /**

@@ -1,7 +1,7 @@
-import { TreeData } from '../../GSelectTree/interface/TreeData'
-import TreeProps from '../../GSelectTree/interface/TreeProps'
+import { TreeData } from '../../GSelectTree/v1/interface/TreeData'
+import TreeProps from '../../GSelectTree/v1/interface/TreeProps'
 import { SelectProps } from './SelectControlConfig'
-import TreeConfig from '../../GSelectTree/interface/TreeConfig'
+import TreeConfig from '../../GSelectTree/v1/interface/TreeConfig'
 
 export interface SelectTreeProps extends SelectProps {
     /**

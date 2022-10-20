@@ -1,7 +1,7 @@
 import { SelectProps, SelectEvents } from './SelectControlConfig'
-import TreeConfig from '../../GSelectTree/interface/TreeConfig'
-import { TreeData } from '../../GSelectTree/interface/TreeData'
-import TreeProps from '../../GSelectTree/interface/TreeProps'
+import TreeConfig from '../../GSelectTree/v1/interface/TreeConfig'
+import { TreeData } from '../../GSelectTree/v1/interface/TreeData'
+import TreeProps from '../../GSelectTree/v1/interface/TreeProps'
 
 /**
  * v2 扩展的 tree 的 props

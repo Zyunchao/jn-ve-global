@@ -44,7 +44,7 @@ export default {
 
 <script lang="ts" setup>
 import { nextTick, watch, ref, computed } from 'vue'
-import { findTargetById } from '../utils/utils'
+import { findTargetById } from '../../utils/utils'
 import { TreeData } from './interface/TreeData'
 import TreeProps from './interface/TreeProps'
 import TreeConfig from './interface/TreeConfig'
