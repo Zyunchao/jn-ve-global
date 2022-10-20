@@ -12,7 +12,7 @@ import { reactive } from 'vue'
 const prefix = '/api'
 
 export default () => {
-    const formConfig = reactive<FormProps>({
+    const formConfig: FormProps = reactive<FormProps>({
         instance: null,
         labelPosition: 'right',
         labelWidth: '180px',
@@ -44,13 +44,6 @@ export default () => {
             html: '<h1>Hello Tiny</h1>'
         },
         formItems: [
-            {
-                prop: '',
-                label: '简单的',
-                controlConfig: {
-                    type: 'collapseItem'
-                }
-            },
             {
                 prop: 'name',
                 label: 'Input',
@@ -148,13 +141,6 @@ export default () => {
                 }
             },
             {
-                prop: '',
-                label: '时间选择',
-                controlConfig: {
-                    type: 'collapseItem'
-                }
-            },
-            {
                 prop: 'time1',
                 label: '时间',
                 span: 12,
@@ -212,16 +198,6 @@ export default () => {
                         startPlaceholder: '请选择开始日期',
                         endPlaceholder: '请选择结束日期',
                         rangeSeparator: '至'
-                    }
-                }
-            },
-            {
-                prop: '',
-                label: '评分',
-                controlConfig: {
-                    type: 'collapseItem',
-                    props: {
-                        isTail: true
                     }
                 }
             },
@@ -322,13 +298,6 @@ export default () => {
                 }
             },
             {
-                prop: '',
-                label: '自定义',
-                controlConfig: {
-                    type: 'collapseItem'
-                }
-            },
-            {
                 prop: 'customLabel',
                 label: (
                     <span class='form-test-custom-label'>
@@ -408,13 +377,6 @@ export default () => {
                 ]
             },
             {
-                prop: '',
-                label: '复杂的',
-                controlConfig: {
-                    type: 'collapseItem'
-                }
-            },
-            {
                 prop: 'address',
                 label: '地址',
                 span: 12,
@@ -431,7 +393,7 @@ export default () => {
                     props: {
                         action: `${prefix}/kinso-basic-open-server/v1/document/file/upload`,
                         downloadUrl: `${prefix}/kinso-basic-open-server/v1/document/file/download`,
-                        fileList: FileSource,
+                        fileList: FileSource as any,
                         name: 'file',
                         size: 2,
                         listType: 'picture-card',
@@ -460,13 +422,6 @@ export default () => {
                             console.log(`%c onRemove fileList == `, 'color: #67c23a;', fileList)
                         }
                     }
-                }
-            },
-            {
-                prop: '',
-                label: '富文本',
-                controlConfig: {
-                    type: 'collapseItem'
                 }
             },
             {
