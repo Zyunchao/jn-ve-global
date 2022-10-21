@@ -2,36 +2,6 @@
     --el-text-color-regular: var(--jn-ve-g-form-color);
 }
 
-.el-button {
-    height: var(--jn-ve-g-btn-height) !important;
-    padding: 0 var(--jn-ve-g-btn-padding-lr) !important;
-    font-size: var(--jn-ve-g-base-font-size-s) !important;
-
-    &:not(.is-text, .is-disabled, .el-button--text) {
-        &:focus {
-            background-color: var(--el-button-bg-color);
-            border: var(--el-border);
-            border-color: var(--el-button-border-color);
-            color: var(--el-button-text-color);
-        }
-
-        &:active {
-            background-color: var(--el-button-bg-color);
-            border: var(--el-border);
-            border-color: var(--el-button-border-color);
-            color: var(--el-button-text-color);
-            transform: scale(0.96);
-        }
-
-        &:hover {
-            color: var(--el-button-hover-text-color);
-            border-color: var(--el-button-hover-border-color);
-            background-color: var(--el-button-hover-bg-color);
-        }
-    }
-}
-
-
 // 覆盖 el-message-box 样式
 .el-message-box {
     --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
