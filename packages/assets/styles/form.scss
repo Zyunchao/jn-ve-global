@@ -8,10 +8,32 @@
     --jn-ve-g-form-item-line-height: 1;
     --jn-ve-g-form-item-margin-b: 18px;
 
-
-    // 覆盖 element 的变量
-    --el-component-size: var(--jn-ve-g-form-item-height);
     --el-checkbox-font-size: var(--jn-ve-g-form-font-size);
+}
+
+/* 
+    1. css 变量按值传递
+    2. 同级变量互相引用后，并不是建立关联关系
+    3. 子级在覆盖父级变量时，父级变量与变量之间不会产生变化
+    4. 凡是涉及到变量引用的，一概遵循低引用高，这样才能在低的改变高的时候，低的引用才能生效
+
+    基于 4 ，在相对低的层级，建立变量的引用，然后可以在低与高的中间，覆盖高层的变量，这样就能实现改变 a 继而 b 也改变了
+*/
+.el-input,
+.el-radio,
+.el-checkbox,
+.el-radio-group,
+.el-checkbox-group,
+.el-date-editor,
+.el-slider,
+.el-rate,
+.el-switch,
+.el-color-picker,
+.form-item-placeholder,
+.el-select-v2 {
+    --el-component-size: var(--jn-ve-g-form-item-height);
+    --el-component-size-large: var(--el-component-size);
+    --el-component-size-small: var(--el-component-size);
 }
 
 .el-form-item {
@@ -19,8 +41,8 @@
 
     .el-form-item__label {
         font-size: var(--jn-ve-g-form-font-size);
-        height: var(--el-component-size);
-        line-height: var(--el-component-size);
+        height: var(--jn-ve-g-form-item-height);
+        line-height: var(--jn-ve-g-form-item-height);
     }
 
     .el-form-item__error {
@@ -89,28 +111,6 @@ input::placeholder {
         color: var(--el-text-color-regular);
     }
 }
-
-// // 虚拟下拉框
-// .g-info-select-all {
-//     .el-select-v2__combobox-input {
-//         line-height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
-//         height: calc(var(--jn-ve-g-form-item-height) - 8px) !important;
-//     }
-// }
-
-// // 时间选择框内部 input
-// .el-picker-panel {
-//     --jn-ve-g-form-item-height: 32px;
-//     --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
-// }
-
-
-// /* 2.2.0 样式修复覆盖 */
-
-// .el-range-editor.el-input__inner {
-//     --jn-ve-g-form-item-height: 38px;
-// }
-
 
 // .el-tree-node__content {
 //     .el-checkbox {

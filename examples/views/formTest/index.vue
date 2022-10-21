@@ -101,12 +101,14 @@ const btns: BtnProps[] = [
 
 <style lang="scss">
 .form-test {
-    .form-content {
-        height: calc(100% - 50px);
+    // --jn-ve-g-form-item-height: 48px;
 
-        .el-scrollbar__view {
-            padding-right: 20px;
-        }
+    .el-form-item__label {
+        background-color: skyblue;
+    }
+
+    .el-form-item__content {
+        background-color: pink;
     }
 
     .g-button-group {
