@@ -107,7 +107,7 @@ const setPosition = _.debounce((pRootDom?: HTMLElement) => {
     // 表头高度 = 容器 padding-top
     infoHeaderWrapRef.value &&
         (pRootDom.style.paddingTop = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`)
-}, 20)
+}, 10)
 const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {

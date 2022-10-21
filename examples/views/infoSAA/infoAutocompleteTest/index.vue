@@ -87,6 +87,10 @@ const resetForm = () => {
 </script>
 
 <style lang="scss" scoped>
+.examples-base-wrapper {
+    padding-top: 200px;
+}
+
 .box {
     width: 400px;
     display: flex;

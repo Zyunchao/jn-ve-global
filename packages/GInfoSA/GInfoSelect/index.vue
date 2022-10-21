@@ -131,25 +131,23 @@ const emits = defineEmits(['paramsChange', 'closed'])
 const localSelectOptins = computed(() => packagingOptionData(props.optionsData, props.optionProps))
 
 // 防抖执行
+let isClosed = false
 const setPosition = _.debounce((pRootDom?: HTMLElement) => {
-    setTimeout(() => {
-        infoHeaderHeight.value = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`
-        optionItemWrapperHeight.value = pRootDom.querySelector('.el-select-dropdown').clientHeight
-    }, 10)
+    if (isClosed) return
+    popperTop.value = pRootDom.style.top
+    popperLeft.value = pRootDom.style.left
+    popperZIndex.value = pRootDom.style.zIndex
+    infoHeaderHeight.value = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`
+    optionItemWrapperHeight.value = pRootDom.querySelector('.el-select-dropdown').clientHeight
 }, 10)
 // 当观察到变动时执行的回调函数
 const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
-        // 样式变化
+        // 样式变化，这里的变化不只是打开时初次获取，在屏幕发生变化时，popper 的位置也会发生变化，所以，这里的是需要随动的
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
             const pRootDom = mutation.target as HTMLElement
             const display = pRootDom.style['display']
             if (display !== 'none') {
-                // popper 的位置 + 层级获取
-                popperTop.value = pRootDom.style.top
-                popperLeft.value = pRootDom.style.left
-                popperZIndex.value = pRootDom.style.zIndex
-
                 // 高度值
                 setPosition(pRootDom)
             }
@@ -164,6 +162,9 @@ const callback = function (mutationsList: MutationRecord[]) {
                     // DOM 隐藏后
                     initAtAfter()
                     emits('closed')
+                    isClosed = true
+                } else {
+                    isClosed = false
                 }
             }, 0)
         }

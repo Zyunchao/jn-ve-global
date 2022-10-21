@@ -78,6 +78,18 @@
     }
 }
 
+input::placeholder {
+    text-align: var(--jn-ve-input-placeholder-font-align) !important;
+}
+
+.el-date-editor--daterange {
+    --jn-ve-input-placeholder-font-align: center;
+
+    .el-range-separator {
+        color: var(--el-text-color-regular);
+    }
+}
+
 // // 虚拟下拉框
 // .g-info-select-all {
 //     .el-select-v2__combobox-input {
@@ -99,17 +111,6 @@
 //     --jn-ve-g-form-item-height: 38px;
 // }
 
-input::placeholder {
-    text-align: var(--jn-ve-input-placeholder-font-align) !important;
-}
-
-.el-date-editor--daterange {
-    --jn-ve-input-placeholder-font-align: center;
-
-    .el-range-separator {
-        color: var(--el-text-color-regular);
-    }
-}
 
 // .el-tree-node__content {
 //     .el-checkbox {
