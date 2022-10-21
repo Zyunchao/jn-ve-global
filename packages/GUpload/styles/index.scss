@@ -8,18 +8,19 @@
 .g-upload {
 
     // 按钮
-    :deep(.upload-btn) {
-        .el-button {
-            // --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
-            // --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr3);
-        }
-    }
+    // :deep(.upload-btn) {
+    //     .el-button {
+    //         // --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+    //         // --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr3);
+    //     }
+    // }
 
     // 禁用
     @include disabled;
-    
+
     // 触发
     @include trigger-avatar;
+
     :deep(.el-upload) {
         @include trigger-picture-card;
     }
