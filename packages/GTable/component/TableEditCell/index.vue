@@ -34,13 +34,15 @@
             >
                 <!-- input 输入框 -->
                 <template v-if="localControlType === 'input'">
-                    <el-input
-                        ref="controlRef"
-                        v-model="localPropRef"
-                        v-bind="localControlProps"
-                        size="small"
-                        @blur="control2Text"
-                    />
+                    <div style="display: flex">
+                        <el-input
+                            ref="controlRef"
+                            v-model="localPropRef"
+                            v-bind="localControlProps"
+                            size="small"
+                            @blur="control2Text"
+                        />
+                    </div>
                 </template>
 
                 <!-- InputNumber -->
