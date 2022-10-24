@@ -1,7 +1,4 @@
 @mixin cell-content {
-    // 覆盖表单控件的高度变量
-    --jn-ve-g-form-item-height: var(--jn-ve-g-table-cell-line-height);
-    --jn-ve-g-form-item-line-height: var(--jn-ve-g-form-item-height);
 
     // 更多按钮 dropdown
     .el-dropdown {
