@@ -2,6 +2,7 @@
 @import './pagination.scss';
 @import './table-header.scss';
 @import './table-body.scss';
+@import './cell-button.scss';
 
 .g-table-root {
     height: 100%;
@@ -11,7 +12,7 @@
     background-color: #fff;
     border: 1px solid var(--jn-ve-g-base-border-color);
     border-radius: 4px 4px 0 0;
-    
+
     // 无分页
     &.hide-pagination {
         border-bottom: none;
@@ -60,15 +61,6 @@
                     background-color: var(--jn-ve-g-base-border-color);
                 }
             }
-
-            /* 
-                左右固定的列 2.0+ 版本使用的是  position:sticky 来进行固定列的 👍🏻 🐂 
-                通过 .el-table 添加下面三个类名，确定表格的横向滚动状态
-            */
-            // &.is-scrolling-left {}
-            // &.is-scrolling-middle {}
-            // &.is-scrolling-right {}
-
         }
     }
 

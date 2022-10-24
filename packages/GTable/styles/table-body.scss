@@ -17,11 +17,8 @@
         }
 
         @include cell-content;
+        @include cell-button;
     }
-
-    /* 左右固定的列 2.0+ 版本使用的是  position:sticky 来进行固定列的 👍🏻 🐂 */
-    // &.el-table-fixed-column--left {}
-    // &.el-table-fixed-column--right {}
 }
 
 @mixin table-body {

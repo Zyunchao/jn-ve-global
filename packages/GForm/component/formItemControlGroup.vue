@@ -148,7 +148,6 @@ const wrapperClass = (type: 'add' | 'remove') => {
 <style lang="scss" scoped>
 .form-item-control-group-wrapper {
     --jn-ve-input-placeholder-font-align: center;
-    --el-component-size: calc(var(--jn-ve-g-form-item-height) - 2px);
 
     width: 100%;
     display: flex;
@@ -206,6 +205,25 @@ const wrapperClass = (type: 'add' | 'remove') => {
 .el-form-item.is-error {
     .form-item-control-group-wrapper {
         border-color: var(--el-color-danger);
+    }
+}
+
+.form-item-control-group-wrapper {
+    .el-input,
+    .el-radio,
+    .el-checkbox,
+    .el-radio-group,
+    .el-checkbox-group,
+    .el-date-editor,
+    .el-slider,
+    .el-rate,
+    .el-switch,
+    .el-color-picker,
+    .form-item-placeholder,
+    .el-select-v2 {
+        --el-component-size: calc(var(--jn-ve-g-form-item-height) - 2px);
+        --el-component-size-large: var(--el-component-size);
+        --el-component-size-small: var(--el-component-size);
     }
 }
 </style>

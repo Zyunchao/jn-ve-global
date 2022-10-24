@@ -136,6 +136,7 @@ defineExpose({
 .g-figure-input {
     position: relative;
     width: 100%;
+    display: flex;
 
     &::after {
         content: attr(data-unit);

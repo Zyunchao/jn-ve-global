@@ -1,0 +1,56 @@
+@mixin cell-button {
+    .el-button {
+
+        &.is-text,
+        &.el-button--text {
+            height: auto !important;
+            font-size: var(--jn-ve-g-table-font-size) !important;
+            padding: 0 !important;
+            border: none;
+            background-color: transparent;
+
+            // 颜色初始化
+            &:not(.is-disabled,
+                :hover,
+                .btn-danger,
+                .el-button--danger,
+                .el-button--primary,
+                .el-button--success,
+                .el-button--warning,
+                .el-button--info,
+                .el-button--default) {
+                --el-button-text-color: var(--el-color-primary);
+            }
+
+            &:active,
+            &:focus {
+                border: none;
+                background-color: transparent;
+            }
+
+            // hover 的颜色
+            &:hover {
+
+                &:not(.is-disabled,
+                    .btn-danger,
+                    .el-button--danger,
+                    .el-button--primary,
+                    .el-button--success,
+                    .el-button--warning,
+                    .el-button--info,
+                    .el-button--default) {
+                    color: var(--el-color-primary-light-3);
+                }
+            }
+        }
+
+        &.is-disabled,
+        &.is-loading::before {
+            background-color: transparent;
+        }
+
+        &.is-loading {
+            opacity: 0.7;
+        }
+    }
+}

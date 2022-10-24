@@ -93,17 +93,8 @@
 
         // 条数调整器
         .el-pagination__sizes {
-
-            &,
-            .el-select,
-            .el-input .el-input__inner {
-                height: var(--jn-ve-g-table-pagination-item-height);
-                line-height: var(--jn-ve-g-table-pagination-item-height);
-            }
-
-            .el-input {
-                width: 100px;
-            }
+            height: var(--jn-ve-g-table-pagination-item-height);
+            overflow: hidden;
         }
     }
 }
