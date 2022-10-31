@@ -36,8 +36,23 @@
 
 </demo-block>
 
+## 指定宽度
+
+<demo-block>
+
+<HintBox-demo3 />
+
+<template #code>
+
+@[code](@demoroot/HintBox/demo3.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
 text | 展示内容 | string | -
+width | 指定宽度 | string \| number | '100%'

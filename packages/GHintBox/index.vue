@@ -1,7 +1,15 @@
 <template>
     <span ref="domRef" class="tool-tip-by-width-box">
-        <el-tooltip v-if="isOverlengthFlag" effect="dark" :content="text" placement="top-start">
-            {{ text }}
+        <el-tooltip
+            v-if="isOverlengthFlag"
+            effect="dark"
+            :content="text"
+            placement="top-start"
+            v-bind="$attrs"
+        >
+            <span>
+                {{ text }}
+            </span>
         </el-tooltip>
 
         <template v-else>
@@ -17,22 +25,34 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, ref, onMounted } from 'vue'
-import { getStyle } from '../utils/utils'
+import { watch, ref, onMounted, computed, shallowRef } from 'vue'
+import { getStyle, size2Rem } from '../utils/utils'
 import { useResizeObserver } from '@vueuse/core'
+import _ from 'lodash'
 
 const props = withDefaults(
     defineProps<{
+        /**
+         * 文本内容
+         */
         text: string
+        /**
+         * 指定宽度
+         */
+        width?: string | number
     }>(),
     {
-        text: ''
+        text: '',
+        width: '100%'
     }
 )
 
-const domRef = ref<Element>(null)
+const domRef = shallowRef<Element | null>(null)
 const isOverlengthFlag = ref<boolean>(false)
 const boxWidth = ref<number>(0)
+const cssWidth = computed(() =>
+    _.isNumber(props.width) ? `${size2Rem(props.width)}px` : props.width
+)
 
 // 数据变化
 watch(
@@ -66,12 +86,18 @@ function textIsOverlength(dom: Element, boxWidth: number, text: string) {
 
 <style lang="scss" scoped>
 .tool-tip-by-width-box {
-    width: 100%;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    width: v-bind(cssWidth);
+    display: inline-flex;
     font-size: inherit;
     color: inherit;
+
+    > span {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: inherit;
+        color: inherit;
+    }
 }
 </style>
