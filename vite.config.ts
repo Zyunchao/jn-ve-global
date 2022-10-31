@@ -6,11 +6,16 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import dts from 'vite-plugin-dts'
 import eslintPlugin from 'vite-plugin-eslint'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import esbuild from 'rollup-plugin-esbuild'
+// import legacy from '@vitejs/plugin-legacy'
 
 export default defineConfig({
     plugins: [
         vue(),
         vueJsx(),
+        // legacy({
+        //     targets: ['defaults', 'not IE 11']
+        // }),
         // 生成 .d.ts
         dts({
             outputDir: resolve(__dirname, '@types'),
@@ -49,10 +54,21 @@ export default defineConfig({
         // vite eslint 集成
         eslintPlugin({
             include: ['src/**/*.{js,jsx,ts,tsx,vue}']
-        })
+        }),
+        {
+            ...esbuild({
+                target: 'chrome70',
+                include: /[\.vue,\.tsx,\.ts]$/,
+                loaders: {
+                    '.vue': 'js'
+                }
+            }),
+            enforce: 'post'
+        } as any
     ],
 
     build: {
+        target: 'es2015',
         minify: 'esbuild',
         sourcemap: false,
         lib: {
