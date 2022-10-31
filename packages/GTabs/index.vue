@@ -1,7 +1,7 @@
 <template>
     <el-tabs
         v-bind="$attrs"
-        :class="['g-tabs', `custom-${type}`]"
+        :class="['g-tabs', type ? `custom-${type}` : '']"
         :type="localType"
         @tab-click="tabChange"
     >
@@ -110,6 +110,7 @@ const tabChange = (index) => {
         :deep(.el-tabs__header) {
             border: none;
             background-color: #f4fbff;
+            height: initial;
 
             &,
             .el-tabs__nav,
