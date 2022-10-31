@@ -75,6 +75,16 @@
                     margin: 0;
                 }
 
+                .el-checkbox {
+                    height: 100% !important;
+                }
+
+                .el-tree-node__label {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                }
+
                 // 节点内图标
                 .tree-node-icon-wrapper {
                     display: flex;
