@@ -38,3 +38,26 @@ const targetName = findTargetById(treeData, '1425374958969872386', 'name')
 </CodeGroupItem>
 
 </CodeGroup>
+
+## getAllLeaf
+
+```ts
+/**
+ * 获取树的所有叶子节点（没有 children 字段或 children 为空的节点）
+ * @param tree 树数据
+ * @returns
+ */
+export declare function getAllLeaf(tree: any[]): any[];
+```
+
+## nodeHasChildren
+
+```ts
+/**
+ * 目标节点是否包含子元素，且子元素长度不为0
+ * @param source 源数据（树）
+ * @param id 目标 id
+ * @returns
+ */
+export declare function nodeHasChildren(source: any[], id: string | number): boolean;
+```

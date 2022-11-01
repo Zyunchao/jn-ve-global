@@ -112,3 +112,14 @@ function difference(newObj: object, oldObj: object): KeyFound[];
  */
 function clearEmpty(source: object | Array<any>, parent?: object | Array<any>): void;
 ```
+
+## isObject
+
+```ts
+/**
+ * 判断目标是否是 object 且不是数组的 object
+ * @param target
+ * @returns
+ */
+export declare function isObject(target: any): boolean;
+```

@@ -25,6 +25,7 @@
 * [getLength](./object.md#getlength)
 * [difference](./object.md#difference)
 * [clearEmpty](./object.md#clearempty)
+* [isObject](./object.md#isobject)
 
 ## [Storage](./storage.md#storage)
 
@@ -45,7 +46,17 @@
 ## [Bom](./bom.md#bom)
 
 * [getUrlParams](./bom.md#geturlparams)
+* [detectBrowser](./bom.md#detectbrowser)
 
 ## [Tree](./tree.md#tree)
 
 * [findTargetById](./tree.md#findtargetbyid)
+* [getAllLeaf](./tree.md#getallleaf)
+* [nodeHasChildren](./tree.md#nodehaschildren)
+
+## [Number](./number.md#number)
+
+* [toThousands](./number.md#tothousands)
+* [restrictDecimals](./number.md#restrictdecimals)
+* [clearNoNum](./number.md#clearnonum)
+* [getNumUnit](./number.md#getnumunit)

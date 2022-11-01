@@ -11,3 +11,22 @@
  */
 function getUrlParams(queryString?: string): {};
 ```
+
+## detectBrowser
+
+```ts
+
+/**
+ * 浏览器嗅探，获取浏览器信息
+ * @param navigator
+ * @returns
+ */
+export declare function detectBrowser(navigator?: Window['navigator']): {
+    os: {
+        [k: string]: any;
+    };
+    browser: {
+        [k: string]: any;
+    };
+};
+```

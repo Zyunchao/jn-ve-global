@@ -34,6 +34,10 @@ export default [
     {
         text: 'tree',
         link: '/utilsDocs/tree.md'
+    },
+    {
+        text: 'number',
+        link: '/utilsDocs/number.md'
     }
     // {
     //     text: 'bom',
