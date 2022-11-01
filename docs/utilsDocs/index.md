@@ -6,14 +6,14 @@
 * [humpObj2PartitionObj](./string.md#humpobj2partitionobj)
 * [partition2Hump](./string.md#partition2Hump)
 * [partitionObj2HumpObj](./string.md#partitionobj2humpobj)
-* [isJSON](./string.md#isjson)
-* [modifyJson](./string.md#modifyjson)
+* [percent2percent25](./string.md#percent2percent25)
 * [funStr2FuncBody](./string.md#funstr2funcbody)
-* [deserialize](./string.md#deserialize)
 * [getStrSize](./string.md#getstrsize)
 * [getRangeStr](/utilsDocs/string.html#getrangestr)
+* [modifyJson](./string.md#modifyjson)
+* [deserialize](./string.md#deserialize)
+* [isJSON](./string.md#isjson)
 * [isBase64](./string.md#isbase64)
-* [percent2percent25](./string.md#percent2percent25)
 
 ## [Object](./object.md#object)
 
