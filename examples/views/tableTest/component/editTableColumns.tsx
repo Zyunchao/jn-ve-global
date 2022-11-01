@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 import { TableColumnProps, TableConfig, BaseTableDataItem } from '@component/index'
-import { toThousands } from '@component/GFigureInput/utils'
+import { toThousands } from '@jsjn/utils'
 import { findTargetById } from '@/utils/utils'
 import dayjs from 'dayjs'
 import { columns as InfoSelectColumns } from '../data/columns'

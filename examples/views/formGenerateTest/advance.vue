@@ -14,7 +14,7 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { FormProps, BtnProps, FormGenerateProps, RadioControlConfig } from '@component/index'
 import mockData from './data/mock.json'
 import AdvanceFormConfig from '@component/GFormGenerate/implements/AdvanceFormConfig'
-import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
+import { toThousands, restrictDecimals } from '@jsjn/utils'
 
 const formConfigJson = ref<string>('')
 const loadingFlag = ref<boolean>(true)

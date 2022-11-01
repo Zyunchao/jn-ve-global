@@ -16,7 +16,7 @@ export default {
 import { FormProps } from '@component/GForm'
 import { reactive } from 'vue'
 import treeData from './data/treeData.json'
-import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
+import { toThousands, restrictDecimals } from '@jsjn/utils'
 
 /**
  * 基本表单数据模型都要发生变化的，所以在生成对象时，要定义成响应式对象

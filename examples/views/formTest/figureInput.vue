@@ -25,7 +25,7 @@
 import { reactive, watch, ref } from 'vue'
 import { FormProps, BtnProps, InputControlConfig } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
-import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
+import { toThousands, restrictDecimals } from '@jsjn/utils'
 
 let formConfig = reactive<FormProps>({
     instance: null,

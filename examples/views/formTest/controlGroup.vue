@@ -9,7 +9,7 @@
 import { reactive, watch, ref, toRef, watchEffect } from 'vue'
 import { FormProps, BtnProps } from '@component/index'
 import treeData from '../selectTreeTest/data.json'
-import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
+import { toThousands, restrictDecimals } from '@jsjn/utils'
 import { v4 as uuidv4 } from 'uuid'
 
 let formConfig1 = reactive<FormProps>({

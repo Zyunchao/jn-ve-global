@@ -23,7 +23,7 @@ import {
 } from '@component/index'
 import dayjs from 'dayjs'
 import { findTargetById } from '@/utils/utils'
-import { toThousands } from '@component/GFigureInput/utils'
+import { toThousands } from '@jsjn/utils'
 
 const foodsMapping = {
     pastries: '黄金糕',

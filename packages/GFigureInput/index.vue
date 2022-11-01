@@ -30,8 +30,7 @@ export default {
 <script lang="ts" setup>
 import { nextTick, ref, computed, watch } from 'vue'
 import { FigureInputProps } from '../GForm'
-import { clearNoNum } from './utils'
-import { getNumUnit } from './utils'
+import { clearNoNum, getNumUnit } from '@jsjn/utils'
 import { ElInput as ElInputCom } from 'element-plus'
 import LGAdvanceInput from '../GForm/component/GAdvanceInput/core.vue'
 

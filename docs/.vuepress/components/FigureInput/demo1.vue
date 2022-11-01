@@ -47,7 +47,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { toThousands, restrictDecimals } from '@component/GFigureInput/utils'
+import { toThousands, restrictDecimals } from '@jsjn/utils'
 
 const figureVal = ref<number | string>('')
 
