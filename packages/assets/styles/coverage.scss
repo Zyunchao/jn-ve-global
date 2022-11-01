@@ -40,3 +40,26 @@
 .el-message {
     z-index: 130002 !important;
 }
+
+// ele 原生弹框样式覆盖
+.el-drawer,
+.el-dialog {
+
+    .el-drawer__header,
+    .el-dialog__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--jn-ve-g-modal-title-base-top-p) 20px var(--jn-ve-g-modal-title-base-top-p) var(--jn-ve-g-modal-title-base-left-p);
+        background-image: var(--jn-ve-g-popup-header-bg);
+        margin-right: 0;
+
+        .el-drawer__title,
+        .el-dialog__title {
+            font-size: 24px;
+            color: #333333;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+    }
+}

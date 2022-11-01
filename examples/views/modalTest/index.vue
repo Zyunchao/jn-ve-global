@@ -43,11 +43,13 @@
         </div>
     </g-modal>
 
-    <!-- <el-dialog v-model="echartsModelShow" width="70%" title="Tips">
-        <div v-if="create" style="height: 600px">
-            <GChart :config="chartConfig" />
-        </div>
-    </el-dialog> -->
+    <el-dialog v-model="dialogShow2" width="70%" title="原生 Dialog">
+        <h1>内容......</h1>
+    </el-dialog>
+
+    <el-drawer v-model="drawerShow2" size="70%" title="原生 Drawer">
+        <h1>内容......</h1>
+    </el-drawer>
 </template>
 
 <script lang="ts">
@@ -64,7 +66,10 @@ import { ElMessageBox } from 'element-plus'
 import BaseModuleDemo from './component/index.vue'
 
 const dialogShow = ref<boolean>(false)
+const dialogShow2 = ref<boolean>(false)
 const drawerShow = ref<boolean>(false)
+const drawerShow2 = ref<boolean>(false)
+
 const baseModuleDialogShow = ref<boolean>(false)
 const echartsModelShow = ref<boolean>(false)
 const create = ref<boolean>(false)
@@ -132,6 +137,18 @@ const btns = reactive<BtnProps[]>([
             setTimeout(() => {
                 create.value = true
             }, 0)
+        }
+    },
+    {
+        label: '原生 dialog',
+        onClick() {
+            dialogShow2.value = true
+        }
+    },
+    {
+        label: '原生 drawer',
+        onClick() {
+            drawerShow2.value = true
         }
     }
 ])
