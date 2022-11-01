@@ -1,5 +1,5 @@
 import { ref, onMounted, watch, watchEffect, Ref } from 'vue'
-import { getStyle } from '../../../../utils/utils'
+import { getStyle } from '@jsjn/utils'
 import { useMutationObserver } from '@vueuse/core'
 import { ElInput as ElInputCom } from 'element-plus'
 

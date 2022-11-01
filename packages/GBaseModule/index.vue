@@ -73,7 +73,7 @@ import { FormProps, FormItemProps } from '../GForm'
 import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } from '../GTable'
 import TableSearch from './component/TableSearch.vue'
 import { RefreshLeft, Search } from '@element-plus/icons-vue'
-import { partitionObj2HumpObj, assignOwnProp } from '../utils/utils'
+import { partitionObj2HumpObj, assignOwnProp } from '@jsjn/utils'
 import LGTable from '../GTable/index.vue'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 
@@ -213,7 +213,8 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
     span:
         props.searchBtnHorizontal || !!props.moreSearchMode
             ? 24
-            : props.searchFormProps.formItems[props.searchFormProps.formItems.length - 1]?.span || 24,
+            : props.searchFormProps.formItems[props.searchFormProps.formItems.length - 1]?.span ||
+              24,
     render() {
         return (
             <>
@@ -231,7 +232,7 @@ const searchBtnsConfig = computed<FormItemProps>(() => ({
 
                         // 清空多选
                         emits('update:selectedRows', [])
-                        
+
                         if (!props.loadTableMethods)
                             throw new Error('core load-table-methods 未找到')
                         props.loadTableMethods?.(1)

@@ -26,7 +26,7 @@ export default {
 
 <script lang="ts" setup>
 import { watch, ref, onMounted, computed, shallowRef } from 'vue'
-import { getStyle, size2Rem } from '../utils/utils'
+import { getStyle, size2Rem } from '@jsjn/utils'
 import { useResizeObserver } from '@vueuse/core'
 import _ from 'lodash'
 

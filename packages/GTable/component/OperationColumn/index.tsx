@@ -2,7 +2,7 @@ import { TableConfig, TableRowBtnProps, BaseTableDataItem, TableColumnProps } fr
 import More from './component/more.vue'
 import { getBtnProps } from './constant/util'
 import { watch, nextTick, reactive } from 'vue'
-import { assignOwnProp } from '../../../utils/utils'
+import { assignOwnProp } from '@jsjn/utils'
 
 /**
  * 对数据进行 push 操作，会改变原始数据

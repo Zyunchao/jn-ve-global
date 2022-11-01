@@ -8,7 +8,7 @@ import {
     CheckboxControlConfig,
     SelectTreeV2ControlConfig
 } from '../index'
-import { Local } from '../../utils/storage'
+import { Local } from '@jsjn/utils'
 
 // 参数存储字段名称列表
 enum DataFiledName {

@@ -81,7 +81,7 @@ import { toRaw, watch, ref, computed, reactive, toRefs, PropType, useAttrs } fro
 import BtnProps from '../GButtonGroup/interface/BtnProps'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 import _ from 'lodash'
-import { partitionObj2HumpObj } from '../utils/utils'
+import { partitionObj2HumpObj } from '@jsjn/utils'
 
 interface Props {
     /**

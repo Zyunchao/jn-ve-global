@@ -1,6 +1,6 @@
 import { onMounted, onBeforeUnmount } from 'vue'
 import _ from 'lodash'
-import { Local } from '../../../../utils/storage'
+import { Local } from '@jsjn/utils'
 
 export default ({
     localPropCopy,

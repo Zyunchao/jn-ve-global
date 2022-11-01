@@ -7,8 +7,7 @@ import {
 } from '../interface/tinymce'
 import { getTinymce } from '../constant/TinyMCE'
 import JnEditorProps from '../interface/JnEditorProps'
-import { getStrSize } from '../../utils/utils'
-import { Local } from '../../utils/storage'
+import { getStrSize, Local } from '@jsjn/utils'
 import { ElMessage } from 'element-plus'
 import { imgCompress } from './utils'
 

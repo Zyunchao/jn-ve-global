@@ -24,7 +24,7 @@ export default {
 import { toRefs, watch, ref, computed, reactive, useAttrs } from 'vue'
 import useInputSlots from './mixins/useInputSlots'
 import { InputControlConfig } from '../../../index'
-import { stringIsIcon } from '../../../utils/utils'
+import { stringIsIcon } from '@jsjn/utils'
 import LGIcon from '../../../GIcon/index.vue'
 import { ElInput as ElInputCom } from 'element-plus'
 

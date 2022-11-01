@@ -21,7 +21,7 @@ import { computed, useAttrs } from 'vue'
 import { TreeData } from '../v1/interface/TreeData'
 import TreeProps from '../v1/interface/TreeProps'
 import _ from 'lodash'
-import { humpObj2PartitionObj } from '../../utils/utils'
+import { humpObj2PartitionObj } from '@jsjn/utils'
 
 interface SelectTreeV2TreeProps extends TreeProps {
     /**

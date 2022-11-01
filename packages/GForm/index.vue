@@ -66,7 +66,7 @@ import { watch, provide, ref, toRef, nextTick, computed, Ref } from 'vue'
 import { FormProps, FormInstance } from './index'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import _ from 'lodash'
-import { assignOwnProp, advanceSerialize } from '../utils/utils'
+import { assignOwnProp, advanceSerialize } from '@jsjn/utils'
 // 本地组件
 import LGFormRow from './component/GFormRow/index.vue'
 import LGColFormItem from './component/GColFormItem/index.vue'

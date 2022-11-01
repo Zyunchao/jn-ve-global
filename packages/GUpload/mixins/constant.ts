@@ -1,6 +1,5 @@
 import { computed, useAttrs, ref } from 'vue'
-import { humpObj2PartitionObj } from '../../utils/utils'
-import { Local } from '../../utils/storage'
+import { humpObj2PartitionObj, Local } from '@jsjn/utils'
 
 export default () => {
     const attrsSource = useAttrs()
