@@ -41,9 +41,9 @@
     margin-bottom: var(--jn-ve-g-form-item-margin-b);
 
     .el-form-item__label {
-        font-size: var(--jn-ve-g-form-font-size);
+        font-size: var(--jn-ve-g-form-font-size) !important;
         height: var(--jn-ve-g-form-item-height);
-        line-height: var(--jn-ve-g-form-item-height);
+        line-height: var(--jn-ve-g-form-item-height) !important;
     }
 
     .el-form-item__error {
