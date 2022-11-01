@@ -1,6 +1,6 @@
 {
     "name": "jn-ve-global",
-    "version": "2.1.17-beta.13",
+    "version": "2.2.0",
     "author": "zyc",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
@@ -24,14 +24,15 @@
         "./@types": "./@types"
     },
     "peerDependencies": {
-        "@element-plus/icons-vue": "1.1.4",
+        "@element-plus/icons-vue": "2.0.10",
+        "@vueuse/core": "^9.3.1",
         "echarts": "^5.3.3",
-        "element-plus": "2.2.0",
+        "element-plus": "2.2.19",
         "lodash": "^4.17.21",
         "resize-observer-polyfill": "^1.5.1",
-        "uuid": "^8.3.2",
-        "vue": "3.2.31",
-        "xlsx": "^0.17.4"
+        "uuid": "^9.0.0",
+        "vue": "3.2.37",
+        "xlsx": "^0.18.5"
     },
     "scripts": {
         "dev": "serve -l 9099 --cors lib & vite",
@@ -43,31 +44,38 @@
         "build:push": "vite build && yalc push"
     },
     "dependencies": {
-        "@element-plus/icons-vue": "1.1.4",
-        "@vueuse/core": "^8.7.5",
+        "@element-plus/icons-vue": "2.0.10",
+        "@jsjn/utils": "^1.0.0",
+        "@vueuse/core": "^9.3.1",
         "echarts": "^5.3.3",
-        "element-plus": "2.2.0",
+        "element-plus": "2.2.19",
         "lodash": "^4.17.21",
         "resize-observer-polyfill": "^1.5.1",
-        "uuid": "^8.3.2",
-        "vue": "3.2.31",
-        "xlsx": "^0.17.4"
+        "uuid": "^9.0.0",
+        "vue": "3.2.37",
+        "xlsx": "^0.18.5"
     },
     "devDependencies": {
+        "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
+        "@babel/plugin-proposal-optional-chaining": "^7.18.9",
         "@types/lodash": "^4.14.181",
-        "@types/node": "^17.0.27",
+        "@types/node": "^18.11.2",
         "@types/uuid": "^8.3.4",
         "@typescript-eslint/parser": "^5.21.0",
+        "@vitejs/plugin-legacy": "^2.3.0",
         "@vitejs/plugin-vue": "^2.3.1",
         "@vitejs/plugin-vue-jsx": "^1.3.10",
         "@vuepress/plugin-container": "2.0.0-beta.38",
         "@vuepress/plugin-register-components": "2.0.0-beta.38",
+        "@vuepress/plugin-search": "2.0.0-beta.38",
         "clipboard-copy": "^4.0.1",
         "eslint": "^8.14.0",
-        "eslint-plugin-vue": "^8.7.1",
+        "eslint-plugin-vue": "^9.6.0",
         "highlight.js": "^11.5.1",
         "nprogress": "^0.2.0",
         "postcss-pxtorem": "^6.0.0",
+        "postcss-selector-not": "^6.0.1",
+        "rollup-plugin-esbuild": "^4.10.1",
         "sass": "^1.51.0",
         "typescript": "^4.6.3",
         "vite": "2.9.8",
@@ -76,7 +84,10 @@
         "vite-plugin-svg-icons": "2.0.1",
         "vite-plugin-vue-setup-extend": "^0.4.0",
         "vue-router": "^4.0.14",
-        "vue-tsc": "^0.34.10",
+        "vue-tsc": "^1.0.8",
         "vuepress": "2.0.0-beta.39"
+    },
+    "publishConfig": {
+        "registry": "http://172.31.71.159/repository/npm-release/"
     }
 }
