@@ -14,8 +14,8 @@ actions:
       link: /micro/
       type: secondary
 
-    - text: Vite 单页面框架
-      link: /viteSPA/
+    - text: Utils
+      link: /utilsDocs/
       type: secondary
 
 features:

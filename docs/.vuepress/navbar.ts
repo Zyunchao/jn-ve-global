@@ -10,10 +10,15 @@ export default [
         activeMatch: '^/micro/'
     },
     {
-        text: 'vite-spa',
-        link: '/viteSPA/',
-        activeMatch: '^/viteSPA/'
+        text: 'utils',
+        link: '/utilsDocs/',
+        activeMatch: '^/utilsDocs/'
     },
+    // {
+    //     text: 'vite-spa',
+    //     link: '/viteSPA/',
+    //     activeMatch: '^/viteSPA/'
+    // },
     // {
     //     text: '前端知识分享',
     //     link: '/blog/',

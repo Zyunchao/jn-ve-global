@@ -6,7 +6,7 @@ import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import eslintPlugin from 'vite-plugin-eslint'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
-const path = require('path')
+import path from 'path'
 
 /**
  * 部署站点的基础路径
@@ -72,7 +72,8 @@ export default defineUserConfig<DefaultThemeOptions>({
             {
                 componentsDir: path.resolve(__dirname, './components')
             }
-        ]
+        ],
+        ['@vuepress/plugin-search']
     ],
 
     markdown: {
