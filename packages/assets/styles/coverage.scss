@@ -50,9 +50,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: var(--jn-ve-g-modal-title-base-top-p) 20px var(--jn-ve-g-modal-title-base-top-p) var(--jn-ve-g-modal-title-base-left-p);
         background-image: var(--jn-ve-g-popup-header-bg);
         margin-right: 0;
+        padding-top: var(--jn-ve-g-modal-title-base-top-p) !important;
+        padding-bottom: var(--jn-ve-g-modal-title-base-top-p) !important;
+        padding-left: var(--jn-ve-g-modal-title-base-left-p) !important;
+        padding-right: 20px !important;
+        margin-bottom: 0 !important;
 
         .el-drawer__title,
         .el-dialog__title {

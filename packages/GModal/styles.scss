@@ -38,10 +38,6 @@ $--close-btn-font-size: 22px;
     border-radius: 8px !important;
     overflow: hidden;
 
-    // .el-dialog__header {
-    //     // @include titleStyle;
-    // }
-
     .el-dialog__body {
         padding: 14px $--dialog-base-left-p 14px $--dialog-base-left-p;
         min-height: 100px;
@@ -73,8 +69,6 @@ $--close-btn-font-size: 22px;
 // drawer 模式
 .g-custom-drawer {
     .el-drawer__header {
-        // @include titleStyle;
-        margin-bottom: 0;
 
         .el-drawer__close-btn {
             position: initial;
