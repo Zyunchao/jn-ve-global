@@ -38,23 +38,23 @@
 }
 
 .el-form-item {
-    margin-bottom: var(--jn-ve-g-form-item-margin-b);
+    margin-bottom: var(--jn-ve-g-form-item-margin-b) !important;
 
     .el-form-item__label {
         font-size: var(--jn-ve-g-form-font-size) !important;
-        height: var(--jn-ve-g-form-item-height);
+        height: var(--jn-ve-g-form-item-height) !important;
         line-height: var(--jn-ve-g-form-item-height) !important;
     }
 
     .el-form-item__error {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 }
 
 .el-select {
     .el-input__inner {
         min-height: var(--el-input-inner-height) !important;
-        line-height: var(--el-input-inner-height);
+        line-height: var(--el-input-inner-height) !important;
     }
 }
 
@@ -64,28 +64,28 @@
 .el-checkbox-button__inner,
 .el-slider,
 .el-rate {
-    font-size: var(--jn-ve-g-form-font-size);
-    height: var(--el-component-size);
+    font-size: var(--jn-ve-g-form-font-size) !important;
+    height: var(--el-component-size) !important;
 }
 
 .el-checkbox__label,
 .el-radio__label {
     font-size: inherit !important;
     height: var(--el-component-size);
-    display: inline-flex;
-    align-items: center;
+    display: inline-flex !important;
+    align-items: center !important;
 }
 
 .el-checkbox,
 .el-radio {
-    margin-right: 24px;
+    margin-right: 24px !important;
 }
 
 .el-radio-button__inner,
 .el-checkbox-button__inner {
-    padding: 0 14px;
-    display: inline-flex;
-    align-items: center;
+    padding: 0 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
 }
 
 .el-color-dropdown {
@@ -96,8 +96,8 @@
 
 .el-color-picker {
     .el-color-picker__trigger {
-        height: var(--el-component-size);
-        width: var(--el-component-size);
+        height: var(--el-component-size) !important;
+        width: var(--el-component-size) !important;
     }
 }
 
@@ -109,6 +109,6 @@ input::placeholder {
     --jn-ve-input-placeholder-font-align: center;
 
     .el-range-separator {
-        color: var(--el-text-color-regular);
+        color: var(--el-text-color-regular) !important;
     }
 }
