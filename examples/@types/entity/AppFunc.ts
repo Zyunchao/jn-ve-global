@@ -35,7 +35,7 @@ export default interface AppFunc {
     /**
      * 是否隐藏路由
      */
-    hidden: string
+    hidden: Hidden
     /**
      * 菜单图标
      */
@@ -43,7 +43,7 @@ export default interface AppFunc {
     /**
      * 主键
      */
-    id: string | number
+    id: string
     /**
      * 是否有数据权限
      */
@@ -57,7 +57,7 @@ export default interface AppFunc {
      */
     isMergeRoute: IsMergeRoute
     /**
-     * 是否路由菜单
+     * 是否路由功能
      */
     isRoute: IsRoute
     /**
@@ -109,6 +109,22 @@ export default interface AppFunc {
      */
     children?: AppFunc[]
     /**
+     * 标识位，标识 APP or Func
+     */
+    isApp: boolean
+    /**
+     * 按钮是否赋予权限
+     */
+    btnCheck: boolean
+    /**
+     * 是否缓存路由
+     */
+    isCache: IsCache
+    /**
+     * 是否模糊匹配
+     */
+    isBlurry: IsBlurry
+    /**
      * 扩展字段
      */
     [k: string]: any
@@ -121,13 +137,13 @@ export enum FuncType {
     ROOT = '0',
     SUB = '1',
     BTN = '2',
-    APP = '9999'
+    WORK = '3'
 }
 export const FuncTypeMapping = {
     [FuncType.ROOT]: '根菜单',
     [FuncType.SUB]: '子菜单',
-    [FuncType.BTN]: '功能按钮',
-    [FuncType.APP]: '应用'
+    [FuncType.BTN]: '按钮/权限',
+    [FuncType.WORK]: '工作台'
 }
 
 /**
@@ -179,7 +195,7 @@ export const IsMergeRouteMapping = {
 }
 
 /**
- * 是否路由菜单
+ * 是否路由功能
  */
 export enum IsRoute {
     NO = '0',
@@ -212,4 +228,29 @@ export enum PermsType {
 export const PermsTypeMapping = {
     [PermsType.SHOW]: '显示',
     [PermsType.HIDE]: '隐藏'
+}
+
+/**
+ * 是否缓存路由
+ */
+export enum IsCache {
+    NO = '0',
+    YES = '1'
+}
+export const IsCacheMapping = {
+    [IsCache.NO]: '否',
+    [IsCache.YES]: '是'
+}
+
+/**
+ * 是否模糊匹配
+ */
+export enum IsBlurry {
+    NO = '0',
+    YES = '1'
+}
+
+export const IsBlurryMapping = {
+    [IsCache.NO]: '否',
+    [IsCache.YES]: '是'
 }
