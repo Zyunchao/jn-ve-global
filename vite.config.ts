@@ -7,7 +7,6 @@ import dts from 'vite-plugin-dts'
 import eslintPlugin from 'vite-plugin-eslint'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import esbuild from 'rollup-plugin-esbuild'
-// import legacy from '@vitejs/plugin-legacy'
 
 export default defineConfig({
     plugins: [
