@@ -26,8 +26,8 @@ const filterObj: (obj: object) => object;
 ```ts
 /**
  * b 对象赋值给 a 对象相同的字段
- * @param target 目标数组
- * @param provider 提供数据的数组
+ * @param target 目标数据
+ * @param provider 提供者
  * @param excludes 要排除的 key 数组
  * @param ignore 是否无视 undefined 或 null，即使提供者的字段无效，也进行赋值
  */
@@ -39,10 +39,11 @@ function assignOwnProp(target: object, provider: object, excludes?: Array<string
 ```ts
 /**
  * 合并两个对象的有效字段，无效字段从目标对象中移除
- * @param source 来源对象
  * @param target 目标输出对象，是对源对象进行操作的
+ * @param provider 提供者
+ * @param processor 处理器钩子，需要返回布尔值或无返回值；true: 有效 | false: 无效 | undefined: 无返回值，交由自判断
  */
-function assignValidField(source: object, target: object): void;
+function assignValidField(target: object, provider: object, processor?: (key: string, value: any) => boolean | undefined): void;
 ```
 
 ## advanceSerialize
