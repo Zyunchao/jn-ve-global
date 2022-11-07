@@ -119,5 +119,14 @@
     >div {
         z-index: 2;
         position: relative;
+
+        &.g-info-select,
+        &.g-info-select-all,
+        &.g-info-autocomplete,
+        .el-autocomplete  {
+            display: flex;
+        }
     }
+
+
 }
