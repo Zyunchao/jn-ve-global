@@ -496,7 +496,8 @@ addEscEvent({
     tableInstance,
     animationTime,
     escTrigger,
-    editCellContentRef
+    editCellContentRef,
+    rowIndex: props.index
 })
 
 // 执行上下文必须的方法

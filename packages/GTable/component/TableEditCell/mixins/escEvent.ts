@@ -13,7 +13,8 @@ export default ({
     tableInstance,
     animationTime,
     escTrigger,
-    editCellContentRef
+    editCellContentRef,
+    rowIndex
 }) => {
     onMounted(() => {
         if (!editCellContentRef.value) return
@@ -26,7 +27,7 @@ export default ({
     })
 
     // 键盘 esc 退出编辑（优先级最高）
-    const taskCacheKey = 'TASK_IDS'
+    const taskCacheKey = `TASK_IDS_${rowIndex}`
     Local.remove(taskCacheKey)
     function cancelEdit(e: KeyboardEvent) {
         if (e.key !== 'Escape') return
