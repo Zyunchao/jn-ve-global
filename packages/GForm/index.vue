@@ -14,11 +14,14 @@
             <!-- 默认表单项 || 不被 Collapse 控制的表单项 -->
             <LGFormRow
                 v-if="baseFormItems.length"
-                :form-config="localConfig"
+                :form-config="(localConfig as FormProps)"
                 :class="{ 'is-collapse-layout': isCollapseLayout }"
             >
                 <template v-for="(item, index) in baseFormItems" :key="`${item.prop}-${index}`">
-                    <LGColFormItem :form-config="localConfig" :form-item-config="item" />
+                    <LGColFormItem
+                        :form-config="(localConfig as FormProps)"
+                        :form-item-config="(item as FormItemProps)"
+                    />
                 </template>
             </LGFormRow>
 
@@ -38,13 +41,13 @@
                             'is-tail': collapseItem.isTail
                         }"
                     >
-                        <LGFormRow :form-config="localConfig">
+                        <LGFormRow :form-config="(localConfig as FormProps)">
                             <template
                                 v-for="(item, index) in collapseItem.content"
                                 :key="`${item.prop}-${index}`"
                             >
                                 <LGColFormItem
-                                    :form-config="localConfig"
+                                    :form-config="(localConfig as FormProps)"
                                     :form-item-config="item"
                                 />
                             </template>
@@ -63,7 +66,7 @@ export default {
 
 <script lang="ts" setup>
 import { watch, provide, ref, toRef, nextTick, computed, Ref } from 'vue'
-import { FormProps, FormInstance } from './index'
+import type { FormProps, FormInstance, FormItemProps } from './index'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import _ from 'lodash'
 import { assignOwnProp, advanceSerialize } from '@jsjn/utils'
