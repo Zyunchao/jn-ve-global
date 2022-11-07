@@ -95,17 +95,7 @@ const modelCache = ref<FormProps['model']>(_.cloneDeep(props.config?.model))
 // 用户主动缓存
 const userCache = ref<FormProps['model']>(null)
 
-const { isCollapseLayout, collapseItems, collapseBeforeFormItems, activeCollapses } =
-    useCollapseLayout(props)
-
-/**
- * 基础的，不受控制的表单项
- *  - 如果是 collapse 布局，则是第一个 collapseItem 之前不受控制的项的集合
- *  - 非 collapse 布局，则是全部
- */
-const baseFormItems = computed(() =>
-    !isCollapseLayout.value ? localConfig.value.formItems : collapseBeforeFormItems.value
-)
+const { isCollapseLayout, collapseItems, activeCollapses, baseFormItems } = useCollapseLayout(props)
 
 /**
  * 惰性监听（只在后续改变时执行）
@@ -135,32 +125,7 @@ watch(
     () => localInstance.value,
     (instance) => {
         if (instance) {
-            instance['initModel'] = () => {
-                assignOwnProp(localConfig.value.model, modelCache.value)
-            }
-
-            instance['init'] = function () {
-                this.initModel()
-                nextTick(() => {
-                    this.resetFields()
-                })
-            }
-
-            instance['cacheModel'] = () => {
-                userCache.value = _.cloneDeep(localConfig.value.model)
-            }
-
-            instance['isChangeByCache'] = () => {
-                if (!userCache.value) {
-                    console.log(`%c 未主动缓存，不予比对`, 'color: #f56c6c;')
-                    return false
-                }
-
-                const cacheStr = advanceSerialize.stringify(userCache.value)
-                const currentModelStr = advanceSerialize.stringify(localConfig.value.model)
-                return !(cacheStr === currentModelStr)
-            }
-
+            advanceInstance(instance)
             localConfig.value.instance = instance
         }
     }
@@ -174,6 +139,34 @@ const formRootConfigs = computed(() => {
     const { instance, formItems, gutter, colon, ...formConfigs } = props.config
     return formConfigs
 })
+
+// 增强表单实例，添加方法
+function advanceInstance(instance: FormInstance) {
+    instance['initModel'] = () => {
+        assignOwnProp(localConfig.value.model, modelCache.value)
+    }
+
+    instance['init'] = function () {
+        this.initModel()
+        nextTick(() => {
+            this.resetFields()
+        })
+    }
+
+    instance['cacheModel'] = () => {
+        userCache.value = _.cloneDeep(localConfig.value.model)
+    }
+
+    instance['isChangeByCache'] = () => {
+        if (!userCache.value) {
+            console.log(`%c 未主动缓存，不予比对`, 'color: #f56c6c;')
+            return false
+        }
+        const cacheStr = advanceSerialize.stringify(userCache.value)
+        const currentModelStr = advanceSerialize.stringify(localConfig.value.model)
+        return !(cacheStr === currentModelStr)
+    }
+}
 </script>
 
 <style lang="scss" scoped>

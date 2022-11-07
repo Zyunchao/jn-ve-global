@@ -106,10 +106,20 @@ export default (props: { config: FormProps }) => {
         set(val) {}
     })
 
+    /**
+     * 基础的，不受控制的表单项
+     *  - 如果是 collapse 布局，则是第一个 collapseItem 之前不受控制的项的集合
+     *  - 非 collapse 布局，则是全部
+     */
+    const baseFormItems = computed(() =>
+        !isCollapseLayout.value ? props.config.formItems : collapseBeforeFormItems.value
+    )
+
     return {
         isCollapseLayout,
         collapseItems,
         collapseBeforeFormItems,
-        activeCollapses
+        activeCollapses,
+        baseFormItems
     }
 }

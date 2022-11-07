@@ -12,7 +12,7 @@ import { reactive } from 'vue'
 const prefix = '/api'
 
 export default () => {
-    const formConfig: FormProps = reactive<FormProps>({
+    const formConfig = reactive<FormProps>({
         instance: null,
         labelPosition: 'right',
         labelWidth: '180px',
@@ -79,6 +79,13 @@ export default () => {
                 }
             },
             {
+                prop: '',
+                label: '分类1',
+                controlConfig: {
+                    type: 'collapseItem'
+                }
+            },
+            {
                 prop: 'selectMValue',
                 label: 'Select',
                 span: 12,
@@ -138,6 +145,13 @@ export default () => {
                         activeValue: '1',
                         inactiveValue: '2'
                     }
+                }
+            },
+            {
+                prop: '',
+                label: '分类2',
+                controlConfig: {
+                    type: 'collapseItem'
                 }
             },
             {
@@ -254,6 +268,13 @@ export default () => {
                         { label: '夫妻肺片', value: '2' },
                         { label: '地三鲜', value: '3' }
                     ]
+                }
+            },
+            {
+                prop: '',
+                label: '分类3',
+                controlConfig: {
+                    type: 'collapseItem'
                 }
             },
             {
