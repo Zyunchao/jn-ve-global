@@ -30,47 +30,32 @@
                 @blur="emits('controlBlur')"
             >
                 <el-option
-                    v-for="selectOption in controlConfig.options"
+                    v-for="selectOption in (controlConfig as SelectControlConfig).options"
                     :key="selectOption.value"
                     :label="selectOption.label"
                     :value="selectOption.value"
                     :disabled="selectOption.disabled"
                 >
                     <!-- 自定义渲染 Select 模板 -->
-                    <template v-if="controlConfig.optionRender">
-                        <FunctionalComponent :render="controlConfig.optionRender(selectOption)" />
+                    <template v-if="(controlConfig as SelectControlConfig).optionRender">
+                        <FunctionalComponent
+                            :render="(controlConfig as SelectControlConfig).optionRender(selectOption)"
+                        />
                     </template>
                 </el-option>
             </el-select>
         </template>
 
-        <!-- Radio -->
-        <template v-if="['radio', 'radioButton'].includes(localControlType)">
-            <el-radio-group v-model="localPropRef" v-bind="controlConfig.props">
-                <!-- radio 样式 -->
-                <template v-if="localControlType === 'radio'">
-                    <el-radio
-                        v-for="radioOption in controlConfig.options"
-                        :key="radioOption.value"
-                        :label="radioOption.value"
-                        v-bind="getOptionProps(radioOption)"
-                    >
-                        {{ radioOption.label }}
-                    </el-radio>
-                </template>
-
-                <!-- 按钮样式 -->
-                <template v-if="localControlType === 'radioButton'">
-                    <el-radio-button
-                        v-for="radioOption in controlConfig.options"
-                        :key="radioOption.value"
-                        :label="radioOption.value"
-                        v-bind="getOptionProps(radioOption)"
-                    >
-                        {{ radioOption.label }}
-                    </el-radio-button>
-                </template>
-            </el-radio-group>
+        <!-- radio or checkbox -->
+        <template
+            v-if="['radio', 'radioButton', 'checkBox', 'checkBoxButton'].includes(localControlType)"
+        >
+            <LGChoose
+                v-model="localPropRef"
+                :type="(localControlType as any)"
+                v-bind="(controlConfig as RadioControlConfig | CheckboxControlConfig).props"
+                :options="(controlConfig as RadioControlConfig | CheckboxControlConfig).options"
+            />
         </template>
 
         <!-- Switch -->
@@ -100,33 +85,6 @@
             />
         </template>
 
-        <!-- Checkbox -->
-        <template v-if="['checkBox', 'checkBoxButton'].includes(localControlType)">
-            <el-checkbox-group v-model="localPropRef" v-bind="controlConfig.props">
-                <template v-if="localControlType === 'checkBox'">
-                    <el-checkbox
-                        v-for="checkBoxOption in controlConfig.options"
-                        :key="checkBoxOption.value"
-                        :label="checkBoxOption.value"
-                        v-bind="getOptionProps(checkBoxOption)"
-                    >
-                        {{ checkBoxOption.label }}
-                    </el-checkbox>
-                </template>
-
-                <template v-if="localControlType === 'checkBoxButton'">
-                    <el-checkbox-button
-                        v-for="checkBoxOption in controlConfig.options"
-                        :key="checkBoxOption.value"
-                        :label="checkBoxOption.value"
-                        v-bind="getOptionProps(checkBoxOption)"
-                    >
-                        {{ checkBoxOption.label }}
-                    </el-checkbox-button>
-                </template>
-            </el-checkbox-group>
-        </template>
-
         <!-- Rate 打分 -->
         <template v-if="localControlType === 'rate'">
             <el-rate v-model="localPropRef" v-bind="controlConfig.props" />
@@ -146,7 +104,7 @@
         <template v-if="localControlType === 'selectTree'">
             <LGSelectTree
                 v-model="localPropRef"
-                :tree-data="controlConfig.treeData"
+                :tree-data="(controlConfig as SelectTreeControlConfig).treeData"
                 v-bind="controlConfig.props"
             />
         </template>
@@ -155,7 +113,7 @@
         <template v-if="localControlType === 'selectTreeV2'">
             <LGSelectTreeV2
                 v-model="localPropRef"
-                :tree-data="controlConfig.treeData"
+                :tree-data="(controlConfig as SelectTreeControlConfig).treeData"
                 v-bind="controlConfig.props"
             />
         </template>
@@ -190,10 +148,10 @@
             <LGInfoSelect
                 v-model="localPropRef"
                 v-bind="localControlProps"
-                :total="controlConfig.total"
-                :options-data="controlConfig.options"
-                :columns="controlConfig.columns"
-                :option-props="controlConfig.optionProps"
+                :total="(controlConfig as InfoSelectControlConfig).total"
+                :options-data="(controlConfig as InfoSelectControlConfig).options"
+                :columns="(controlConfig as InfoSelectControlConfig).columns"
+                :option-props="(controlConfig as InfoSelectControlConfig).optionProps"
             />
         </template>
 
@@ -202,9 +160,9 @@
             <LGInfoSelectAll
                 v-model="localPropRef"
                 v-bind="localControlProps"
-                :options-data="controlConfig.options"
-                :columns="controlConfig.columns"
-                :option-props="controlConfig.optionProps"
+                :options-data="(controlConfig as InfoSelectAllControlConfig).options"
+                :columns="(controlConfig as InfoSelectAllControlConfig).columns"
+                :option-props="(controlConfig as InfoSelectAllControlConfig).optionProps"
             />
         </template>
 
@@ -213,9 +171,9 @@
             <LGInfoAutocomplete
                 v-model="localPropRef"
                 v-bind="localControlProps"
-                :columns="controlConfig.columns"
-                :fetch-suggestions="controlConfig.fetchSuggestions"
-                :value-key="controlConfig.valueKey"
+                :columns="(controlConfig as InfoAutocompleteControlConfig).columns"
+                :fetch-suggestions="(controlConfig as InfoAutocompleteControlConfig).fetchSuggestions"
+                :value-key="(controlConfig as InfoAutocompleteControlConfig).valueKey"
             />
         </template>
 
@@ -223,7 +181,7 @@
         <template v-if="localControlType === 'address'">
             <LGAddress
                 v-model="localPropRef"
-                :options="controlConfig.options"
+                :options="(controlConfig as AddressControlConfig).options"
                 v-bind="controlConfig.props"
             />
         </template>
@@ -239,12 +197,15 @@
 
         <!-- 表格，仅做展示 -->
         <template v-if="localControlType === 'table'">
-            <LGTable :config="controlConfig.props" />
+            <LGTable :config="(controlConfig.props as TableConfig<any>)" />
         </template>
 
         <!-- 虚假的 collapseItem，仅做展示效果，为拖拽设计器服务 -->
         <template v-if="localControlType === 'collapseItem'">
-            <ImitativeCollapseItem :title="formItemConfig.label" v-bind="controlConfig.props" />
+            <ImitativeCollapseItem
+                :title="(formItemConfig.label as string)"
+                v-bind="controlConfig.props"
+            />
         </template>
 
         <!-- 占据排版的占位符 -->
@@ -268,8 +229,17 @@ import {
     RadioOptionProps,
     RadioButtonOptionProps,
     ControlConfig,
-    UploadControlConfig
+    UploadControlConfig,
+    RadioControlConfig,
+    CheckboxControlConfig,
+    SelectControlConfig,
+    InfoSelectAllControlConfig,
+    InfoAutocompleteControlConfig,
+    InfoSelectControlConfig,
+    AddressControlConfig,
+    SelectTreeControlConfig
 } from '../index'
+import { TableConfig } from '../../index'
 import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/v1/index.vue'
 import LGFigureInput from '../../GFigureInput/index.vue'
@@ -284,6 +254,7 @@ import LJnEditor from '../../JnEditor/index.vue'
 import LGAdvanceInput from './GAdvanceInput/index.vue'
 import LGTable from '../../GTable/index.vue'
 import ImitativeCollapseItem from './imitativeCollapseItem.vue'
+import LGChoose from './GChoose/index.vue'
 
 import formConfigProvideKey from '../constant/formConfigProvideKey'
 import getControlOprions from '../mixins/getControlOprions'
@@ -313,7 +284,7 @@ const emits = defineEmits(['controlFocus', 'controlBlur'])
 const rootFormConfig = inject(formConfigProvideKey)
 
 const localControlType = computed(() => props.controlConfig.type)
-const localPropRef = ref(props.prop)
+const localPropRef = ref<any>(props.prop)
 
 // 个别控件需要手动同步 form 的 disabled 状态
 const controlDisabled = computed(() =>
@@ -378,12 +349,6 @@ const localControlProps = computed(() => {
 
     return controlProps
 })
-
-// 获取控件（Radio、Checkbox）的 item 的配置（四级配置）
-const getOptionProps = (radioOption: RadioOptionProps | RadioButtonOptionProps) => {
-    const { label, value, ...props } = radioOption
-    return props
-}
 </script>
 
 <style lang="scss" scoped></style>
