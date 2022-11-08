@@ -67,7 +67,20 @@ const emits = defineEmits(['closed'])
 
 // ------------- 隐藏 or 显示 + 表头位置获取 ----------------------------------------------------------------------
 let isClosed = false
-const setPosition = _.debounce((pRootDom?: HTMLElement) => {
+// const setPosition = _.debounce((pRootDom?: HTMLElement) => {
+//     if (isClosed) return
+//     popperTop.value = pRootDom.style.top
+//     popperLeft.value = pRootDom.style.left
+//     popperZIndex.value = pRootDom.style.zIndex
+
+//     // 表头高度 = 容器 padding-top
+//     infoHeaderWrapRef.value &&
+//         (pRootDom.style.paddingTop = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`)
+
+//     // 容器宽度 = 根容器宽度
+//     pRootDom.style.width = currentRootWidth.value
+// }, 10)
+const setPosition = (pRootDom?: HTMLElement) => {
     if (isClosed) return
     popperTop.value = pRootDom.style.top
     popperLeft.value = pRootDom.style.left
@@ -79,7 +92,7 @@ const setPosition = _.debounce((pRootDom?: HTMLElement) => {
 
     // 容器宽度 = 根容器宽度
     pRootDom.style.width = currentRootWidth.value
-}, 10)
+}
 const callback = function (mutationsList: MutationRecord[]) {
     for (let mutation of mutationsList) {
         // 样式变化，这里的变化不只是打开时初次获取，在屏幕发生变化时，popper 的位置也会发生变化，所以，这里的是需要随动的

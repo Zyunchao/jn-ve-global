@@ -1,4 +1,5 @@
 import packageInfo from '../package.json'
+import { version } from 'vue'
 
 // 样式资源
 import './assets/styles/index.scss'
@@ -57,5 +58,6 @@ export default (app) => {
  */
 export const icons = { elIconKeys, aliIcons, localIcons }
 
-// 版本号输出，增加辨识
+// 版本号输出，增加辨识 version
 console.log(`[${packageInfo.name}] v${packageInfo.version}`)
+console.log(`[vue] v${version}`)
