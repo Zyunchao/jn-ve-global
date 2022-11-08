@@ -81,7 +81,7 @@ const btns: BtnProps[] = [
     },
     {
         label: '加载中',
-        loading: true,
+        loading: () => true,
         type: 'success',
         onClick: () => {
             console.log(`%c 加载中 === `, 'color: #e6a23c;')
@@ -173,13 +173,18 @@ const rowBtnConfig = reactive<TableConfig<any>['rowBtnConfig']>({
         },
         {
             label: '按钮4',
-            loading: true,
+            loading: (row, index) => {
+                return index % 2 === 0
+            },
             onClick(row, index) {
                 console.log(`%c 按钮4 click....`, 'color: #ff3040;', row, index)
             }
         },
         {
             label: '按钮5',
+            hide: (row, index) => {
+                return index % 2 === 0
+            },
             style: {
                 color: 'red'
             },
