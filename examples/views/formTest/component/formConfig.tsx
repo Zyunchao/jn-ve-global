@@ -78,13 +78,13 @@ export default () => {
                     ]
                 }
             },
-            {
-                prop: '',
-                label: '分类1',
-                controlConfig: {
-                    type: 'collapseItem'
-                }
-            },
+            // {
+            //     prop: '',
+            //     label: '分类1',
+            //     controlConfig: {
+            //         type: 'collapseItem'
+            //     }
+            // },
             {
                 prop: 'selectMValue',
                 label: 'Select',
@@ -122,6 +122,42 @@ export default () => {
             },
             {
                 prop: 'radio',
+                label: 'RadioLang',
+                span: 12,
+                tip: '性别',
+                controlConfig: {
+                    type: 'radio',
+                    options: [
+                        { label: '男', value: 'm' },
+                        { label: '女', value: 'f' },
+                        { label: '中', value: 'z' },
+                        { label: '男', value: 'm' },
+                        { label: '女', value: 'f' },
+                        { label: '中', value: 'z' },
+                        { label: '男', value: 'm' },
+                        { label: '女', value: 'f' },
+                        { label: '中', value: 'z' },
+                        { label: '男', value: 'm' },
+                        { label: '女', value: 'f' },
+                        { label: '中', value: 'z' },
+                        { label: '男', value: 'm' },
+                        { label: '女', value: 'f' },
+                        { label: '中', value: 'z' },
+                        { label: '男', value: 'm' },
+                        { label: '女', value: 'f' },
+                        { label: '中', value: 'z' },
+                        { label: '男', value: 'm' },
+                        { label: '女', value: 'f' },
+                        { label: '中', value: 'z' }
+                    ],
+                    props: {
+                        noBox: false,
+                        oneLine: true
+                    }
+                }
+            },
+            {
+                prop: 'radio',
                 label: 'Radio',
                 span: 12,
                 controlConfig: {
@@ -147,13 +183,13 @@ export default () => {
                     }
                 }
             },
-            {
-                prop: '',
-                label: '分类2',
-                controlConfig: {
-                    type: 'collapseItem'
-                }
-            },
+            // {
+            //     prop: '',
+            //     label: '分类2',
+            //     controlConfig: {
+            //         type: 'collapseItem'
+            //     }
+            // },
             {
                 prop: 'time1',
                 label: '时间',
@@ -257,6 +293,32 @@ export default () => {
                 }
             },
             {
+                prop: 'food',
+                label: 'CheckBoxLang',
+                span: 12,
+                controlConfig: {
+                    type: 'checkBox',
+                    options: [
+                        { label: '肯德基', value: '0' },
+                        { label: '麦当劳', value: '1' },
+                        { label: '必胜客', value: '2' },
+                        { label: '华莱士', value: '3' },
+                        { label: '肯德基', value: '0' },
+                        { label: '麦当劳', value: '1' },
+                        { label: '必胜客', value: '2' },
+                        { label: '华莱士', value: '3' },
+                        { label: '肯德基', value: '0' },
+                        { label: '麦当劳', value: '1' },
+                        { label: '必胜客', value: '2' },
+                        { label: '华莱士', value: '3' }
+                    ],
+                    props: {
+                        noBox: true,
+                        oneLine: true
+                    }
+                }
+            },
+            {
                 prop: 'food2',
                 label: 'CheckBoxButton',
                 span: 12,
@@ -270,13 +332,13 @@ export default () => {
                     ]
                 }
             },
-            {
-                prop: '',
-                label: '分类3',
-                controlConfig: {
-                    type: 'collapseItem'
-                }
-            },
+            // {
+            //     prop: '',
+            //     label: '分类3',
+            //     controlConfig: {
+            //         type: 'collapseItem'
+            //     }
+            // },
             {
                 prop: 'slider',
                 label: 'Slider',

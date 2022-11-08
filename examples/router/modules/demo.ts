@@ -144,6 +144,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/virtualized-table-test',
         component: () => import('@/views/tableTest/virtualized.vue')
+    },
+    {
+        path: '/choose-test',
+        component: () => import('@/views/formTest/choose.vue')
     }
 ]
 
