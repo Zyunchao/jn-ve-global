@@ -112,6 +112,7 @@ export default (config: TableConfig<any>) => {
 function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: number) {
     const btnSourceProps = getBtnProps(btn)
     let disabled = typeof btn.disabled === 'function' ? btn.disabled(row, index) : btn.disabled
+    let loading = typeof btn.loading === 'function' ? btn.loading(row, index) : btn.loading
 
     /**
      * 需要鉴权 or 不需要鉴权的按钮
@@ -120,6 +121,7 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
         <el-button
             {...btnSourceProps}
             disabled={disabled}
+            loading={loading}
             v-auth={btn.authCode}
             text={true}
             onClick={() => {
@@ -131,6 +133,7 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
         <el-button
             {...btnSourceProps}
             disabled={disabled}
+            loading={loading}
             text={true}
             onClick={() => {
                 btn.onClick?.(row, index)
