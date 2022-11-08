@@ -1,5 +1,40 @@
 # 更新日志 
 
+<!-- ================== 2.2.1 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.2.1
+
+</template>
+
+<template #date>
+
+2022-11-8
+
+</template>
+
+<h3>新特性</h3>
+
+<h4>FormItem</h4>
+
+1. radio & checkbox 增加去除 “选择框” 的 Api
+2. radio & checkbox 增加一行展示并展开的 Api
+
+<h3>BugFix</h3>
+
+<h4>Table</h4>
+
+1. Esc 事件移除多行失效问题；
+2. 可编辑单元格 infoXXX 切换抖动问题；
+3. 单元格 el-tag 高度问题；
+4. infoAutocomplete 表头位置偏移；
+5. 表格操作列按钮 loading 函数识别问题；
+
+</update-log-block>
+
 <!-- ================== 2.2.0 ======================================================================== -->
 
 <update-log-block>
