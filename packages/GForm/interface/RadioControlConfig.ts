@@ -66,6 +66,14 @@ export interface RadioGroupProps {
      * Radio-group Events
      */
     onChange?: (value: any) => void
+    /**
+     * 没有选择框，只有文字
+     */
+    noBox?: boolean
+    /**
+     * 默认只显示一行
+     */
+    oneLine?: boolean
 }
 
 /**

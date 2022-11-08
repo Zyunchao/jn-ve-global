@@ -32,12 +32,20 @@ export interface CheckboxGroupProps {
      * 	当绑定值变化时触发的事件
      */
     onChange?: (val: string[] | number[]) => void
+    /**
+     * 没有选择框，只有文字
+     */
+    noBox?: boolean
+    /**
+     * 默认只显示一行
+     */
+    oneLine?: boolean
 }
 
 /**
  * 待选项的配置
  */
-interface CheckboxOptionBasePeops {
+export interface CheckboxOptionBasePeops {
     /**
      * item 的显示值
      */

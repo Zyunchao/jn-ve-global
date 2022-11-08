@@ -4,7 +4,12 @@
     display: flex;
     align-items: center;
 
-    >div:not(.el-radio-group, .el-checkbox-group, .el-switch, .el-color-picker, .el-rate) {
+    >div:not(.el-radio-group,
+        .el-checkbox-group,
+        .el-switch,
+        .el-color-picker,
+        .el-rate,
+        .g-choose) {
         width: 100%;
     }
 
