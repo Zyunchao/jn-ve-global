@@ -9,11 +9,11 @@
         "@types"
     ],
     "main": "./dist/jn-ve-global.umd.js",
-    "module": "./dist/jn-ve-global.es.js",
+    "module": "./dist/jn-ve-global.mjs",
     "types": "./@types/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/jn-ve-global.es.js",
+            "import": "./dist/jn-ve-global.mjs",
             "require": "./dist/jn-ve-global.umd.js"
         },
         "./style.css": "./dist/style.css",
