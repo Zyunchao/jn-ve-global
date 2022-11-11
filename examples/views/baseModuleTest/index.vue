@@ -39,6 +39,7 @@ const tablePagination = reactive<PaginationProps>({
     currentPage: 1,
     pageSize: 10,
     total: 30,
+    pageSizes: [100, 200],
     onChange(page, size) {
         tableData.value = mockData[`data${page}`]
     }
