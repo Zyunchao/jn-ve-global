@@ -142,6 +142,7 @@ const elFormItemProps = computed(() => {
         tip,
 
         // 拖拽平台扩展属性
+        default: defaultval,
         _control_propertys_,
         _events_provide_,
         _events_holding_,
