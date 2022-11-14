@@ -23,17 +23,6 @@
         "./@types/*": "./@types/*",
         "./@types": "./@types"
     },
-    "peerDependencies": {
-        "@element-plus/icons-vue": "2.0.10",
-        "@vueuse/core": "^9.3.1",
-        "echarts": "^5.3.3",
-        "element-plus": "2.2.19",
-        "lodash": "^4.17.21",
-        "resize-observer-polyfill": "^1.5.1",
-        "uuid": "^9.0.0",
-        "vue": "3.2.37",
-        "xlsx": "^0.18.5"
-    },
     "scripts": {
         "dev": "serve -l 9099 --cors lib & vite",
         "build": "vite build",
@@ -45,7 +34,7 @@
     },
     "dependencies": {
         "@element-plus/icons-vue": "2.0.10",
-        "@jsjn/utils": "^1.0.0",
+        "@jsjn/utils": "1.0.2",
         "@vueuse/core": "^9.3.1",
         "echarts": "^5.3.3",
         "element-plus": "2.2.19",
