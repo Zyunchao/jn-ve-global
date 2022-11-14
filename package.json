@@ -32,6 +32,9 @@
         "docs:build:github": "vuepress build docs github",
         "build:push": "vite build && yalc push"
     },
+    "resolutions": {
+        "vue": "3.2.37"
+    },
     "dependencies": {
         "@element-plus/icons-vue": "2.0.10",
         "@jsjn/utils": "1.0.2",
