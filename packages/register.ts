@@ -12,8 +12,8 @@ import { elIconKeys, aliIcons, localIcons } from './GIconPicker/data/icons'
 /**
  * 全局注册组件
  */
-const globalComponentFiles = import.meta.globEager('./**/index.vue')
-const globalFunctionalComponentFiles = import.meta.globEager('./*/index.tsx')
+const globalComponentFiles = import.meta.glob<any>('./**/index.vue', { eager: true })
+const globalFunctionalComponentFiles = import.meta.glob<any>('./*/index.tsx', { eager: true })
 
 // 模板组件
 const components = Object.keys(globalComponentFiles).reduce((components: any, path: string) => {

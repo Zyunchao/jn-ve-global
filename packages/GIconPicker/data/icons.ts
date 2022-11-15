@@ -22,10 +22,10 @@ export const localIcons: string[] = getLocalIconNames()
  */
 function getLocalIconNames(): string[] {
     /**
-     * 注意: import.meta.globEager 内只能以相对路径传递
+     * 注意: import.meta.glob 内只能以相对路径传递
      */
-    const newCoreFiles = import.meta.globEager('../../assets/icons/svg/newCore/*.svg')
-    const regtechFiles = import.meta.globEager('../../assets/icons/svg/regtech/*.svg')
+    const newCoreFiles = import.meta.glob('../../assets/icons/svg/newCore/*.svg', { eager: true })
+    const regtechFiles = import.meta.glob('../../assets/icons/svg/regtech/*.svg', { eager: true })
 
     const allFiles = { ...newCoreFiles, ...regtechFiles }
 
