@@ -1,4 +1,3 @@
-
 #image: node:latest   # 表示使用有 nodejs 环境的 docker，python等也有其他的 docker。
 
 #stages:     # 定义阶段顺序
@@ -27,21 +26,21 @@
 #    - dist               # 同时把 build 阶段生成的 dist 文件夹也缓存起来，在 deploy 阶段会用到。
 
 pages:
- cache:
-   paths:
-   - node_modules/
+    cache:
+        paths:
+            - node_modules/
 
- script:
-   - npm config get registry
-   - npm cache clean --force
-   #- yarn install -g # npm install
-   - npm install 
-   #- yarn docs:build # npm run docs:build
-   - npm run docs:build
-   - rm -fr public
-   - mkdir public && cp -fr docs/.vuepress/dist/* public
- artifacts:
-   paths:
-   - public
- only:
- - master
+    script:
+        # - npm config get registry
+        # - npm cache clean --force
+        # - npm install
+        # - npm run docs:build
+        - yarn install
+        - yarn docs:build
+        - rm -fr public
+        - mkdir public && cp -fr docs/.vuepress/dist/* public
+    artifacts:
+        paths:
+            - public
+    only:
+        - master
