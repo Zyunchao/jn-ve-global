@@ -31,7 +31,7 @@
         "docs:build": "vuepress build docs",
         "docs:build:github": "vuepress build docs github",
         "build:push": "vite build && yalc push",
-        "build:px": "vite build -- --px"
+        "build:px": "vite build -- --px && yalc push"
     },
     "resolutions": {
         "vue": "3.2.37",
