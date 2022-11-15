@@ -33,6 +33,7 @@ pages:
 
  script:
    - npm config get registry
+   - npm cache clean --force
    #- yarn install -g # npm install
    - npm install 
    #- yarn docs:build # npm run docs:build
