@@ -1,6 +1,6 @@
 main.page {
     .theme-default-content {
-        >table {
+        >div>table {
             border-collapse: collapse;
             margin: 1rem 0;
             display: block;
@@ -21,7 +21,7 @@ main.page {
             }
         }
 
-        >table {
+        >div>table {
             width: 100%;
             display: table;
 
@@ -55,7 +55,7 @@ main.page {
         }
 
         // 目录
-        >nav.table-of-contents {
+        >div>nav.table-of-contents {
             position: fixed;
             right: 0;
             top: 60px;

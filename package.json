@@ -30,14 +30,17 @@
         "docs:dev": "vuepress dev docs --open",
         "docs:build": "vuepress build docs",
         "docs:build:github": "vuepress build docs github",
-        "build:push": "vite build && yalc push"
+        "build:push": "vite build && yalc push",
+        "build:px": "vite build -- --px"
     },
     "resolutions": {
-        "vue": "3.2.37"
+        "vue": "3.2.37",
+        "vite": "3.2.3",
+        "@jsjn/utils": "1.0.3"
     },
     "dependencies": {
         "@element-plus/icons-vue": "2.0.10",
-        "@jsjn/utils": "1.0.2",
+        "@jsjn/utils": "1.0.3",
         "@vueuse/core": "^9.3.1",
         "echarts": "^5.3.3",
         "element-plus": "2.2.19",
@@ -56,9 +59,9 @@
         "@typescript-eslint/parser": "^5.21.0",
         "@vitejs/plugin-vue": "^3.2.0",
         "@vitejs/plugin-vue-jsx": "^2.1.0",
-        "@vuepress/plugin-container": "2.0.0-beta.38",
-        "@vuepress/plugin-register-components": "2.0.0-beta.38",
-        "@vuepress/plugin-search": "2.0.0-beta.38",
+        "@vuepress/plugin-container": "2.0.0-beta.53",
+        "@vuepress/plugin-register-components": "2.0.0-beta.53",
+        "@vuepress/plugin-search": "2.0.0-beta.53",
         "clipboard-copy": "^4.0.1",
         "eslint": "^8.14.0",
         "eslint-plugin-vue": "^9.6.0",
@@ -66,17 +69,17 @@
         "nprogress": "^0.2.0",
         "postcss-pxtorem": "^6.0.0",
         "postcss-selector-not": "^6.0.1",
-        "rollup-plugin-esbuild": "^4.10.1",
+        "rollup-plugin-esbuild": "^5.0.0",
         "sass": "^1.51.0",
         "typescript": "^4.6.3",
-        "vite": "3.2.2",
+        "vite": "3.2.3",
         "vite-plugin-dts": "1.5.0",
         "vite-plugin-eslint": "^1.8.1",
         "vite-plugin-svg-icons": "2.0.1",
         "vite-plugin-vue-setup-extend": "^0.4.0",
         "vue-router": "^4.0.14",
         "vue-tsc": "^1.0.8",
-        "vuepress": "2.0.0-beta.39"
+        "vuepress": "2.0.0-beta.53"
     },
     "publishConfig": {
         "registry": "http://172.31.71.159/repository/npm-release/"
