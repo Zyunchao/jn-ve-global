@@ -61,6 +61,28 @@ export function restrictDecimals(str: string, s: number = 2) {
 }
 ```
 
+## 格式化预设
+
+:::tip 2.2.2+
+
+组件内部预设了一些格式化的方法，传递对应的参数可开启预设
+
+注意：组件依旧以 `format` 和 `valueFormat` 为第一优先级
+
+:::
+
+<demo-block>
+
+<FigureInput-demo2 />
+
+<template #code>
+
+@[code](@demoroot/FigureInput/demo2.vue)
+
+</template>
+
+</demo-block>
+
 ## Attributes
 
 参数|说明|类型|默认值
@@ -69,3 +91,6 @@ modelValue | 绑定的值 | string \| number | --
 format | 展示的格式化方式（千分位、保留小数..） | (val: string \| number) => string \| number | null
 valueFormat | 绑定的值的格式化方式（反格式化） | (val: string \| number) => string \| number | null
 showUnitTip | 显示单位提示 | boolean | true
+toThousands | 是否格式化成千分位（仅展示） | boolean | false
+showDecimalsLength | 展示时小数位长度 | number | --
+valDecimalsLength | 输入时小数位长度 | number | --

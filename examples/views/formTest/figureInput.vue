@@ -38,19 +38,16 @@ let formConfig = reactive<FormProps>({
     formItems: [
         {
             prop: 'money',
-            label: '输入',
+            label: '正常输入',
             span: 24,
             controlConfig: {
-                type: 'input',
-                props: {
-                    append: 'el-EditPen',
-                    suffix: 'el-ChatLineRound'
-                }
+                type: 'figureInput'
             }
         },
         {
             prop: 'money',
             label: '收集的数据',
+            span: 24,
             render(prop) {
                 return <h4>{prop.value}</h4>
             }
@@ -62,37 +59,42 @@ let formConfig = reactive<FormProps>({
             controlConfig: {
                 type: 'figureInput',
                 props: {
-                    format: (val) => {
-                        return toThousands(val)
+                    toThousands: true,
+                    onChange(val) {
+                        console.log(`%c onChange val === `, 'color: #67c23a;', val)
                     },
-                    append: 'el-EditPen',
-                    suffix: 'el-ChatLineRound'
-                }
-            }
-        },
-        {
-            prop: 'money',
-            label: '保留两位小数',
-            span: 24,
-            controlConfig: {
-                type: 'figureInput',
-                props: {
-                    format: (val) => {
-                        return val ? ((val as number) - 0).toFixed(2) : val
+                    onFocus(val) {
+                        console.log(`%c onFocus val === `, 'color: #f56c6c;', val)
+                    },
+                    onInput(val) {
+                        console.log(`%c onInput val === `, 'color: #67c23a;', val)
+                    },
+                    onBlur(val) {
+                        console.log(`%c onBlur val === `, 'color: #409eff;', val)
                     }
                 }
             }
         },
         {
             prop: 'money',
-            label: '保留四位小数',
+            label: '展示保留两位小数',
             span: 24,
             controlConfig: {
                 type: 'figureInput',
                 props: {
-                    format: (val) => {
-                        return val ? ((val as number) - 0).toFixed(4) : val
-                    }
+                    toThousands: true,
+                    showDecimalsLength: 2
+                }
+            }
+        },
+        {
+            prop: 'money',
+            label: '展示保留四位小数',
+            span: 24,
+            controlConfig: {
+                type: 'figureInput',
+                props: {
+                    showDecimalsLength: 4
                 }
             }
         },
@@ -106,15 +108,70 @@ let formConfig = reactive<FormProps>({
             controlConfig: {
                 type: 'figureInput',
                 props: {
-                    format: (val) => {
-                        return val
-                    },
-                    valueFormat: (val) => {
-                        return restrictDecimals(val as string, 2)
-                    }
+                    valDecimalsLength: 4
                 }
             }
         }
+        // {
+        //     prop: 'money',
+        //     label: '千分位',
+        //     span: 24,
+        //     controlConfig: {
+        //         type: 'figureInput',
+        //         props: {
+        //             format: (val) => {
+        //                 return toThousands(val)
+        //             },
+        //             append: 'el-EditPen',
+        //             suffix: 'el-ChatLineRound'
+        //         }
+        //     }
+        // },
+        // {
+        //     prop: 'money',
+        //     label: '保留两位小数',
+        //     span: 24,
+        //     controlConfig: {
+        //         type: 'figureInput',
+        //         props: {
+        //             format: (val) => {
+        //                 return val ? ((val as number) - 0).toFixed(2) : val
+        //             }
+        //         }
+        //     }
+        // },
+        // {
+        //     prop: 'money',
+        //     label: '保留四位小数',
+        //     span: 24,
+        //     controlConfig: {
+        //         type: 'figureInput',
+        //         props: {
+        //             format: (val) => {
+        //                 return val ? ((val as number) - 0).toFixed(4) : val
+        //             }
+        //         }
+        //     }
+        // },
+        // {
+        //     /**
+        //      * 存储格式化
+        //      */
+        //     prop: 'money',
+        //     label: '至多输入两位小数',
+        //     span: 24,
+        //     controlConfig: {
+        //         type: 'figureInput',
+        //         props: {
+        //             format: (val) => {
+        //                 return val
+        //             },
+        //             valueFormat: (val) => {
+        //                 return restrictDecimals(val as string, 4)
+        //             }
+        //         }
+        //     }
+        // }
     ]
 })
 
