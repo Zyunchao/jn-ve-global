@@ -30,9 +30,9 @@ export default {
 <script lang="ts" setup>
 import { nextTick, ref, computed, watch } from 'vue'
 import { FigureInputProps } from '../GForm'
-import { clearNoNum, getNumUnit } from '@jsjn/utils'
 import { ElInput as ElInputCom } from 'element-plus'
 import LGAdvanceInput from '../GForm/component/GAdvanceInput/core.vue'
+import { toThousands, restrictDecimals, clearNoNum, getNumUnit } from '@jsjn/utils'
 
 const props = withDefaults(
     defineProps<{
@@ -52,11 +52,24 @@ const props = withDefaults(
          * 显示单位提示
          */
         showUnitTip?: boolean
+        /**
+         * 是否格式化成千分位（仅展示）
+         */
+        toThousands?: boolean
+        /**
+         * 展示时小数位长度
+         */
+        showDecimalsLength?: number
+        /**
+         * 输入时小数位长度
+         */
+        valDecimalsLength?: number
     }>(),
     {
         format: null,
         valueFormat: null,
-        showUnitTip: true
+        showUnitTip: true,
+        toThousands: false
     }
 )
 
@@ -76,14 +89,21 @@ const gatherFigureInputVal = computed({
     get: () => props.modelValue,
     set: (val) => {
         // 限制只能输入整数 or 小数
-        emits('update:modelValue', clearNoNum(val as string))
+        let inputRes = clearNoNum(val)
 
-        // 将限制处理过的数据传递给用户的 valueFormat
+        // valueFormat 权重最高
         if (props.valueFormat) {
-            nextTick(() => {
-                emits('update:modelValue', props.valueFormat(props.modelValue))
-            })
+            inputRes = props.valueFormat(inputRes) as string
+            emits('update:modelValue', inputRes)
+            return
         }
+
+        // 预设配置：可输入的小数位数
+        if (props.valDecimalsLength) {
+            inputRes = restrictDecimals(inputRes, props.valDecimalsLength)
+        }
+
+        emits('update:modelValue', inputRes)
     }
 })
 
@@ -93,8 +113,19 @@ const showFigureInputVal = computed(() => {
         return props.format(gatherFigureInputVal.value as string)
     }
 
+    let showVal = gatherFigureInputVal.value
+
+    // 预设配置：展示保留 n 位小数
+    if (props.showDecimalsLength && showVal) {
+        showVal = ((showVal as number) - 0).toFixed(props.showDecimalsLength)
+    }
+    // 千分位
+    if (props.toThousands) {
+        showVal = toThousands(showVal)
+    }
+
     // 原展示
-    return gatherFigureInputVal.value
+    return showVal
 })
 
 /**

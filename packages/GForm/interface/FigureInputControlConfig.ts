@@ -13,6 +13,18 @@ export interface FigureInputProps extends InputProps, InputEvents, InputSlots {
      * 显示单位提示
      */
     showUnitTip?: boolean
+    /**
+     * 是否格式化成千分位（仅展示）
+     */
+    toThousands?: boolean
+    /**
+     * 展示时小数位长度
+     */
+    showDecimalsLength?: number
+    /**
+     * 输入时小数位长度
+     */
+    valDecimalsLength?: number
 }
 
 export default interface FigureInputControlConfig {
