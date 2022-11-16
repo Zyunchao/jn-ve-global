@@ -69,7 +69,7 @@ const props = withDefaults(
         format: null,
         valueFormat: null,
         showUnitTip: true,
-        toThousands: false
+        toThousands: true
     }
 )
 
@@ -120,7 +120,7 @@ const showFigureInputVal = computed(() => {
         showVal = ((showVal as number) - 0).toFixed(props.showDecimalsLength)
     }
     // 千分位
-    if (props.toThousands) {
+    if (props.toThousands && showVal) {
         showVal = toThousands(showVal)
     }
 
