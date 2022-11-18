@@ -94,6 +94,9 @@ const gatherFigureInputVal = computed({
         // valueFormat 权重最高
         if (props.valueFormat) {
             inputRes = props.valueFormat(inputRes) as string
+            if (inputRes === undefined) {
+                console.log(`%c ${new Error('valueFormat 需要返回值')}`, 'color: #f56c6c;')
+            }
             emits('update:modelValue', inputRes)
             return
         }
@@ -110,7 +113,11 @@ const gatherFigureInputVal = computed({
 // 展示输入框绑定的值
 const showFigureInputVal = computed(() => {
     if (props.format) {
-        return props.format(gatherFigureInputVal.value as string)
+        const coustomFormtRes = props.format(gatherFigureInputVal.value as string)
+        if (coustomFormtRes === undefined) {
+            console.log(`%c ${new Error('format 需要返回值')}`, 'color: #f56c6c;')
+        }
+        return coustomFormtRes
     }
 
     let showVal = gatherFigureInputVal.value
