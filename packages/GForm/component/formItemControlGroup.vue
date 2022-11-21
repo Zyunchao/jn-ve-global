@@ -176,7 +176,8 @@ const wrapperClass = (type: 'add' | 'remove') => {
     :deep(.el-input__wrapper),
     :deep(.el-input__inner),
     :deep(.el-select .el-input.is-focus .el-input__inner),
-    :deep(.el-select .el-input.is-focus .el-input__wrapper) {
+    :deep(.el-select .el-input.is-focus .el-input__wrapper),
+    :deep(.el-select .el-input__wrapper.is-focus) {
         box-shadow: none !important;
     }
 
