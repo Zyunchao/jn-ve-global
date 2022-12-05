@@ -26,7 +26,7 @@
                 <!-- 一键开启多选 -->
                 <el-table-column
                     v-if="localConfig.showSelection"
-                    width="55"
+                    :width="size2Rem(55)"
                     v-bind="localConfig.selectionColumns"
                     type="selection"
                 />
@@ -84,6 +84,7 @@ import { ElMessage } from 'element-plus'
 import Schema, { ValidateError, ValidateFieldsError, Rules } from 'async-validator'
 import TableColumn from './component/TableColumn.vue'
 import AddOperationColumn from './component/OperationColumn/index'
+import { size2Rem } from '@jsjn/utils'
 
 interface Props {
     config: TableConfig<any>
