@@ -41,7 +41,8 @@
                     }
 
                     // 行 hover
-                    &.hover-row {
+                    &.hover-row,
+                    &:hover {
                         td {
                             background-color: #e8e8e8;
                         }
