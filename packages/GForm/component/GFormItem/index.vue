@@ -44,7 +44,12 @@
         <!-- 优先级1：自定义 Render 控件 -->
         <template v-if="formItemConfig.render">
             <FunctionalComponent
-                :render="formItemConfig.render(toRef(formConfig.model, formItemConfig.prop))"
+                :render="
+                    formItemConfig.render(
+                        toRef(formConfig.model, formItemConfig.prop),
+                        formItemConfig.prop
+                    )
+                "
             />
         </template>
 

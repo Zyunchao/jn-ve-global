@@ -246,7 +246,7 @@ export interface ControlFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render?: (prop?: Ref<any>) => JSX.Element | VNode | string | number
+    render?: (prop?: Ref<any>, key?: string) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */
