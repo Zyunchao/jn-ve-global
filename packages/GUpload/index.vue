@@ -216,20 +216,23 @@ const { uploadRef } = getRefStore({ emits })
 watch(
     () => props.imgUrl,
     (url) => {
-        if (url && attrs.value['list-type'] === 'avatar') {
-            /**
-             * avatar 模式将意味着查看照片模式，而 currentFile 需要一个 name 属性
-             * 这里的 name 只是一个假象，为弹框模式做判断
-             */
-            currentFile.value = {
-                name: '*.png',
-                url: url
+        if (attrs.value['list-type'] === 'avatar') {
+            if (url) {
+                /**
+                 * avatar 模式将意味着查看照片模式，而 currentFile 需要一个 name 属性
+                 * 这里的 name 只是一个假象，为弹框模式做判断
+                 */
+                currentFile.value = {
+                    name: '*.png',
+                    url: url
+                }
+            } else if (!url) {
+                currentFile.value = null
+                uploadRef.value?.clearFiles()
             }
         }
     },
-    {
-        immediate: true
-    }
+    { immediate: true }
 )
 
 // 钩子
