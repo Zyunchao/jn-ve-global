@@ -123,13 +123,15 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch } from 'vue'
+import { watch, ref } from 'vue'
 import { getFileType, getFileTypeIcon } from './utils'
 import { imgSuffix, officeSuffix } from './constant/fileTypeList'
 import UploadFile from './interface/UploadFile'
 import { getHooks, getMethods, getUtils, getRefStore, getFileStore, getConstant } from './mixins'
+import { ElUpload } from 'element-plus'
 
 interface UploadCustomProps {
+    instance?: InstanceType<typeof ElUpload> | null
     /**
      * 抛出的值
      */
@@ -177,6 +179,7 @@ interface UploadCustomProps {
 }
 
 const props = withDefaults(defineProps<UploadCustomProps>(), {
+    instance: null,
     modelValue: '',
     fileList: () => [],
     disabled: false,
@@ -190,7 +193,12 @@ const props = withDefaults(defineProps<UploadCustomProps>(), {
     downloadUrl: '/kinso-basic-open-server/v1/document/file/download'
 })
 
-const emits = defineEmits(['update:modelValue', 'update:fileList', 'getUploadRef'])
+const emits = defineEmits([
+    'update:modelValue',
+    'update:fileList',
+    'getUploadRef',
+    'update:instance'
+])
 
 const {
     modalShow,
@@ -208,6 +216,13 @@ const { currentFile, localFileList } = getFileStore({ props, emits })
 
 // elUpload ref
 const { uploadRef } = getRefStore({ emits })
+
+watch(
+    () => uploadRef.value,
+    (instance) => {
+        emits('update:instance', instance)
+    }
+)
 
 /**
  * 头像将类似于单选，imgUrl 服务头像

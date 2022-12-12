@@ -32,6 +32,7 @@
 <h4>Upload</h4>
 
 1. 修复头像模式下，清空 imgUrl 未生效问题
+2. 组件抛出 el-upload 实例
 
 </update-log-block>
 

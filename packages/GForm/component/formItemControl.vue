@@ -123,6 +123,7 @@
             <LGUpload
                 v-model="localPropRef"
                 v-model:fileList="localUploadFileList"
+                v-model:instance="localUploadInstance"
                 v-bind="controlConfig.props"
                 :disabled="controlDisabled"
             />
@@ -301,10 +302,12 @@ getControlOprions({ props: props as any })
 /**
  * 特殊处理 upload 的 fileList
  */
-let localUploadFileList = null
+let localUploadFileList = undefined
+let localUploadInstance = undefined
 if (localControlType.value === 'upload') {
     const config = props.controlConfig as UploadControlConfig
     localUploadFileList = toRef(config.props, 'fileList')
+    localUploadInstance = toRef(config.props, 'instance')
 }
 
 // 获取 控件 的配置（三级配置）

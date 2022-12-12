@@ -1,5 +1,5 @@
 import UploadFile from '../../GUpload/interface/UploadFile'
-
+import { ElUpload } from 'element-plus'
 export interface BaseResponse {
     code: '000000' | '500000' | '800403'
     data: any
@@ -64,6 +64,7 @@ export interface UploadEvents {
 }
 
 export interface UploadProps {
+    instance: InstanceType<typeof ElUpload> | null
     /**
      * 必填参数，上传的地址
      */
