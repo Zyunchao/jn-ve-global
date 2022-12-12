@@ -22,6 +22,10 @@
 
 1. 输入框增加常用的格式化方法的预设
 
+<h4>Upload</h4>
+
+1. 组件抛出 el-upload 实例
+
 <h3>BugFix</h3>
 
 <h4>Table</h4>
@@ -32,7 +36,6 @@
 <h4>Upload</h4>
 
 1. 修复头像模式下，清空 imgUrl 未生效问题
-2. 组件抛出 el-upload 实例
 
 </update-log-block>
 
