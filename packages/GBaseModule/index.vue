@@ -67,19 +67,17 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { useAttrs, PropType, reactive, watch, ref, computed, nextTick, toRef, markRaw } from 'vue'
+import { ref, computed } from 'vue'
 import { BtnProps } from './index'
-import { FormProps, FormItemProps } from '../GForm'
+import { FormProps } from '../GForm'
 import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } from '../GTable'
 import TableSearch from './component/TableSearch.vue'
-import { RefreshLeft, Search } from '@element-plus/icons-vue'
-import { partitionObj2HumpObj, assignOwnProp } from '@jsjn/utils'
 import LGTable from '../GTable/index.vue'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 import { getBaseModuleMode } from '@component/_globalConstant/baseModuleMode'
 import type { BaseModuleMode } from '@component/_globalConstant/baseModuleMode'
-
-const baseModuleMode = getBaseModuleMode()
+import useSearchBtnConfig from './hooks/useSearchBtnConfig'
+import useMergeProps from './hooks/useMergeProps'
 
 interface Props {
     /**
@@ -144,6 +142,10 @@ interface Props {
      * 选中行的维护数组
      */
     selectedRows?: TableConfig<any>['selectedRows']
+    /**
+     * 布局模式，现支持两种
+     */
+    mode?: BaseModuleMode
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -160,12 +162,11 @@ const props = withDefaults(defineProps<Props>(), {
     rowBtnConfig: null,
     tabs: () => [],
     activeTab: '',
-    selectedRows: null
+    selectedRows: null,
+    mode: getBaseModuleMode()
 })
 
 const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selectedRows'])
-const attrs = useAttrs()
-const humpAttrs = computed(() => partitionObj2HumpObj(attrs, ['onReset', 'onSearch']))
 
 const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
 
@@ -184,163 +185,20 @@ const localActiveTab = computed({
 })
 
 // 搜索按钮的配置
-const searchBtnsConfig = computed<FormItemProps>(() => ({
-    prop: 'opertion-btn',
-    class: `content-center search-btn-item`,
-    span:
-        props.searchBtnHorizontal || !!props.moreSearchMode
-            ? 24
-            : props.searchFormProps.formItems[props.searchFormProps.formItems.length - 1]?.span ||
-              24,
-    render() {
-        return (
-            <>
-                <el-button
-                    icon={RefreshLeft}
-                    onClick={() => {
-                        // 优先执行用户传递的 reset
-                        if (attrs.onReset && typeof attrs.onReset === 'function') {
-                            attrs.onReset()
-                            return
-                        }
-
-                        // 清空查询条件
-                        props.searchFormProps.instance?.resetFields()
-
-                        // 清空多选
-                        emits('update:selectedRows', [])
-
-                        if (!props.loadTableMethods)
-                            throw new Error('core load-table-methods 未找到')
-                        props.loadTableMethods?.(1)
-                    }}>
-                    重置
-                </el-button>
-                {props.searchBtnAuthCode ? (
-                    <el-button
-                        v-auth={props.searchBtnAuthCode}
-                        type='primary'
-                        icon={Search}
-                        onClick={() => {
-                            searchHandle()
-                        }}>
-                        查询
-                    </el-button>
-                ) : (
-                    <el-button
-                        type='primary'
-                        icon={Search}
-                        onClick={() => {
-                            searchHandle()
-                        }}>
-                        查询
-                    </el-button>
-                )}
-            </>
-        )
-    }
-}))
-
-async function searchHandle() {
-    // 校验
-    const validateRes = await props.searchFormProps.instance.validate()
-
-    // 更多查询条件时，查询关闭弹框
-    if (props.moreSearchMode === 'popup' && tableSearchRef.value.popupShow) {
-        tableSearchRef.value.closePopup()
-    }
-
-    // 优先执行用户传递的 search
-    if (attrs.onSearch && typeof attrs.onSearch === 'function') {
-        attrs.onSearch()
-        return
-    }
-
-    if (!props.loadTableMethods) throw new Error('core load-table-methods 未找到')
-    props.loadTableMethods?.(1)
-}
-
-// 包装本地表格配置（中转站）
-const localTableConfig = reactive<TableConfig<any>>({
-    instance: null,
-    rowKey: 'id',
-    stripe: true,
-    columns: props.tableColumns,
-    data: props.tableData,
-    pagination: props.tablePagination,
-    rowBtnConfig: props.rowBtnConfig,
-    selectedRows: props.selectedRows,
-    ...humpAttrs.value
+const { searchBtnsConfig } = useSearchBtnConfig({
+    props,
+    emits,
+    tableSearchRef
 })
 
-/* --------------- 向外抛出 ------------------------------------------------------------------- */
-// 实例
-watch(
-    () => localTableConfig.instance,
-    (instance) => {
-        emits('getTableInstance', instance)
-    }
-)
-// 选中行
-watch(
-    () => localTableConfig.selectedRows,
-    (list) => {
-        emits('update:selectedRows', list)
-    }
-)
-
-/* --------------- 向内关联 ------------------------------------------------------------------- */
-// 未定义为 props 的 table 的参数
-watch(
-    () => humpAttrs.value,
-    (obj) => {
-        assignOwnProp(localTableConfig, obj, ['instance', 'columns', 'data'])
-        nextTick(() => {
-            localTableConfig.instance?.doLayout()
-        })
-    }
-)
-// 数据
-watch(
-    () => props.tableData,
-    (data) => {
-        localTableConfig.data = data
-    }
-)
-// 列
-watch(
-    () => props.tableColumns,
-    (columns) => {
-        localTableConfig.columns = columns
-    }
-)
-// 分页
-watch(
-    () => props.tablePagination,
-    (val) => {
-        localTableConfig.pagination = val
-        if (val && !localTableConfig.pagination['onChange']) {
-            localTableConfig.pagination['onChange'] = () => {
-                props.loadTableMethods?.()
-            }
-        }
-    },
-    {
-        immediate: true,
-        deep: false
-    }
-)
-// 选中行的状态数组
-watch(
-    () => props.selectedRows,
-    (list) => {
-        localTableConfig.selectedRows = list
-    }
-)
+// 包装本地表格配置（中转站）
+const { localTableConfig } = useMergeProps({ props, emits })
 
 // 抛出
 defineExpose({
-    tableInstance: localTableConfig.instance
+    tableConfig: localTableConfig,
+    tableInstance: localTableConfig.instance,
+    tableSearchRef
 })
 </script>
 

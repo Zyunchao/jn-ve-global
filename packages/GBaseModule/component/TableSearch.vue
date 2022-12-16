@@ -11,7 +11,7 @@
         <!-- 核心表单 -->
         <div class="form-wrapper">
             <div :class="['search-field-form-wrapper', modeClass]">
-                <LGForm class="search-field-form" :config="localSearchFormConfig" />
+                <LGForm class="search-field-form" :config="(localSearchFormConfig as FormProps)" />
             </div>
 
             <!-- 
@@ -21,7 +21,7 @@
              -->
             <LGForm
                 v-if="searchBtnHorizontal || moreSearchMode"
-                :config="localSearchBtnsFormConfig"
+                :config="(localSearchBtnsFormConfig as FormProps)"
             />
         </div>
     </div>
@@ -37,9 +37,9 @@
         :destroy-on-close="false"
     >
         <el-scrollbar max-height="400px">
-            <LGForm :config="localSearchFormConfig" />
+            <LGForm :config="(localSearchFormConfig as FormProps)" />
         </el-scrollbar>
-        <LGForm :config="localSearchBtnsFormConfig" />
+        <LGForm :config="(localSearchBtnsFormConfig as FormProps)" />
     </LGModal>
 </template>
 
@@ -112,7 +112,7 @@ const localSearchBtnsFormConfig = reactive<FormProps>({
  * 2. 是否显示更多查询
  * 3. 是否已包含（用户配置自定义按钮组权限更高）
  */
-const localSearchFormConfig = ref(props.searchFormProps)
+const localSearchFormConfig = ref<FormProps>(props.searchFormProps)
 if (
     !localSearchFormConfig.value.formItems.some((formItem) => formItem.prop === 'opertion-btn') &&
     !props.searchBtnHorizontal &&
