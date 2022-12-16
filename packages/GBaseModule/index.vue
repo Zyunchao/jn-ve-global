@@ -76,114 +76,91 @@ import { RefreshLeft, Search } from '@element-plus/icons-vue'
 import { partitionObj2HumpObj, assignOwnProp } from '@jsjn/utils'
 import LGTable from '../GTable/index.vue'
 import LGButtonGroup from '../GButtonGroup/index.vue'
+import { getBaseModuleMode } from '@component/_globalConstant/baseModuleMode'
+import type { BaseModuleMode } from '@component/_globalConstant/baseModuleMode'
 
-const props = defineProps({
-    /**
-     * 搜索条件表单配置
-     */
-    searchFormProps: {
-        type: Object as PropType<FormProps>,
-        default: null
-    },
+const baseModuleMode = getBaseModuleMode()
+
+interface Props {
     /**
      * 表格列
      */
-    tableColumns: {
-        type: Array as PropType<TableColumnProps[]>,
-        default: () => []
-    },
+    tableColumns?: TableColumnProps[]
     /**
      * 表格数据
      */
-    tableData: {
-        type: Array as PropType<BaseTableDataItem[]>,
-        default: () => []
-    },
+    tableData?: BaseTableDataItem[]
+    /**
+     * 搜索条件表单配置
+     */
+    searchFormProps?: FormProps
     /**
      * 分页数据
      */
-    tablePagination: {
-        type: Object as PropType<PaginationProps>,
-        default: null
-    },
+    tablePagination?: PaginationProps
     /**
      * 按钮组
      */
-    btns: {
-        type: Array as PropType<BtnProps[]>,
-        default: () => []
-    },
+    btns?: BtnProps[]
     /**
      * 搜索按钮是否独占一行
      */
-    searchBtnHorizontal: {
-        type: Boolean,
-        default: false
-    },
+    searchBtnHorizontal?: boolean
     /**
      * 核心加载 table 数据的方法
      */
-    loadTableMethods: {
-        type: Function
-    },
+    loadTableMethods?: (page?: number) => void
     /**
      * 表格 loading flag
      */
-    tableLoading: {
-        type: Boolean,
-        default: false
-    },
+    tableLoading?: boolean
     /**
      * 去除 “查询条件” label
      */
-    noSearchLabel: {
-        type: Boolean,
-        default: false
-    },
+    noSearchLabel?: boolean
     /**
      * 搜索按钮的鉴权 code
      */
-    searchBtnAuthCode: {
-        type: String,
-        default: ''
-    },
+    searchBtnAuthCode?: string
     /**
      * 更多查询展示方式
      * pullDown：下拉
      * popup：弹出
      */
-    moreSearchMode: {
-        type: String as PropType<'pull-down' | 'popup'>,
-        default: undefined
-    },
+    moreSearchMode?: 'pull-down' | 'popup'
     /**
      * 表格操作列
      */
-    rowBtnConfig: {
-        type: Object as PropType<TableConfig<any>['rowBtnConfig']>,
-        default: null
-    },
+    rowBtnConfig?: TableConfig<any>['rowBtnConfig']
     /**
      * tab 切换
      */
-    tabs: {
-        type: Array as PropType<Array<{ label: string; value: string }>>,
-        default: () => []
-    },
+    tabs?: Array<{ label: string; value: string }>
     /**
      * 激活的 tab
      */
-    activeTab: {
-        type: String,
-        default: ''
-    },
+    activeTab?: string
     /**
      * 选中行的维护数组
      */
-    selectedRows: {
-        type: Array as PropType<TableConfig<any>['selectedRows']>,
-        default: null
-    }
+    selectedRows?: TableConfig<any>['selectedRows']
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    searchBtnsConfig: null,
+    tableColumns: () => [],
+    tableData: () => [],
+    tablePagination: null,
+    btns: () => [],
+    searchBtnHorizontal: false,
+    tableLoading: false,
+    noSearchLabel: false,
+    searchBtnAuthCode: '',
+    moreSearchMode: undefined,
+    rowBtnConfig: null,
+    tabs: () => [],
+    activeTab: '',
+    selectedRows: null
 })
 
 const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selectedRows'])

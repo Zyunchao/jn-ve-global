@@ -64,7 +64,7 @@ export interface UploadEvents {
 }
 
 export interface UploadProps {
-    instance: InstanceType<typeof ElUpload> | null
+    instance?: InstanceType<typeof ElUpload> | null
     /**
      * 必填参数，上传的地址
      */
