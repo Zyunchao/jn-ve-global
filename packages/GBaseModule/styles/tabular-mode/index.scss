@@ -1,0 +1,114 @@
+.base-module-root.tabular-mode {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+
+    /* 中间操作区域 */
+    .middle-area {
+        display: flex;
+        background-color: #fff;
+        padding: var(--jn-ve-g-base-module-table-padding-b) var(--jn-ve-g-base-module-padding-lr);
+        display: flex;
+        padding-bottom: 0;
+        justify-content: space-between;
+
+        >.title {
+            width: 100px;
+            font-size: 20px;
+            color: #222222;
+            font-weight: 600;
+            line-height: var(--jn-ve-g-btn-s-height);
+        }
+
+
+        .middle-opertion-wrapper {
+            flex: 1;
+            display: flex;
+
+            :deep(.g-button-group) {
+                --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+                --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
+            }
+
+            .middle-left-wrapper {
+                flex: 1;
+                display: flex;
+                flex-direction: row-reverse;
+            }
+
+            .middle-right-wrapper {
+                width: 300px;
+                flex: none;
+                padding-left: 20px;
+            }
+        }
+    }
+
+
+    .core-wrapper {
+        background-color: #fff;
+        padding: var(--jn-ve-g-base-module-table-padding-b) var(--jn-ve-g-base-module-padding-lr) var(--jn-ve-g-base-module-table-padding-b);
+        flex: 1;
+        overflow: hidden;
+
+        .core-table-wrapper {
+            height: 100%;
+            position: relative;
+        }
+    }
+
+    &.tabs-layout {
+        .core-wrapper {
+            display: flex;
+            flex-direction: column;
+
+            .core-table-wrapper {
+                flex: 1;
+                overflow: hidden;
+            }
+        }
+
+        .core-tab-wrapper {
+            background-color: #f4fbff;
+
+            :deep(.el-tabs) {
+                .el-tabs__nav-wrap {
+                    &::after {
+                        display: none;
+                    }
+                }
+
+                .el-tabs__header {
+                    margin: 0;
+
+                    .el-tabs__active-bar {
+                        display: none;
+                    }
+
+                    .el-tabs__item {
+                        height: var(--jn-ve-g-base-module-tabs-height);
+                        padding: 0 38px;
+                        font-size: 18px;
+                        color: #8a8989;
+                        border: 1px solid #f4fbff;
+                        border-bottom: none;
+                        transition: all 0.2s;
+
+                        &.is-active {
+                            border-color: var(--jn-ve-g-base-border-color);
+                            background-color: #fff;
+                            color: #0c0c0c;
+                        }
+                    }
+                }
+
+                .el-tabs__content {
+                    display: none;
+                }
+            }
+        }
+    }
+}

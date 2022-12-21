@@ -5,9 +5,10 @@
         moreSearchMode 的权重比 noSearchLabel 高，如果传递了 moreSearchMode 则必然显示 “搜索条件 + 更多查询” 并添加 padding
      -->
     <div
-        class="base-module-root"
         :class="[
+            'base-module-root',
             $attrs.class,
+            `${localMode}-mode`,
             {
                 'no-padding': (noSearchLabel && !moreSearchMode) || !searchFormProps,
                 'tabs-layout': !!tabs.length
@@ -18,6 +19,7 @@
         <TableSearch
             v-if="searchFormProps"
             ref="tableSearchRef"
+            :mode="localMode"
             :search-form-props="searchFormProps"
             :search-btns-config="searchBtnsConfig"
             :no-search-label="noSearchLabel"
@@ -26,15 +28,26 @@
         />
 
         <!-- 中间操作区域 -->
-        <div v-if="(btns && btns.length) || $slots['middle-right']" class="middle-opertion-wrapper">
-            <!-- 左 按钮组-->
-            <div class="middle-left-wrapper">
-                <LGButtonGroup v-if="btns && btns.length > 0" class="btns-wrapper" :btns="btns" />
-            </div>
+        <div class="middle-area">
+            <span v-if="localMode === 'tabular'" class="title">查询结果</span>
 
-            <!-- 右 -->
-            <div class="middle-right-wrapper">
-                <slot name="middle-right" />
+            <div
+                v-if="(btns && btns.length) || $slots['middle-right']"
+                class="middle-opertion-wrapper"
+            >
+                <!-- 左 按钮组-->
+                <div class="middle-left-wrapper">
+                    <LGButtonGroup
+                        v-if="btns && btns.length > 0"
+                        class="btns-wrapper"
+                        :btns="btns"
+                    />
+                </div>
+
+                <!-- 右 -->
+                <div v-if="$slots['middle-right']" class="middle-right-wrapper">
+                    <slot name="middle-right" />
+                </div>
             </div>
         </div>
 
@@ -67,7 +80,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { BtnProps } from './index'
 import { FormProps } from '../GForm'
 import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } from '../GTable'
@@ -163,12 +176,16 @@ const props = withDefaults(defineProps<Props>(), {
     tabs: () => [],
     activeTab: '',
     selectedRows: null,
-    mode: getBaseModuleMode()
+    mode: undefined
 })
 
 const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selectedRows'])
-
 const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
+
+/**
+ * 期望运行的 baseModule 的模式
+ */
+const localMode = computed(() => props.mode || getBaseModuleMode())
 
 // 激活的 tab 页
 const localActiveTab = computed({
@@ -203,5 +220,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-@import './styles';
+@import './styles/classic-mode/index.scss';
+@import './styles/tabular-mode/index.scss';
 </style>

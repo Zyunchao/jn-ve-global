@@ -1,6 +1,6 @@
 <template>
-    <div ref="self" class="search-wrapper not-select">
-        <div v-if="!noSearchLabel || moreSearchMode" class="top">
+    <div ref="self" :class="['search-wrapper not-select', `${mode}-mode`]">
+        <div v-if="showTitle" class="top">
             <span class="title">查询条件</span>
             <div v-if="moreSearchMode" :class="['more', modeClass]" @click="handleMoreSearch">
                 <img :src="tableSearchMoreIcon" alt="" srcset="">
@@ -22,6 +22,15 @@
             <LGForm
                 v-if="searchBtnHorizontal || moreSearchMode"
                 :config="(localSearchBtnsFormConfig as FormProps)"
+            />
+        </div>
+
+        <!-- 扁平化模式下的查看更多操作按钮 -->
+        <div v-if="mode === 'tabular'" class="show-more-btn-wrapper" @click="handleMoreSearch">
+            <span>{{ modeTriggerLabel }}</span>
+            <g-icon
+                v-if="moreSearchMode === 'pull-down'"
+                :icon="pullDownFlag ? 'el-ArrowUp' : 'el-ArrowDown'"
             />
         </div>
     </div>
@@ -56,46 +65,49 @@ import LGForm from '../../GForm/index.vue'
 import tableSearchMoreIcon from '@component/assets/icons/svg/old/table-search-more.svg'
 import { getStyle } from '@jsjn/utils'
 import LGModal from '../../GModal/index.vue'
+import type { BaseModuleMode } from '@component/_globalConstant/baseModuleMode'
 
-const props = defineProps({
+interface Props {
     /**
      * 搜索条件表单配置
      */
-    searchFormProps: {
-        type: Object as PropType<FormProps>,
-        default: null
-    },
+    searchFormProps?: FormProps
     /**
      * 按钮组
      */
-    searchBtnsConfig: {
-        type: Object as PropType<FormItemProps>,
-        default: null
-    },
+    searchBtnsConfig?: FormItemProps
     /**
      * 去除 “查询条件” label
      */
-    noSearchLabel: {
-        type: Boolean,
-        default: false
-    },
+    noSearchLabel?: boolean
     /**
      * 搜索按钮是否独占一行
      */
-    searchBtnHorizontal: {
-        type: Boolean,
-        default: false
-    },
+    searchBtnHorizontal?: boolean
     /**
      * 更多查询展示方式
      * pullDown：下拉
      * popup：弹出
      */
-    moreSearchMode: {
-        type: String as PropType<'pull-down' | 'popup'>,
-        default: undefined
-    }
+    moreSearchMode?: 'pull-down' | 'popup'
+    /**
+     * 基础布局的模式，同步父级
+     */
+    mode?: BaseModuleMode
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    searchFormProps: null,
+    searchBtnsConfig: null,
+    noSearchLabel: false,
+    searchBtnHorizontal: false,
+    moreSearchMode: undefined,
+    mode: 'classic'
 })
+
+const showTitle = computed(
+    () => !props.noSearchLabel || (props.moreSearchMode && props.mode === 'classic')
+)
 
 /**
  * 按钮组 form config
@@ -132,6 +144,10 @@ const modeClass = computed<string>(() => {
     }`
 })
 
+const modeTriggerLabel = computed<string>(() =>
+    props.moreSearchMode === 'pull-down' ? (!pullDownFlag.value ? '展开' : '收起') : '查看更多'
+)
+
 /**
  * 下拉模式，原 form 高度
  * 这里获取的是 dom 的实际 height，故不需要 rem 的转换
@@ -163,54 +179,10 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+@import './styles/classic-mode.scss';
+@import './styles/tabular-mode.scss';
+
 .search-wrapper {
-    padding: 10px var(--jn-ve-g-base-module-padding-lr) 0;
-
-    // 顶部
-    .top {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        align-items: center;
-
-        .title {
-            font-size: 20px;
-            color: #333333;
-        }
-
-        .more {
-            display: inline-flex;
-            font-size: 16px;
-            align-items: center;
-            height: 100%;
-            cursor: pointer;
-            color: #595959;
-
-            span {
-                line-height: 1;
-                margin-left: 10px;
-            }
-
-            img {
-                width: 20px;
-                height: 20px;
-            }
-
-            &.pull-down {
-                img {
-                    transition: filter 0.2s;
-                    filter: grayscale(100%);
-                }
-
-                &.active {
-                    img {
-                        filter: grayscale(0%) !important;
-                    }
-                }
-            }
-        }
-    }
-
     .form-wrapper {
         padding: 0 var(--jn-ve-g-base-module-padding-lr);
 
@@ -226,6 +198,7 @@ defineExpose({
             // 下拉
             &.pull-down {
                 transition: height 0.2s;
+
                 &.active {
                     height: v-bind(searchFieldFormHeight);
                 }

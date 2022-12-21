@@ -1,6 +1,15 @@
 import packageInfo from '../package.json'
+import type { App } from 'vue'
 import { version as VueVersion } from 'vue'
 import { version as ElVersion } from 'element-plus'
+import {
+    setBaseModuleMode,
+    BaseModuleMode,
+    getDefauleMode,
+    setDefauleMode
+} from './_globalConstant/baseModuleMode'
+import { setAppMode } from './_globalConstant/appMode'
+import { getGlobal } from '@jsjn/utils'
 
 // 样式资源
 import './assets/styles/index.scss'
@@ -42,7 +51,14 @@ const functionalComponents = Object.keys(globalFunctionalComponentFiles).reduce(
     {}
 )
 
-export default (app) => {
+export default (
+    app: App,
+    props?: {
+        appMode?: string
+        baseModuleMode?: BaseModuleMode
+        baseModuleDefaultMode?: BaseModuleMode
+    }
+) => {
     // vue 模板组件
     Object.keys(components).forEach((name) => {
         app.component(name, components[name])
@@ -52,6 +68,30 @@ export default (app) => {
     Object.keys(functionalComponents).forEach((name) => {
         app.component(name, functionalComponents[name])
     })
+
+    // 参数传递
+    if (props) {
+        if (props.appMode) {
+            setAppMode(props.appMode)
+        } else if (getGlobal().__VUE_APP_MODE__) {
+            setAppMode(getGlobal().__VUE_APP_MODE__)
+        }
+
+        /**
+         * baseModule 的模式参数
+         *  - 如果设置了，就去对应微应用设置的值
+         *  - 如果没有，就取基座设置的默认值
+         */
+        if (props.baseModuleDefaultMode) {
+            setDefauleMode(props.baseModuleDefaultMode)
+        }
+
+        if (props.baseModuleMode) {
+            setBaseModuleMode(props.baseModuleMode)
+        } else {
+            setBaseModuleMode(getDefauleMode())
+        }
+    }
 }
 
 /**

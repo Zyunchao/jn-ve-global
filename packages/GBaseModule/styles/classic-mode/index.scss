@@ -1,13 +1,13 @@
 @import './tabs-layout.scss';
 @import './middle-area.scss';
 
-.base-module-root {
+.base-module-root.classic-mode {
     height: 100%;
     width: 100%;
     overflow: hidden;
     background-color: #fff;
     border-radius: 6px;
-    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.04);
+    // box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
 
