@@ -1,5 +1,14 @@
 <template>
-    <div ref="self" :class="['search-wrapper not-select', `${mode}-mode`]">
+    <div
+        ref="self"
+        :class="[
+            'search-wrapper not-select',
+            `${mode}-mode`,
+            {
+                [`show-more ${props.moreSearchMode}`]: props.moreSearchMode
+            }
+        ]"
+    >
         <div v-if="showTitle" class="top">
             <span class="title">查询条件</span>
             <div v-if="moreSearchMode" :class="['more', modeClass]" @click="handleMoreSearch">
@@ -26,7 +35,11 @@
         </div>
 
         <!-- 扁平化模式下的查看更多操作按钮 -->
-        <div v-if="mode === 'tabular'" class="show-more-btn-wrapper" @click="handleMoreSearch">
+        <div
+            v-if="mode === 'tabular' && moreSearchMode"
+            class="show-more-btn-wrapper"
+            @click="handleMoreSearch"
+        >
             <span>{{ modeTriggerLabel }}</span>
             <g-icon
                 v-if="moreSearchMode === 'pull-down'"
@@ -106,7 +119,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const showTitle = computed(
-    () => !props.noSearchLabel || (props.moreSearchMode && props.mode === 'classic')
+    () => (!props.noSearchLabel || props.moreSearchMode) && props.mode === 'classic'
 )
 
 /**

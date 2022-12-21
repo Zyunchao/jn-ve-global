@@ -4,10 +4,12 @@
     padding-top: var(--jn-ve-g-form-item-margin-b);
     position: relative;
 
-    :deep(.search-btn-item) {
-        .el-form-item__content {
-            justify-content: flex-end;
-            padding-right: 120px;
+    &.show-more {
+        :deep(.search-btn-item) {
+            .el-form-item__content {
+                justify-content: flex-end;
+                padding-right: 120px;
+            }
         }
     }
 
