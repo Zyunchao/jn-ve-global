@@ -57,6 +57,14 @@
         .core-table-wrapper {
             height: 100%;
             position: relative;
+
+            :deep(.g-table-root) {
+                border: none;
+
+                .g-table-pagination {
+                    padding: 0;
+                }
+            }
         }
     }
 

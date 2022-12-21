@@ -1,8 +1,12 @@
 <template>
     <BusinessLayout>
-        <!-- :tabs="moduleTabs" -->
+        <!-- 
+            :tabs="moduleTabs"
+            mode='tabular' classic
+        -->
         <g-base-module
             v-model:selected-rows="selectedRows"
+            mode="tabular"
             :show-selection="true"
             highlight-current-row
             no-search-label
