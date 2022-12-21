@@ -33,27 +33,33 @@ const isDis = ref<boolean>(false)
 const btnsNomal: BtnProps[] = [
     {
         label: 'primary',
-        type: 'primary'
+        type: 'primary',
+        icon: 'el-ChatLineRound'
     },
     {
         label: 'success',
-        type: 'success'
+        type: 'success',
+        icon: 'el-ChatLineRound'
     },
     {
         label: 'warning',
-        type: 'warning'
+        type: 'warning',
+        icon: 'el-ChatLineRound'
     },
     {
         label: 'danger',
-        type: 'danger'
+        type: 'danger',
+        icon: 'el-ChatLineRound'
     },
     {
         label: 'info',
-        type: 'info'
+        type: 'info',
+        icon: 'el-ChatLineRound'
     },
     {
         label: 'default',
-        type: 'default'
+        type: 'default',
+        icon: 'el-ChatLineRound'
     },
     {
         label: '自定义样式',
@@ -61,7 +67,8 @@ const btnsNomal: BtnProps[] = [
         style: {
             backgroundColor: '#ff3040',
             color: '#fff'
-        }
+        },
+        icon: 'el-ChatLineRound'
     }
 ]
 

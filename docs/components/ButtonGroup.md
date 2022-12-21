@@ -73,6 +73,10 @@ interface BtnProps {
      * 具体的行内样式
      */
     style?: { [k: string]: any } | string
+    /**
+     * 按钮图标，（仅支持组件库内 icon 图标）
+     */
+    icon?: string
 }
 ```
 
