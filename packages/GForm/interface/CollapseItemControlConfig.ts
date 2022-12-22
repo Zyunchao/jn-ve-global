@@ -1,3 +1,4 @@
+import type { BtnProps } from '@component/index'
 export default interface CollapseItemControlConfig {
     type: 'collapseItem'
     props?: {
@@ -17,5 +18,9 @@ export default interface CollapseItemControlConfig {
          * 是否是尾巴，闭合标签作用
          */
         isTail?: boolean
+        /**
+         * 按钮组
+         */
+        btns?: BtnProps[]
     }
 }

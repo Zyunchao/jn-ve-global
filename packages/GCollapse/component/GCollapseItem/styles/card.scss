@@ -1,0 +1,33 @@
+.custom-collapse-item.card-mode-item {
+    --el-collapse-header-height: 40px;
+    --el-collapse-header-font-size: 16px;
+    --el-collapse-header-text-color: #222;
+
+
+    :deep(.el-collapse-item__header) {
+        cursor: default;
+        color: var(--el-collapse-header-text-color);
+        font-weight: 600;
+        padding: 0 12px;
+        border-bottom: 1px solid #EBEBEB;
+
+        .active-icon,
+        .el-collapse-item__arrow {
+            display: none;
+        }
+
+        .prefix-icon {
+            font-size: inherit;
+            margin-right: 4px;
+        }
+    }
+
+    :deep(.el-collapse-item__wrap) {
+        border: none;
+        margin-bottom: 20px;
+
+        .el-collapse-item__content {
+            padding: 10px 20px;
+        }
+    }
+}

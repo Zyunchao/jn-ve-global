@@ -9,6 +9,7 @@ export default () => {
         labelPosition: 'right',
         labelWidth: '180px',
         // disabled: true,
+        collapseMode: 'card',
         model: {
             name: '12345',
             region: '',
@@ -96,7 +97,8 @@ export default () => {
                     props: {
                         // disabled: true,
                         // active: true
-                        prefix: 'jg-public-kapian-jiangbuzijin'
+                        prefix: 'jg-public-kapian-jiangbuzijin',
+                        btns: [{ label: '测试' }]
                     }
                 }
             },

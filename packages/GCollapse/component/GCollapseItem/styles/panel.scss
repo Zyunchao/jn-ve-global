@@ -1,0 +1,65 @@
+$--icon-size: 16px;
+$--icon-l: 10px;
+
+.custom-collapse-item.panel-mode-item {
+    --el-collapse-header-height: 36px;
+    --el-collapse-header-font-size: 18px;
+    --el-collapse-header-text-color: #4e5966;
+
+    &.is-disabled {
+        :deep(.el-collapse-item__header) {
+            color: var(--el-collapse-header-text-color) !important;
+            cursor: default !important;
+        }
+    }
+
+    &.form-item-classify.is-tail {
+        :deep(.el-collapse-item__header) {
+            display: none;
+        }
+
+        :deep(.el-collapse-item__content) {
+            padding: 0 20px;
+        }
+    }
+
+    /* 头 */
+    :deep(.el-collapse-item__header) {
+        font-weight: 600;
+        border-bottom: none;
+        overflow: hidden;
+        padding: 0 12px;
+
+        .active-icon {
+            font-size: $--icon-size;
+            transform: rotate(-90deg);
+            margin-left: $--icon-l;
+            transition: transform 0.3s;
+            color: #c2c2c2;
+        }
+
+        .prefix-icon {
+            font-size: inherit;
+            margin-right: 4px;
+        }
+
+        .el-collapse-item__arrow {
+            display: none;
+        }
+
+        &.is-active {
+            .active-icon {
+                transform: rotate(-90deg) rotateY(180deg);
+            }
+        }
+    }
+
+    // 内容区域
+    :deep(.el-collapse-item__wrap) {
+        border-bottom: none;
+
+        .el-collapse-item__content {
+            padding: 10px 20px 14px;
+        }
+    }
+}

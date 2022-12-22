@@ -26,7 +26,11 @@
             </LGFormRow>
 
             <!-- Collapse 布局容器 -->
-            <LGCollapse v-if="isCollapseLayout" v-model="activeCollapses">
+            <LGCollapse
+                v-if="isCollapseLayout"
+                v-model="activeCollapses"
+                :mode="localConfig.collapseMode"
+            >
                 <template
                     v-for="(collapseItem, index) in collapseItems"
                     :key="`${collapseItem.title}-${index}`"
@@ -36,6 +40,7 @@
                         :name="collapseItem.name"
                         :disabled="collapseItem.disabled"
                         :prefix="collapseItem.prefix"
+                        :btns="collapseItem.btns"
                         :class="{
                             'form-item-classify': true,
                             'is-tail': collapseItem.isTail

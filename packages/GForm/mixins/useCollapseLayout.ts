@@ -1,5 +1,5 @@
 import { computed, ShallowRef, Ref, watch } from 'vue'
-import type { FormProps, FormItemProps } from '../index'
+import type { FormProps, FormItemProps, BtnProps } from '@component/index'
 
 export interface CustomCollapseItem {
     name: string
@@ -31,6 +31,11 @@ export interface CustomCollapseItem {
      * 是否是尾巴，闭合标签作用
      */
     isTail?: boolean
+
+    /**
+     * 按钮组
+     */
+    btns?: BtnProps[]
 }
 
 export default (props: { config: FormProps }) => {

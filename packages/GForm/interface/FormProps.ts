@@ -138,6 +138,10 @@ export default interface FormProps extends ElFormProps {
      */
     colon?: boolean
     /**
+     * 带有 CollapseItem 时，Collapse 模式选择
+     */
+    collapseMode?: 'card' | 'panel'
+    /**
      * 扩展字段
      */
     [k: string]: any
