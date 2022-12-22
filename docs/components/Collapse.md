@@ -167,3 +167,4 @@ disabled | 禁用 | boolean | false
 prefix | 图标 | string | --
 active | 是否展开 | boolean | true
 isTail | 是否是尾巴，闭合标签作用 | boolean | false
+btns | 按钮组 | BtnProps[] | --

@@ -126,12 +126,96 @@ BaseModule 中的多选和 Table 的多选一致，有一个区别是 selectedRo
 
 </demo-block>
 
-## 参数列表
+## 布局模式
 
-### Attributes
+:::tip
+
+基于不同组的业务需求，提供了不同的布局模式，原有使用方式不变，增加 `mode` api 传递
+
+:::
+
+已支持模式：
+
+* classic：经典模式
+* tabular：扁平化模式
+
+### 更多弹出
+
+<demo-block bg='#f3f4f5'>
+
+<BaseModule-moreSearchPopupTabular />
+
+<template #code>
+
+@[code](@demoroot/BaseModule/moreSearchPopupTabular.vue)
+
+</template>
+
+</demo-block>
+
+### 更多下拉
+
+<demo-block bg='#f3f4f5'>
+
+<BaseModule-moreSearchPullDownTabular />
+
+<template #code>
+
+@[code](@demoroot/BaseModule/moreSearchPullDownTabular.vue)
+
+</template>
+
+</demo-block>
+
+### 注意：
+
+由于历史原因，当前组件的模式配置，分为两种配置方式
+
+* 全局
+* 组件
+
+组件级别 > 全局
+
+其中，全局又分为：
+
+* 基座全局
+* 微应用全局
+
+微应用全局 > 基座全局
+
+:::tip
+
+目前，基座已经根据项目组，全局化配置组件的模式，即项目组划分默认模式
+
+* 监管：经典模式
+* 新核心：扁平化
+
+:::
+
+如果微应用需要统一管理模式，请参考微应用全局配置方式：
+
+注册组件库时，传递参数 `baseModuleMode: 'tabular' 或 'classic'`
+
+```ts
+app.use(ElementPlus, { locale })
+    .use(router)
+    .use(api)
+    .use(GlobalComponents, {
+        baseModuleMode: 'tabular' // 'classic'
+    })
+    .use(LGlobalComponents)
+    .use(store, key)
+    .use(VueGridLayout)
+    .use(directives)
+    .use(microLifecycle)
+    .mount('#app')
+```
+
+## Attributes
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
+mode | 布局模式 | 'classic' \| 'tabular' | 'classic'
 searchFormProps | 搜索条件表单配置对象 | [FormProps](/element-component/modules/Form.html#form-attributes) | null
 tableColumns | 表格列配置 | [TableColumnProps](/element-component/modules/Table.html#table-column-attributes) | []
 tableData | 表格数据 | BaseTableDataItem[] | []
@@ -146,9 +230,9 @@ moreSearchMode | 更多查询展示方式 | 'pull-down' \| 'popup' | undefined
 rowBtnConfig | 表格操作列配置对象 | TableConfig['rowBtnConfig'] | null
 tabs | 标签页配置数组 | Array<{ lable: string; value: string }> | []
 v-model:activeTab \| :activeTab | 双向绑定的激活的 tab 页的 value 值 | string | 默认第一个 tab 的 value
-v-model:selectedRows | 多选绑定的数组，不传递表示不维护选中列表 | array | null 
+v-model:selectedRows | 多选绑定的数组，不传递表示不维护选中列表 | array | null
 
-### Event
+## Events
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
@@ -156,9 +240,17 @@ v-model:selectedRows | 多选绑定的数组，不传递表示不维护选中列
 @reset | 重置钩子 | Function | --
 @search | 查询钩子 | Function | --
 
-### Slot
+## Slot
 
 参数 | 说明 | 类型 | 默认值
 -----|-----|-----|-----
 core | 替换表格，使用自定义内容 | -- | --
 middle-right | 按钮右侧的内容 | -- | --
+
+## defineExpose
+
+参数 | 说明 | 类型 | 默认值
+-----|-----|-----|-----
+tableConfig | 内部实际表格配置 | TableConfig | --
+tableInstance | 表格实例 | TableConfig['instance'] | null
+tableSearchRef | 搜索组件的实例 | VNode | --
