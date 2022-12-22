@@ -1,5 +1,5 @@
 import { reactive, watch, nextTick, computed, useAttrs } from 'vue'
-import type { TableConfig } from '@component/index'
+import type { TableConfig } from '../../index'
 import { assignOwnProp, partitionObj2HumpObj } from '@jsjn/utils'
 
 export default ({ props, emits }) => {

@@ -1,4 +1,4 @@
-import type { BtnProps } from '@component/index'
+import type { BtnProps } from '../../index'
 export default interface CollapseItemControlConfig {
     type: 'collapseItem'
     props?: {

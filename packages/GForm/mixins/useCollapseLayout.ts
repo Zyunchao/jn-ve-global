@@ -1,5 +1,5 @@
 import { computed, ShallowRef, Ref, watch } from 'vue'
-import type { FormProps, FormItemProps, BtnProps } from '@component/index'
+import type { FormProps, FormItemProps, BtnProps } from '../../index'
 
 export interface CustomCollapseItem {
     name: string

@@ -1,5 +1,5 @@
 import { computed, useAttrs } from 'vue'
-import type { FormItemProps } from '@component/GForm/index'
+import type { FormItemProps } from '../../index'
 import { RefreshLeft, Search } from '@element-plus/icons-vue'
 
 export default ({ props, emits, tableSearchRef }) => {
