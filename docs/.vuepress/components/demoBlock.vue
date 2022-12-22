@@ -2,7 +2,12 @@
     <ClientOnly>
         <div class="demo-block">
             <!-- 案例展示容器 -->
-            <div class="component-wrapper">
+            <div
+                class="component-wrapper"
+                :style="{
+                    backgroundColor: bg
+                }"
+            >
                 <slot />
             </div>
 
@@ -40,11 +45,21 @@
 <script lang="ts">
 import { defineComponent, onMounted, watch } from 'vue'
 export default defineComponent({
-    name: 'DemoBlock'
+    name: 'DemoBlock',
+    inheritAttrs: false
 })
 </script>
 <script lang="ts" setup>
 import { ref, reactive, getCurrentInstance } from 'vue'
+
+const props = withDefaults(
+    defineProps<{
+        bg?: string
+    }>(),
+    {
+        bg: '#fff'
+    }
+)
 
 const { proxy } = getCurrentInstance()
 

@@ -94,6 +94,62 @@
 
 </demo-block>
 
+## 模式
+
+目前有两种模式：
+
+* panel（默认）
+* card
+
+:::tip
+
+card 模式不支持收缩，默认所有的 CollapseItem 都为 disabled ，即使不支持收缩，也需要传递 `activeNames`
+
+需要将所有节点的 name 包含在内
+
+注意：卡片背景颜色为白色，注意与嵌套容器背景色的差异，应避免其容器背景为白色
+
+:::
+
+<demo-block bg='#f3f4f5'>
+
+<Collapse-card />
+
+<template #code>
+
+@[code](@demoroot/Collapse/card.vue)
+
+</template>
+
+</demo-block>
+
+## 携带按钮
+
+:::tip
+
+`card` & `panel` 均可携带按钮，传递方式一致
+
+:::
+
+<demo-block bg='#f3f4f5'>
+
+<Collapse-cardButton />
+
+<template #code>
+
+@[code](@demoroot/Collapse/cardButton.vue)
+
+</template>
+
+</demo-block>
+
+## Collapse Attributes
+
+参数|说明|类型|默认值
+-----|-----|-----|-----
+mode | 模式选择 | 'card' \| 'panel' | 'panel'
+disabled | 一键禁用 | boolean | undefined
+
 ## CollapseItem Attributes
 
 参数|说明|类型|默认值
