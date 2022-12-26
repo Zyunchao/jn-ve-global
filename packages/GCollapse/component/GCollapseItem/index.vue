@@ -2,7 +2,7 @@
     <el-collapse-item
         v-bind="$attrs"
         :disabled="localDisabled"
-        :class="['custom-collapse-item', `${collapseMode}-mode-item`]"
+        :class="['custom-collapse-item', `${collapseMode}-mode-item`, { 'is-shadow': shadow }]"
     >
         <template #title>
             <div class="collapse-item-title">
@@ -74,6 +74,10 @@ interface Props {
      * 按钮
      */
     btns?: BtnProps[]
+    /**
+     * 卡片模式，区分背景时，提供盒子阴影
+     */
+    shadow?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -82,7 +86,8 @@ const props = withDefaults(defineProps<Props>(), {
     height: 300,
     prefix: '',
     disabled: undefined,
-    btns: () => []
+    btns: () => [],
+    shadow: false
 })
 
 const attrs = useAttrs()

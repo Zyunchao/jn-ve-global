@@ -3,10 +3,13 @@
     --el-collapse-header-font-size: 16px;
     --el-collapse-header-text-color: #222;
 
+    &.is-shadow {
+        box-shadow: var(--el-box-shadow-light);
+    }
 
     :deep(.el-collapse-item__header) {
-        cursor: default;
-        color: var(--el-collapse-header-text-color);
+        cursor: default !important;
+        color: var(--el-collapse-header-text-color) !important;
         font-weight: 600;
         padding: 0 12px;
         border-bottom: 1px solid #EBEBEB;
