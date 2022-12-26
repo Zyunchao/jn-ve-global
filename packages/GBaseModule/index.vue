@@ -1,9 +1,4 @@
 <template>
-    <!-- 
-        容器的 pading 需要在传递 searchFormProps 的前提下
-        noSearchLabel = true 去除 padding
-        moreSearchMode 的权重比 noSearchLabel 高，如果传递了 moreSearchMode 则必然显示 “搜索条件 + 更多查询” 并添加 padding
-     -->
     <div
         :class="[
             'base-module-root',
@@ -29,7 +24,7 @@
 
         <!-- 中间操作区域 -->
         <div class="middle-area">
-            <span v-if="localMode === 'tabular'" class="title">查询结果</span>
+            <span v-if="localMode === 'tabular' && !noSearchLabel" class="title">查询结果</span>
 
             <div
                 v-if="(btns && btns.length) || $slots['middle-right']"
@@ -126,7 +121,9 @@ interface Props {
      */
     tableLoading?: boolean
     /**
-     * 去除 “查询条件” label
+     * 多用途 api 去除 label，包括
+     *  - “查询条件”
+     *  - “查询结果”
      */
     noSearchLabel?: boolean
     /**

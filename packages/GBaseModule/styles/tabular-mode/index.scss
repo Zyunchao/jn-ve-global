@@ -9,8 +9,13 @@
     &.no-padding {
         --jn-ve-g-base-module-padding-lr: 0;
 
+        .middle-area {
+            padding: 0;
+        }
+
         .core-wrapper {
             padding-bottom: 0;
+            padding-top: 0;
         }
     }
 
