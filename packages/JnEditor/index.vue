@@ -1,6 +1,6 @@
 <template>
     <div class="jn-editor-wrapper">
-        <tinymceDom ref="elementRef" />
+        <TinymceDom ref="elementRef" />
     </div>
 </template>
 
@@ -101,7 +101,7 @@ const elementId = computed(() => `${props.id}-${uuidv4()}` || uuidv4())
 const currentEditor = shallowRef<TinyMCEEditor | null>(null)
 const editorMounted = ref<boolean>(false)
 // dom 节点
-const { element: tinymceDom, elementRef } = getDom(props, elementId.value)
+const { element: TinymceDom, elementRef } = getDom(props, elementId.value)
 
 const init = () => initCurrentTiny(elementId.value, props, emits, currentEditor, editorMounted)
 onMounted(init)
