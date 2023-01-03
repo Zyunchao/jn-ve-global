@@ -177,8 +177,4 @@ export default [
             }
         ]
     }
-    // {
-    //     text: 'Issue',
-    //     link: '/micro/issue/disableScopecss.md'
-    // }
 ]
