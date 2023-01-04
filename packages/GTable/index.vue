@@ -29,6 +29,7 @@
                     :width="size2Rem(55)"
                     v-bind="localConfig.selectionColumns"
                     type="selection"
+                    class-name="table-selection-column"
                 />
 
                 <template

@@ -64,6 +64,18 @@
                 &::before {
                     background-color: var(--jn-ve-g-base-border-color);
                 }
+
+                .table-selection-column {
+                    .cell {
+                        width: 100%;
+                        padding: 0;
+                        justify-content: center;
+                    }
+
+                    .el-checkbox {
+                        margin: 0 !important;
+                    }
+                }
             }
         }
     }
