@@ -1,4 +1,4 @@
-import type { App } from 'vue'
+import type { App, Plugin } from 'vue'
 import type { BaseModuleMode } from './_globalConstant/baseModuleMode'
 export * from './GTable'
 export * from './GForm'
@@ -22,7 +22,7 @@ declare const _default: (
         baseModuleDefaultMode?: BaseModuleMode
     }
 ) => void
-export default _default
+export default _default as Plugin
 // 组件库内的图标资源
 export declare const icons: {
     elIconKeys: string[]
