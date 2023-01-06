@@ -130,6 +130,7 @@ const labelWidth = computed(() => {
 // el-form-item 的配置
 const elFormItemProps = computed(() => {
     const {
+        // 组件库扩展属性
         label,
         hide,
         group,
@@ -143,15 +144,17 @@ const elFormItemProps = computed(() => {
         md,
         lg,
         xl,
-        selected,
         tip,
 
         // 拖拽平台扩展属性
+        selected,
         default: defaultval,
         _control_propertys_,
         _events_provide_,
         _events_holding_,
+        _extend_properties_,
 
+        // 剩余原生 element 有效属性
         ...formItemProps
     } = props.formItemConfig
     return formItemProps

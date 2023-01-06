@@ -338,6 +338,12 @@ const localControlProps = computed(() => {
             break
     }
 
+    /**
+     * 这里在过滤传递的 props 的 _on 开头的伪事件代码
+     * 处理原因忘记了
+     * 应该不是为拖拽平台服务的，拖拽平台注入的事件都是处理过的事件名称
+     * 
+     */
     const temp = {}
     if (Object.keys(controlProps).some((key) => key.startsWith('_on'))) {
         Object.keys(controlProps).forEach((key) => {

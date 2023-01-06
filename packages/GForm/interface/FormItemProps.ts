@@ -118,6 +118,21 @@ interface _LowCodeFormItemCustomProps {
     _events_holding_?: {
         [k: string]: string
     }
+    /**
+     * 扩展属性待选列表，一般来说，扩展属性的配置较为复杂
+     * 需要自定义组件的处理
+     * 且扩展属性属于通用型属性
+     */
+    _extend_properties_?: Array<
+        | 'treeData'
+        | 'getOptionsUrl'
+        | 'mapOptionsCb'
+        | 'options'
+        | 'columns'
+        | 'optionProps'
+        | 'fetchSuggestions'
+        | 'valueKey'
+    >
 }
 
 export interface FormItemCustomProps extends _LowCodeFormItemCustomProps {
