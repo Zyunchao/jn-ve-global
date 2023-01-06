@@ -45,7 +45,7 @@ export interface CheckboxGroupProps {
 /**
  * 待选项的配置
  */
-export interface CheckboxOptionBasePeops {
+export interface CheckboxOptionBaseProps {
     /**
      * item 的显示值
      */
@@ -76,7 +76,7 @@ export interface CheckboxOptionBasePeops {
     checked?: boolean
 }
 
-export interface CheckboxBoxOptionProps extends CheckboxOptionBasePeops {
+export interface CheckboxBoxOptionProps extends CheckboxOptionBaseProps {
     /**
      * 是否显示边框
      */
@@ -91,7 +91,7 @@ export interface CheckboxBoxOptionProps extends CheckboxOptionBasePeops {
     indeterminate?: boolean
 }
 
-export interface CheckboxButtonOptionProps extends CheckboxOptionBasePeops {}
+export interface CheckboxButtonOptionProps extends CheckboxOptionBaseProps {}
 
 export interface CheckboxControlConfig {
     type: 'checkBox'
