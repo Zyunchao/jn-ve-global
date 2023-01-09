@@ -2,7 +2,7 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-01-09 13:41:30
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-01-09 14:17:38
+ * @LastEditTime: 2023-01-09 14:39:24
  * @FilePath: /jn-ve-global/packages/_http/Authorization.ts
  * @Description: 获取 localStorage 中的登录缓存（来自于业务框架的 vuex 持久化数据）
  *
@@ -15,10 +15,8 @@ import { Local } from '@jsjn/utils'
 
 const vuexCache = Local.get('vuex')
 
-const mockToken = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJleUpqYkdsbGJuUkpaQ0k2SWprNU9Ua2lMQ0oxYzJWeVNXUWlPaUl4TmpBeU5EZzVNelE0TWpnNE5qZzRNVEk1SW4wPSIsInJuU3RyIjoiSFNJdEFDd2FrYzJUV3Z2dHpMVld1RWdaMGZBcFIxRUgifQ.LUlCOjp7sa5WJTF2cuWJjkKg5zbvLE4q0kh4hPFNjpI'
-
 let Authorization = vuexCache?.loginInfo?.access_token
     ? `Bearer ${vuexCache.loginInfo.access_token}`
-    : mockToken
+    : null
 
 export default Authorization

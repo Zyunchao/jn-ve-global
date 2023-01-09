@@ -10,6 +10,7 @@ import JnEditorProps from '../interface/JnEditorProps'
 import { getStrSize, Local } from '@jsjn/utils'
 import { ElMessage } from 'element-plus'
 import { imgCompress } from './utils'
+import Authorization from '@component/_http/Authorization'
 
 export type EditorOptions = Parameters<TinyMCE['init']>[0]
 
@@ -319,15 +320,8 @@ function uploadFile(
     // 获取鉴权信息，否则放弃
     const uploadHeaders = new Headers()
 
-    const vuexCache = Local.get('vuex')
-    if (!vuexCache) {
-        !!failure
-            ? failure('上传失败，未能获取登录信息')
-            : ElMessage.error('上传失败，未能获取登录信息')
-        return
-    }
-    if (vuexCache.loginInfo['access_token']) {
-        uploadHeaders.append('Authorization', `Bearer ${vuexCache.loginInfo['access_token']}`)
+    if (Authorization) {
+        uploadHeaders.append('Authorization', Authorization)
     } else {
         !!failure
             ? failure('上传失败，未能获取登录信息')
