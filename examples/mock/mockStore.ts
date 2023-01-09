@@ -1,3 +1,11 @@
+/*
+ * @Author: Zyunchao 18651805393@163.com
+ * @Date: 2023-01-09 14:32:31
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2023-01-09 14:52:31
+ * @FilePath: /jn-ve-global/examples/mock/mockStore.ts
+ * @Description: 模拟业务框架的 vuex 持久化的数据
+ */
 import { Local } from '@jsjn/utils'
 import mockVuex from './data/vuex.json'
 
