@@ -43,18 +43,22 @@ export default ({
         prop: Ref<string | number | boolean | object | Array<any>>
     }
 }) => {
-    if (!Authorization) return
-
-    // 范围内的组件
-    if (
-        ![...loadOptionsControlTyeps, ...loadTreeDataControlType].includes(props.controlConfig.type)
-    ) {
-        return
-    }
-
     // 设定的获取数据 url，未设定就终止
     const getOptionsUrl = props.controlConfig.getOptionsUrl
-    if (!getOptionsUrl) return null
+
+    /**
+     * 判断状态
+     *  - 有 token
+     *  - 获取选项的地址是否传递
+     *  - 是否为指定的控件类型
+     */
+    if (
+        !Authorization ||
+        !getOptionsUrl ||
+        ![...loadOptionsControlTyeps, ...loadTreeDataControlType].includes(props.controlConfig.type)
+    ) {
+        return null
+    }
 
     // 通过控件类型，确定存储数据的字段名称
     const dataFieldName = loadOptionsControlTyeps.includes(props.controlConfig.type)
