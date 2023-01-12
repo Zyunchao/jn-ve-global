@@ -2,7 +2,7 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-01-09 13:41:30
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-01-09 14:39:24
+ * @LastEditTime: 2023-01-12 16:04:14
  * @FilePath: /jn-ve-global/packages/_http/Authorization.ts
  * @Description: 获取 localStorage 中的登录缓存（来自于业务框架的 vuex 持久化数据）
  *
@@ -13,10 +13,14 @@
  */
 import { Local } from '@jsjn/utils'
 
-const vuexCache = Local.get('vuex')
+function getAuthorization() {
+    const vuexCache = Local.get('vuex')
 
-let Authorization = vuexCache?.loginInfo?.access_token
-    ? `Bearer ${vuexCache.loginInfo.access_token}`
-    : null
+    let Authorization = vuexCache?.loginInfo?.access_token
+        ? `Bearer ${vuexCache.loginInfo.access_token}`
+        : null
 
-export default Authorization
+    return Authorization
+}
+
+export default getAuthorization

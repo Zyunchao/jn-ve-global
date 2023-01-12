@@ -10,7 +10,7 @@ import JnEditorProps from '../interface/JnEditorProps'
 import { getStrSize, Local } from '@jsjn/utils'
 import { ElMessage } from 'element-plus'
 import { imgCompress } from './utils'
-import Authorization from '@component/_http/Authorization'
+import getAuthorization from '@component/_http/getAuthorization'
 
 export type EditorOptions = Parameters<TinyMCE['init']>[0]
 
@@ -317,6 +317,7 @@ function uploadFile(
     success: (url: string) => void,
     failure?: (err: string) => void
 ) {
+    const Authorization = getAuthorization()
     // 获取鉴权信息，否则放弃
     const uploadHeaders = new Headers()
 

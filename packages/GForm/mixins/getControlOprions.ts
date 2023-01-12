@@ -8,7 +8,7 @@ import {
     CheckboxControlConfig,
     SelectTreeV2ControlConfig
 } from '../index'
-import Authorization from '@component/_http/Authorization'
+import getAuthorization from '@component/_http/getAuthorization'
 
 // 参数存储字段名称列表
 enum DataFiledName {
@@ -43,6 +43,7 @@ export default ({
         prop: Ref<string | number | boolean | object | Array<any>>
     }
 }) => {
+    const Authorization = getAuthorization()
     // 设定的获取数据 url，未设定就终止
     const getOptionsUrl = props.controlConfig.getOptionsUrl
 
