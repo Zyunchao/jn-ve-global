@@ -31,7 +31,7 @@ export default [
                 link: '/micro/updateLog/basic.md'
             },
             {
-                text: '微应用框架@1.1.0',
+                text: '微应用框架@2.0.0',
                 link: '/micro/updateLog/micro.md'
             }
         ]

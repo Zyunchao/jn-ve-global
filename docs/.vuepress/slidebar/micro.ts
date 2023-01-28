@@ -25,6 +25,10 @@ export default [
         link: '/micro/storeMage.md'
     },
     {
+        text: '提交日志规范',
+        link: '/micro/commitMsg.md'
+    },
+    {
         text: '微应用注册列表',
         link: '/micro/microRegList.md'
     },
