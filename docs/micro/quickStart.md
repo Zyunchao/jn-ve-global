@@ -36,18 +36,18 @@
 
 ![packageName.png](/images/realize/packageName.png)
 
-4. 在 `/.gitignore` 中添加生产包的忽略配置
+4. 修改 package.json 的 port 字段 `/package.json`
+    > 开发模式下，应用是以端口进行本地部署的，如果在本地跑多个微应用，<strong style="color: #ff3040;">每个微应用的端口应该唯一</strong>，关乎基座应用的注册及加载资源
+
+![portChnage](/images/realize/portChnage.jpg)
+
+5. 在 `/.gitignore` 中添加生产包的忽略配置
     > 由于项目采用二级目录配置，打包出来的生产包，以 第三步 的命名，命名生产包，生产包不需要 git 管理，故需要将项目名配置到 .gitignore 中
 
 ```zsh
 # .gitignore
 apollp
 ```
-
-5. 修改微应用的端口 `/vue.config.js`
-    > 开发模式下，应用是以端口进行本地部署的，如果在本地跑多个微应用，<strong style="color: #ff3040;">每个微应用的端口应该唯一</strong>，关乎基座应用的注册及加载资源
-
-![portChnage](/images/realize/portChnage.png)
 
 6. 添加页面 `/src/views/`
     > 依据[页面创建规则](./moduleDetail/pages.md#页面组件规范)，添加页面
