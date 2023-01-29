@@ -149,6 +149,10 @@ export default [
             {
                 text: '指令',
                 link: '/micro/moduleDetail/directives.md'
+            },
+            {
+                text: '页面级权限控制',
+                link: '/micro/moduleDetail/pageContentAuths.md'
             }
         ]
     },
