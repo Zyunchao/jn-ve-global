@@ -34,7 +34,7 @@
 
 1. <strong style="color:#cc0000;">break</strong>: 微应用端口号配置方式修改，参考：[快速开始/微应用开发/4](/micro/quickStart2.md#微应用开发)
 
-2. 增加项目级常量存放目录，`/src/constant`，增加部分常用常量；
+2. 增加项目级常量存放目录，`/src/constants`，增加部分常用常量；
 3. 打包生产，去除 `console` 等日志输出；
 4. 微应用去除 `element` 的样式资源引用；
 5. 打包生产，去除 `KINSO_ROUTE` 的配置；
