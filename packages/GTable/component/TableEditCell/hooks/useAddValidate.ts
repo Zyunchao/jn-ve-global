@@ -1,3 +1,11 @@
+/*
+ * @Author: Zyunchao 18651805393@163.com
+ * @Date: 2023-02-01 10:02:50
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2023-02-01 10:20:49
+ * @FilePath: /jn-ve-global/packages/GTable/component/TableEditCell/hooks/useAddValidate.ts
+ * @Description: 针对当前单元格，在创建完成后，创建 validator 实例
+ */
 import { watch, onMounted, ref } from 'vue'
 import Schema, { ValidateError } from 'async-validator'
 

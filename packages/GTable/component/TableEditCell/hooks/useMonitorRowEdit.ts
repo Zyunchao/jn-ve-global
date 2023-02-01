@@ -1,3 +1,11 @@
+/*
+ * @Author: Zyunchao 18651805393@163.com
+ * @Date: 2023-02-01 10:02:50
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2023-02-01 10:24:46
+ * @FilePath: /jn-ve-global/packages/GTable/component/TableEditCell/hooks/useMonitorRowEdit.ts
+ * @Description: 监视器，监听行 edit 状态发生改变
+ */
 import { watch } from 'vue'
 import _ from 'lodash'
 import { ValidateError } from 'async-validator'

@@ -39,7 +39,7 @@ export default () => {
         {
             prop: 'input',
             label: '姓名-Input',
-            width: 160,
+            // width: 160,
             editable: true,
             // openDB: true,
             openSC: true,
@@ -65,82 +65,9 @@ export default () => {
             ]
         },
         {
-            prop: 'inputNumer',
-            label: '年龄-InputNumer',
-            width: 160,
-            editable: true,
-            openDB: true,
-            controlConfig: {
-                type: 'inputNumber',
-                props: {
-                    min: 0
-                }
-            },
-            rules: [
-                {
-                    required: true,
-                    type: 'number',
-                    min: 0,
-                    max: 10,
-                    message: '年龄在 0 - 10 之间'
-                }
-            ]
-        },
-        {
-            prop: 'select',
-            label: '食物-Select',
-            width: 200,
-            editable: true,
-            openDB: true,
-            controlConfig: {
-                type: 'select',
-                options: Object.keys(foodsMapping).map((key) => ({
-                    label: foodsMapping[key],
-                    value: key
-                }))
-            },
-            render(row) {
-                return <>{foodsMapping[row.select]}</>
-            },
-            rules: {
-                required: true,
-                validator(rule, val, cb) {
-                    if (val === 'noodles' || val === 'coconut') {
-                        return false
-                    }
-                    return true
-                },
-                message: '食物必选，且不能选择 “龙须面” 和 “椰子”'
-            }
-        },
-        {
-            prop: 'selectMultiple',
-            label: '食物多选-Select',
-            width: 200,
-            editable: true,
-            openDB: true,
-            controlConfig: {
-                type: 'select',
-                options: Object.keys(foodsMapping).map((key) => ({
-                    label: foodsMapping[key],
-                    value: key
-                })),
-                props: {
-                    multiple: true
-                }
-            },
-            render(row) {
-                return row.selectMultiple
-                    ? Array.isArray(row.selectMultiple)
-                        ? row.selectMultiple.map((key) => foodsMapping[key] || key).join('，')
-                        : row.selectMultiple
-                    : ''
-            }
-        },
-        {
             prop: 'money',
             label: '工资-FigureInput',
-            width: 180,
+            // width: 180,
             editable: true,
             // openDB: true,
             openSC: true,
@@ -159,134 +86,205 @@ export default () => {
                 return toThousands(row.money)
             }
         },
+
         {
-            prop: 'address',
-            label: '地址-Address',
+            prop: 'inputNumer',
+            label: '年龄-InputNumer',
+            // width: 160,
             editable: true,
-            width: 200,
-            openSC: true,
+            openDB: true,
             controlConfig: {
-                type: 'address',
-                props: {
-                    hideDetail: false
-                }
-            }
-        },
-        {
-            prop: 'radio',
-            label: '性别-Radio',
-            width: 160,
-            editable: true,
-            controlConfig: {
-                type: 'radio',
-                options: Object.keys(sexMapping).map((key) => ({
-                    value: key,
-                    label: sexMapping[key]
-                }))
+                type: 'input'
             },
-            render(row) {
-                return sexMapping[row.radio]
-            }
-        },
-        {
-            prop: 'timePicker',
-            label: '现在时间-TimePicker',
-            width: 210,
-            editable: true,
-            controlConfig: {
-                type: 'timePicker',
-                props: {
-                    format: 'HH:mm:ss'
+            rules: [
+                {
+                    required: true,
+                    type: 'number',
+                    min: 0,
+                    max: 10,
+                    message: '年龄在 0 - 10 之间'
                 }
-            },
-            render(row) {
-                return row.timePicker instanceof Date
-                    ? dayjs(row.timePicker).format('HH:mm:ss')
-                    : row.timePicker
-            }
-        },
-        {
-            prop: 'timeSelect',
-            label: '上班时间-TimeSelect',
-            width: 200,
-            editable: true,
-            controlConfig: {
-                type: 'timeSelect',
-                props: {
-                    start: '08:30',
-                    step: '00:15',
-                    end: '18:30'
-                }
-            }
-        },
-        {
-            prop: 'datePicker',
-            label: '生日-DatePicker',
-            width: 220,
-            editable: true,
-            controlConfig: {
-                type: 'datePicker',
-                props: {
-                    valueFormat: 'YYYY-MM-DD'
-                }
-            },
-            render(row) {
-                return dayjs(row.datePicker).format('YYYY-MM-DD')
-            }
-        },
-        {
-            prop: 'dateTimePicker',
-            label: '生日-DateTimePicker',
-            width: 220,
-            editable: true,
-            controlConfig: {
-                type: 'dateTimePicker',
-                props: {
-                    valueFormat: 'YYYY-MM-DD HH:mm:ss'
-                }
-            },
-            render(row) {
-                return dayjs(row.dateTimePicker).format('YYYY-MM-DD HH:mm:ss')
-            }
-        },
-        {
-            prop: 'daterange',
-            label: '放假-Daterange',
-            width: 260,
-            editable: true,
-            controlConfig: {
-                type: 'datePicker',
-                props: {
-                    type: 'daterange',
-                    valueFormat: 'YYYY-MM-DD'
-                }
-            },
-            render(row) {
-                return Array.isArray(row.daterange)
-                    ? `${row.daterange[0]} 至 ${row.daterange[1]}`
-                    : row.daterange
-            }
-        },
-        {
-            prop: 'checkbox',
-            label: '爱好-Checkbox',
-            minWidth: 200,
-            editable: true,
-            controlConfig: {
-                type: 'checkBox',
-                options: Object.keys(hobbyMapping).map((key) => ({
-                    value: key,
-                    label: hobbyMapping[key]
-                }))
-            },
-            render(row) {
-                return row.checkbox
-                    ? Array.isArray(row.checkbox)
-                        ? row.checkbox.map((key) => hobbyMapping[key] || key).join('，')
-                        : row.checkbox
-                    : ''
-            }
-        },
+            ]
+        }
+        // {
+        //     prop: 'select',
+        //     label: '食物-Select',
+        //     width: 200,
+        //     editable: true,
+        //     openDB: true,
+        //     controlConfig: {
+        //         type: 'select',
+        //         options: Object.keys(foodsMapping).map((key) => ({
+        //             label: foodsMapping[key],
+        //             value: key
+        //         }))
+        //     },
+        //     render(row) {
+        //         return <>{foodsMapping[row.select]}</>
+        //     },
+        //     rules: {
+        //         required: true,
+        //         validator(rule, val, cb) {
+        //             if (val === 'noodles' || val === 'coconut') {
+        //                 return false
+        //             }
+        //             return true
+        //         },
+        //         message: '食物必选，且不能选择 “龙须面” 和 “椰子”'
+        //     }
+        // },
+        // {
+        //     prop: 'selectMultiple',
+        //     label: '食物多选-Select',
+        //     width: 200,
+        //     editable: true,
+        //     openDB: true,
+        //     controlConfig: {
+        //         type: 'select',
+        //         options: Object.keys(foodsMapping).map((key) => ({
+        //             label: foodsMapping[key],
+        //             value: key
+        //         })),
+        //         props: {
+        //             multiple: true
+        //         }
+        //     },
+        //     render(row) {
+        //         return row.selectMultiple
+        //             ? Array.isArray(row.selectMultiple)
+        //                 ? row.selectMultiple.map((key) => foodsMapping[key] || key).join('，')
+        //                 : row.selectMultiple
+        //             : ''
+        //     }
+        // },
+        // {
+        //     prop: 'address',
+        //     label: '地址-Address',
+        //     editable: true,
+        //     width: 200,
+        //     openSC: true,
+        //     controlConfig: {
+        //         type: 'address',
+        //         props: {
+        //             hideDetail: false
+        //         }
+        //     }
+        // },
+        // {
+        //     prop: 'radio',
+        //     label: '性别-Radio',
+        //     width: 160,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'radio',
+        //         options: Object.keys(sexMapping).map((key) => ({
+        //             value: key,
+        //             label: sexMapping[key]
+        //         }))
+        //     },
+        //     render(row) {
+        //         return sexMapping[row.radio]
+        //     }
+        // },
+        // {
+        //     prop: 'timePicker',
+        //     label: '现在时间-TimePicker',
+        //     width: 210,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'timePicker',
+        //         props: {
+        //             format: 'HH:mm:ss'
+        //         }
+        //     },
+        //     render(row) {
+        //         return row.timePicker instanceof Date
+        //             ? dayjs(row.timePicker).format('HH:mm:ss')
+        //             : row.timePicker
+        //     }
+        // },
+        // {
+        //     prop: 'timeSelect',
+        //     label: '上班时间-TimeSelect',
+        //     width: 200,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'timeSelect',
+        //         props: {
+        //             start: '08:30',
+        //             step: '00:15',
+        //             end: '18:30'
+        //         }
+        //     }
+        // },
+        // {
+        //     prop: 'datePicker',
+        //     label: '生日-DatePicker',
+        //     width: 220,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'datePicker',
+        //         props: {
+        //             valueFormat: 'YYYY-MM-DD'
+        //         }
+        //     },
+        //     render(row) {
+        //         return dayjs(row.datePicker).format('YYYY-MM-DD')
+        //     }
+        // },
+        // {
+        //     prop: 'dateTimePicker',
+        //     label: '生日-DateTimePicker',
+        //     width: 220,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'dateTimePicker',
+        //         props: {
+        //             valueFormat: 'YYYY-MM-DD HH:mm:ss'
+        //         }
+        //     },
+        //     render(row) {
+        //         return dayjs(row.dateTimePicker).format('YYYY-MM-DD HH:mm:ss')
+        //     }
+        // },
+        // {
+        //     prop: 'daterange',
+        //     label: '放假-Daterange',
+        //     width: 260,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'datePicker',
+        //         props: {
+        //             type: 'daterange',
+        //             valueFormat: 'YYYY-MM-DD'
+        //         }
+        //     },
+        //     render(row) {
+        //         return Array.isArray(row.daterange)
+        //             ? `${row.daterange[0]} 至 ${row.daterange[1]}`
+        //             : row.daterange
+        //     }
+        // },
+        // {
+        //     prop: 'checkbox',
+        //     label: '爱好-Checkbox',
+        //     minWidth: 200,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'checkBox',
+        //         options: Object.keys(hobbyMapping).map((key) => ({
+        //             value: key,
+        //             label: hobbyMapping[key]
+        //         }))
+        //     },
+        //     render(row) {
+        //         return row.checkbox
+        //             ? Array.isArray(row.checkbox)
+        //                 ? row.checkbox.map((key) => hobbyMapping[key] || key).join('，')
+        //                 : row.checkbox
+        //             : ''
+        //     }
+        // },
         // {
         //     prop: 'colorPicker',
         //     label: '幸运色-ColorPicker',
@@ -345,93 +343,93 @@ export default () => {
         //         )
         //     }
         // },
-        {
-            prop: 'selectTree',
-            label: '组织-SelectTree',
-            width: 260,
-            editable: true,
-            openDB: true,
-            controlConfig: {
-                type: 'selectTreeV2',
-                treeData: treeData
-            },
-            render(row) {
-                return (
-                    <span>{findTargetById(treeData, row.selectTree)?.name || row.selectTree}</span>
-                )
-            }
-        },
-        {
-            prop: 'selectTreeMultiple',
-            label: '组织-SelectTreeMultiple',
-            width: 300,
-            editable: true,
-            openDB: true,
-            controlConfig: {
-                type: 'selectTreeV2',
-                treeData: treeData,
-                props: {
-                    multiple: true
-                }
-            },
-            render(row) {
-                return (
-                    <span>
-                        {row.selectTreeMultiple
-                            .map((item) => findTargetById(treeData, item)?.name || item)
-                            .join('，')}
-                    </span>
-                )
-            }
-        },
-        {
-            prop: 'infoSelect',
-            label: 'InfoSelect',
-            width: 300,
-            editable: true,
-            controlConfig: {
-                type: 'infoSelect',
-                columns: InfoSelectColumns,
-                options: userList.filter((item, index) => index >= 0 && index < 10) as any,
-                total: 29
-            }
-        },
-        {
-            prop: 'infoSelectAll',
-            label: 'InfoSelectAll',
-            width: 300,
-            editable: true,
-            controlConfig: {
-                type: 'infoSelectAll',
-                columns: InfoSelectColumns,
-                options: userList as any,
-                props: {
-                    multiple: true,
-                    optionMaxItemNum: 5
-                }
-            }
-        },
-        {
-            prop: 'infoAutocomplete',
-            label: 'InfoAutocomplete',
-            width: 300,
-            editable: true,
-            openDB: true,
-            rules: [
-                {
-                    required: true,
-                    type: 'string',
-                    message: '姓名是必填项'
-                }
-            ],
-            controlConfig: {
-                type: 'infoAutocomplete',
-                columns: InfoSelectColumns,
-                fetchSuggestions(str, cb) {
-                    cb(userList)
-                },
-                valueKey: 'name'
-            }
-        }
+        // {
+        //     prop: 'selectTree',
+        //     label: '组织-SelectTree',
+        //     width: 260,
+        //     editable: true,
+        //     openDB: true,
+        //     controlConfig: {
+        //         type: 'selectTreeV2',
+        //         treeData: treeData
+        //     },
+        //     render(row) {
+        //         return (
+        //             <span>{findTargetById(treeData, row.selectTree)?.name || row.selectTree}</span>
+        //         )
+        //     }
+        // },
+        // {
+        //     prop: 'selectTreeMultiple',
+        //     label: '组织-SelectTreeMultiple',
+        //     width: 300,
+        //     editable: true,
+        //     openDB: true,
+        //     controlConfig: {
+        //         type: 'selectTreeV2',
+        //         treeData: treeData,
+        //         props: {
+        //             multiple: true
+        //         }
+        //     },
+        //     render(row) {
+        //         return (
+        //             <span>
+        //                 {row.selectTreeMultiple
+        //                     .map((item) => findTargetById(treeData, item)?.name || item)
+        //                     .join('，')}
+        //             </span>
+        //         )
+        //     }
+        // },
+        // {
+        //     prop: 'infoSelect',
+        //     label: 'InfoSelect',
+        //     width: 300,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'infoSelect',
+        //         columns: InfoSelectColumns,
+        //         options: userList.filter((item, index) => index >= 0 && index < 10) as any,
+        //         total: 29
+        //     }
+        // },
+        // {
+        //     prop: 'infoSelectAll',
+        //     label: 'InfoSelectAll',
+        //     width: 300,
+        //     editable: true,
+        //     controlConfig: {
+        //         type: 'infoSelectAll',
+        //         columns: InfoSelectColumns,
+        //         options: userList as any,
+        //         props: {
+        //             multiple: true,
+        //             optionMaxItemNum: 5
+        //         }
+        //     }
+        // },
+        // {
+        //     prop: 'infoAutocomplete',
+        //     label: 'InfoAutocomplete',
+        //     width: 300,
+        //     editable: true,
+        //     openDB: true,
+        //     rules: [
+        //         {
+        //             required: true,
+        //             type: 'string',
+        //             message: '姓名是必填项'
+        //         }
+        //     ],
+        //     controlConfig: {
+        //         type: 'infoAutocomplete',
+        //         columns: InfoSelectColumns,
+        //         fetchSuggestions(str, cb) {
+        //             cb(userList)
+        //         },
+        //         valueKey: 'name'
+        //     }
+        // }
     ])
 }

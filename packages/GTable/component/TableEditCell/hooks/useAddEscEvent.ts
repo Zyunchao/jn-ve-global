@@ -1,3 +1,11 @@
+/*
+ * @Author: Zyunchao 18651805393@163.com
+ * @Date: 2023-02-01 10:02:50
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2023-02-01 10:24:03
+ * @FilePath: /jn-ve-global/packages/GTable/component/TableEditCell/hooks/useEscEvent.ts
+ * @Description: 页面 esc 取消编辑状态
+ */
 import { onMounted, onBeforeUnmount } from 'vue'
 import _ from 'lodash'
 import { Local } from '@jsjn/utils'

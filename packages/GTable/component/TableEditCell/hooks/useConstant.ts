@@ -1,3 +1,11 @@
+/*
+ * @Author: Zyunchao 18651805393@163.com
+ * @Date: 2023-02-01 10:02:50
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2023-02-01 10:23:40
+ * @FilePath: /jn-ve-global/packages/GTable/component/TableEditCell/hooks/useConstant.ts
+ * @Description: 存储组件常量归类
+ */
 import { computed, ref, inject, toRef } from 'vue'
 import { FigureInputProps } from '../../../../GForm'
 import { onCellEditKey, tableInstanceKey } from '../../../constant/InjectionKeys'
@@ -36,7 +44,6 @@ export default ({ props, editCellContentRef }) => {
     const localData = computed<BaseTableDataItem>(() => props.data)
 
     // 行字段的同步引用
-    // const localPropRef = toRef(props.data, props.columnConfig.prop)
     const localPropRef = computed({
         get: () => props.data[props.columnConfig.prop],
         set: (val) => {
@@ -50,7 +57,6 @@ export default ({ props, editCellContentRef }) => {
     const localControlType = ref(props.columnConfig.controlConfig?.type)
 
     // 控件配置 props
-    // const localControlProps = ref(props.columnConfig.controlConfig?.props)
     const localControlProps = computed(() => {
         if (!props.columnConfig.controlConfig || !props.columnConfig.controlConfig.props) {
             return undefined

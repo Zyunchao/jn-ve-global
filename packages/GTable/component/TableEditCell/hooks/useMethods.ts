@@ -1,3 +1,11 @@
+/*
+ * @Author: Zyunchao 18651805393@163.com
+ * @Date: 2023-02-01 10:02:50
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2023-02-01 10:24:26
+ * @FilePath: /jn-ve-global/packages/GTable/component/TableEditCell/hooks/useMethods.ts
+ * @Description: 存储组件方法归类
+ */
 import _ from 'lodash'
 import { DatePickerControlConfig } from '../../../../GForm'
 

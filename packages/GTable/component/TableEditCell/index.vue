@@ -432,13 +432,13 @@ import LGInfoAutocomplete from '../../../GInfoSA/GInfoAutocomplete/index.vue'
 import LGSelectTreeV2 from '../../../GSelectTree/v2/index.vue'
 import LGAddress from '../../../GAddress/index.vue'
 import {
-    getConstant,
-    addEscEvent,
-    getMethods,
-    getRefsStore,
-    addValidate,
-    setMonitorRowEdit
-} from './mixins'
+    useAddEscEvent,
+    useAddValidate,
+    useConstant,
+    useMethods,
+    useMonitorRowEdit,
+    useRefsStore
+} from './hooks'
 
 interface Props {
     /**
@@ -462,7 +462,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 // dom ref
-const { editCellContentRef, controlRef } = getRefsStore()
+const { editCellContentRef, controlRef } = useRefsStore()
 
 // 上下文所必须的变量
 const {
@@ -488,10 +488,10 @@ const {
 
     // 工具
     parentClassFlag
-} = getConstant({ props, editCellContentRef })
+} = useConstant({ props, editCellContentRef })
 
 // 校验
-const { currentCellValidator, validateRes, validateMsg } = addValidate({
+const { currentCellValidator, validateRes, validateMsg } = useAddValidate({
     editCellContentRef,
     props,
     localPropRef,
@@ -499,7 +499,7 @@ const { currentCellValidator, validateRes, validateMsg } = addValidate({
 })
 
 // 添加 esc 事件 mixin
-addEscEvent({
+useAddEscEvent({
     localPropCopy,
     localPropRef,
     cellStatus,
@@ -522,7 +522,7 @@ const {
     datePickerValueVerify,
     handleDB,
     handleSC
-} = getMethods({
+} = useMethods({
     cellStatus,
     CellStatus,
     tableInstance,
@@ -541,7 +541,7 @@ const {
 })
 
 // 行编辑总控
-setMonitorRowEdit({
+useMonitorRowEdit({
     localData,
     text2Control,
     currentCellValidator,
