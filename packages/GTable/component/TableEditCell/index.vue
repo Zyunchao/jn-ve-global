@@ -34,7 +34,7 @@
             >
                 <!-- input 输入框 -->
                 <template v-if="localControlType === 'input'">
-                    <div style="display: flex">
+                    <div style="display: flex; width: 100%;">
                         <el-input
                             ref="controlRef"
                             v-model="localPropRef"
