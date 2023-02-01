@@ -29,12 +29,12 @@
             </template>
 
             <!-- 可编辑行 -->
-            <template v-else-if="columnConfig.editable">
+            <template v-else-if="columnConfig.editable && $index >= 0">
                 <TableEditCell :column-config="columnConfig" :data="row" :index="$index" />
             </template>
 
             <!-- 列的自定义渲染 -->
-            <template v-else-if="columnConfig.render">
+            <template v-else-if="columnConfig.render && $index >= 0">
                 <FunctionalComponent :render="columnConfig.render(row, $index)" />
             </template>
         </template>
