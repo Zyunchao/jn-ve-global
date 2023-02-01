@@ -80,16 +80,18 @@
                         "
                     >
                         <el-option
-                            v-for="selectOption in columnConfig.controlConfig.options"
+                            v-for="selectOption in (columnConfig.controlConfig as SelectControlConfig).options"
                             :key="selectOption.value"
                             :label="selectOption.label"
                             :value="selectOption.value"
                             :disabled="selectOption.disabled"
                         >
                             <!-- 自定义渲染 Select 模板 -->
-                            <template v-if="columnConfig.controlConfig.optionRender">
+                            <template
+                                v-if="(columnConfig.controlConfig as SelectControlConfig).optionRender"
+                            >
                                 <FunctionalComponent
-                                    :render="columnConfig.controlConfig.optionRender(selectOption)"
+                                    :render="(columnConfig.controlConfig as SelectControlConfig).optionRender(selectOption)"
                                 />
                             </template>
                         </el-option>
@@ -109,7 +111,7 @@
                         @change="control2Text"
                     >
                         <el-radio
-                            v-for="radioOption in columnConfig.controlConfig.options"
+                            v-for="radioOption in (columnConfig.controlConfig as RadioControlConfig).options"
                             :key="radioOption.value"
                             :label="radioOption.value"
                             :disabled="radioOption.disabled"
@@ -195,7 +197,7 @@
                     <div v-if="Array.isArray(localPropRef)" class="checkbox-wrapper">
                         <el-checkbox-group v-model="localPropRef" v-bind="localControlProps">
                             <el-checkbox
-                                v-for="checkBoxOption in columnConfig.controlConfig.options"
+                                v-for="checkBoxOption in (columnConfig.controlConfig as CheckboxControlConfig).options"
                                 :key="checkBoxOption.value"
                                 :label="checkBoxOption.value"
                                 :disabled="checkBoxOption.disabled"
@@ -275,7 +277,7 @@
                                 (localControlProps.multiple && Array.isArray(localPropRef))
                         "
                         v-model="localPropRef"
-                        :tree-data="columnConfig.controlConfig.treeData"
+                        :tree-data="(columnConfig.controlConfig as SelectTreeControlConfig).treeData"
                         v-bind="localControlProps"
                         size="small"
                         @visible-change="
@@ -301,7 +303,7 @@
                                 (localControlProps.multiple && Array.isArray(localPropRef))
                         "
                         v-model="localPropRef"
-                        :tree-data="columnConfig.controlConfig.treeData"
+                        :tree-data="(columnConfig.controlConfig as SelectTreeV2ControlConfig).treeData"
                         v-bind="localControlProps"
                         size="small"
                         style="width: 100%"
@@ -334,10 +336,10 @@
                     <LGInfoSelect
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        :total="columnConfig.controlConfig.total"
-                        :options-data="columnConfig.controlConfig.options"
-                        :columns="columnConfig.controlConfig.columns"
-                        :option-props="columnConfig.controlConfig.optionProps"
+                        :total="(columnConfig.controlConfig as InfoSelectControlConfig).total"
+                        :options-data="(columnConfig.controlConfig as InfoSelectControlConfig).options"
+                        :columns="(columnConfig.controlConfig as InfoSelectControlConfig).columns"
+                        :option-props="(columnConfig.controlConfig as InfoSelectControlConfig).optionProps"
                         size="small"
                         @closed="delayControlToText"
                     />
@@ -348,9 +350,9 @@
                     <LGInfoSelectAll
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        :options-data="columnConfig.controlConfig.options"
-                        :columns="columnConfig.controlConfig.columns"
-                        :option-props="columnConfig.controlConfig.optionProps"
+                        :options-data="(columnConfig.controlConfig as InfoSelectAllControlConfig).options"
+                        :columns="(columnConfig.controlConfig as InfoSelectAllControlConfig).columns"
+                        :option-props="(columnConfig.controlConfig as InfoSelectAllControlConfig).optionProps"
                         size="small"
                         @closed="delayControlToText"
                     />
@@ -361,9 +363,9 @@
                     <LGInfoAutocomplete
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        :columns="columnConfig.controlConfig.columns"
-                        :fetch-suggestions="columnConfig.controlConfig.fetchSuggestions"
-                        :value-key="columnConfig.controlConfig.valueKey"
+                        :columns="(columnConfig.controlConfig as InfoAutocompleteControlConfig).columns"
+                        :fetch-suggestions="(columnConfig.controlConfig as InfoAutocompleteControlConfig).fetchSuggestions"
+                        :value-key="(columnConfig.controlConfig as InfoAutocompleteControlConfig).valueKey"
                         size="small"
                         @closed="delayControlToText"
                     />
@@ -374,7 +376,7 @@
                     <LGAddress
                         v-model="localPropRef"
                         v-bind="localControlProps"
-                        :options="columnConfig.controlConfig.options"
+                        :options="(columnConfig.controlConfig as AddressControlConfig).options"
                         size="small"
                         @table-edit-hide="delayControlToText"
                     />
@@ -408,7 +410,19 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { TableColumnProps, BaseTableDataItem } from '../../index'
+import type {
+    TableColumnProps,
+    BaseTableDataItem,
+    SelectControlConfig,
+    RadioControlConfig,
+    CheckboxControlConfig,
+    SelectTreeControlConfig,
+    SelectTreeV2ControlConfig,
+    InfoSelectAllControlConfig,
+    InfoSelectControlConfig,
+    InfoAutocompleteControlConfig,
+    AddressControlConfig
+} from '../../../index'
 import FunctionalComponent from '../../../FunctionalComponent'
 import LGSelectTree from '../../../GSelectTree/v1/index.vue'
 import LGFigureInput from '../../../GFigureInput/index.vue'
@@ -432,13 +446,13 @@ interface Props {
      */
     columnConfig: TableColumnProps
     /**
-     * row 数据
+     * 单元格所在行的 数据
      */
     data: BaseTableDataItem
     /**
-     * row index
+     * 单元格所在行的 index
      */
-    index: string | number
+    index: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
