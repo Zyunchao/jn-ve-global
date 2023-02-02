@@ -8,7 +8,7 @@ import {
     CheckboxControlConfig,
     SelectTreeV2ControlConfig
 } from '../index'
-import getAuthorization from '@component/_http/getAuthorization'
+import getAuthorization from '../../_http/getAuthorization'
 
 // 参数存储字段名称列表
 enum DataFiledName {

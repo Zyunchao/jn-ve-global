@@ -1,4 +1,4 @@
-# 更新日志 
+# 组件库 jn-ve-global 更新日志 
 
 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。
 
