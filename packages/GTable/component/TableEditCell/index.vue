@@ -34,7 +34,7 @@
             >
                 <!-- input 输入框 -->
                 <template v-if="localControlType === 'input'">
-                    <div style="display: flex; width: 100%;">
+                    <div style="display: flex; width: 100%">
                         <el-input
                             ref="controlRef"
                             v-model="localPropRef"
@@ -495,7 +495,8 @@ const { currentCellValidator, validateRes, validateMsg } = useAddValidate({
     editCellContentRef,
     props,
     localPropRef,
-    localData
+    localData,
+    controlCellShow
 })
 
 // 添加 esc 事件 mixin
