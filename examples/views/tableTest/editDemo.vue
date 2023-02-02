@@ -1,5 +1,8 @@
 <template>
     <BusLayout>
+        <el-button type="success" @click="handleValidate">
+            校验
+        </el-button>
         <g-table :config="tableConfig" />
     </BusLayout>
 </template>
@@ -11,13 +14,29 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { reactive, nextTick, ref } from 'vue'
+import { reactive, nextTick, ref, watch } from 'vue'
 import mockData from './editTableData'
 import { TableConfig, BaseTableDataItem } from '@component/index'
 import EditTableData from './component/editTableColumns'
 import BusLayout from '@/components/businessLayout/index.vue'
 
-const tableColumns = EditTableData()
+const tableData = ref<any[]>()
+const tableInstance = ref<TableConfig['instance']>()
+const tableColumns = EditTableData(tableData, tableInstance)
+
+const handleValidate = () => {
+    tableConfig.instance
+        .validate({
+            // ri: 1,
+            prop: 'money'
+        })
+        .then((res) => {
+            console.log(`%c 校验成功：`, 'color: #67c23a;', res)
+        })
+        .catch((err) => {
+            console.log(`%c 校验失败：`, 'color: #ff3040;', err)
+        })
+}
 
 const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
     instance: null,
@@ -61,7 +80,11 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
             },
             {
                 label: '删除2',
-                type: 'danger'
+                type: 'danger',
+                onClick(row, index) {
+                    // tableConfig.data = tableConfig.data.filter((_, i) => i !== index)
+                    tableConfig.data.splice(index, 1)
+                }
             },
             {
                 label: '删除3',
@@ -86,6 +109,23 @@ const tableConfig = reactive<TableConfig<BaseTableDataItem>>({
         ]
     }
 })
+
+watch(
+    () => tableConfig.data,
+    (data) => {
+        tableData.value = data
+    },
+    {
+        deep: true,
+        immediate: true
+    }
+)
+watch(
+    () => tableConfig.instance,
+    (instance) => {
+        tableInstance.value = instance
+    }
+)
 
 /**
  * 转换数据

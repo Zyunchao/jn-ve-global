@@ -1,6 +1,19 @@
 import { BaseTableDataItem } from '../index'
 
-export default interface TableMethods {
+export interface TableMethodsExtend {
+    validate?: (props?: {
+        /**
+         * 要校验的行数
+         */
+        ri?: number
+        /**
+         * 要检验的列（每一行的指定字段）
+         */
+        prop?: string
+    }) => Promise<PromiseSettledResult<any>[]>
+}
+
+export default interface TableMethods extends TableMethodsExtend {
     /**
      * 用于多选表格，清空用户的选择
      */

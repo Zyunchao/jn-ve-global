@@ -17,7 +17,7 @@ export interface TableRowBtnProps<TBD> extends BtnProps {
     onClick?: (row?: TBD, index?: number) => void
 }
 
-export default interface TableConfig<TBD> extends TableProps<TBD> {
+export default interface TableConfig<TBD = any> extends TableProps<TBD> {
     /**
      * 列的配置
      */

@@ -86,9 +86,10 @@ import Schema, { ValidateError, ValidateFieldsError, Rules } from 'async-validat
 import TableColumn from './component/TableColumn.vue'
 import AddOperationColumn from './component/OperationColumn/index'
 import { size2Rem } from '@jsjn/utils'
+import useLoadTriggerValidator from './hooks/useLoadTriggerValidator'
 
 interface Props {
-    config: TableConfig<any>
+    config: TableConfig
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -109,6 +110,9 @@ AddOperationColumn(localConfig.value)
 provide(onCellEditKey, props.config?.onCellEdited)
 // 表格实例
 provide(tableInstanceKey, localInstance)
+
+// 收集表格所有单元格的校验器
+useLoadTriggerValidator({ props, localInstance })
 
 // 监听配置对象的 !"引用"! 更改，重建表格
 watch(

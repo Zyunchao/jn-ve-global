@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, Ref } from 'vue'
 import { TableColumnProps, TableConfig, BaseTableDataItem } from '@component/index'
 import { toThousands } from '@jsjn/utils'
 import { findTargetById } from '@/utils/utils'
@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 import { columns as InfoSelectColumns } from '../data/columns'
 import treeData from '../../selectTreeTest/data.json'
 import userList from '../data/userList.json'
+import _ from 'lodash'
 
 const foodsMapping = {
     pastries: '黄金糕',
@@ -34,7 +35,7 @@ const sexMapping = {
     f: '女'
 }
 
-export default () => {
+export default (tableData: Ref<any[]>, tableInstance: Ref<TableConfig['instance']>) => {
     return reactive<TableColumnProps[]>([
         {
             prop: 'input',
@@ -73,38 +74,55 @@ export default () => {
             openSC: true,
             rules: [
                 {
-                    required: true
+                    validator(rule, value, cb, source) {
+                        // console.log(`%c value === `, 'color: #e6a23c;', value)
+                        const sum = _.sumBy(tableData.value, (item) => item.money)
+
+                        // console.log(`%c sum === `, 'color: #67c23a;', sum)
+
+                        if (sum > 10) {
+                            // cb(new Error('工资总和 应该小于 10'))
+                            return new Error('工资总和 应该小于 10')
+                        }
+
+                        cb()
+                    }
                 }
             ],
             controlConfig: {
-                type: 'figureInput',
+                type: 'inputNumber',
                 props: {
-                    format: (val) => toThousands(val)
+                    onChange() {
+                        tableInstance.value.validate()
+                    }
                 }
-            },
-            render(row) {
-                return toThousands(row.money)
+                // props: {
+                //     format: (val) => toThousands(val)
+                // }
             }
+            // render(row) {
+            //     return toThousands(row.money)
+            // }
         },
 
         {
             prop: 'inputNumer',
-            label: '年龄-InputNumer',
+            label: '年龄-InputNumer'
             // width: 160,
-            editable: true,
-            openDB: true,
-            controlConfig: {
-                type: 'input'
-            },
-            rules: [
-                {
-                    required: true,
-                    type: 'number',
-                    min: 0,
-                    max: 10,
-                    message: '年龄在 0 - 10 之间'
-                }
-            ]
+            // editable: true,
+            // openDB: true,
+            // controlConfig: {
+            //     type: 'input'
+            // }
+            // rules: [
+            //     {
+            //         required: true,
+            //         type: 'number',
+            //         min: 0,
+            //         max: 10,
+            //         message: '年龄在 0 - 10 之间'
+            //     }
+            // ]
         }
         // {
         //     prop: 'select',
