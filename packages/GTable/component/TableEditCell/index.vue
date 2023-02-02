@@ -54,7 +54,7 @@
                             size="small"
                             v-bind="localControlProps"
                         />
-                        <el-button text size="small" @click="control2Text">
+                        <el-button text size="small" @click.stop="control2Text">
                             确定
                         </el-button>
                     </div>
@@ -207,7 +207,7 @@
                             </el-checkbox>
                         </el-checkbox-group>
                         <div class="checkbox-confirm-btn-wrapper">
-                            <el-button size="small" type="primary" @click="control2Text">
+                            <el-button size="small" type="primary" @click.stop="control2Text">
                                 确定
                             </el-button>
                         </div>
