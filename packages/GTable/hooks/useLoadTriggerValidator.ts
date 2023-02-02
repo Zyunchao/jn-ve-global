@@ -2,7 +2,7 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-02-01 11:40:38
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-02-02 10:51:06
+ * @LastEditTime: 2023-02-02 11:05:58
  * @FilePath: /jn-ve-global/packages/GTable/hooks/useLoadTriggerValidator.ts
  * @Description: 为表格（可编辑）添加主动校验方法
  */
@@ -89,6 +89,7 @@ function findEffectiveCellValidator(
     prop?: string
 ): CellValidator[] {
     const temp: CellValidator[] = []
+    const riEffective = ri === 0 || !!ri
 
     Object.keys(map).forEach((rowKey) => {
         const row = map[rowKey]
@@ -98,20 +99,20 @@ function findEffectiveCellValidator(
                 return
             }
 
-            if (!ri && !prop) {
+            if (!riEffective && !prop) {
                 // 全部校验
                 temp.push(cellValidator)
-            } else if (!ri && prop) {
+            } else if (!riEffective && prop) {
                 // 按列校验
                 if (prop === cellValidatorKey) {
                     temp.push(cellValidator)
                 }
-            } else if (ri && !prop) {
+            } else if (riEffective && !prop) {
                 // 按行校验
                 if (rowKey === `${rowFlagKey}${ri}`) {
                     temp.push(cellValidator)
                 }
-            } else if (ri && prop) {
+            } else if (riEffective && prop) {
                 // 具体单元格校验
                 if (rowKey === `${rowFlagKey}${ri}` && prop === cellValidatorKey) {
                     temp.push(cellValidator)
