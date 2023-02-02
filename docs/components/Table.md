@@ -267,6 +267,49 @@
 
 </demo-block>
 
+#### 表格主动校验
+
+:::tip 适用
+
+\>= 2.3.0
+
+注意：在主动校验时，组件只会校验处于激活控件状态的单元格
+:::
+
+调用表格实例的 `validate` 方法，实现主动校验， `validate` 返回 `Promise` 实例
+
+```ts
+validate?: (props?: {
+    /**
+     * 要校验的行数
+     */
+    ri?: number
+    /**
+     * 要检验的列（每一行的指定字段）
+     */
+    prop?: string
+}) => Promise<PromiseSettledResult<any>[]>
+```
+
+调用场景：
+
+* 整体（所有单元格）校验：validate 不传递参数
+* 整行：传递 `ri`
+* 整列：传递 `prop`
+* 具体到某个单元格：传递 `ci` && `prop`
+
+<demo-block>
+
+<Table-validate />
+
+<template #code>
+
+@[code vue{54}](@demoroot/Table/validate.vue)
+
+</template>
+
+</demo-block>
+
 #### 控件事件获取整行数据
 
 :::tip 2.0.5+ 版本
