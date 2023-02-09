@@ -1,7 +1,11 @@
 <template>
     <transition name="shade-opactitys">
-        <div v-if="show" class="loading-next">
-            <LGIcon icon="el-Loading" />
+        <div v-if="true" class="loading-next">
+            <div class="box">
+                <slot>
+                    <component :is="currentIcon" />
+                </slot>
+            </div>
         </div>
     </transition>
 </template>
@@ -13,25 +17,34 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import LGIcon from '../GIcon/index.vue'
-const props = withDefaults(defineProps<{ show: boolean }>(), {
-    show: false
+import { computed, VNode } from 'vue'
+
+const props = withDefaults(
+    defineProps<{
+        show: boolean
+        i?: string
+        color?: string
+        scale?: number
+    }>(),
+    {
+        show: false,
+        i: '1',
+        color: '#000',
+        scale: 1
+    }
+)
+
+const loadingIcons = import.meta.glob('./components/*.vue', { eager: true })
+const currentIcon = computed<VNode>(() => {
+    const key = `./components/loading${props.i}.vue`
+    if (Object.keys(loadingIcons).some((objKey) => objKey === key)) {
+        return loadingIcons[key]['default']
+    }
+    return loadingIcons[`./components/loading1.vue`]['default']
 })
 </script>
 
 <style lang="scss" scoped>
-$--base-active-color: #399ffb;
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 .loading-next {
     width: 100%;
     height: 100%;
@@ -41,25 +54,26 @@ $--base-active-color: #399ffb;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 9999;
     background-color: #fff;
 
-    :deep(.g-icon) {
-        font-size: 100px;
-        color: $--base-active-color;
-        font-weight: 700;
-        animation: rotate 1.5s linear infinite;
+    .box {
+        transform: scale(v-bind(scale));
+    }
+
+    :deep(.loading) {
+        color: v-bind(color);
     }
 }
 
 .shade-opactitys-enter-active,
 .shade-opactitys-leave-active {
-	will-change: transform;
-	transition: all 0.3s ease;
+    will-change: transform;
+    transition: all 0.3s ease;
 }
 
 .shade-opactitys-enter-from,
 .shade-opactitys-leave-to {
-	opacity: 0;
+    opacity: 0;
 }
 </style>
