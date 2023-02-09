@@ -1,6 +1,6 @@
 <template>
     <transition name="shade-opactitys">
-        <div v-if="true" class="loading-next">
+        <div v-if="show" class="loading-next">
             <div class="box">
                 <slot>
                     <component :is="currentIcon" />
