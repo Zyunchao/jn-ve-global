@@ -8,7 +8,7 @@
 
 <template #version>
 
-2.4.0
+2.4.3
 
 </template>
 
@@ -22,7 +22,7 @@
 
 <h4>SelectTree</h4>
 
-1. SelectTree V1 版本采用 ElTreeV2 重构
+1. SelectTree V1 版本采用 ElTreeV2 重构，针对大体量数据优化
 
 </update-log-block>
 
