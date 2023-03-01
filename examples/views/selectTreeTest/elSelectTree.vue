@@ -1,5 +1,7 @@
 <template>
     <BaseLayout>
+        <g-form :config="formConfig" />
+
         <div class="box">
             <g-select-tree-v2
                 v-model="activeValue"
@@ -8,8 +10,6 @@
                 multiple
             />
         </div>
-
-        <g-form :config="formConfig" />
     </BaseLayout>
 </template>
 
@@ -24,6 +24,7 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import treeData from './data.json'
 import BaseLayout from '@/components/businessLayout/index.vue'
 import { SelectTreeV2ControlConfig, FormProps } from '@component/index'
+import mockOrgData from './orgData.json'
 
 const treeProps = {
     label: 'name',
@@ -37,28 +38,29 @@ const formConfig = reactive<FormProps>({
     labelPosition: 'right',
     labelWidth: '80px',
     model: {
-        selectTree2: ''
+        selectTree2: []
     },
     formItems: [
         {
             prop: 'selectTree2',
             label: '测试',
+            span: 12,
             controlConfig: {
-                type: 'selectTreeV2',
-                treeData: treeData,
+                type: 'selectTree',
+                treeData: mockOrgData as any,
                 props: {
-                    treeProps: {
-                        label: 'name',
-                        value: 'id',
-                        disabled: 'red'
-                    },
-                    multiple: true,
-                    onChange(val) {
-                        console.log(`%c onChange === `, 'color: #67c23a;', val)
-                    },
-                    onNodeClick() {
-                        console.log(`%c 树节点点击 ==== `, 'color: #f56c6c;')
-                    }
+                    // treeProps: {
+                    //     label: 'name',
+                    //     value: 'id',
+                    //     disabled: 'red'
+                    // },
+                    multiple: true
+                    // onChange(val) {
+                    //     console.log(`%c onChange === `, 'color: #67c23a;', val)
+                    // }
+                    // onNodeClick() {
+                    //     console.log(`%c 树节点点击 ==== `, 'color: #f56c6c;')
+                    // }
                 }
             }
         }
@@ -76,5 +78,6 @@ watch(
 <style lang="scss" scoped>
 .box {
     width: 600px;
+    margin-top: 200px;
 }
 </style>
