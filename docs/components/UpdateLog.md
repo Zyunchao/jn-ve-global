@@ -2,6 +2,30 @@
 
 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。
 
+<!-- ================== 2.4.0 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.4.0
+
+</template>
+
+<template #date>
+
+2023-03-01
+
+</template>
+
+<h3>New</h3>
+
+<h4>SelectTree</h4>
+
+1. SelectTree V1 版本采用 ElTreeV2 重构
+
+</update-log-block>
+
 <!-- ================== 2.3.0 ======================================================================== -->
 
 <update-log-block>
