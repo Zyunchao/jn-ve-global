@@ -21,7 +21,6 @@
             <el-tree-v2
                 v-if="treeData && !redraw"
                 ref="elTreeRefV2"
-                node-key="id"
                 class="select-tree-tree"
                 v-bind="treeConfig"
                 :data="treeData"
@@ -230,12 +229,12 @@ const handleCurrentChange = (data) => {
 
     // 是否都可选择
     if (props.everyChoose) {
-        emits('update:modelValue', data.id)
+        emits('update:modelValue', data[props.treeProps.value])
         elSelectRef.value.blur()
         props.onChange?.(data)
     } else {
         if (!props.nonselectable.includes(data.type)) {
-            emits('update:modelValue', data.id)
+            emits('update:modelValue', data[props.treeProps.value])
             elSelectRef.value.blur()
             props.onChange?.(data)
         }
