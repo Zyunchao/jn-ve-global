@@ -4,14 +4,6 @@ import TreeV2Config from '../../GSelectTree/v1/interface/TreeV2Config'
 
 interface SelectTreeProps {
     /**
-     * v-mdoel 绑定的 prop
-     */
-    modelValue: string | number | Array<string> | Array<number>
-    /**
-     * 树的待选数据
-     */
-    treeData: TreeData[]
-    /**
      * 多选
      */
     multiple?: boolean
