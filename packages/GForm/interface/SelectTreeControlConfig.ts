@@ -45,6 +45,10 @@ interface SelectTreeProps {
      * 默认展开全部
      */
     defaultExpandAll?: boolean
+    /**
+     * 是否可清空
+     */
+    clearable?: boolean
 }
 
 export default interface SelectTreeControlConfig {

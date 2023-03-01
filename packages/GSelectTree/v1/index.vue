@@ -13,7 +13,7 @@
         popper-class="select-tree-item-wrapper"
         class="select-tree-select"
         style="width: 100%"
-        clearable
+        :clearable="clearable"
         :filterable="filterable"
         :filter-method="filterable ? selectFilterMethod : undefined"
     >
@@ -106,6 +106,10 @@ interface SelectTreeProps {
      * 默认展开全部
      */
     defaultExpandAll?: boolean
+    /**
+     * 是否可清空
+     */
+    clearable?: boolean
 }
 
 const props = withDefaults(defineProps<SelectTreeProps>(), {
@@ -125,7 +129,8 @@ const props = withDefaults(defineProps<SelectTreeProps>(), {
     treeConfig: null,
     onChange: null,
     filterable: false,
-    defaultExpandAll: true
+    defaultExpandAll: true,
+    clearable: false
 })
 
 const emits = defineEmits(['update:modelValue'])
