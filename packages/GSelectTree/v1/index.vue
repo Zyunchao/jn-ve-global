@@ -19,7 +19,7 @@
     >
         <el-option value="">
             <el-tree-v2
-                v-if="treeData"
+                v-if="treeData && !redraw"
                 ref="elTreeRefV2"
                 node-key="id"
                 class="select-tree-tree"
@@ -49,7 +49,7 @@ export default {
 
 <script lang="ts" setup>
 import { nextTick, watch, ref, computed } from 'vue'
-import { findTargetById, getAllParentNode } from '@jsjn/utils'
+import { findTargetByField, getAllParentNode } from '@jsjn/utils'
 import { TreeData } from './interface/TreeData'
 import TreeV2Props from './interface/TreeV2Props'
 import TreeV2Config from './interface/TreeV2Config'
@@ -150,6 +150,20 @@ const defaultExpandedKeys = computed<string[]>(() =>
         : []
 )
 
+/**
+ * 数据更新，重绘树，以适配 defaultExpandedKeys
+ */
+const redraw = ref<boolean>(false)
+watch(
+    () => [props.treeData, props.treeProps],
+    () => {
+        redraw.value = true
+        nextTick(() => {
+            redraw.value = false
+        })
+    }
+)
+
 // 将与父级绑定的值，进行转义
 const localSelectValue = computed({
     get: () => {
@@ -161,18 +175,25 @@ const localSelectValue = computed({
         let selectShowTxt: string | string[] = ''
         if (props.multiple) {
             // 多选展示值
-            selectShowTxt = (props.modelValue as string[] | number[]).map((id: string | number) => {
-                return (
-                    findTargetById(props.treeData, id as string, props.treeProps.label as string) ||
-                    id
-                )
-            })
+            selectShowTxt = (props.modelValue as string[] | number[]).map(
+                (fieldVal: string | number) => {
+                    return (
+                        findTargetByField(
+                            props.treeData,
+                            fieldVal as string,
+                            props.treeProps.value || 'id',
+                            props.treeProps.label as string
+                        ) || fieldVal
+                    )
+                }
+            )
         } else {
             // 单选展示值
             selectShowTxt =
-                findTargetById(
+                findTargetByField(
                     props.treeData,
                     props.modelValue as string,
+                    props.treeProps.value || 'id',
                     props.treeProps.label as string
                 ) || props.modelValue
         }
@@ -240,7 +261,7 @@ const selectFilterMethod = (val: string) => {
 
 const treeFilterMethod = (query: string, node: TreeNode) => {
     // 用户传递优先
-    if (props.treeConfig.filterMethod) {
+    if (props.treeConfig?.filterMethod) {
         return props.treeConfig.filterMethod(query, node)
     }
     return node[props.treeProps.label]!.includes(query)
