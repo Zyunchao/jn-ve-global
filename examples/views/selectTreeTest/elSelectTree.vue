@@ -31,41 +31,47 @@ const treeProps = {
     value: 'id'
 }
 
-const activeValue = ref<string[]>(['1425374958969872386', '1425375136254713858'])
+const activeValue = ref<string[]>(['3200009521950001'])
 
 const formConfig = reactive<FormProps>({
     instance: null,
     labelPosition: 'right',
     labelWidth: '80px',
     model: {
-        selectTree2: []
+        selectTree: '3200009521950001'
     },
     formItems: [
         {
-            prop: 'selectTree2',
+            prop: 'selectTree',
             label: '测试',
             span: 12,
             controlConfig: {
                 type: 'selectTree',
-                treeData: mockOrgData as any,
+                // treeData: mockOrgData as any, //[],
+                treeData: [],
                 props: {
-                    // treeProps: {
-                    //     label: 'name',
-                    //     value: 'id',
-                    //     disabled: 'red'
-                    // },
-                    multiple: true
-                    // onChange(val) {
-                    //     console.log(`%c onChange === `, 'color: #67c23a;', val)
-                    // }
-                    // onNodeClick() {
-                    //     console.log(`%c 树节点点击 ==== `, 'color: #f56c6c;')
-                    // }
+                    treeProps: {
+                        label: 'name',
+                        value: 'instituId'
+                    },
+                    multiple: false,
+                    onChange(val) {
+                        console.log(`%c onChange === `, 'color: #67c23a;', val)
+                    }
                 }
             }
         }
     ]
 })
+
+setTimeout(() => {
+    ;(formConfig.formItems[0].controlConfig as any).treeData = mockOrgData
+}, 1000)
+
+// setTimeout(() => {
+//     formConfig.model.selectTree = '3200009521950001'
+//     // ;(formConfig.formItems[0].controlConfig as any).treeData = mockOrgData
+// }, 2000)
 
 watch(
     () => formConfig.model.selectTree2,

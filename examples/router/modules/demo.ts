@@ -148,6 +148,14 @@ const routes: Array<RouteConfig> = [
     {
         path: '/choose-test',
         component: () => import('@/views/formTest/choose.vue')
+    },
+    {
+        path: '/remoteOptions-test',
+        component: () => import('@/views/formTest/remoteOptionsTest.vue')
+    },
+    {
+        path: '/transfer-test',
+        component: () => import('@/views/transfer/index.vue')
     }
 ]
 
