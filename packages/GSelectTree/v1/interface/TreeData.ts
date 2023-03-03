@@ -4,5 +4,7 @@ export interface TreeData {
     children: TreeData[]
     value?: string
     label?: string
+    disabled?: boolean
+    checked?: boolean
     [k: string]: unknown
 }
