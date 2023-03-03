@@ -25,7 +25,7 @@
                         :show-checkbox="true"
                         :check-strictly="true"
                         :data="localTreeData"
-                        :props="treeProps"
+                        :props="sourceMapping"
                         :default-expanded-keys="defaultExpandedKeys"
                         :height="size2Rem(400 - 32 - 30 - 10)"
                         @check="handleTreeCheck"
@@ -72,13 +72,13 @@
 
                 <div class="g-transfer-tree-panel__list">
                     <el-checkbox-group v-model="checkedPanelCheckedKeys">
-                        <template v-for="node in checkedPanelNodes" :key="node[treeProps.value]">
+                        <template v-for="node in checkedPanelNodes" :key="node[sourceMapping.value]">
                             <el-checkbox
                                 class="g-transfer-tree-panel__checked-item"
-                                :label="node[treeProps.value]"
+                                :label="node[sourceMapping.value]"
                             >
-                                <span :title="node[treeProps.label]">
-                                    {{ node[treeProps.label] }}
+                                <span :title="node[sourceMapping.label]">
+                                    {{ node[sourceMapping.label] }}
                                 </span>
                             </el-checkbox>
                         </template>
@@ -124,11 +124,11 @@ const props = withDefaults(
         /**
          * 树的配置对象
          */
-        treeProps?: TreeProps
+        sourceMapping?: TreeProps
     }>(),
     {
         data: () => [],
-        treeProps: () => ({
+        sourceMapping: () => ({
             label: 'name',
             value: 'id',
             children: 'children',

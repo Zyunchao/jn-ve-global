@@ -32,14 +32,14 @@ export default (p: Params) => {
         () => [localSelectedKeys.value, localTreeData.value],
         _.debounce(([selectedKeys, treeData]) => {
             checkedPanelNodes.value = selectedKeys.map((key) => {
-                const selectedNode = findTargetByField(treeData, key, props.treeProps.value)
+                const selectedNode = findTargetByField(treeData, key, props.sourceMapping.value)
 
                 if (selectedNode) {
                     return selectedNode
                 } else {
                     return {
-                        [props.treeProps.value]: key,
-                        [props.treeProps.label]: key
+                        [props.sourceMapping.value]: key,
+                        [props.sourceMapping.label]: key
                     }
                 }
             })

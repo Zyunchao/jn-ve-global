@@ -16,7 +16,7 @@ interface Params {
         /**
          * 树的配置对象
          */
-        treeProps?: TreeProps
+        sourceMapping?: TreeProps
         [k: string]: any
     }
     emits: {
@@ -53,7 +53,7 @@ export default (p: Params) => {
             const preSelectedNode = findTargetByField(
                 localTreeData.value,
                 key as string,
-                props.treeProps.value
+                props.sourceMapping.value
             )
 
             if (preSelectedNode) {
