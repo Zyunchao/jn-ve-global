@@ -1,0 +1,189 @@
+.g-transfer-tree-wrapper {
+    --el-transfer-border-color: var(--el-border-color-lighter);
+    --el-transfer-border-radius: var(--el-border-radius-base);
+    --el-transfer-panel-header-height: 0.4rem;
+    --el-transfer-panel-header-bg-color: var(--el-fill-color-light);
+    --el-transfer-panel-footer-height: 0.4rem;
+    --el-transfer-item-height: 0.3rem;
+    --el-transfer-filter-height: 0.32rem;
+
+    --el-transfer-panel-body-height: 4rem;
+    --el-transfer-panel-width: 4.2rem;
+    --transfer-txt-btns-bottom-start: 200px;
+    --transfer-txt-btn-width: 60px;
+    --transfer-panel-space: 84px;
+
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+
+    .g-transfer-tree-panel {
+        overflow: hidden;
+        background: var(--el-bg-color-overlay);
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+        width: var(--el-transfer-panel-width);
+        max-height: 100%;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        position: relative;
+        margin: 0 var(--transfer-panel-space);
+        border-radius: var(--el-border-radius-base);
+
+        &:first-of-type {
+            margin-left: 0;
+        }
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+
+        .g-transfer-tree-panel__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            height: var(--el-transfer-panel-header-height);
+            background: var(--el-transfer-panel-header-bg-color);
+            margin: 0;
+            padding-left: 15px;
+            padding-right: 15px;
+            border: 1px solid var(--el-transfer-border-color);
+            border-top-left-radius: var(--el-transfer-border-radius);
+            border-top-right-radius: var(--el-transfer-border-radius);
+            box-sizing: border-box;
+            color: var(--el-color-black);
+
+            .check {
+                display: flex;
+                align-items: center;
+
+                :deep(.el-checkbox) {
+                    margin-right: 8px !important;
+                }
+            }
+
+            .count {
+                font-size: 12px;
+                color: var(--el-text-color-secondary);
+            }
+        }
+
+        .g-transfer-tree-panel__body {
+            height: var(--el-transfer-panel-body-height);
+            border-left: 0.01rem solid var(--el-transfer-border-color);
+            border-right: 0.01rem solid var(--el-transfer-border-color);
+            border-bottom: 0.01rem solid var(--el-transfer-border-color);
+            border-bottom-left-radius: var(--el-transfer-border-radius);
+            border-bottom-right-radius: var(--el-transfer-border-radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+
+            .g-transfer-tree-panel__filter {
+                text-align: center;
+                margin: 0.15rem;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                width: calc(var(--el-transfer-panel-width) - 16px * 2);
+                flex: none;
+
+                :deep(.el-input__inner) {
+                    height: var(--el-transfer-filter-height);
+                    width: 100%;
+                    font-size: 0.12rem;
+                    display: inline-block;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                    border-radius: calc(var(--el-transfer-filter-height) / 2);
+                }
+            }
+
+            .g-transfer-tree-panel__list {
+                flex: 1;
+                overflow: hidden;
+                
+                :deep(.g-transfer-tree-panel__tree) {
+                    .el-tree-node {
+                        .el-tree-node__content {
+                            width: 100%;
+                            height: 100%;
+
+                            .el-tree-node__expand-icon {
+                                font-size: 20px;
+                                margin-right: 4px;
+                                margin-left: 4px;
+                                padding: 0;
+                            }
+
+                            >.el-checkbox {
+                                &.is-disabled {
+                                    display: none;
+                                }
+                            }
+
+                            .g-transfer-tree-panel__node-label {
+                                width: 100%;
+                                display: inline-block;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                font-size: var(--jn-ve-g-form-font-size) !important;
+                                color: var(--el-text-color-regular);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .g-transfer-tree-panel__checked-item {
+                --jn-ve-g-form-item-height: 26PX;
+
+                height: var(--el-component-size);
+                line-height: var(--el-component-size);
+                padding-left: 0.15rem;
+                width: 100%;
+                display: flex;
+                align-items: center;
+
+                :deep(.el-checkbox__label) {
+                    width: 100%;
+                    line-height: var(--el-component-size);
+                    display: block !important;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-size: var(--jn-ve-g-form-font-size) !important;
+                    color: var(--el-text-color-regular);
+                }
+            }
+
+            &.is-with-footer {
+                border-bottom: none;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        .g-transfer-tree-panel__footer {
+            height: var(--el-transfer-panel-footer-height);
+            background: var(--el-bg-color-overlay);
+            margin: 0;
+            padding: 0;
+            border: 0.01rem solid var(--el-transfer-border-color);
+            border-bottom-left-radius: var(--el-transfer-border-radius);
+            border-bottom-right-radius: var(--el-transfer-border-radius);
+        }
+    }
+
+    .g-transfer-tree__buttons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        :deep(.el-button) {
+            width: var(--transfer-txt-btn-width) !important;
+        }
+    }
+}
