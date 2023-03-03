@@ -1,17 +1,19 @@
 <template>
-    <g-transfer
-        v-model="selectKeys"
-        :titles="['待选', '已选']"
-        :data="sourceData"
-        :filterable="true"
-        :paginationShow="true"
-        :total="total"
-        @pagination-change="handlePaginationChange"
-    ></g-transfer>
+    <el-scrollbar>
+        <g-transfer
+            v-model="selectKeys"
+            :titles="['待选', '已选']"
+            :data="sourceData"
+            :filterable="true"
+            :paginationShow="true"
+            :total="total"
+            @pagination-change="handlePaginationChange"
+        ></g-transfer>
 
-    <hr style="margin: 20px 0" />
+        <hr style="margin: 20px 0" />
 
-    <GTransferTree v-model="treeSelectKeys" :data="treeData" :filterable="true" />
+        <GTransferTree v-model="treeSelectKeys" :data="treeData" :filterable="true" />
+    </el-scrollbar>
 </template>
 
 <script lang="ts">
