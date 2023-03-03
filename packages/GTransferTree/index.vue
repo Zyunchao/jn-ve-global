@@ -25,7 +25,7 @@
                         ref="elTreeV2Ref"
                         class="g-transfer-tree-panel__tree"
                         :show-checkbox="true"
-                        :check-strictly="true"
+                        :check-strictly="checkStrictly"
                         :data="localTreeData"
                         :props="sourceMapping"
                         :default-expanded-keys="defaultExpandedKeys"
@@ -76,24 +76,26 @@
                 ></el-input>
 
                 <div class="g-transfer-tree-panel__list">
-                    <el-checkbox-group v-model="checkedPanelCheckedKeys">
-                        <template
-                            v-for="node in checkedPanelNodes"
-                            :key="node[sourceMapping.value]"
-                        >
-                            <el-checkbox
-                                :class="[
-                                    'g-transfer-tree-panel__checked-item',
-                                    { 'is-hide': node.isHide }
-                                ]"
-                                :label="node[sourceMapping.value]"
+                    <el-scrollbar>
+                        <el-checkbox-group v-model="checkedPanelCheckedKeys">
+                            <template
+                                v-for="node in checkedPanelNodes"
+                                :key="node[sourceMapping.value]"
                             >
-                                <span :title="node[sourceMapping.label]">
-                                    {{ node[sourceMapping.label] }}
-                                </span>
-                            </el-checkbox>
-                        </template>
-                    </el-checkbox-group>
+                                <el-checkbox
+                                    :class="[
+                                        'g-transfer-tree-panel__checked-item',
+                                        { 'is-hide': node.isHide }
+                                    ]"
+                                    :label="node[sourceMapping.value]"
+                                >
+                                    <span :title="node[sourceMapping.label]">
+                                        {{ node[sourceMapping.label] }}
+                                    </span>
+                                </el-checkbox>
+                            </template>
+                        </el-checkbox-group>
+                    </el-scrollbar>
 
                     <p v-if="checkedPanelIsEmpty" class="empty">暂无数据</p>
                 </div>
@@ -145,6 +147,10 @@ const props = withDefaults(
          * 可搜索
          */
         filterable?: boolean
+        /**
+         * 在显示复选框的情况下，是否严格的遵循父子不互相关联的做法
+         */
+        checkStrictly?: boolean
     }>(),
     {
         data: () => [],
@@ -156,7 +162,8 @@ const props = withDefaults(
             check: 'check'
         }),
         titles: () => ['待选', '已选'],
-        filterable: true
+        filterable: true,
+        checkStrictly: false
     }
 )
 
