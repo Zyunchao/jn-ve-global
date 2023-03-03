@@ -11,7 +11,7 @@
 
     <hr style="margin: 20px 0" />
 
-    <GTransferTree v-model="treeSelectKeys" :data="treeData" />
+    <GTransferTree v-model="treeSelectKeys" :data="treeData" :filterable="true" />
 </template>
 
 <script lang="ts">
@@ -32,8 +32,18 @@ interface Option {
     disabled?: boolean
 }
 
-const treeData = ref(_.cloneDeep(mockOrgData))
-const treeSelectKeys = ref<Array<string | number>>(['1615264570391699457', '1235'])
+const treeData = ref()
+const treeSelectKeys = ref<Array<string | number>>([])
+
+setTimeout(() => {
+    treeSelectKeys.value = ['1615264570391699457', '1235']
+}, 1000)
+
+setTimeout(() => {
+    treeData.value = _.cloneDeep(mockOrgData)
+
+    machineData(treeData.value)
+}, 2000)
 
 const sourceData = ref<Option[]>(generateData())
 const selectKeys = ref<Array<string | number>>([])
@@ -55,8 +65,6 @@ watch(
 
 const handlePaginationChange = (currentPage, pageSize) => {
     sourceData.value = generateData(currentPage, pageSize)
-
-    // console.log(`%c handlePaginationChange === `, 'color: #67c23a;', pageSize, currentPage)
 }
 
 function generateData(currentPage: number = 1, pageSize: number = 10) {
@@ -85,8 +93,6 @@ function machineData(treeData: any[]) {
         }
     })
 }
-
-machineData(treeData.value)
 </script>
 
 <style lang="scss" scoped></style>

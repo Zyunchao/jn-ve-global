@@ -3,7 +3,7 @@
         <!-- 左面板 -->
         <div class="g-transfer-tree-panel">
             <p class="g-transfer-tree-panel__header">
-                <span>待选</span>
+                <span>{{ titles[0] }}</span>
                 <span class="count">
                     <span>{{ treeCheckedKeys.length }}</span>
                     <span>/</span>
@@ -12,10 +12,12 @@
             </p>
             <div class="g-transfer-tree-panel__body">
                 <el-input
+                    v-if="filterable"
                     v-model="filterTextLeft"
                     class="g-transfer-tree-panel__filter"
                     placeholder="请输入搜索内容"
                     :prefix-icon="Search"
+                    clearable
                 ></el-input>
 
                 <div class="g-transfer-tree-panel__list">
@@ -28,6 +30,7 @@
                         :props="sourceMapping"
                         :default-expanded-keys="defaultExpandedKeys"
                         :height="size2Rem(400 - 32 - 30 - 10)"
+                        :filter-method="filterable ? treeFilterMethod : undefined"
                         @check="handleTreeCheck"
                     >
                         <template #default="{ node }">
@@ -54,27 +57,35 @@
                         :indeterminate="isIndeterminate"
                         @change="handleCheckAllChange"
                     />
-                    <span>已选</span>
+                    <span>{{ titles[1] }}</span>
                 </span>
                 <span class="count">
-                    <span>{{ treeCheckedKeys.length }}</span>
+                    <span>{{ checkedPanelCheckedKeys.length }}</span>
                     <span>/</span>
                     <span>{{ checkedPanelNodes.length }}</span>
                 </span>
             </p>
             <div class="g-transfer-tree-panel__body">
                 <el-input
+                    v-if="filterable"
                     v-model="filterTextRight"
                     class="g-transfer-tree-panel__filter"
                     placeholder="请输入搜索内容"
                     :prefix-icon="Search"
+                    clearable
                 ></el-input>
 
                 <div class="g-transfer-tree-panel__list">
                     <el-checkbox-group v-model="checkedPanelCheckedKeys">
-                        <template v-for="node in checkedPanelNodes" :key="node[sourceMapping.value]">
+                        <template
+                            v-for="node in checkedPanelNodes"
+                            :key="node[sourceMapping.value]"
+                        >
                             <el-checkbox
-                                class="g-transfer-tree-panel__checked-item"
+                                :class="[
+                                    'g-transfer-tree-panel__checked-item',
+                                    { 'is-hide': node.isHide }
+                                ]"
                                 :label="node[sourceMapping.value]"
                             >
                                 <span :title="node[sourceMapping.label]">
@@ -83,6 +94,8 @@
                             </el-checkbox>
                         </template>
                     </el-checkbox-group>
+
+                    <p v-if="checkedPanelIsEmpty" class="empty">暂无数据</p>
                 </div>
             </div>
             <!-- <div class="g-transfer-tree-panel__footer"></div> -->
@@ -101,8 +114,7 @@ export default defineComponent({
 import { reactive, nextTick } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import { ElTreeV2 } from 'element-plus'
-import { size2Rem, findTargetByField } from '@jsjn/utils'
-import { getEnableNodesLength } from './utils/tree'
+import { size2Rem } from '@jsjn/utils'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 import type { BtnProps, TreeData } from '../index'
 import _ from 'lodash'
@@ -125,6 +137,14 @@ const props = withDefaults(
          * 树的配置对象
          */
         sourceMapping?: TreeProps
+        /**
+         * 标题
+         */
+        titles?: string[]
+        /**
+         * 可搜索
+         */
+        filterable?: boolean
     }>(),
     {
         data: () => [],
@@ -134,7 +154,9 @@ const props = withDefaults(
             children: 'children',
             disabled: 'disabled',
             check: 'check'
-        })
+        }),
+        titles: () => ['待选', '已选'],
+        filterable: true
     }
 )
 
@@ -153,8 +175,6 @@ const {
     changeNodesDisabledStatus
 } = useTreeContext({ props, emits })
 
-const { filterTextLeft, filterTextRight } = useFilterContext()
-
 // 已选数据上下文
 const {
     checkedPanelNodes,
@@ -168,6 +188,15 @@ const {
     emits,
     localTreeData
 })
+
+// 搜索功能上下文
+const { filterTextLeft, filterTextRight, treeFilterMethod, checkedPanelIsEmpty } = useFilterContext(
+    {
+        props,
+        elTreeV2Ref,
+        checkedPanelNodes
+    }
+)
 
 const transferBtns = reactive<BtnProps[]>([
     {

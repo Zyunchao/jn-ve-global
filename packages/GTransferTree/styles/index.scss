@@ -104,7 +104,7 @@
             .g-transfer-tree-panel__list {
                 flex: 1;
                 overflow: hidden;
-                
+
                 :deep(.g-transfer-tree-panel__tree) {
                     .el-tree-node {
                         .el-tree-node__content {
@@ -135,6 +135,16 @@
                         }
                     }
                 }
+
+                .empty {
+                    position: relative;
+                    height: 60px;
+                    text-align: center;
+                    width: 100%;
+                    line-height: 60px;
+                    color: var(--el-text-color-secondary);
+                    font-size: var(--el-font-size-base);
+                }
             }
 
             .g-transfer-tree-panel__checked-item {
@@ -155,6 +165,10 @@
                     text-overflow: ellipsis;
                     font-size: var(--jn-ve-g-form-font-size) !important;
                     color: var(--el-text-color-regular);
+                }
+
+                &.is-hide {
+                    display: none;
                 }
             }
 
