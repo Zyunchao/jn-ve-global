@@ -64,8 +64,8 @@ function generateData(currentPage: number = 1, pageSize: number = 10) {
 
     for (let i = 1 + currentPage * pageSize; i <= (currentPage + 1) * pageSize; i++) {
         data.push({
-            key: i,
-            label: `Option ${i}`
+            id: `${i}`,
+            name: `Option ${i}`
         })
     }
 

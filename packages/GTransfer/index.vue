@@ -6,6 +6,7 @@
             target-order="unshift"
             v-bind="$attrs"
             v-model="currentSelectedKeys"
+            :props="sourceMapping"
             class="g-transfer"
             :data="currentDataWrap"
             @change="transferChange"
@@ -48,8 +49,10 @@ import LGButtonGroup from '../GButtonGroup/index.vue'
 import usePagination from './hooks/usePagination'
 
 interface Option {
-    key: number
-    label: string
+    id?: string
+    name?: string
+    key?: string
+    label?: string
     disabled?: boolean
     [k: string]: any
 }
@@ -72,19 +75,37 @@ const props = withDefaults(
          * 数据总量
          */
         total?: number
+        /**
+         * 数据源的字段别名
+         */
+        sourceMapping?: {
+            key?: string
+            label?: string
+            disabled?: string
+        }
     }>(),
     {
         modelValue: () => [],
         data: () => [],
         paginationShow: true,
-        total: 0
+        total: 0,
+        sourceMapping: () => ({
+            key: 'id',
+            label: 'name',
+            disabled: 'disabled'
+        })
     }
 )
 
 const emits = defineEmits<{
     (e: 'update:modelValue', arr: Array<string | number>): void
     (e: 'pagination-change', currentPage: number, pageSize: number): void
-    (e: 'change', vals: number[], toDirection: 'left' | 'right', moveKeys: number[]): void
+    (
+        e: 'change',
+        vals: Array<number | string>,
+        toDirection: 'left' | 'right',
+        moveKeys: Array<number | string>
+    ): void
 }>()
 
 const { paginationConfig } = usePagination({ props, emits })
@@ -106,7 +127,9 @@ const currentSelectedKeys = computed<Array<string | number>>({
  * 保存当前活跃的 keys 对应的源数据
  */
 const currentSelectedDatas = computed(() =>
-    currentDataWrap.value.filter((item) => props.modelValue.includes(item.key))
+    currentDataWrap.value.filter((item) =>
+        props.modelValue.includes(item[props.sourceMapping['key']])
+    )
 )
 
 // 源数据 本地化
@@ -136,18 +159,24 @@ watch(
  *  - 所还数据就应该是当前页：这个当前页取决于后台返回的分页数据（该数据已备份）
  *      组件默认行为，移动到左侧，即不对 “当前活跃的数据容器” 进行额外的处理
  */
-const transferChange = (vals: number[], toDirection: 'left' | 'right', moveKeys: number[]) => {
+const transferChange = (
+    vals: Array<number | string>,
+    toDirection: 'left' | 'right',
+    moveKeys: Array<number | string>
+) => {
     // 触发外部绑定的事件
     emits('change', vals, toDirection, moveKeys)
 
     // 归还数据
     if (toDirection === 'left') {
         moveKeys.forEach((key) => {
-            if (!props.data.some((sourceItem) => sourceItem.key === key)) {
+            if (!props.data.some((sourceItem) => sourceItem[props.sourceMapping['key']] === key)) {
                 /**
                  * “当前活跃的数据容器” 移除所还项，这样两个容器就都不会显示了
                  */
-                currentDataWrap.value = currentDataWrap.value.filter((item) => item.key !== key)
+                currentDataWrap.value = currentDataWrap.value.filter(
+                    (item) => item[props.sourceMapping['key']] !== key
+                )
             }
         })
     }
@@ -158,7 +187,9 @@ const transferExtBtns = reactive<BtnProps[]>([
     {
         label: '>>',
         onClick() {
-            currentSelectedKeys.value = currentDataWrap.value.map((item) => item.key)
+            currentSelectedKeys.value = currentDataWrap.value.map(
+                (item) => item[props.sourceMapping['key']]
+            )
         }
     },
     {
