@@ -201,6 +201,10 @@ const transferExtBtns = reactive<BtnProps[]>([
         }
     }
 ])
+
+defineExpose({
+    paginationConfig
+})
 </script>
 
 <style lang="scss" scoped>
