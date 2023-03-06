@@ -31,18 +31,19 @@ export default (p: Params) => {
     watch(
         () => [localSelectedKeys.value, localTreeData.value],
         _.debounce(([selectedKeys, treeData]) => {
-            checkedPanelNodes.value = selectedKeys.map((key) => {
-                const selectedNode = findTargetByField(treeData, key, props.sourceMapping.value)
+            checkedPanelNodes.value =
+                selectedKeys?.map((key) => {
+                    const selectedNode = findTargetByField(treeData, key, props.sourceMapping.value)
 
-                if (selectedNode) {
-                    return selectedNode
-                } else {
-                    return {
-                        [props.sourceMapping.value]: key,
-                        [props.sourceMapping.label]: key
+                    if (selectedNode) {
+                        return selectedNode
+                    } else {
+                        return {
+                            [props.sourceMapping.value]: key,
+                            [props.sourceMapping.label]: key
+                        }
                     }
-                }
-            })
+                }) || []
 
             // 抛出所选节点的数组
             emits('update:selectedData', checkedPanelNodes.value)
