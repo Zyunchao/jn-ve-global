@@ -83,6 +83,10 @@ const props = withDefaults(
             label?: string
             disabled?: string
         }
+        /**
+         * 选中的数据（对象）
+         */
+        selectedData?: any[]
     }>(),
     {
         modelValue: () => [],
@@ -99,6 +103,7 @@ const props = withDefaults(
 
 const emits = defineEmits<{
     (e: 'update:modelValue', arr: Array<string | number>): void
+    (e: 'update:selectedData', arr: any[]): void
     (e: 'pagination-change', currentPage: number, pageSize: number): void
     (
         e: 'change',
@@ -130,6 +135,10 @@ const currentSelectedDatas = computed(() =>
     currentDataWrap.value.filter((item) =>
         props.modelValue.includes(item[props.sourceMapping['key']])
     )
+)
+watch(
+    () => currentSelectedDatas.value,
+    (data) => emits('update:selectedData', data)
 )
 
 // 源数据 本地化

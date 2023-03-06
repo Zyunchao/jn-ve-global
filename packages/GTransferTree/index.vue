@@ -128,7 +128,7 @@ import useFilterContext from './hooks/useFilterContext'
 const props = withDefaults(
     defineProps<{
         /**
-         * 绑定的已选值
+         * 绑定的已选值（id 数组）
          */
         modelValue: Array<string | number>
         /**
@@ -151,6 +151,10 @@ const props = withDefaults(
          * 在显示复选框的情况下，是否严格的遵循父子不互相关联的做法
          */
         checkStrictly?: boolean
+        /**
+         * 选中的数据（对象）
+         */
+        selectedData?: TreeData[]
     }>(),
     {
         data: () => [],
@@ -169,6 +173,7 @@ const props = withDefaults(
 
 const emits = defineEmits<{
     (e: 'update:modelValue', arr: Array<string | number>): void
+    (e: 'update:selectedData', arr: TreeData[]): void
 }>()
 
 // 树的上下文

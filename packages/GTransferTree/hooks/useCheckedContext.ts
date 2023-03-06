@@ -1,6 +1,5 @@
 import { ref, computed, watch, Ref } from 'vue'
-import { TreeData } from '../../index'
-import type { TreeNodeData } from 'element-plus/es/components/tree-v2/src/types'
+import type { TreeData } from '../../index'
 import { findTargetByField } from '@jsjn/utils'
 import _ from 'lodash'
 
@@ -14,6 +13,7 @@ interface Params {
     }
     emits: {
         (e: 'update:modelValue', arr: Array<string | number>): void
+        (e: 'update:selectedData', arr: TreeData[]): void
     }
     localTreeData: Ref<TreeData[]>
 }
@@ -43,12 +43,15 @@ export default (p: Params) => {
                     }
                 }
             })
+
+            // 抛出所选节点的数组
+            emits('update:selectedData', checkedPanelNodes.value)
         }, 100),
         { immediate: true }
     )
 
     // checkbox 数据
-    const checkedPanelNodes = ref<TreeNodeData[]>([])
+    const checkedPanelNodes = ref<TreeData[]>([])
     const checkedPanelCheckedKeys = ref<Array<string | number>>([])
     const checkAll = computed<boolean>(
         () =>

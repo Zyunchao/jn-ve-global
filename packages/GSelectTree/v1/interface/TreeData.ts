@@ -6,5 +6,5 @@ export interface TreeData {
     label?: string
     disabled?: boolean
     checked?: boolean
-    [k: string]: unknown
+    [k: string]: any
 }
