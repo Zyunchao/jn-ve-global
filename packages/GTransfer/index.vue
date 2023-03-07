@@ -11,6 +11,12 @@
             :data="currentDataWrap"
             @change="transferChange"
         >
+            <template #default="{ option }">
+                <span :title="option[sourceMapping['label']]">
+                    {{ option[sourceMapping['label']] }}
+                </span>
+            </template>
+
             <template v-if="paginationShow" #left-footer>
                 <el-pagination
                     v-model:page-size="paginationConfig.pageSize"
@@ -243,6 +249,27 @@ defineExpose({
 
             &:last-of-type {
                 margin-right: 0;
+            }
+
+            .el-transfer-panel__item {
+                display: flex !important;
+                align-items: center;
+                margin: 0 !important;
+
+                .el-checkbox__input {
+                    position: initial;
+                    top: initial;
+                }
+
+                .el-checkbox__label {
+                    line-height: var(--jn-ve-g-form-item-height) !important;
+                    padding-left: 8px;
+
+                    width: 100%;
+                    display: block !important;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
         }
 
