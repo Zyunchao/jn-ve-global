@@ -260,7 +260,8 @@ const transferExtBtns = reactive<BtnProps[]>([
 ])
 
 defineExpose({
-    paginationConfig
+    paginationConfig,
+    leftSearchQuery
 })
 </script>
 
@@ -395,27 +396,22 @@ defineExpose({
         }
     }
 
-    :deep(.el-transfer-panel__body) {
-        box-sizing: border-box;
-        padding-top: calc(
-            var(--jn-ve-g-form-item-height) + var(--custom-transfer-panel-search-pl) * 2
-        );
-    }
-
     :deep(.g-transfer) {
         .el-transfer-panel {
             &:first-of-type {
-                .el-checkbox-group {
-                    height: var(--custom-transfer-panel-body-height) !important;
-                }
-
-                .el-transfer-panel__body > .el-input {
-                    display: none;
-                }
-            }
-            &:last-of-type {
                 .el-transfer-panel__body {
-                    padding-top: 0 !important;
+                    box-sizing: border-box;
+                    padding-top: calc(
+                        var(--jn-ve-g-form-item-height) + var(--custom-transfer-panel-search-pl) * 2
+                    );
+
+                    > .el-input {
+                        display: none;
+                    }
+
+                    .el-checkbox-group {
+                        height: 100% !important;
+                    }
                 }
             }
         }
