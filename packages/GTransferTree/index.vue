@@ -113,7 +113,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { reactive, nextTick } from 'vue'
+import { reactive, nextTick, watch } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import { ElTreeV2 } from 'element-plus'
 import { size2Rem } from '@jsjn/utils'
@@ -208,6 +208,14 @@ const { filterTextLeft, filterTextRight, treeFilterMethod, checkedPanelIsEmpty }
         elTreeV2Ref,
         checkedPanelNodes
     }
+)
+
+watch(
+    () => props.data,
+    () => {
+        changeNodesDisabledStatus(localSelectedKeys.value, true)
+    },
+    { deep: false }
 )
 
 const transferBtns = reactive<BtnProps[]>([
