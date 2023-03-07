@@ -9,6 +9,7 @@
             :props="sourceMapping"
             class="g-transfer"
             :data="currentDataWrap"
+            :filterable="true"
             @change="transferChange"
         >
             <template #default="{ option }">
@@ -37,6 +38,15 @@
 
         <!-- 扩展按钮 -->
         <LGButtonGroup class="transfer-ext-btns" :btns="transferExtBtns" />
+
+        <div class="search-wrapper left">
+            <el-input
+                v-model="leftSearchQuery"
+                placeholder="请输入搜索内容"
+                :prefix-icon="Search"
+                :clearable="true"
+            ></el-input>
+        </div>
     </div>
 </template>
 
@@ -53,6 +63,7 @@ import type { BtnProps } from '../index'
 import _ from 'lodash'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 import usePagination from './hooks/usePagination'
+import { Search } from '@element-plus/icons-vue'
 
 interface Option {
     id?: string
@@ -93,6 +104,10 @@ const props = withDefaults(
          * 选中的数据（对象）
          */
         selectedData?: any[]
+        /**
+         * 查询方法
+         */
+        filterMethod?: (query: string, currentData?: Option[]) => void
     }>(),
     {
         modelValue: () => [],
@@ -120,6 +135,33 @@ const emits = defineEmits<{
 }>()
 
 const { paginationConfig } = usePagination({ props, emits })
+
+const leftSearchQuery = ref<string>('')
+
+watch(
+    () => leftSearchQuery.value,
+    _.debounce((query) => {
+        if (props.filterMethod) {
+            props.filterMethod(query, currentDataWrap.value)
+            return
+        }
+
+        // 默认筛选
+        if (query) {
+            currentDataWrap.value = _.uniqWith(
+                currentDataWrap.value
+                    .filter((item) => item[props.sourceMapping?.['label']]?.includes(query))
+                    .concat(currentSelectedDatas.value),
+                _.isEqual
+            )
+        } else {
+            currentDataWrap.value = _.uniqWith(
+                props.data.concat(currentSelectedDatas.value),
+                _.isEqual
+            )
+        }
+    }, 200)
+)
 
 /**
  * 当前活跃的数据容器，穿梭框一个核心概念：左右两侧的列表是基于一个数据列表进行维护展示的
@@ -227,17 +269,25 @@ defineExpose({
     --transfer-txt-btns-bottom-start: 200px;
     --transfer-txt-btn-width: 60px;
     --transfer-panel-space: 84px;
+    --custom-transfer-panel-width: 420px;
+    --custom-transfer-panel-search-pl: 15px;
+    --custom-transfer-panel-header-height: 40px;
+    --custom-transfer-panel-body-height: 400px;
+    --jn-ve-g-form-item-height: 32px;
 
     position: relative;
     width: fit-content;
     margin: 0 auto;
 
     :deep(.g-transfer) {
-        --el-transfer-panel-body-height: 400px;
-        --el-transfer-panel-width: 420px;
+        --el-transfer-panel-body-height: var(--custom-transfer-panel-body-height);
+        --el-transfer-panel-width: var(--custom-transfer-panel-width);
+        --el-transfer-panel-header-height: var(--custom-transfer-panel-header-height, 40px);
 
         .el-transfer-panel__filter {
-            width: calc(var(--el-transfer-panel-width) - 15px * 2);
+            width: calc(
+                var(--el-transfer-panel-width) - var(--custom-transfer-panel-search-pl) * 2
+            );
         }
 
         .el-transfer-panel {
@@ -323,6 +373,52 @@ defineExpose({
 
     .transfer-ext-btns {
         bottom: var(--transfer-txt-btns-bottom-start);
+    }
+
+    .search-wrapper {
+        width: calc(
+            var(--custom-transfer-panel-width) - var(--custom-transfer-panel-search-pl) * 2
+        );
+        background-color: #fff;
+        position: absolute;
+        top: calc(
+            var(--custom-transfer-panel-header-height) + var(--custom-transfer-panel-search-pl)
+        );
+        z-index: 2;
+
+        &.left {
+            left: var(--custom-transfer-panel-search-pl);
+        }
+
+        &.right {
+            right: var(--custom-transfer-panel-search-pl);
+        }
+    }
+
+    :deep(.el-transfer-panel__body) {
+        box-sizing: border-box;
+        padding-top: calc(
+            var(--jn-ve-g-form-item-height) + var(--custom-transfer-panel-search-pl) * 2
+        );
+    }
+
+    :deep(.g-transfer) {
+        .el-transfer-panel {
+            &:first-of-type {
+                .el-checkbox-group {
+                    height: var(--custom-transfer-panel-body-height) !important;
+                }
+
+                .el-transfer-panel__body > .el-input {
+                    display: none;
+                }
+            }
+            &:last-of-type {
+                .el-transfer-panel__body {
+                    padding-top: 0 !important;
+                }
+            }
+        }
     }
 }
 </style>
