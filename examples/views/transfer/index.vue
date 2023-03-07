@@ -38,7 +38,7 @@ const treeData = ref()
 const treeSelectKeys = ref<Array<string | number>>([])
 
 setTimeout(() => {
-    treeSelectKeys.value = ['1615264570391699457', '1235']
+    treeSelectKeys.value = ['1615264570391699457', '1621418109203738626']
 }, 1000)
 
 setTimeout(() => {
@@ -75,7 +75,7 @@ function generateData(currentPage: number = 1, pageSize: number = 10) {
     for (let i = 1 + currentPage * pageSize; i <= (currentPage + 1) * pageSize; i++) {
         data.push({
             id: `${i}`,
-            name: `Option ${i}`
+            name: `数据数据数据数据数据数据数据数据数据数据 ${i} 数据数据数据数据数据数据数据数据`
         })
     }
 
