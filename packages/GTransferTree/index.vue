@@ -262,5 +262,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+/*! scopecss-disable */
 @import './styles';
 </style>

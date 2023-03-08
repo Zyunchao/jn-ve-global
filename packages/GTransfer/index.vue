@@ -302,6 +302,12 @@ defineExpose({
                 margin-right: 0;
             }
 
+            .el-transfer-panel__header {
+                .el-checkbox {
+                    margin-right: 0 !important; 
+                }
+            }
+
             .el-transfer-panel__item {
                 display: flex !important;
                 align-items: center;
@@ -377,8 +383,13 @@ defineExpose({
     }
 
     .search-wrapper {
+        --el-transfer-filter-height: 32px;
+        --base-boder-width: 1px;
+
+        // 搜索框宽度 = panel宽度 - 定位(maring) * 2 - 边框宽度
         width: calc(
-            var(--custom-transfer-panel-width) - var(--custom-transfer-panel-search-pl) * 2
+            (var(--custom-transfer-panel-width) - var(--custom-transfer-panel-search-pl) * 2) -
+                var(--base-boder-width) * 2
         );
         background-color: #fff;
         position: absolute;
@@ -388,11 +399,18 @@ defineExpose({
         z-index: 2;
 
         &.left {
-            left: var(--custom-transfer-panel-search-pl);
+            // 需要 + 上边框的宽度
+            left: calc(var(--custom-transfer-panel-search-pl) + var(--base-boder-width));
         }
 
-        &.right {
-            right: var(--custom-transfer-panel-search-pl);
+        :deep(.el-input__inner) {
+            height: var(--el-transfer-filter-height);
+            width: 100%;
+            font-size: 12px;
+            display: inline-block;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            border-radius: calc(var(--el-transfer-filter-height) / 2);
         }
     }
 

@@ -1,3 +1,4 @@
+/*! scopecss-disable */
 .g-transfer-tree-wrapper {
     --el-transfer-border-color: var(--el-border-color-lighter);
     --el-transfer-border-radius: var(--el-border-radius-base);
@@ -13,7 +14,7 @@
     --transfer-txt-btn-width: 60px;
     --transfer-panel-space: 84px;
 
-    position: relative;
+    position: relative !important;
     width: fit-content;
     margin: 0 auto;
     display: flex;
@@ -55,6 +56,7 @@
             border-top-right-radius: var(--el-transfer-border-radius);
             box-sizing: border-box;
             color: var(--el-color-black);
+            font-size: var(--jn-ve-g-form-font-size);
 
             .check {
                 display: flex;
