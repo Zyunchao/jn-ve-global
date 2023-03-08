@@ -11,11 +11,13 @@
                 :table-config="tableConfig"
                 :height="500"
             />
-            <GCollapseItem title="自定义" name="3">
+            <GCollapseItem title="自定义" name="3" tip="测试提醒内容.">
                 <p>自定义内容........</p>
                 <p>自定义内容........</p>
                 <p>自定义内容........</p>
                 <p>自定义内容........</p>
+
+                <!-- <template #title> 123</template> -->
             </GCollapseItem>
             <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
                 <GTable :config="tableConfig" />

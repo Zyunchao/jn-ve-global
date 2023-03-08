@@ -8,7 +8,21 @@
             <div class="collapse-item-title">
                 <div class="label">
                     <LGIcon v-if="prefix" :icon="prefix" class="prefix-icon" />
-                    <span>{{ attrs.title }}</span>
+                    <slot name="title">
+                        <span>{{ attrs.title }}</span>
+
+                        <el-tooltip
+                            v-if="tip"
+                            :content="tip"
+                            class="box-item"
+                            effect="dark"
+                            placement="top"
+                        >
+                            <span class="tooltip__trigger">
+                                <LGIcon icon="el-QuestionFilled"></LGIcon>
+                            </span>
+                        </el-tooltip>
+                    </slot>
                     <LGIcon icon="el-DArrowRight" class="active-icon" />
                 </div>
                 <LGButtonGroup v-if="btns && btns.length" :btns="btns" />
@@ -78,6 +92,10 @@ interface Props {
      * 卡片模式，区分背景时，提供盒子阴影
      */
     shadow?: boolean
+    /**
+     * 标题 tip
+     */
+    tip?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -116,6 +134,14 @@ const localDisabled = computed(() => isDisabledForParent.value ?? props.disabled
         > .label {
             display: flex;
             align-items: center;
+
+            .tooltip__trigger {
+                display: flex;
+                align-items: center;
+                padding-left: 10px;
+                color: var(--el-collapse-header-text-color);
+                font-size: 18px;
+            }
         }
     }
 }

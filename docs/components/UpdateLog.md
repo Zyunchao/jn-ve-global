@@ -1,6 +1,32 @@
 # 组件库 jn-ve-global 更新日志 
 
 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。
+<!-- ================== 2.5.0 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.5.0
+
+</template>
+
+<template #date>
+
+2023-03-08
+
+</template>
+
+<h3>New</h3>
+
+新增组件 `GTransferTree` & `GTransfer`
+
+<h4>CollapseItem</h4>
+
+1. 标题增加 tooltip 提示
+2. 增加 `#title` 插槽，可自定义渲染标题
+
+</update-log-block>
 
 <!-- ================== 2.4.0 ======================================================================== -->
 
