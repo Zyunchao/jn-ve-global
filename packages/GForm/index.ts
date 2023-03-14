@@ -20,6 +20,7 @@ export * from './interface/InfoAutocompleteControlConfig'
 export * from './interface/SelectTreeV2ControlConfig'
 export * from './interface/AddressControlConfig'
 export * from './interface/JnEditorControlConfig'
+export * from './interface/CollapseItemControlConfig'
 
 export { default as FormProps } from './interface/FormProps'
 export { default as FormItemProps } from './interface/FormItemProps'

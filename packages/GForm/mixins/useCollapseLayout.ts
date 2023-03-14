@@ -1,7 +1,7 @@
 import { computed, ShallowRef, Ref, watch } from 'vue'
-import type { FormProps, FormItemProps, BtnProps } from '../../index'
+import type { FormProps, FormItemProps, BtnProps, CollapseItemControlProps } from '../../index'
 
-export interface CustomCollapseItem {
+export interface CustomCollapseItem extends CollapseItemControlProps {
     name: string
     /**
      * 索引
@@ -15,27 +15,6 @@ export interface CustomCollapseItem {
      * 控件内容
      */
     content: FormItemProps[]
-    /**
-     * 禁用
-     */
-    disabled?: boolean
-    /**
-     * 前缀图标
-     */
-    prefix?: string
-    /**
-     * 是否默认展开
-     */
-    active?: boolean
-    /**
-     * 是否是尾巴，闭合标签作用
-     */
-    isTail?: boolean
-
-    /**
-     * 按钮组
-     */
-    btns?: BtnProps[]
 }
 
 export default (props: { config: FormProps }) => {

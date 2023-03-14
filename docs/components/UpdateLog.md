@@ -7,6 +7,30 @@
 
 <template #version>
 
+2.5.1
+
+</template>
+
+<template #date>
+
+2023-03-08
+
+</template>
+
+<h3>New</h3>
+
+<h4>Form</h4>
+
+1. 表单 `interface CollapseItemControlProps` 增加参数
+
+</update-log-block>
+
+<!-- ================== 2.5.0 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
 2.5.0
 
 </template>

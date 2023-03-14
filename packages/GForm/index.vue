@@ -41,6 +41,8 @@
                         :disabled="collapseItem.disabled"
                         :prefix="collapseItem.prefix"
                         :btns="collapseItem.btns"
+                        :shadow="collapseItem.shadow"
+                        :tip="collapseItem.tip"
                         :class="{
                             'form-item-classify': true,
                             'is-tail': collapseItem.isTail
