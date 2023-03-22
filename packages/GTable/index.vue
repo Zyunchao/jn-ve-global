@@ -62,6 +62,7 @@
             class="g-table-pagination"
         >
             <el-pagination
+                v-if="isCreatePagination"
                 v-model:page-size="localConfig.pagination.pageSize"
                 v-model:current-page="localConfig.pagination.currentPage"
                 :total="localConfig.pagination.total"
@@ -87,6 +88,7 @@ import TableColumn from './component/TableColumn.vue'
 import AddOperationColumn from './component/OperationColumn/index'
 import { size2Rem } from '@jsjn/utils'
 import useLoadTriggerValidator from './hooks/useLoadTriggerValidator'
+import useTimeoutCreate from './hooks/useTimeoutCreate'
 
 interface Props {
     config: TableConfig
@@ -95,6 +97,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     config: null
 })
+
+const { isCreate: isCreatePagination } = useTimeoutCreate()
 
 const localInstance = ref<TableInstance | null>(null)
 const refreshLoad = ref(true)
@@ -143,25 +147,9 @@ watch(
 // 监听分页部分的变化，向外抛出
 if (localConfig.value.pagination) {
     watch(
-        () => localConfig.value.pagination.pageSize,
-        () => {
-            localConfig.value.pagination.onChange?.(
-                localConfig.value.pagination.currentPage,
-                localConfig.value.pagination.pageSize
-            )
-
-            toggleTableRowSelection()
-        }
-    )
-
-    watch(
-        () => localConfig.value.pagination.currentPage,
-        () => {
-            localConfig.value.pagination.onChange?.(
-                localConfig.value.pagination.currentPage,
-                localConfig.value.pagination.pageSize
-            )
-
+        () => [localConfig.value.pagination.currentPage, localConfig.value.pagination.pageSize],
+        ([currentPage, pageSize]) => {
+            localConfig.value.pagination.onChange?.(currentPage, pageSize)
             toggleTableRowSelection()
         }
     )

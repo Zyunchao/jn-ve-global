@@ -31,9 +31,14 @@ export default ({ props, emits, tableSearchRef }) => {
                             // 清空多选
                             emits('update:selectedRows', [])
 
-                            if (!props.loadTableMethods)
-                                throw new Error('core load-table-methods 未找到')
-                            props.loadTableMethods?.(1)
+                            // 初始化分页
+                            if (props.tablePagination) {
+                                props.tablePagination.currentPage = 1
+                                props.tablePagination.pageSize = 10
+                            }
+                            // if (!props.loadTableMethods)
+                            //     throw new Error('core load-table-methods 未找到')
+                            // props.loadTableMethods?.(1)
                         }}>
                         重置
                     </el-button>
