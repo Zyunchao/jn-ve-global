@@ -48,7 +48,15 @@
 
                 <template #empty>
                     <LGIcon icon="ali-icon-wushuju" />
-                    <p>暂无数据</p>
+                    <p>
+                        <span>暂无数据</span>
+                        <LGIcon
+                            v-if="props.config.onRefresh"
+                            icon="el-Refresh"
+                            :class="{ 'is-refresh': isRefresh }"
+                            @click="handleEmptyRefresh"
+                        />
+                    </p>
                 </template>
             </el-table>
         </div>
@@ -153,6 +161,15 @@ if (localConfig.value.pagination) {
             toggleTableRowSelection()
         }
     )
+}
+
+const isRefresh = ref<boolean>(false)
+const handleEmptyRefresh = () => {
+    isRefresh.value = true
+    setTimeout(() => {
+        isRefresh.value = false
+    }, 1000)
+    props.config.onRefresh()
 }
 
 // *********************↓ 表格多选，跨页多选 ↓**************************************************************************************

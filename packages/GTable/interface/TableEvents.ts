@@ -1,4 +1,7 @@
 interface CustomTableEvents {
+    /**
+     * 无数据是，占位处的刷新事件触发
+     */
     onRefresh?: () => void
 }
 
