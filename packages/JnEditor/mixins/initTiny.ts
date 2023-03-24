@@ -86,7 +86,6 @@ export default (
      * 事件：https://www.tiny.cloud/docs/advanced/events/
      */
     const finalInit: Parameters<TinyMCE['init']>[0] = {
-        ...props.config,
         ...modeInit,
         selector: `#${id}`,
         language: 'zh_CN',
@@ -123,6 +122,8 @@ export default (
             { start: '--', replacement: '—' },
             { start: '-', replacement: '—' }
         ],
+        // 用户传递的 config 优先级较高
+        ...props.config,
         setup(editor: TinyMCEEditor) {
             currentEditor.value = editor
 
