@@ -52,7 +52,10 @@ const tableConfig = reactive<TableConfig<any>>({
     columns: tableColumns,
     rowKey: 'index',
     stripe: true,
-    data: mockData.data1,
+    data: [],
+    onRefresh() {
+        console.log(`%c 表格刷新事件......`, 'color: #67c23a;' )
+    },
     rowBtnConfig: {
         label: 'qwer',
         hide: false,
