@@ -36,9 +36,12 @@ export default ({ props, emits, tableSearchRef }) => {
                                 props.tablePagination.currentPage = 1
                                 props.tablePagination.pageSize = 10
                             }
-                            // if (!props.loadTableMethods)
-                            //     throw new Error('core load-table-methods 未找到')
-                            // props.loadTableMethods?.(1)
+
+                            // 触发查询条件
+                            if (!props.loadTableMethods) {
+                                throw new Error('core load-table-methods 未找到')
+                            }
+                            props.loadTableMethods?.(1)
                         }}>
                         重置
                     </el-button>
