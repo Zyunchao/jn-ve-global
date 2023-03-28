@@ -1,5 +1,5 @@
 <template>
-    <div class="g-transfer-tree-wrapper">
+    <div :class="['g-transfer-tree-wrapper', { 'is-disabled': disabled }]">
         <!-- 左面板 -->
         <div class="g-transfer-tree-panel">
             <p class="g-transfer-tree-panel__header">
@@ -18,7 +18,8 @@
                     placeholder="请输入搜索内容"
                     :prefix-icon="Search"
                     clearable
-                ></el-input>
+                    :disabled="disabled"
+                />
 
                 <div class="g-transfer-tree-panel__list">
                     <el-tree-v2
@@ -73,7 +74,7 @@
                     placeholder="请输入搜索内容"
                     :prefix-icon="Search"
                     clearable
-                ></el-input>
+                />
 
                 <div class="g-transfer-tree-panel__list">
                     <el-scrollbar>
@@ -97,7 +98,9 @@
                         </el-checkbox-group>
                     </el-scrollbar>
 
-                    <p v-if="checkedPanelIsEmpty" class="empty">暂无数据</p>
+                    <p v-if="checkedPanelIsEmpty" class="empty">
+                        暂无数据
+                    </p>
                 </div>
             </div>
             <!-- <div class="g-transfer-tree-panel__footer"></div> -->
@@ -155,6 +158,10 @@ const props = withDefaults(
          * 选中的数据（对象）
          */
         selectedData?: TreeData[]
+        /**
+         * 禁用
+         */
+        disabled?: boolean
     }>(),
     {
         data: () => [],
@@ -167,7 +174,8 @@ const props = withDefaults(
         }),
         titles: () => ['待选', '已选'],
         filterable: true,
-        checkStrictly: false
+        checkStrictly: false,
+        disabled: false
     }
 )
 
@@ -221,7 +229,7 @@ watch(
 const transferBtns = reactive<BtnProps[]>([
     {
         label: '<',
-        disabled: () => checkedPanelCheckedKeys.value.length === 0,
+        disabled: () => props.disabled === true || checkedPanelCheckedKeys.value.length === 0,
         onClick() {
             localSelectedKeys.value = localSelectedKeys.value.filter(
                 (key) => !checkedPanelCheckedKeys.value.includes(key)
@@ -232,7 +240,7 @@ const transferBtns = reactive<BtnProps[]>([
     },
     {
         label: '>',
-        disabled: () => treeCheckedKeys.value.length === 0,
+        disabled: () => props.disabled === true || treeCheckedKeys.value.length === 0,
         onClick() {
             // 去重
             localSelectedKeys.value = _.uniqWith(

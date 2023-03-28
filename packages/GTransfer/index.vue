@@ -1,15 +1,16 @@
 <template>
-    <div class="g-transfer-wrapper">
+    <div :class="['g-transfer-wrapper', { 'is-disabled': disabled }]">
         <!-- 穿梭框 -->
         <el-transfer
-            :titles="['待选', '已选']"
-            target-order="unshift"
             v-bind="$attrs"
             v-model="currentSelectedKeys"
+            :titles="['待选', '已选']"
+            target-order="unshift"
             :props="sourceMapping"
             class="g-transfer"
             :data="currentDataWrap"
             :filterable="true"
+            :disabled="disabled"
             @change="transferChange"
         >
             <template #default="{ option }">
@@ -39,13 +40,16 @@
         <!-- 扩展按钮 -->
         <LGButtonGroup class="transfer-ext-btns" :btns="transferExtBtns" />
 
+        <div v-if="disabled" class="disabled-shade" />
+
         <div class="search-wrapper left">
             <el-input
                 v-model="leftSearchQuery"
                 placeholder="请输入搜索内容"
                 :prefix-icon="Search"
                 :clearable="true"
-            ></el-input>
+                :disabled="disabled"
+            />
         </div>
     </div>
 </template>
@@ -108,6 +112,10 @@ const props = withDefaults(
          * 查询方法
          */
         filterMethod?: (query: string, currentData?: Option[]) => void
+        /**
+         * 禁用
+         */
+        disabled?: boolean
     }>(),
     {
         modelValue: () => [],
@@ -118,7 +126,8 @@ const props = withDefaults(
             key: 'id',
             label: 'name',
             disabled: 'disabled'
-        })
+        }),
+        disabled: false
     }
 )
 
@@ -242,19 +251,20 @@ const transferChange = (
 // 扩展按钮组
 const transferExtBtns = reactive<BtnProps[]>([
     {
+        label: '<<',
+        disabled: () => props.disabled === true || currentSelectedKeys.value.length === 0,
+        onClick() {
+            currentSelectedKeys.value = []
+            currentDataWrap.value = props.data
+        }
+    },
+    {
         label: '>>',
+        disabled: () => props.disabled === true,
         onClick() {
             currentSelectedKeys.value = currentDataWrap.value.map(
                 (item) => item[props.sourceMapping['key']]
             )
-        }
-    },
-    {
-        label: '<<',
-        disabled: () => currentSelectedKeys.value.length === 0,
-        onClick() {
-            currentSelectedKeys.value = []
-            currentDataWrap.value = props.data
         }
     }
 ])
@@ -304,7 +314,7 @@ defineExpose({
 
             .el-transfer-panel__header {
                 .el-checkbox {
-                    margin-right: 0 !important; 
+                    margin-right: 0 !important;
                 }
             }
 
@@ -433,6 +443,46 @@ defineExpose({
                 }
             }
         }
+    }
+
+    &.is-disabled {
+        :deep(.el-checkbox) {
+            .el-checkbox__input {
+                display: none;
+            }
+
+            .el-checkbox__label {
+                color: var(--el-text-color-regular) !important;
+                cursor: default;
+            }
+        }
+
+        :deep(.el-transfer__buttons) {
+            .el-button {
+                color: var(--el-button-disabled-text-color) !important;
+                cursor: not-allowed !important;
+                background-image: none !important;
+                background-color: var(--el-button-disabled-bg-color) !important;
+                border-color: var(--el-button-disabled-border-color) !important;
+            }
+        }
+
+        :deep(.el-transfer-panel__header) {
+            .el-checkbox__label {
+                > span {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .disabled-shade {
+        width: 200px;
+        position: absolute;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 </style>
