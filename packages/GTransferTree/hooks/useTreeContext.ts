@@ -44,8 +44,14 @@ export default (p: Params) => {
     )
 
     const handleTreeCheck = (_, checkInfo: CheckedInfo) => {
-        const { checkedKeys } = checkInfo
-        treeCheckedKeys.value = checkedKeys
+        const { checkedKeys, checkedNodes } = checkInfo
+        /**
+         * 过滤非禁用的已选的节点
+         */
+        const keys = checkedNodes
+            .filter((node) => !node.disabled)
+            .map((node) => node[props.sourceMapping.value])
+        treeCheckedKeys.value = keys
     }
 
     function changeNodesDisabledStatus(keys: Array<string | number>, status: boolean) {

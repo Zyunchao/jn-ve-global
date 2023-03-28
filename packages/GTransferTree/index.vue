@@ -12,6 +12,7 @@
                     </span>
 
                     <el-tooltip
+                        v-if="checkStrictly === undefined"
                         effect="dark"
                         :content="!localCheckStrictly ? '包含下级' : '不包含下级'"
                         placement="bottom"
@@ -44,7 +45,7 @@
                         ref="elTreeV2Ref"
                         class="g-transfer-tree-panel__tree"
                         :show-checkbox="true"
-                        :check-strictly="localCheckStrictly"
+                        :check-strictly="checkStrictly ?? localCheckStrictly"
                         :data="localTreeData"
                         :props="sourceMapping"
                         :default-expanded-keys="defaultExpandedKeys"
@@ -171,7 +172,7 @@ const props = withDefaults(
         /**
          * 在显示复选框的情况下，是否严格的遵循父子不互相关联的做法
          */
-        // checkStrictly?: boolean
+        checkStrictly?: boolean
         /**
          * 选中的数据（对象）
          */
@@ -192,7 +193,7 @@ const props = withDefaults(
         }),
         titles: () => ['待选', '已选'],
         filterable: true,
-        // checkStrictly: false,
+        checkStrictly: undefined,
         disabled: false
     }
 )
