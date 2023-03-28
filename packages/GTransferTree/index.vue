@@ -4,10 +4,28 @@
         <div class="g-transfer-tree-panel">
             <p class="g-transfer-tree-panel__header">
                 <span>{{ titles[0] }}</span>
-                <span class="count">
-                    <span>{{ treeCheckedKeys.length }}</span>
-                    <span>/</span>
-                    <span>{{ enableNodesLength }}</span>
+                <span class="right">
+                    <span class="count">
+                        <span>{{ treeCheckedKeys.length }}</span>
+                        <span>/</span>
+                        <span>{{ enableNodesLength }}</span>
+                    </span>
+
+                    <el-tooltip
+                        effect="dark"
+                        :content="!localCheckStrictly ? '包含下级' : '不包含下级'"
+                        placement="bottom"
+                    >
+                        <span
+                            :class="[
+                                'change-check-strictly-trigger',
+                                { 'is-un-strictly': localCheckStrictly }
+                            ]"
+                            @click="localCheckStrictly = !localCheckStrictly"
+                        >
+                            <g-icon icon="org" />
+                        </span>
+                    </el-tooltip>
                 </span>
             </p>
             <div class="g-transfer-tree-panel__body">
@@ -26,7 +44,7 @@
                         ref="elTreeV2Ref"
                         class="g-transfer-tree-panel__tree"
                         :show-checkbox="true"
-                        :check-strictly="checkStrictly"
+                        :check-strictly="localCheckStrictly"
                         :data="localTreeData"
                         :props="sourceMapping"
                         :default-expanded-keys="defaultExpandedKeys"
@@ -116,7 +134,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { reactive, nextTick, watch } from 'vue'
+import { reactive, nextTick, watch, ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import { ElTreeV2 } from 'element-plus'
 import { size2Rem } from '@jsjn/utils'
@@ -153,7 +171,7 @@ const props = withDefaults(
         /**
          * 在显示复选框的情况下，是否严格的遵循父子不互相关联的做法
          */
-        checkStrictly?: boolean
+        // checkStrictly?: boolean
         /**
          * 选中的数据（对象）
          */
@@ -174,7 +192,7 @@ const props = withDefaults(
         }),
         titles: () => ['待选', '已选'],
         filterable: true,
-        checkStrictly: false,
+        // checkStrictly: false,
         disabled: false
     }
 )
@@ -183,6 +201,8 @@ const emits = defineEmits<{
     (e: 'update:modelValue', arr: Array<string | number>): void
     (e: 'update:selectedData', arr: TreeData[]): void
 }>()
+
+const localCheckStrictly = ref<boolean>(false)
 
 // 树的上下文
 const {
