@@ -6,8 +6,18 @@ export default [
     },
     {
         text: '微前端',
-        link: '/micro/',
-        activeMatch: '^/micro/'
+        children: [
+            {
+                text: 'MultiRepo',
+                link: '/micro/'
+                // activeMatch: '^/micro/'
+            },
+            {
+                text: 'Monorepo',
+                link: '/monorepo/'
+                // activeMatch: '^/monorepo/'
+            }
+        ]
     },
     {
         text: 'utils',
@@ -23,7 +33,7 @@ export default [
         text: '更新日志',
         children: [
             {
-                text: '组件库@2.5.3',
+                text: '组件库@2.6.0',
                 link: '/components/UpdateLog.md'
             },
             {

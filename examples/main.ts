@@ -18,7 +18,7 @@ app.directive('auth', {})
 app.use(ElementPlus, { locale: zhCn })
     .use(GlobalComponents, {
         interceptorsReqHandle: (config) => {
-            config.headers['Authorization'] = 'Bearer d499611d-71bb-4e4c-a991-bb284392db67'
+            config.headers['Authorization'] = 'Bearer 838f8fd1-7f8a-4ed2-ac8f-307bbc8bfbdc'
 
             return config
         }
