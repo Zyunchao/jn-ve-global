@@ -464,7 +464,12 @@ export default () => {
                 label: '地址',
                 span: 12,
                 controlConfig: {
-                    type: 'address'
+                    type: 'address',
+                    props: {
+                        onChange(region, detail, regionText) {
+                            console.log(`%c val == `, 'color: #67c23a;', region, detail, regionText)
+                        }
+                    }
                 }
             },
             {

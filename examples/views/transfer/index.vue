@@ -1,27 +1,32 @@
 <template>
-    <el-button type="success" @click="modalShow = true">打开</el-button>
+    <el-button type="success" @click="modalShow = true">
+        打开
+    </el-button>
 
     <g-modal v-model="modalShow">
-        <g-tabs style="margin-bottom: 20px;" v-model="activeName" :list="tabList"></g-tabs>
+        <g-tabs v-model="activeName" style="margin-bottom: 20px" :list="tabList" />
 
         <g-transfer
             v-if="activeName === ActiveUserType.LIST"
-            v-model="selectKeys"
             ref="transferRef"
+            v-model="selectKeys"
             :titles="['待选', '已选']"
             :data="sourceData"
             :filterable="true"
-            :paginationShow="true"
+            :pagination-show="true"
             :total="total"
             :filter-method="filterMethod"
+            :disabled="false"
             @pagination-change="handlePaginationChange"
-        ></g-transfer>
+        />
 
         <GTransferTree
             v-if="activeName === ActiveUserType.ORG_TREE"
             v-model="treeSelectKeys"
             :data="treeData"
             :filterable="true"
+            :disabled="false"
+            :check-strictly="undefined"
         />
     </g-modal>
 </template>
@@ -61,13 +66,13 @@ const tabList: TabPaneProps[] = [
     }
 ]
 
-const activeName = ref<ActiveUserType>(ActiveUserType.LIST)
-const modalShow = ref<boolean>(false)
+const activeName = ref<ActiveUserType>(ActiveUserType.ORG_TREE)
+const modalShow = ref<boolean>(true)
 const treeData = ref()
 const treeSelectKeys = ref<Array<string | number>>([])
 
 setTimeout(() => {
-    treeSelectKeys.value = ['1615264570391699457', '1621418109203738626']
+    // treeSelectKeys.value = ['1615264570391699457', '1621418109203738626']
 }, 1000)
 
 setTimeout(() => {

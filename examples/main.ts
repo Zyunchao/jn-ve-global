@@ -15,4 +15,13 @@ const app = createApp(App)
 
 app.directive('auth', {})
 
-app.use(ElementPlus, { locale: zhCn }).use(GlobalComponents).use(Router).mount('#app')
+app.use(ElementPlus, { locale: zhCn })
+    .use(GlobalComponents, {
+        interceptorsReqHandle: (config) => {
+            config.headers['Authorization'] = 'Bearer d499611d-71bb-4e4c-a991-bb284392db67'
+
+            return config
+        }
+    })
+    .use(Router)
+    .mount('#app')
