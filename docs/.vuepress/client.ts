@@ -8,9 +8,7 @@ export default defineClientConfig({
     enhance({ app, router, siteData }) {
         app.directive('auth', {})
         app.use(ElementPlus, { locale: zhCn })
-        app.use(GlobalComponent, {
-            interceptorsReqHandle: (config) => config
-        })
+        app.use(GlobalComponent)
     },
     setup() {},
     rootComponents: []
