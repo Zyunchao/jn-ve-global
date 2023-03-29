@@ -31,12 +31,12 @@ pages:
             - node_modules/
 
     script:
+        - nvm install 16.18.1
+        - nvm use 16.18.1
         - npm config get registry
         - npm cache clean --force
         - npm install
         - npm run docs:build
-        - nvm install 16.18.1
-        - nvm use 16.18.1
         # - yarn cache clean
         # - yarn install
         # - yarn docs:build
