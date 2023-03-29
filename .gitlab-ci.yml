@@ -31,13 +31,13 @@ pages:
             - node_modules/
 
     script:
-        # - npm config get registry
-        # - npm cache clean --force
-        # - npm install
-        # - npm run docs:build
-        - yarn cache clean
-        - yarn install
-        - yarn docs:build
+        - npm config get registry
+        - npm cache clean --force
+        - npm install
+        - npm run docs:build
+        # - yarn cache clean
+        # - yarn install
+        # - yarn docs:build
         - rm -fr public
         - mkdir public && cp -fr docs/.vuepress/dist/* public
     artifacts:
