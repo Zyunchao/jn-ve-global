@@ -4,8 +4,8 @@ dist
 uums
 dist-ssr
 *.local
-yarn.lock
-package-lock.json
+# yarn.lock
+# package-lock.json
 *.zip
 *.7z
 .temp 
