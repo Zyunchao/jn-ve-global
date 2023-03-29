@@ -67,9 +67,14 @@ export interface AddressProps {
 
 export interface AddressCascaderEvents {
     /**
+     * 自定义 change 事件
      * 当绑定值变化时触发的事件	value
+     * @param region 所选地区编码
+     * @param detail 详细地址
+     * @param regionText 所选地区文本数组
+     * @returns
      */
-    onChange?: (val: string | string[]) => void
+    onChange?: (region?: string | string[], detail?: string, regionText?: string[]) => void
     /**
      * 当展开节点发生变化时触发	各父级选项值组成的数组
      */

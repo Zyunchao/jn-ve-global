@@ -1,6 +1,7 @@
 <template>
     <div :class="['g-address', { 'is-hide-detail': hideDetail }]">
         <el-cascader
+            ref="elCascaderRef"
             v-bind="attrs"
             v-model="selectedRegion"
             :filterable="true"
@@ -26,8 +27,9 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, computed, useAttrs } from 'vue'
+import { toRaw, computed, useAttrs, watch, ref } from 'vue'
 import regionData from './data/region.json'
+import { ElCascader } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{
@@ -45,6 +47,7 @@ const props = withDefaults(
          * 区域待选数据，覆盖本地
          */
         options?: Array<any>
+        onChange?: (region?: string | string[], detail?: string, regionText?: string[]) => void
     }>(),
     {
         modelValue: () => [],
@@ -55,6 +58,7 @@ const props = withDefaults(
 
 const emits = defineEmits(['update:modelValue', 'table-edit-hide'])
 const attrs = useAttrs()
+const elCascaderRef = ref<InstanceType<typeof ElCascader> | null>()
 
 const localRegionData = computed(() => props.options || regionData)
 
@@ -94,10 +98,22 @@ const detailAddress = computed<string>({
     }
 })
 
+watch(
+    () => [selectedRegion.value, detailAddress.value],
+    ([region, detail]) => {
+        const node = elCascaderRef.value.getCheckedNodes(false)?.[0]
+        props.onChange(region, detail as string, node?.pathLabels)
+    }
+)
+
 // 表格中关闭
 const tableEditHide = (val) => {
     if (!val && props.hideDetail) emits('table-edit-hide')
 }
+
+defineExpose({
+    regionData
+})
 </script>
 
 <style lang="scss" scoped>
