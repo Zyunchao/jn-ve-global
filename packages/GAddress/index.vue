@@ -112,7 +112,8 @@ const tableEditHide = (val) => {
 }
 
 defineExpose({
-    regionData
+    regionData,
+    elCascaderRef
 })
 </script>
 
