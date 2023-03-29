@@ -212,7 +212,16 @@ watch(
          * 去重是因为后台返回的数据中会包含之前的已选数据，如果直接拼接，会产生重复数据
          * 重复数据会对列表渲染产生问题
          */
-        currentDataWrap.value = _.uniqWith(data.concat(currentSelectedDatas.value), _.isEqual)
+        currentDataWrap.value = data.concat(
+            currentSelectedDatas.value.filter((sItem) => {
+                const key = props.sourceMapping['key']
+                return !data.some((dItem) => dItem[key] === sItem[key])
+            })
+        )
+
+        // console.log(`%c currentDataWrap.value === `, 'color: #67c23a;', currentDataWrap.value)
+        // 这里使用数据对象引用去对比，会有问题。即数据更新后，数据会一直追加新的数据的引用，因为每次比对的都是新的引用
+        // currentDataWrap.value = _.uniqWith(data.concat(currentSelectedDatas.value), _.isEqual)
     },
     { immediate: true }
 )
@@ -222,7 +231,7 @@ watch(
  *  - 所还数据不在当前页：应该从 “当前活跃的数据容器” 中移除，即不存在于待选列表，也不存在于已选列表
  *      通过更新 “当前活跃的数据容器” 实现移除
  *
- *  - 所还数据就应该是当前页：这个当前页取决于后台返回的分页数据（该数据已备份）
+ *  - 所还数据是当前页：这个当前页取决于后台返回的分页数据（该数据已备份）
  *      组件默认行为，移动到左侧，即不对 “当前活跃的数据容器” 进行额外的处理
  */
 const transferChange = (
