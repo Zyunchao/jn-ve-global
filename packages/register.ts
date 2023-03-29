@@ -10,6 +10,12 @@ import {
 } from './_globalConstant/baseModuleMode'
 import { setAppMode } from './_globalConstant/appMode'
 import { getGlobal } from '@jsjn/utils'
+import {
+    setIterceptorsReqHandle,
+    setIterceptorsResHandle,
+    ReqHandle,
+    ResHandle
+} from './_http/httpInterceptors'
 
 // 样式资源
 import './assets/styles/index.scss'
@@ -57,6 +63,8 @@ export default (
         appMode?: string
         baseModuleMode?: BaseModuleMode
         baseModuleDefaultMode?: BaseModuleMode
+        interceptorsReqHandle?: ReqHandle
+        interceptorsResHandle?: ResHandle
     }
 ) => {
     // vue 模板组件
@@ -90,6 +98,15 @@ export default (
             setBaseModuleMode(props.baseModuleMode)
         } else {
             setBaseModuleMode(getDefauleMode())
+        }
+
+        // 请求拦截器
+        if (props.interceptorsReqHandle) {
+            setIterceptorsReqHandle(props.interceptorsReqHandle)
+        }
+        // 响应拦截器
+        if (props.interceptorsResHandle) {
+            setIterceptorsResHandle(props.interceptorsResHandle)
         }
     }
 }
