@@ -18,13 +18,13 @@ export default ({ emits, props }) => {
      * 普通的列表模式，将抛出有效的 fileList
      */
     const localFileList = computed({
-        get: () => {
-            return _.cloneDeep(props.fileList).map((file, index) => {
+        get: () =>
+            _.cloneDeep(props.fileList).map((file, index) => {
                 // 异步获取文件的 url
                 if (!file.url && file.fileId && props.downloadUrl) {
                     const fileType = getFileType(file.name)
-
                     const url = `${props.downloadUrl}/${file.fileId}`
+
                     myAxios
                         .get(url, {
                             responseType: 'blob'
@@ -32,17 +32,27 @@ export default ({ emits, props }) => {
                         .then((res) => {
                             let blob: Blob
 
-                            if (res.status === 200) {
-                                blob = res.data
+                            /**
+                             * 这里的测试样例的 axios 实例未处理响应体，基座的拦截器是处理过响应数据结构的
+                             */
+                            // if (res.status === 200) {
+                            //     blob = res.data
+                            //     if (fileType === 'pdf') {
+                            //         blob = new Blob([res.data], { type: 'application/pdf;' })
+                            //     }
+                            // }
+
+                            // 实际的基座响应数据
+                            if (res) {
+                                blob = res as any
                                 if (fileType === 'pdf') {
-                                    blob = new Blob([res.data], { type: 'application/pdf;' })
+                                    blob = new Blob([blob], { type: 'application/pdf;' })
                                 }
                             }
 
                             file.url = blob
                                 ? window.URL.createObjectURL(blob)
                                 : `${props.downloadUrl}/${file.fileId}`
-
 
                             // 列表更新获取地址时，不会实时的响应到预览图，重绘文件列表即可
                             isRedrawFileList.value = true
@@ -52,8 +62,7 @@ export default ({ emits, props }) => {
                         })
                 }
                 return file
-            })
-        },
+            }),
         set: (list) => {
             emits('update:fileList', list)
         }

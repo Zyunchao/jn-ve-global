@@ -8,6 +8,7 @@ export * from './GTabs'
 export * from './GChart'
 export * from './GFormGenerate'
 export * from './JnEditor/interface/tinymce'
+import { ReqHandle, ResHandle } from './_http/httpInterceptors'
 
 export { default as InfoColumnProps } from './GInfoSA/interface/InfoColumnProps'
 export { default as IrregularTableCell } from './GIrregularTable/interface/Cell'
@@ -20,6 +21,8 @@ declare const _default: (
         appMode?: string
         baseModuleMode?: BaseModuleMode
         baseModuleDefaultMode?: BaseModuleMode
+        interceptorsReqHandle?: ReqHandle
+        interceptorsResHandle?: ResHandle
     }
 ) => void
 export default _default as Plugin

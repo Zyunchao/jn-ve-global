@@ -481,7 +481,7 @@ export default () => {
                     props: {
                         action: `${prefix}/kinso-basic-open-server/v1/document/file/upload`,
                         downloadUrl: `${prefix}/kinso-basic-open-server/v1/document/file/download`,
-                        fileList: FileSource as any,
+                        fileList: [],
                         name: 'file',
                         size: 2,
                         listType: 'picture-card',
@@ -552,6 +552,15 @@ export default () => {
             }
         ]
     })
+
+
+    setTimeout(() => {
+        formConfig.formItems.find(item => {
+            if(item.prop === 'avatar') {
+                item.controlConfig.props.fileList = FileSource
+            }
+        })
+    }, 3000)
 
     return formConfig
 }
