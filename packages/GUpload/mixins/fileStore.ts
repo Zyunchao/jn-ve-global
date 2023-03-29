@@ -1,5 +1,7 @@
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import _ from 'lodash'
+import myAxios from '../../_http/http'
+import { getFileType } from '../utils'
 
 export default ({ emits, props }) => {
     /**
@@ -9,17 +11,49 @@ export default ({ emits, props }) => {
      */
     const currentFile = ref(null)
 
+    // 文件列表内容改变，重绘
+    const isRedrawFileList = ref<boolean>(false)
+
     /**
      * 普通的列表模式，将抛出有效的 fileList
      */
     const localFileList = computed({
-        get: () =>
-            _.cloneDeep(props.fileList).map((file) => {
+        get: () => {
+            return _.cloneDeep(props.fileList).map((file, index) => {
+                // 异步获取文件的 url
                 if (!file.url && file.fileId && props.downloadUrl) {
-                    file.url = `${props.downloadUrl}/${file.fileId}`
+                    const fileType = getFileType(file.name)
+
+                    const url = `${props.downloadUrl}/${file.fileId}`
+                    myAxios
+                        .get(url, {
+                            responseType: 'blob'
+                        })
+                        .then((res) => {
+                            let blob: Blob
+
+                            if (res.status === 200) {
+                                blob = res.data
+                                if (fileType === 'pdf') {
+                                    blob = new Blob([res.data], { type: 'application/pdf;' })
+                                }
+                            }
+
+                            file.url = blob
+                                ? window.URL.createObjectURL(blob)
+                                : `${props.downloadUrl}/${file.fileId}`
+
+
+                            // 列表更新获取地址时，不会实时的响应到预览图，重绘文件列表即可
+                            isRedrawFileList.value = true
+                            nextTick(() => {
+                                isRedrawFileList.value = false
+                            })
+                        })
                 }
                 return file
-            }),
+            })
+        },
         set: (list) => {
             emits('update:fileList', list)
         }
@@ -27,6 +61,7 @@ export default ({ emits, props }) => {
 
     return {
         currentFile,
-        localFileList
+        localFileList,
+        isRedrawFileList
     }
 }
