@@ -6,10 +6,10 @@
  * @FilePath: /_apollo/src/microApp/httpInterceptors.ts
  * @Description: 接收父级的请求拦截函数，做到微应用与基座的行为保持一致
  */
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 
-export type ReqHandle = (config: AxiosRequestConfig<any>) => Promise<AxiosRequestConfig<any>>
-export type ResHandle = (res: AxiosResponse<any, any>) => any
+export type ReqHandle = (config: InternalAxiosRequestConfig) => Promise<InternalAxiosRequestConfig>
+export type ResHandle = (res: AxiosResponse) => Promise<AxiosResponse>
 
 export let interceptorsReqHandle: ReqHandle = null
 export let interceptorsResHandle: ResHandle = null
