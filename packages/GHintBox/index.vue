@@ -6,6 +6,7 @@
             :content="text"
             placement="top-start"
             v-bind="$attrs"
+            popper-class="g-hint-box-popper"
         >
             <span>
                 {{ text }}
