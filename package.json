@@ -1,6 +1,6 @@
 {
     "name": "jn-ve-global",
-    "version": "2.6.0",
+    "version": "2.6.1",
     "author": "zyc",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
@@ -45,7 +45,7 @@
         "async-validator": "^4.2.5",
         "axios": "^1.2.2",
         "echarts": "^5.3.3",
-        "element-plus": "2.2.32",
+        "element-plus": "2.3.2",
         "lodash": "^4.17.21",
         "resize-observer-polyfill": "^1.5.1",
         "uuid": "^9.0.0",

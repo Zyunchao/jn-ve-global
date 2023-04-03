@@ -25,9 +25,20 @@
             justify-content: center;
             align-items: center;
 
-            svg {
+            >.el-tooltip__trigger {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: 10px;
+
+                &:first-of-type {
+                    margin-left: 0;
+                }
+            }
+
+            .custom-svg-icon {
                 cursor: pointer;
-                margin-right: 14px;
                 color: #a7a7a7 !important;
 
                 &:hover {

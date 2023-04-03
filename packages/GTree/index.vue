@@ -6,8 +6,13 @@
                 <LGButtonGroup :btns="btns" />
             </div>
             <div class="tree-icons">
-                <g-icon icon="tree-list-unfold" @click="unfold" />
-                <g-icon icon="tree-list-pack-up" @click="packUp" />
+                <el-tooltip content="展开全部" placement="bottom">
+                    <span> <LGIcon icon="tree-list-unfold" @click="unfold" /> </span>
+                </el-tooltip>
+
+                <el-tooltip effect="dark" content="收起全部" placement="bottom">
+                    <span> <LGIcon icon="tree-list-pack-up" @click="packUp" /></span>
+                </el-tooltip>
             </div>
         </div>
 
@@ -85,7 +90,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { watch, watchEffect, ref } from 'vue'
+import { watch, watchEffect, ref, computed } from 'vue'
 import { BtnProps } from '../index'
 import type { TreeData, SelectTreeTreeProps as TreeProps } from '../GSelectTree/v1/index'
 import { nodeHasChildren } from './utils'
