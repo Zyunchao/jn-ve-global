@@ -31,7 +31,7 @@ pages:
             - node_modules/
 
     script:
-        # - n 16.18.1
+        - n 16.18.1
         - n use 16.18.1
         - node -v
         - npm config get registry
