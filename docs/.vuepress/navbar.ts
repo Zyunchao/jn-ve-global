@@ -6,18 +6,8 @@ export default [
     },
     {
         text: '微前端',
-        children: [
-            {
-                text: 'MultiRepo',
-                link: '/micro/'
-                // activeMatch: '^/micro/'
-            },
-            {
-                text: 'Monorepo',
-                link: '/monorepo/'
-                // activeMatch: '^/monorepo/'
-            }
-        ]
+        link: '/micro/',
+        activeMatch: '^/micro/'
     },
     {
         text: 'utils',
