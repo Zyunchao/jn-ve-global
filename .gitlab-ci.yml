@@ -31,8 +31,8 @@ pages:
             - node_modules/
 
     script:
-        # - n 16.18.1
-        - n use 16.18.1
+        - n 18.15.0
+        - n use 18.15.0
         - node -v
         # - npm config get registry
         # - npm cache clean --force
