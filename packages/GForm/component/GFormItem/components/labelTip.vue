@@ -1,5 +1,5 @@
 <template>
-    <el-tooltip :placement="placement" :popper-class="popperClass">
+    <el-tooltip :placement="placement" :popper-class="[popperClass, 'form-item-tip__popper']">
         <template #content>
             <!-- 组件 || jsx 元素 -->
             <component :is="content" v-if="isVNode(content)" />
