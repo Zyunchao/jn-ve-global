@@ -2,7 +2,7 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-02-01 10:02:50
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-02-02 10:53:04
+ * @LastEditTime: 2023-04-03 09:42:14
  * @FilePath: /jn-ve-global/packages/GTable/component/TableEditCell/hooks/useAddValidate.ts
  * @Description: 针对当前单元格，在创建完成后，创建 validator 实例
  */
@@ -82,6 +82,7 @@ export default ({ editCellContentRef, props, localPropRef, localData, controlCel
 
     // 单元格销毁时，移除全局保存的当前单元格校验器
     onUnmounted(() => {
+        if(!allEditCellValidatorMap?.[rowKey]?.[cellName]) return
         allEditCellValidatorMap[rowKey][cellName] = null
     })
 
