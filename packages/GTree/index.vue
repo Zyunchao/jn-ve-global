@@ -6,11 +6,11 @@
                 <LGButtonGroup :btns="btns" />
             </div>
             <div class="tree-icons">
-                <el-tooltip content="展开全部" placement="bottom">
+                <el-tooltip content="展开全部" placement="bottom" popper-class="my-custom-popper">
                     <span> <LGIcon icon="tree-list-unfold" @click="unfold" /> </span>
                 </el-tooltip>
 
-                <el-tooltip effect="dark" content="收起全部" placement="bottom">
+                <el-tooltip content="收起全部" placement="bottom" popper-class="my-custom-popper">
                     <span> <LGIcon icon="tree-list-pack-up" @click="packUp" /></span>
                 </el-tooltip>
             </div>
@@ -22,60 +22,52 @@
         </div>
 
         <!-- 树 -->
-        <div class="tree-wrapper">
-            <el-scrollbar class="tree-scrollbar">
-                <el-tree
-                    ref="treeRef"
-                    :data="data"
-                    node-key="id"
-                    highlight-current
-                    :expand-on-click-node="false"
-                    :default-expand-all="expandAll"
-                    empty-text="暂无数据"
-                    :filter-node-method="filterNode"
-                    :props="defaultProps"
-                    v-bind="$attrs"
-                    :default-checked-keys="localDefaultCheckedKeys"
-                >
-                    <!-- 节点图标 -->
-                    <template #default="{ node, data }">
-                        <span
-                            v-if="mode === 'default'"
-                            :class="[
-                                'tree-node-icon-wrapper',
-                                {
-                                    'no-icon':
-                                        !data.industryId &&
-                                        (!data.children || !data.children.length)
-                                }
-                            ]"
-                        >
-                            <!-- 根节点 -->
-                            <LGIcon
-                                v-if="Array.isArray(node.parent.data)"
-                                icon="org"
-                                class="root-icon"
-                            />
+        <div ref="treeWrapRef" class="tree-wrapper">
+            <ElTreeV2
+                v-if="!!treeWrapHeight"
+                ref="treeRef"
+                :data="data"
+                empty-text="暂无数据"
+                :highlight-current="true"
+                :filter-method="filterMethod"
+                :expand-on-click-node="false"
+                v-bind="$attrs"
+                :height="treeWrapHeight"
+                :item-size="itemSize"
+                :props="localSourceMapping"
+                :default-checked-keys="localDefaultCheckedKeys"
+                @node-expand="handleNodeExpand"
+                @node-collapse="handleNodeCollapse"
+            >
+                <template #default="{ node, data }">
+                    <span
+                        v-if="['institution', 'default'].includes(mode)"
+                        :class="[
+                            'tree-node-icon-wrapper',
+                            { 'no-icon': !data.industryId && !data.children?.length }
+                        ]"
+                    >
+                        <!-- 一级节点 -->
+                        <LGIcon v-if="node.level === 1" icon="org" class="root-icon" />
 
-                            <!-- 子节点 -->
-                            <LGIcon
-                                v-else-if="
-                                    !data.industryId &&
-                                        data.children &&
-                                        data.children.length > 0 &&
-                                        !Array.isArray(node.parent.data)
-                                "
-                                :icon="node.expanded ? 'folder' : 'aside-tree-node-close-icon'"
-                            />
+                        <!-- 非机构节点，且有子节点 -->
+                        <LGIcon
+                            v-else-if="!data.industryId && !!data.children?.length"
+                            :icon="
+                                expandNodeKeys.includes(data[localSourceMapping.value])
+                                    ? 'folder'
+                                    : 'aside-tree-node-close-icon'
+                            "
+                        />
 
-                            <!-- 机构 -->
-                            <LGIcon v-else-if="data.industryId" icon="tree-node-institution-icon" />
-                        </span>
+                        <!-- 机构节点（数据包含 industryId） -->
+                        <LGIcon v-else-if="data.industryId" icon="tree-node-institution-icon" />
+                    </span>
 
-                        <span>{{ node.label }}</span>
-                    </template>
-                </el-tree>
-            </el-scrollbar>
+                    <!-- 节点文本 -->
+                    <span>{{ node.label }}</span>
+                </template>
+            </ElTreeV2>
         </div>
 
         <!-- 留白占位 -->
@@ -90,12 +82,14 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { watch, watchEffect, ref, computed } from 'vue'
-import { BtnProps } from '../index'
-import type { TreeData, SelectTreeTreeProps as TreeProps } from '../GSelectTree/v1/index'
-import { nodeHasChildren } from './utils'
+import { watchEffect, ref, computed } from 'vue'
+import type { TreeData, BtnProps, TreeV2Props } from '../index'
 import LGIcon from '../GIcon/index.vue'
 import LGButtonGroup from '../GButtonGroup/index.vue'
+import { size2Rem, getStyle, nodeHasChildren, getAllParentNode } from '@jsjn/utils'
+import { ElTreeV2 } from 'element-plus'
+import useFilterContext from './hooks/useFilterContext'
+import useExpandCache from './hooks/useExpandCache'
 import _ from 'lodash'
 
 interface Props {
@@ -106,11 +100,11 @@ interface Props {
     /**
      * 类别 'default' | 'other'
      */
-    mode?: 'default' | 'other'
+    mode?: 'institution' | 'default' | 'other'
     /**
-     * 默认配置选项
+     * 默认配置选项，历史依赖原因，理论上应该改为 sourceMapping
      */
-    defaultProps?: TreeProps
+    defaultProps?: TreeV2Props
     /**
      * 配置按钮组
      */
@@ -121,12 +115,11 @@ interface Props {
     showBtnArea?: boolean
     /**
      * 默认勾选的节点的 key 的数组
-     * 需要传递 node-key='id'
      */
     defaultCheckedKeys?: string[] | number[]
     /**
      * 过滤传递的默认勾选的 key 的数组中的父节点
-     * 如果传递的选中节点中包含父节点，那么就会到值其下的子节点全部选中
+     * 如果传递的选中节点中包含父节点，那么就会导致其下的子节点全部选中
      * 有些情况下，可能希望由子控制父，而不是由父控制子
      */
     filterParentCheckedKeysFlag?: boolean
@@ -134,38 +127,74 @@ interface Props {
      * 隐藏搜索框
      */
     hideSearch?: boolean
+    /**
+     * 默认展开全部
+     */
+    defaultExpandAll?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
     data: () => [],
     mode: 'default',
-    defaultProps: () => ({
-        children: 'children',
-        label: 'name'
-    }),
     btns: () => [],
     showBtnArea: true,
     defaultCheckedKeys: () => [],
     filterParentCheckedKeysFlag: false,
-    hideSearch: false
+    hideSearch: false,
+    defaultExpandAll: false
 })
 
 const emits = defineEmits(['getTreeRef'])
 
-const treeRef = ref<any>(null)
-const filterText = ref<string>('')
-const expandAll = ref<boolean>(true)
 const localDefaultCheckedKeys = ref<any[]>()
+const localSourceMapping = computed<TreeV2Props>(() => ({
+    label: 'name',
+    value: 'id',
+    children: 'children',
+    disabled: 'disabled',
+    ...props.defaultProps
+}))
 
-// 树的过滤
-watch(
-    () => filterText.value,
-    (newValue) => {
-        treeRef.value.filter(newValue)
-    }
+const treeWrapRef = ref<HTMLElement>()
+const treeWrapHeight = computed(() =>
+    treeWrapRef.value ? parseFloat(getStyle(treeWrapRef.value, 'height')) : 0
+)
+const itemSize = computed(() => size2Rem(30))
+
+/**
+ * 树中所有父节点的 key 数组，用途：
+ *  - 默认展开全部
+ *  - 展开全部
+ *  - 收起全部
+ */
+const allParentNodeKeys = computed(() =>
+    getAllParentNode(props.data).map((node) => node[localSourceMapping.value.value])
 )
 
-// 处理默认选中的数据
+// 过滤的上下文
+const { treeRef, filterText, filterMethod } = useFilterContext({ emits, localSourceMapping })
+
+// 缓存展开的节点
+const { expandNodeKeys, handleNodeExpand, handleNodeCollapse } = useExpandCache({
+    localSourceMapping,
+    treeRef
+})
+
+// 是否默认展开全部节点
+watchEffect(() => {
+    if (!props.defaultExpandAll) return
+    const parentKeys = allParentNodeKeys.value
+    const data = props.data
+    const treeInstance = treeRef.value
+    if (!treeInstance || !data || !data.length || !parentKeys.length) return
+    treeInstance.setExpandedKeys(parentKeys)
+})
+
+/**
+ * 处理默认选中的数据
+ *  - 如果标识 filterParentCheckedKeysFlag，则过滤掉父级节点
+ *  - 否则，全量返回用户传递的
+ */
 watchEffect(() => {
     if (
         props.data.length > 0 &&
@@ -173,10 +202,16 @@ watchEffect(() => {
         props.filterParentCheckedKeysFlag
     ) {
         localDefaultCheckedKeys.value = props.defaultCheckedKeys
-            .map((id) => {
-                const isParentNode = nodeHasChildren(props.data, id)
+            .map((targetFieldVal) => {
+                // 依照树的 props 配置对象的 value 字段，进行筛选
+                const isParentNode = nodeHasChildren(
+                    props.data,
+                    targetFieldVal,
+                    localSourceMapping.value.value
+                )
+
                 if (isParentNode) return null
-                else return id
+                else return targetFieldVal
             })
             .filter((item) => !!item)
     } else {
@@ -184,43 +219,17 @@ watchEffect(() => {
     }
 })
 
-// 抛出树的 ref
-watch(
-    () => treeRef.value,
-    (instance) => {
-        if (instance) emits('getTreeRef', instance)
-    }
-)
-
-const filterNode = (value, data) => {
-    if (!value) return true
-    return data[(props.defaultProps.label as string) || 'name'].indexOf(value) !== -1
-}
-
+// 展开全部
 const unfold = () => {
-    changeTreeNodeUnfold(treeRef.value.store.root)
+    if (!allParentNodeKeys.value.length) return
+    treeRef.value.setExpandedKeys(allParentNodeKeys.value)
+    expandNodeKeys.value = allParentNodeKeys.value
 }
 
+// 收起全部
 const packUp = () => {
-    changeTreeNodeStatusPackUp(treeRef.value.store.root)
-}
-
-function changeTreeNodeUnfold(node) {
-    for (let i = 0; i < node.childNodes.length; i++) {
-        node.childNodes[i].expanded = expandAll.value
-        if (node.childNodes[i].childNodes.length > 0) {
-            changeTreeNodeUnfold(node.childNodes[i])
-        }
-    }
-}
-
-function changeTreeNodeStatusPackUp(node) {
-    for (let i = 0; i < node.childNodes.length; i++) {
-        node.childNodes[i].expanded = !expandAll.value
-        if (node.childNodes[i].childNodes.length > 0) {
-            changeTreeNodeStatusPackUp(node.childNodes[i])
-        }
-    }
+    treeRef.value.setExpandedKeys([])
+    expandNodeKeys.value = []
 }
 
 // 抛出
