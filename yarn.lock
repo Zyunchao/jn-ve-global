@@ -543,10 +543,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@jsjn/utils@1.2.0":
-  version "1.2.0"
-  resolved "http://172.31.71.159/repository/npm-public/@jsjn/utils/-/utils-1.2.0.tgz"
-  integrity sha512-aDqs5SHaYbwtNio9p0WOHz+GW9xFQhgpK/fJyZf1KWlS1r6DxLCyJqRFKuQMYuRGiP6vIX2MIVqcGXt7HIiMfQ==
+"@jsjn/utils@1.2.1":
+  version "1.2.1"
+  resolved "http://172.31.71.159/repository/npm-public/@jsjn/utils/-/utils-1.2.1.tgz#70d114e07e78d0b4e4a5defbfbdfbac03f559853"
+  integrity sha512-qaOKvguFs8kCi2W9BlMaKbLJpjYerJbBD5dSgOhOyROexMp+3gwgOlea3eu1lwEVA6PgYwDy0SYpQEtP3ExTPw==
   dependencies:
     lodash "^4.17.21"
 
@@ -2107,10 +2107,10 @@ electron-to-chromium@^1.4.284:
   resolved "http://172.31.71.159/repository/npm-public/electron-to-chromium/-/electron-to-chromium-1.4.342.tgz"
   integrity sha512-dTei3VResi5bINDENswBxhL+N0Mw5YnfWyTqO75KGsVldurEkhC9+CelJVAse8jycWyP8pv3VSj4BSyP8wTWJA==
 
-element-plus@2.2.32:
-  version "2.2.32"
-  resolved "http://172.31.71.159/repository/npm-public/element-plus/-/element-plus-2.2.32.tgz#e7e6757a66ed158363a86b5c9fc10dfbc0096783"
-  integrity sha512-DTJMhYOy6MApbmh6z/95hPTK5WrBiNHGzV4IN+uEkup1WoimQ+Qyt8RxKdTe/X1LWEJ8YgWv/Cl8P4ocrt5z5g==
+element-plus@2.3.2:
+  version "2.3.2"
+  resolved "http://172.31.71.159/repository/npm-public/element-plus/-/element-plus-2.3.2.tgz#93abe96bcd5d00e96ef281e8d148391d698fb6e3"
+  integrity sha512-NIK0QckKKagdlMm3eLoVoD4Lkfj5ECzpZAxwrRLdm1Yi5qiTU9Guor33+IbIa52z4gHMuhMxgSVS2xAGmjLHsw==
   dependencies:
     "@ctrl/tinycolor" "^3.4.1"
     "@element-plus/icons-vue" "^2.0.6"

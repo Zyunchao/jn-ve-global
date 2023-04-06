@@ -2,24 +2,22 @@
     <div class="examples-base-wrapper">
         <div class="demo1">
             <g-tree
-                :data="orgTreeData"
+                v-loading="dataLaoding"
+                :data="mockData"
                 :btns="btns"
-                show-checkbox
-                :show-btn-area="false"
+                :show-checkbox="false"
+                :show-btn-area="true"
                 :default-checked-keys="defaultCheckedKeys"
                 :filter-parent-checked-keys-flag="true"
+                :expand-on-click-node="true"
                 @node-click="nodeClick"
                 @check="nodeClick"
             />
         </div>
 
-        <div class="demo2">
+        <!-- <div class="demo2">
             <g-tree :data="treeData" :btns="btns" :node-click="nodeClick" />
-        </div>
-
-        <el-button @click="addNode">
-            添加节点
-        </el-button>
+        </div> -->
     </div>
 </template>
 
@@ -34,37 +32,73 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import treeData from './data/treeData.json'
 import orgTreeData from './data/orgTreeData.json'
 import { BtnProps } from '@component/index'
+import regionalTree from './data/regionalTree.json'
+import areaOrgTree from './data/areaOrgTree.json'
+import industryTree from './data/industryTree.json'
+
+const mockIndustryTree = industryTree.map((industry) => ({
+    ...industry,
+    id: industry.itemValue,
+    name: industry.itemText
+}))
+
+const dataLaoding = ref<boolean>(false)
+const mockData = ref([])
+const defaultCheckedKeys = ref<string[]>([])
 
 const btns: BtnProps[] = [
     {
-        label: '新增机构',
+        label: '机构树',
         onClick() {
-            console.log(`%c ??????`, 'color: #67c23a;')
+            dataLaoding.value = true
+
+            setTimeout(() => {
+                // mockData.value = mockIndustryTree
+                // mockData.value = orgTreeData
+                mockData.value = areaOrgTree
+                dataLaoding.value = false
+            }, 500)
+        }
+    },
+    {
+        label: '区域树',
+        onClick() {
+            dataLaoding.value = true
+
+            setTimeout(() => {
+                mockData.value = regionalTree
+                dataLaoding.value = false
+            }, 500)
+        }
+    },
+    {
+        label: '选择带有父级(instituId)',
+        type: 'success',
+        onClick() {
+            defaultCheckedKeys.value = ['3200009521950001', '3201026633500001']
+        }
+    },
+    {
+        label: '选中',
+        onClick() {
+            defaultCheckedKeys.value = ['1591976254600773633', '1591978997189050370']
+        }
+    },
+    {
+        label: '清空',
+        onClick() {
+            defaultCheckedKeys.value = []
         }
     }
 ]
-
-const defaultCheckedKeys = ref<string[]>(['1424688522159378434'])
 
 watch(
     () => defaultCheckedKeys.value,
     (val) => {
         console.log(`%c defaultCheckedKeys ==   `, 'color: #e6a23c;', val)
     },
-    {
-        deep: true
-    }
+    { deep: true }
 )
-
-const addNode = () => {
-    defaultCheckedKeys.value = [
-        '1424688522159378434',
-        '1425375466908475393',
-        '1425375784899633153',
-        '1425375928718123010',
-        '1425374852916895745'
-    ]
-}
 
 const nodeClick = (data, node) => {
     console.log(`%c data == `, 'color: #e6a23c;', data, node)
@@ -81,7 +115,7 @@ const nodeClick = (data, node) => {
 
     .demo1,
     .demo2 {
-        width: 300px;
+        width: 700px;
         margin-right: 100px;
         background-color: #fff;
         border-radius: 8px;

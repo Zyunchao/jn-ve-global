@@ -36,16 +36,16 @@
     "resolutions": {
         "vue": "3.2.37",
         "vite": "4.0.3",
-        "@jsjn/utils": "1.2.0"
+        "@jsjn/utils": "1.2.1"
     },
     "dependencies": {
         "@element-plus/icons-vue": "2.0.10",
-        "@jsjn/utils": "1.2.0",
+        "@jsjn/utils": "1.2.1",
         "@vueuse/core": "^9.3.1",
         "async-validator": "^4.2.5",
         "axios": "^1.2.2",
         "echarts": "^5.3.3",
-        "element-plus": "2.2.32",
+        "element-plus": "2.3.2",
         "lodash": "^4.17.21",
         "resize-observer-polyfill": "^1.5.1",
         "uuid": "^9.0.0",
