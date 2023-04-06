@@ -8,7 +8,11 @@
 
     <!-- 仅展示作用 -->
     <template v-if="inputDisabled && exceedBoxWidth">
-        <el-tooltip :content="localModelValue" placement="top-start">
+        <el-tooltip
+            :content="localModelValue"
+            placement="top-start"
+            popper-class="input-lang-word-popper"
+        >
             <InputCore :model-value="localModelValue" v-bind="$attrs" />
         </el-tooltip>
     </template>
