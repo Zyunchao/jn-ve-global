@@ -79,14 +79,16 @@
                 }
 
                 // 文本
-                .el-tree-node__label {
-                    display: flex;
-                    align-items: center;
-                    height: 100%;
+                .tree-node__label {
+                    flex: 1;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
                 }
 
                 // 节点内图标
-                .tree-node-icon-wrapper {
+                .tree-node__icon-wrapper {
                     display: flex;
                     align-items: center;
                     height: 100%;

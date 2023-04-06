@@ -43,7 +43,7 @@
                     <span
                         v-if="['institution', 'default'].includes(mode)"
                         :class="[
-                            'tree-node-icon-wrapper',
+                            'tree-node__icon-wrapper',
                             { 'no-icon': !data.industryId && !data.children?.length }
                         ]"
                     >
@@ -65,7 +65,7 @@
                     </span>
 
                     <!-- 节点文本 -->
-                    <span>{{ node.label }}</span>
+                    <span class="tree-node__label" :title="node.label">{{ node.label }}</span>
                 </template>
             </ElTreeV2>
         </div>
