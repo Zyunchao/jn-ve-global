@@ -211,9 +211,6 @@ const {
     localAccept
 } = getConstant()
 
-// 文件、文件列表
-const { currentFile, localFileList, isRedrawFileList } = getFileStore({ props, emits })
-
 // elUpload ref
 const { uploadRef } = getRefStore({ emits })
 
@@ -224,31 +221,13 @@ watch(
     }
 )
 
-/**
- * 头像将类似于单选，imgUrl 服务头像
- * fileList 服务文件列表上传
- */
-watch(
-    () => props.imgUrl,
-    (url) => {
-        if (attrs.value['list-type'] === 'avatar') {
-            if (url) {
-                /**
-                 * avatar 模式将意味着查看照片模式，而 currentFile 需要一个 name 属性
-                 * 这里的 name 只是一个假象，为弹框模式做判断
-                 */
-                currentFile.value = {
-                    name: '*.png',
-                    url: url
-                }
-            } else if (!url) {
-                currentFile.value = null
-                uploadRef.value?.clearFiles()
-            }
-        }
-    },
-    { immediate: true }
-)
+// 文件、文件列表（回填）
+const { currentFile, localFileList, isRedrawFileList } = getFileStore({
+    props,
+    emits,
+    attrs,
+    uploadRef
+})
 
 // 钩子
 const { beforeUpload, onExceed, onSuccess, onError, onChange, onRemove } = getHooks({

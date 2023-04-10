@@ -3,7 +3,7 @@ import _ from 'lodash'
 import myAxios from '../../_http/http'
 import { getFileType } from '../utils'
 
-export default ({ emits, props }) => {
+export default ({ emits, props, attrs, uploadRef }) => {
     /**
      * 当前活跃的 file
      *  1. 列表模式能够获取到点击的文件信息
@@ -25,41 +25,14 @@ export default ({ emits, props }) => {
                     const fileType = getFileType(file.name)
                     const url = `${props.downloadUrl}/${file.fileId}`
 
-                    myAxios
-                        .get(url, {
-                            responseType: 'blob'
+                    getFileBlobUrlByRequest(url, fileType).then((localBolbUrl) => {
+                        file.url = localBolbUrl
+                        // 列表更新获取地址时，不会实时的响应到预览图，重绘文件列表即可
+                        isRedrawFileList.value = true
+                        nextTick(() => {
+                            isRedrawFileList.value = false
                         })
-                        .then((res) => {
-                            let blob: Blob
-
-                            /**
-                             * 这里的测试样例的 axios 实例未处理响应体，基座的拦截器是处理过响应数据结构的
-                             */
-                            // if (res.status === 200) {
-                            //     blob = res.data
-                            //     if (fileType === 'pdf') {
-                            //         blob = new Blob([res.data], { type: 'application/pdf;' })
-                            //     }
-                            // }
-
-                            // 实际的基座响应数据
-                            if (res) {
-                                blob = res as any
-                                if (fileType === 'pdf') {
-                                    blob = new Blob([blob], { type: 'application/pdf;' })
-                                }
-                            }
-
-                            file.url = blob
-                                ? window.URL.createObjectURL(blob)
-                                : `${props.downloadUrl}/${file.fileId}`
-
-                            // 列表更新获取地址时，不会实时的响应到预览图，重绘文件列表即可
-                            isRedrawFileList.value = true
-                            nextTick(() => {
-                                isRedrawFileList.value = false
-                            })
-                        })
+                    })
                 }
                 return file
             }),
@@ -68,9 +41,97 @@ export default ({ emits, props }) => {
         }
     })
 
+    // 头像模式回填
+    const localImgUrl = ref<string>(props.imgUrl)
+    watch(
+        () => props.imgUrl,
+        (imgUrl) => (localImgUrl.value = imgUrl)
+    )
+
+    /**
+     * 头像将类似于单选，imgUrl 服务头像
+     * fileList 服务文件列表上传
+     */
+    watch(
+        () => localImgUrl.value,
+        (url) => {
+            if (attrs.value['list-type'] === 'avatar') {
+                if (url) {
+                    /**
+                     * avatar 模式将意味着查看照片模式，而 currentFile 需要一个 name 属性
+                     * 这里的 name 只是一个假象，为弹框模式做判断
+                     */
+                    currentFile.value = {
+                        name: '*.png',
+                        url: url
+                    }
+                } else if (!url) {
+                    currentFile.value = null
+                    uploadRef.value?.clearFiles()
+                }
+            }
+        },
+        { immediate: true }
+    )
+
+    watch(
+        () => props.modelValue,
+        async (fileId) => {
+            if (!fileId) {
+                localImgUrl.value = ''
+                return
+            }
+
+            if (props.imgUrl || !props.downloadUrl) return
+
+            if (attrs.value['list-type'] === 'avatar') {
+                const url = `${props.downloadUrl}/${fileId}`
+                const localBolbUrl = await getFileBlobUrlByRequest(url)
+                localImgUrl.value = localBolbUrl
+            }
+        },
+        { immediate: true }
+    )
+
     return {
         currentFile,
         localFileList,
         isRedrawFileList
     }
+}
+
+/**
+ * 依据 url 获取文件服务器资源，并返回本地 blob 协议的地址
+ * @param url 资源服务器地址：用户传递下载地址 + fileId
+ * @param fileType 文件类型，包装 pdf 类型的数据
+ * @returns
+ */
+function getFileBlobUrlByRequest(url: string, fileType?: string) {
+    return myAxios
+        .get(url, {
+            responseType: 'blob'
+        })
+        .then((res) => {
+            let blob: Blob
+
+            /**
+             * 这里的测试样例的 axios 实例未处理响应体，基座的拦截器是处理过响应数据结构的
+             */
+            // if (res.status === 200) {
+            //     blob = res.data
+            //     if (fileType === 'pdf') {
+            //         blob = new Blob([res.data], { type: 'application/pdf;' })
+            //     }
+            // }
+
+            // 实际的基座响应数据
+            if (res) {
+                blob = res as any
+                if (fileType && fileType === 'pdf') {
+                    blob = new Blob([blob], { type: 'application/pdf;' })
+                }
+            }
+
+            return blob ? window.URL.createObjectURL(blob) : url
+        })
 }
