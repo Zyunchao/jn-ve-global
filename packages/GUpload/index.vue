@@ -123,7 +123,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, ref } from 'vue'
+// import { watch, ref } from 'vue'
 import { getFileType, getFileTypeIcon } from './utils'
 import { imgSuffix, officeSuffix } from './constant/fileTypeList'
 import UploadFile from './interface/UploadFile'
@@ -213,13 +213,6 @@ const {
 
 // elUpload ref
 const { uploadRef } = getRefStore({ emits })
-
-watch(
-    () => uploadRef.value,
-    (instance) => {
-        emits('update:instance', instance)
-    }
-)
 
 // 文件、文件列表（回填）
 const { currentFile, localFileList, isRedrawFileList } = getFileStore({

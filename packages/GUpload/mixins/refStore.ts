@@ -13,5 +13,13 @@ export default ({ emits }) => {
         }
     )
 
+    // 这里我也不知道当初为什么这么抛出，但为了历史遗留问题，保留吧
+    watch(
+        () => uploadRef.value,
+        (instance) => {
+            emits('update:instance', instance)
+        }
+    )
+
     return { uploadRef }
 }
