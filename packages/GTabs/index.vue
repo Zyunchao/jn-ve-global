@@ -5,16 +5,19 @@
         :type="localType"
         @tab-click="tabChange"
     >
-        <el-tab-pane
-            v-for="item in list"
-            :key="item.value"
-            :name="item.value"
-            :disabled="item.disabled"
-        >
-            <template #label>
-                <span class="tabs-item-label">{{ item.label }}</span>
-            </template>
-        </el-tab-pane>
+        <template v-for="item in list" :key="item.value">
+            <el-tab-pane
+                v-if="
+                    item.hide === undefined || (_.isFunction(item.hide) ? !item.hide() : !item.hide)
+                "
+                :name="item.value"
+                :disabled="item.disabled"
+            >
+                <template #label>
+                    <span class="tabs-item-label">{{ item.label }}</span>
+                </template>
+            </el-tab-pane>
+        </template>
     </el-tabs>
     <div v-if="slots.default" class="g-tabs-content">
         <slot />
@@ -30,6 +33,7 @@ export default {
 <script lang="ts" setup>
 import { computed, useSlots } from 'vue'
 import { TabPaneProps } from './index'
+import _ from 'lodash'
 
 const props = withDefaults(
     defineProps<{

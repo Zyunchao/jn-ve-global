@@ -56,8 +56,9 @@ export declare function getAllLeaf(tree: any[]): any[];
 /**
  * 目标节点是否包含子元素，且子元素长度不为0
  * @param source 源数据（树）
- * @param id 目标 id
+ * @param targetFieldVal 查找依据值
+ * @param targetFieldName 依据字段名称，默认 'id'
  * @returns
  */
-export declare function nodeHasChildren(source: any[], id: string | number): boolean;
+export declare function nodeHasChildren(source: any[], targetFieldVal: string | number, targetFieldName?: string): boolean;
 ```

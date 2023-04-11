@@ -2,6 +2,41 @@
 
 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。
 
+<!-- ================== 2.6.1 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.6.1
+
+</template>
+
+<template #date>
+
+2023-04-xx
+
+</template>
+
+<h3>New</h3>
+
+<h4>Upload</h4>
+
+1. 头像模式增加响应 modelValue 自动回填预览地址；
+
+<h4>Tabs</h4>
+
+1. tabPane 增加 hide api;
+
+<h3>优化</h3>
+
+<h4>Tree</h4>
+
+1. 使用虚拟滚动树重构；
+2. 增加展开节点缓存；
+
+</update-log-block>
+
 <!-- ================== 2.6.0 ======================================================================== -->
 
 <update-log-block>

@@ -61,3 +61,4 @@ interface **TabPaneProps**
 label | 显示值 | string | --
 value | 绑定值 | string | --
 disabled | 禁用 | boolean | --
+hide | 隐藏 | boolean \| (() => boolean) | --
