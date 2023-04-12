@@ -7,7 +7,7 @@
             填充数据
         </el-button>
 
-        <g-modal v-model="modalShow" title="表单集成" :btns="modalBtns" width="30%">
+        <g-modal v-model="modalShow" title="表单集成" :btns="modalBtns" width="30%" top="20vh">
             <div class="box">
                 <span>单选：</span>
                 <g-info-select

@@ -131,6 +131,6 @@ const resetForm = () => {
 
 .box2 {
     width: 400px;
-    margin-top: 20px;
+    margin-top: 100px;
 }
 </style>
