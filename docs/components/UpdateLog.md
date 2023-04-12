@@ -14,7 +14,7 @@
 
 <template #date>
 
-2023-04-xx
+2023-04-12
 
 </template>
 
@@ -34,6 +34,12 @@
 
 1. 使用虚拟滚动树重构；
 2. 增加展开节点缓存；
+
+<h3>BugFix</h3>
+
+<h4>InfoXXXX</h4>
+
+1. InfoXXXX 三个组件弹出层定位在上面时，信息头定位错乱问题；
 
 </update-log-block>
 
