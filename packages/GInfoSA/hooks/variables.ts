@@ -12,12 +12,12 @@ export default (props: VarableHookProps) => {
     const animationFlag = ref<boolean>(true)
 
     // ref 引用
-    const currentRootRef = ref<HTMLElement>(null) // 组件根
-    const elSelectRef = ref<any>(null) // select 实例
-    const popperRoot = ref<HTMLElement>(null) // 弹出根容器
-    const infoHeaderWrapRef = ref<{ el: HTMLElement; height: string }>(null) // 表格头
-    const scrollWrapper = ref<HTMLElement>(null) // 待选项的滚动容器
-    const paginationRef = ref<HTMLElement>(null) // 分页
+    const currentRootRef = ref<HTMLElement>() // 组件根
+    const elSelectRef = ref<any>() // select 实例
+    const popperRoot = ref<HTMLElement>() // 弹出根容器
+    const infoHeaderWrapRef = ref<{ el: HTMLElement; height: string }>() // 表格头
+    const scrollWrapper = ref<HTMLElement>() // 待选项的滚动容器
+    const paginationRef = ref<HTMLElement>() // 分页
 
     // DOM Position
     const popperTop = ref<string>('')

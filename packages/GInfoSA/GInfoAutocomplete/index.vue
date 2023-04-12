@@ -47,6 +47,7 @@ import InfoHeader from '../component/infoHeader.vue'
 import OptionCustomContent from '../component/optionCustomContent.vue'
 import _ from 'lodash'
 import useMainLogic from '../hooks'
+import { getStyle } from '@jsjn/utils'
 
 interface Props {
     /**
@@ -82,8 +83,10 @@ let isClosed = false
 // }, 10)
 const setPosition = (pRootDom?: HTMLElement) => {
     if (isClosed) return
-    popperTop.value = pRootDom.style.top
-    popperLeft.value = pRootDom.style.left
+    // popperTop.value = pRootDom.style.top
+    // popperLeft.value = pRootDom.style.left
+    popperTop.value = getStyle(pRootDom, 'top')
+    popperLeft.value = getStyle(pRootDom, 'left')
     popperZIndex.value = pRootDom.style.zIndex
 
     // 表头高度 = 容器 padding-top

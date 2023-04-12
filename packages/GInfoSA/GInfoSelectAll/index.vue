@@ -50,6 +50,7 @@ import OptionCustomContent from '../component/optionCustomContent.vue'
 import _ from 'lodash'
 import { packagingOptionData } from '../utils'
 import useMainLogic from '../hooks'
+import { getStyle } from '@jsjn/utils'
 
 interface Props {
     /**
@@ -100,8 +101,10 @@ const popperHeight = computed(() => parseInt(baseHeight) * props.optionMaxItemNu
 
 // ------------- 隐藏 or 显示 + 表头位置获取 ----------------------------------------------------------------------
 const setPosition = _.debounce((pRootDom?: HTMLElement) => {
-    popperTop.value = pRootDom.style.top
-    popperLeft.value = pRootDom.style.left
+    // popperTop.value = pRootDom.style.top
+    // popperLeft.value = pRootDom.style.left
+    popperTop.value = getStyle(pRootDom, 'top')
+    popperLeft.value = getStyle(pRootDom, 'left')
     popperZIndex.value = pRootDom.style.zIndex
 
     // 表头高度 = 容器 padding-top

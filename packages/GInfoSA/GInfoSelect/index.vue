@@ -82,6 +82,7 @@ import ResizeObserver from 'resize-observer-polyfill'
 import _ from 'lodash'
 import useMainLogic from '../hooks'
 import { packagingOptionData } from '../utils'
+import { getStyle } from '@jsjn/utils'
 
 interface Props {
     /**
@@ -134,8 +135,10 @@ const localSelectOptins = computed(() => packagingOptionData(props.optionsData, 
 let isClosed = false
 const setPosition = _.debounce((pRootDom?: HTMLElement) => {
     if (isClosed) return
-    popperTop.value = pRootDom.style.top
-    popperLeft.value = pRootDom.style.left
+    // popperTop.value = pRootDom.style.top
+    // popperLeft.value = pRootDom.style.left
+    popperTop.value = getStyle(pRootDom, 'top')
+    popperLeft.value = getStyle(pRootDom, 'left')
     popperZIndex.value = pRootDom.style.zIndex
     infoHeaderHeight.value = `${(infoHeaderWrapRef.value as any).el.offsetHeight}px`
     optionItemWrapperHeight.value = pRootDom.querySelector('.el-select-dropdown').clientHeight
