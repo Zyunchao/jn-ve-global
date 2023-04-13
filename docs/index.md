@@ -14,6 +14,10 @@ actions:
       link: /micro/
       type: secondary
 
+    - text: Micro-cli
+      link: /micro-cli/
+      type: secondary
+
     - text: Utils
       link: /utilsDocs/
       type: secondary

@@ -10,6 +10,11 @@ export default [
         activeMatch: '^/micro/'
     },
     {
+        text: 'micro-cli',
+        link: '/micro-cli/',
+        activeMatch: '^/micro-cli/'
+    },
+    {
         text: 'utils',
         link: '/utilsDocs/',
         activeMatch: '^/utilsDocs/'
