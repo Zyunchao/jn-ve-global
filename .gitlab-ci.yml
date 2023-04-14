@@ -34,7 +34,7 @@ pages:
         # - n 16.18.1
         # - n use 16.18.1
         - node -v
-        - npm i pnpm -g
+        # - npm i pnpm -g
         # - npm config get registry
         # - npm cache clean --force
         # - npm install
@@ -42,7 +42,7 @@ pages:
         # - yarn cache clean
         # - yarn install
         # - yarn docs:build
-        - pnpm install
+        # - pnpm install
         - pnpm docs:build
         - rm -fr public
         - mkdir public && cp -fr docs/.vuepress/dist/* public
