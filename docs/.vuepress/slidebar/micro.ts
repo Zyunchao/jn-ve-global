@@ -21,7 +21,7 @@ export default [
         ]
     },
     {
-        text: '仓库管理',
+        text: '仓库管理[淘汰]',
         link: '/micro/storeMage.md'
     },
     {
@@ -34,16 +34,17 @@ export default [
     },
     {
         text: '快速开始',
-        children: [
-            {
-                text: '基于本地基座应用开发',
-                link: '/micro/quickStart.md'
-            },
-            {
-                text: '基于部署生产的基座应用开发',
-                link: '/micro/quickStart2.md'
-            }
-        ]
+        link: '/micro/quickStart-monorepo.md'
+        // children: [
+        //     {
+        //         text: '基于本地基座应用开发',
+        //         link: '/micro/quickStart.md'
+        //     },
+        //     {
+        //         text: '基于部署生产的基座应用开发[参考]',
+        //         link: '/micro/quickStart2.md'
+        //     }
+        // ]
     },
     {
         text: '目录结构',
