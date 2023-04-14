@@ -1,4 +1,4 @@
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, reactive } from 'vue'
 import _ from 'lodash'
 import myAxios from '../../_http/http'
 import { getFileType } from '../utils'
@@ -11,30 +11,22 @@ export default ({ emits, props, attrs, uploadRef }) => {
      */
     const currentFile = ref(null)
 
-    // 文件列表内容改变，重绘
-    const isRedrawFileList = ref<boolean>(false)
-
     /**
      * 普通的列表模式，将抛出有效的 fileList
      */
     const localFileList = computed({
         get: () =>
             _.cloneDeep(props.fileList).map((file, index) => {
-                // 异步获取文件的 url
+                const proxyFile = reactive(file)
+                // 异步获取文件的 url，proxy 代理 file，file.url 发生变化时，会渲染列表
                 if (!file.url && file.fileId && props.downloadUrl) {
                     const fileType = getFileType(file.name)
                     const url = `${props.downloadUrl}/${file.fileId}`
-
                     getFileBlobUrlByRequest(url, fileType).then((localBolbUrl) => {
-                        file.url = localBolbUrl
-                        // 列表更新获取地址时，不会实时的响应到预览图，重绘文件列表即可
-                        isRedrawFileList.value = true
-                        nextTick(() => {
-                            isRedrawFileList.value = false
-                        })
+                        proxyFile.url = localBolbUrl
                     })
                 }
-                return file
+                return proxyFile
             }),
         set: (list) => {
             emits('update:fileList', list)
@@ -95,8 +87,7 @@ export default ({ emits, props, attrs, uploadRef }) => {
 
     return {
         currentFile,
-        localFileList,
-        isRedrawFileList
+        localFileList
     }
 }
 

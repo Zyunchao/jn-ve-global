@@ -45,7 +45,7 @@
 
         <!-- 文件列表 -->
         <template #file="{ file }">
-            <div v-if="!isRedrawFileList" :class="['file-list-item', uploadListType]">
+            <div :class="['file-list-item', uploadListType]">
                 <!-- 略缩 -->
                 <div class="info">
                     <img class="preview" :src="getFileTypeIcon(file.name, file.url)">
@@ -215,7 +215,7 @@ const {
 const { uploadRef } = getRefStore({ emits })
 
 // 文件、文件列表（回填）
-const { currentFile, localFileList, isRedrawFileList } = getFileStore({
+const { currentFile, localFileList } = getFileStore({
     props,
     emits,
     attrs,
