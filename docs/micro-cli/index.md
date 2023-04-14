@@ -9,7 +9,7 @@ npm i jn-micro-cli -g --registry=http://172.31.71.159/repository/npm-public/
 
 # 安装成功后，验证
 jn-micro -v
-# 输出：1.0.0
+# 输出：1.1.0
 ```
 
 :::tip
