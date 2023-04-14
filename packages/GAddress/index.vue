@@ -102,7 +102,7 @@ watch(
     () => [selectedRegion.value, detailAddress.value],
     ([region, detail]) => {
         const node = elCascaderRef.value.getCheckedNodes(false)?.[0]
-        props.onChange(region, detail as string, node?.pathLabels)
+        props.onChange?.(region, detail as string, node?.pathLabels)
     }
 )
 
