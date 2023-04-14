@@ -156,7 +156,7 @@ export default exposesRoutes
 
 :::
 
-1. 注册微应用 `/public/microApps/index.js`
+1. 注册微应用 `rootPro/subPro/public/microApps/index.js`
 
 ```js
 /**
@@ -165,18 +165,14 @@ export default exposesRoutes
  *  name: string
  *
  *  // 应用地址
- *  url: string
- *
- *  // 是否开启keep-alive模式，开启keep-alive后，应用卸载时会进入缓存，而不是销毁它们，以便保留应用的状态和提升重复渲染的性能。
- *  keepAlive?: boolean
+ *  origin: string
  * }
  */
 
 // 子应用注册列表，基座应用依据当前列表进行注册子应用，可在生产环境更换
 window.__MICRO_APP_LIST__ = [{
-    name: 'apollo',
-    url: 'http://localhost:3002/',
-    keepAlive: true
+    name: 'home',
+    origin: 'http://localhost:3002'
 }]
 ```
 
@@ -184,7 +180,7 @@ window.__MICRO_APP_LIST__ = [{
 
 我已经封装了一个主动加载远程组件的组件，大家只要学会使用这个组件就可以了，组件位于
 
- `/src/components/business/remoteMicroAppComponent/index.vue`
+ `@jsjn/micro-core-components/business/remoteMicroAppComponent/index.vue`
 
 ```vue
 <template>
@@ -244,7 +240,7 @@ export default {
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
-import RemoteMicroAppComponent from '@/components/business/remoteMicroAppComponent/index.vue'
+import RemoteMicroAppComponent from '@jsjn/micro-core-components/business/remoteMicroAppComponent/index.vue'
 import { ref, watchEffect, nextTick } from 'vue'
 
 const aresAppSourceUrl = window.__MICRO_APP_LIST__.find((app) => app.name === 'ares')?.url
