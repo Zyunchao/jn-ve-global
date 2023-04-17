@@ -30,7 +30,7 @@ const emits = defineEmits(['getChartInstance'])
 // 获取 GChart 的 echarts 实例容器
 const parentChartInstanceWrap = inject(chartInstanceKey)
 
-const chartBoxRef = ref<HTMLElement>(null)
+const chartBoxRef = ref<HTMLElement>()
 const chartInstance = ref<ECharts>(null)
 const ob = ref<ResizeObserver>(null)
 const isFirstOB = ref<boolean>(true)
