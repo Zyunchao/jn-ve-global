@@ -94,6 +94,10 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/chartTest/index.vue')
     },
     {
+        path: '/modal-chart-test',
+        component: () => import('@/views/chartTest/modalTest.vue')
+    },
+    {
         path: '/infoSelect-test',
         component: () => import('@/views/infoSAA/infoSelectTest/index.vue')
     },

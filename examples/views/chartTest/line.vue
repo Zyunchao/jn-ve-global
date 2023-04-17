@@ -1,5 +1,8 @@
 <template>
     <div class="examples-base-wrapper">
+        <el-button @click="addData">
+            追加数据
+        </el-button>
         <!-- 单数据 -->
         <div class="chart-box">
             <GChart :config="singleLineConfig" />
@@ -44,8 +47,16 @@ import * as echarts from 'echarts'
 import ChartConfig from '@component/GChart/interface/ChartConfig'
 import { ECharts, EChartsOption } from 'echarts'
 
+const addData = () => {
+    // singleLineConfig.data = [10, 10, 20, 30]
+
+    singleLineConfig.data.push(90)
+    singleLineConfig.x.push('测试')
+    console.log(`%c addData === `, 'color: #67c23a;', singleLineConfig.data)
+}
+
 // 单条
-const singleLineConfig = ref<ChartConfig>({
+const singleLineConfig = reactive<ChartConfig>({
     title: '单条数据',
     type: 'line',
     x: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
