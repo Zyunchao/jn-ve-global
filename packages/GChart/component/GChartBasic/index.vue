@@ -10,7 +10,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, inject, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, inject, nextTick, watch } from 'vue'
 import * as echarts from 'echarts'
 import ResizeObserver from 'resize-observer-polyfill'
 import { ECharts, EChartsOption } from 'echarts'
@@ -34,6 +34,20 @@ const chartBoxRef = ref<HTMLElement>(null)
 const chartInstance = ref<ECharts>(null)
 const ob = ref<ResizeObserver>(null)
 const isFirstOB = ref<boolean>(true)
+
+/**
+ * 数据动态刷新
+ * https://echarts.apache.org/zh/api.html#echartsInstance.setOption
+ */
+watch(
+    () => props.option,
+    _.debounce((option) => {
+        if (chartInstance.value) {
+            chartInstance.value.setOption(option)
+        }
+    }, 200),
+    { deep: true }
+)
 
 onMounted(() => {
     nextTick(() => {
