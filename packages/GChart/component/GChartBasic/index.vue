@@ -10,7 +10,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, inject } from 'vue'
+import { ref, onMounted, onUnmounted, inject, nextTick } from 'vue'
 import * as echarts from 'echarts'
 import ResizeObserver from 'resize-observer-polyfill'
 import { ECharts, EChartsOption } from 'echarts'
@@ -36,39 +36,41 @@ const ob = ref<ResizeObserver>(null)
 const isFirstOB = ref<boolean>(true)
 
 onMounted(() => {
-    const cI = echarts.init(chartBoxRef.value)
-    cI.setOption(props.option)
-    chartInstance.value = cI
+    nextTick(() => {
+        const cI = echarts.init(chartBoxRef.value)
+        cI.setOption(props.option)
+        chartInstance.value = cI
 
-    // 抛出 echarts 实例
-    emits('getChartInstance', cI)
+        // 抛出 echarts 实例
+        emits('getChartInstance', cI)
 
-    /**
-     * 如果是嵌套（封装好的图标）使用，通过 inject 获取容器（Ref）引用，然后将 echarts 实例包装到容器中
-     */
-    if (parentChartInstanceWrap) {
-        parentChartInstanceWrap.value = cI
-    }
+        /**
+         * 如果是嵌套（封装好的图标）使用，通过 inject 获取容器（Ref）引用，然后将 echarts 实例包装到容器中
+         */
+        if (parentChartInstanceWrap) {
+            parentChartInstanceWrap.value = cI
+        }
 
-    // 监听容器变化，进行图标的重绘
-    const resizeObserver = new ResizeObserver(
-        _.debounce((entries: ResizeObserverEntry[]) => {
-            if (isFirstOB.value) {
-                isFirstOB.value = false
-                return
-            }
+        // 监听容器变化，进行图标的重绘
+        const resizeObserver = new ResizeObserver(
+            _.debounce((entries: ResizeObserverEntry[]) => {
+                if (isFirstOB.value) {
+                    isFirstOB.value = false
+                    return
+                }
 
-            // cI.isDisposed 如果已销毁，返回 true，否则返回 undefined
-            !cI.isDisposed() &&
-                cI.resize({
-                    animation: {
-                        duration: 200
-                    }
-                })
-        }, 500)
-    )
-    resizeObserver.observe(chartBoxRef.value)
-    ob.value = resizeObserver
+                // cI.isDisposed 如果已销毁，返回 true，否则返回 undefined
+                !cI.isDisposed() &&
+                    cI.resize({
+                        animation: {
+                            duration: 200
+                        }
+                    })
+            }, 500)
+        )
+        resizeObserver.observe(chartBoxRef.value)
+        ob.value = resizeObserver
+    })
 })
 
 onUnmounted(() => {
