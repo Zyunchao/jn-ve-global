@@ -11,9 +11,9 @@
 开发技巧如下：
 
 * 熟悉 [Vue3 SFC语法](https://v3.cn.vuejs.org/api/sfc-spec.html)
-* 熟悉 [Mixin](https://v3.cn.vuejs.org/guide/mixins.html)
-* 参考[Element-plus官网](https://element-plus.gitee.io/zh-CN/)
-* 参考内部[组件库](../../components/index.md)
+* 熟悉 [Vue3 组合式函数](https://cn.vuejs.org/guide/reusability/composables.html)
+* 参考 [Element-plus官网](https://element-plus.gitee.io/zh-CN/)
+* 参考内部 [组件库](../../components/index.md)
 
 ## 页面组件规范
 
@@ -21,7 +21,7 @@
 
 :::tip
 
-唯一的建议就是希望大家善于利用组件化开发
+唯一的建议就是希望大家善于利用组件化、模块化开发
 
 :::
 
@@ -39,7 +39,7 @@
 
 4. 组件正确嵌套，且组件符合前三条规则
 
-子组件放到 `component`
+子组件放到 `components`
 
 ![子组件唯一入口规则.png](/images/realize/子组件唯一入口规则.png)
 
@@ -47,18 +47,9 @@
 
 5. 其他目录
 
-一个页面模块，可以包含下面三个文件夹
+一个页面模块，可以自定义其他文件夹，常用的结构包括（不限于）：
 
-![页面模块文件夹.png](/images/realize/页面模块文件夹.png)
-
-* component 子组件存放目录
-* constant 组件常量存放
+* components 子组件存放目录
+* constants 组件常量存放
 * interface 组件的接口类型存放（包含子组件的类型）
-
-:::tip
-
-对于组件的开发，希望大家要知其然，知其所以然
-
-大家要先熟练掌握组件库的使用，才能更好的去开发页面
-
-:::
+* hooks 组合式函数（自定义 hooks、mixins...）存放目录
