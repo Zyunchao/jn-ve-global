@@ -2,6 +2,36 @@
 
 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。
 
+<!-- ================== 2.6.2 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.6.2
+
+</template>
+
+<template #date>
+
+2023-04-xx
+
+</template>
+
+<h3>New</h3>
+
+<h4>Chart</h4>
+
+1. 增加数据动态刷新能力
+
+<h3>BugFix</h3>
+
+<h4>Chart</h4>
+
+1. 弹框内嵌 Chart 组件时，ResizeObserver 监听错误问题（弹框内嵌图表大小有问题）；
+
+</update-log-block>
+
 <!-- ================== 2.6.1 ======================================================================== -->
 
 <update-log-block>
