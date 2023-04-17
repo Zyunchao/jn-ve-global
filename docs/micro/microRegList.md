@@ -16,67 +16,7 @@
 
 ![注册列表](/images/micro/微应用注册列表-dist.png)
 
-## 不同的开发模式配置方式
-
-已知，我们在开发一个程序时，分为开发模式和生产模式，我们现在常用的开发方式为：
-
-* 开发模式：将基座应用部署到服务器上，微应用的 url 采用 `localhost:端口号` 的形式配置
-    > 这样基座应用加载的就是本地的微应用
-
-* 生产模式：将微应用打包后，和基座应用部署在统一个服务器下，微应用的 url 采用 `ip 或 域名` 的形式配置
-    > 这样基座应用加载的就是服务器中的微应用的生产包
-
-无论哪种开发模式，我们都需要准确的将微应用的部署地址，告诉基座应用
-
-## 格式
-
-```js
-/**
- * interface MicroApp {
- *  // 应用名称，每个name都对应一个应用，当多个应用同时渲染时，name不可以重复。
- *  name: string
- *
- *  // 应用地址
- *  url: string
- *
- *  // 是否开启keep-alive模式，开启keep-alive后，应用卸载时会进入缓存，而不是销毁它们，以便保留应用的状态和提升重复渲染的性能。
- *  keepAlive?: boolean
- * }
- */
-
-// 子应用注册列表，基座应用依据当前列表进行注册子应用，可在生产环境更换
-window.__MICRO_APP_LIST__ = [{
-        name: 'ares',
-        url: 'http://localhost:3001',
-        keepAlive: true
-    },
-    {
-        name: 'apollo',
-        url: 'http://localhost:3002',
-        keepAlive: true
-    }
-]
-```
-
-:::tip 注意
-
-[基座部署开发模式](./quickStart2.md)下：
-
-微应用注册列表中的每个微应用的 url 可配置为
-
-* 具体 ip 地址：常用于生产模式
-* localhost:300X：微应用的注册是在运行阶段的，如果以 `localhost` 配置，用户（开发）在访问基座应用时，基座应用会请求本地（开发模式）的资源，以实现生产基座和开发微应用的对接
-
-:::
-
-## 优化的格式
-
-:::tip 2022-07-13 起适用
-:::
-
-微应用注册列表本质上就是上面的格式，基座应用所需的信息都包含在了里面，在经过实际的开发后，发现更改生产包里的注册列表是一个繁琐的事情，且有可能存在忘记修改的情况
-
-在原有的注册列表配置基础上，进行了改进，改进后的注册列表如下：
+## 微应用注册列表 interface
 
 ```ts
 interface MicroApp {
@@ -98,7 +38,7 @@ interface MicroApp {
 type MicroAppList = Array<string | MicroApp>
 ```
 
-### 格式详解
+## 类型格式详解
 
 列表的每一个配置项，可采用字符串、对象的两种形式配置
 
@@ -108,11 +48,11 @@ type MicroAppList = Array<string | MicroApp>
 * 对象：`mappingMicroList` 方法内部会自动拼接 `name` + `origin`
     > 常用于开发模式，指定不同于基座部署环境的微应用
 
-### 示例
+### 配置模式示例
 
 #### 生产模式下
 
-在升级后的注册列表，生产模式下，微应用可直接配置字符串数组
+生产模式下，微应用可直接配置字符串数组
 
 ```js
 const isProduction = false
@@ -124,7 +64,7 @@ window.__MICRO_APP_LIST__ = mappingMicroList(microAppList, isProduction)
 
 #### 开发模式下
 
-由于开发模式下需要运行本地的微应用，所以，还是需要指定特殊的部署地址的，这时需要采用对象的配置方式，如：
+由于开发模式下需要运行本地的微应用，需要指定特殊的部署地址，采用对象的配置方式，如：
 
 ```js
 const isProduction = false
